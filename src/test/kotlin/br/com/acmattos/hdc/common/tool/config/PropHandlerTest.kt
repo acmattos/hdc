@@ -82,7 +82,7 @@ object PropHandlerTest: Spek({
                 Assertions.assertThat(result).isNotEqualTo(defaultValue)
             }
         }
-        ////
+
         Scenario("""invalid key given to #getProperty, defaultValue usage""") {
             lateinit var key: String
             var defaultValue = 0
