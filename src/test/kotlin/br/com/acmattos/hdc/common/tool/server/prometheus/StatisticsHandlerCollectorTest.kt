@@ -19,7 +19,7 @@ object StatisticsHandlerCollectorTest : Spek({
             lateinit var collector: StatisticsHandlerCollector
             lateinit var samples: List<Collector.MetricFamilySamples>
             Given("""a statistics handler""") {
-                handler = mockk<StatisticsHandler>(relaxed = true)
+                handler = mockk(relaxed = true)
             }
             And("""a statistics handler collector for a set of metrics""") {
                 collector = StatisticsHandlerCollector.initialize(

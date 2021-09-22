@@ -6,7 +6,7 @@ import org.eclipse.jetty.server.handler.StatisticsHandler
 import org.eclipse.jetty.util.thread.QueuedThreadPool
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 09/06/2020.
  */
 class PrometheusServer(

@@ -10,7 +10,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 09/06/2020.
  */
 object PrometheusServerTest : Spek({

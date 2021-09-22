@@ -21,7 +21,7 @@ object QueuedThreadPoolCollectorTest : Spek({
             lateinit var samples: List<Collector.MetricFamilySamples>
 
             Given("""a queued thread pool""") {
-                pool = mockk<QueuedThreadPool>(relaxed = true)
+                pool = mockk(relaxed = true)
             }
             And("""a queued thread pool collector for a set of metrics""") {
                 collector = QueuedThreadPoolCollector.initialize(

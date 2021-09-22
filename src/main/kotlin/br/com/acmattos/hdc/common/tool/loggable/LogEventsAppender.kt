@@ -23,7 +23,7 @@ class LogEventsAppender(
     /**
      * Prepares the appender to start monitoring.
      */
-    fun setup(): LogEventsAppender {
+    private fun setup(): LogEventsAppender {
         logger = LoggerFactory.getLogger(clazz)
             as ch.qos.logback.classic.Logger
         logger.addAppender(this)
