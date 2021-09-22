@@ -17,7 +17,6 @@ const val ERROR_MESSAGE = "This is a error message sample"
  */
 object HdcLoggerTest: Spek({
     Feature("${HdcLogger::class.java} only message usage") {
-//        beforeEachScenario { appender.tearDown() }
         Scenario("trace message generation") {
             lateinit var logger: HdcLogger
             lateinit var appender: LogEventsAppender
@@ -120,7 +119,6 @@ object HdcLoggerTest: Spek({
     }
 
     Feature("${HdcLogger::class.java} message with exception usage") {
-        //beforeEachScenario { appender.tearDown() }
         Scenario("trace message generation") {
             lateinit var logger: HdcLogger
             lateinit var appender: LogEventsAppender

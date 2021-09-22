@@ -1,0 +1,87 @@
+package br.com.acmattos.hdc.common.tool.assertion
+
+import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
+import ch.qos.logback.classic.Level
+import org.assertj.core.api.AbstractThrowableAssert
+import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.gherkin.Feature
+
+private const val MESSAGE = "Condition has failed!"
+private const val LOG_MESSAGE_1 = "[ASSERTION] - Assertion to be evaluated..."
+private const val LOG_MESSAGE_2 = "[ASSERTION] - Assertion evaluated successfully!: -> '$MESSAGE' <-"
+private const val LOG_MESSAGE_3 = "[ASSERTION FAILURE]: -> '$MESSAGE' <-"
+
+/**
+ * @author ACMattos
+ * @since 22/09/2021.
+ */
+object AssertionTest: Spek({
+    Feature("${Assertion::class.java} usage") {
+        Scenario("assertion succeed") {
+            lateinit var appender: LogEventsAppender
+            var condition = false
+            Given("""a prepared ${LogEventsAppender::class.java}""") {
+                appender = LogEventsAppender(Assertion::class.java)
+            }
+            And("""a condition that evaluates to true""") {
+                condition = true
+            }
+            When("""#assert is executed""") {
+                Assertion.assert(MESSAGE) {
+                    condition
+                }
+            }
+            Then("""the message is $LOG_MESSAGE_1""") {
+                assertThat(appender.getMessage(0)).isEqualTo(LOG_MESSAGE_1)
+            }
+            And("the level is ${Level.TRACE}") {
+                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            }
+            And("""the message is $LOG_MESSAGE_2""") {
+                assertThat(appender.getMessage(1)).isEqualTo(LOG_MESSAGE_2)
+            }
+            And("the level is ${Level.TRACE}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.TRACE)
+            }
+        }
+
+        Scenario("assertion fails") {
+            lateinit var appender: LogEventsAppender
+            lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
+            var condition = true
+            Given("""a prepared ${LogEventsAppender::class.java}""") {
+                appender = LogEventsAppender(Assertion::class.java)
+            }
+            And("""a condition that evaluates to false""") {
+                condition = false
+            }
+            When("""#assert is executed""") {
+                assertion = Assertions.assertThatCode {
+                    Assertion.assert(MESSAGE) {
+                        condition
+                    }
+                }
+            }
+            Then("""the message is $LOG_MESSAGE_1""") {
+                assertThat(appender.getMessage(0)).isEqualTo(LOG_MESSAGE_1)
+            }
+            And("the level is ${Level.TRACE}") {
+                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            }
+            And("""the message is $LOG_MESSAGE_3""") {
+                assertThat(appender.getMessage(1)).isEqualTo(LOG_MESSAGE_3)
+            }
+            And("the level is ${Level.INFO}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.INFO)
+            }
+            Then("""#assert throws exception""") {
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE))
+            }
+            And("""exception has message $MESSAGE""") {
+                assertion.hasMessage(MESSAGE)
+            }
+        }
+    }
+})
