@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.common.tool.uid
 
-import br.com.acmattos.hdc.common.tool.logable.Loggable
+import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import de.huxhorn.sulky.ulid.ULID
 import java.security.SecureRandom
 

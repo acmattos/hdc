@@ -2,6 +2,7 @@ package br.com.acmattos.hdc.common.tool.config
 
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
@@ -29,7 +30,7 @@ object PropHandlerTest: Spek({
                 result = PropHandler.getProperty(key)
             }
             Then("""the property value is retrieved as expected""") {
-                Assertions.assertThat(result).isEqualTo(value)
+                assertThat(result).isEqualTo(value)
             }
         }
 
@@ -76,10 +77,10 @@ object PropHandlerTest: Spek({
                 result = PropHandler.getProperty(key, defaultValue)
             }
             Then("""the property value is retrieved as expected""") {
-                Assertions.assertThat(result).isEqualTo(value)
+                assertThat(result).isEqualTo(value)
             }
             And("""the property value is not defaultValue""") {
-                Assertions.assertThat(result).isNotEqualTo(defaultValue)
+                assertThat(result).isNotEqualTo(defaultValue)
             }
         }
 
@@ -98,7 +99,7 @@ object PropHandlerTest: Spek({
                 result = PropHandler.getProperty(key, defaultValue)
             }
             Then("""the property value is not retrieved as expected""") {
-                Assertions.assertThat(result).isEqualTo(defaultValue)
+                assertThat(result).isEqualTo(defaultValue)
             }
         }
     }

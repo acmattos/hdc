@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.common.tool.server.javalin
 
-import br.com.acmattos.hdc.common.tool.logable.Loggable
+import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.uid.ULIDGen
 
 const val UNKNOWN_REASON = "UNKNOWN REASON"
