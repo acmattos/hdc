@@ -9,7 +9,6 @@ import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.core.JavalinConfig
-import io.javalin.core.util.Util
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
 import io.javalin.plugin.json.JavalinJackson
@@ -29,7 +28,7 @@ private const val PATH_HEALTH_CHECK = "/health-check"
  * @since 09/06/2020.
  */
 class JavalinServer(
-    private val javalinConfig: Consumer<JavalinConfig>,
+    private val javalinConfig: Consumer<JavalinConfig>?,
     private val routes: (() -> Unit),
     private val objectMapper: ObjectMapper,
     private val port: Int
@@ -150,7 +149,7 @@ class JavalinServer(
         context.status(errorResponse.status)
         context.json(errorResponse)
         logger.warn(
-            "[{} {}] - EUID:[] -> {} <-",
+            "[{} {}] - EUID:[{}] -> {} <-",
             exception,
             JAVALIN,
             ERROR,
