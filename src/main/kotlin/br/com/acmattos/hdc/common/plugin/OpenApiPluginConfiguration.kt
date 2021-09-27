@@ -42,8 +42,8 @@ object OpenApiPluginConfiguration {
                 doc.json("500", Response::class.java)
             }// Lambda that will be applied to every documentation
             activateAnnotationScanningFor("br.com.acmattos.hdc") // Activate annotation scanning (Required for annotation api with static java methods)
-            .toJsonMapper(JacksonToJsonMapper(JacksonObjectMapperFactory.build())) // Custom json mapper
-            .modelConverterFactory(JacksonModelConverterFactory(JacksonObjectMapperFactory.build())) // Custom OpenApi model converter
+            toJsonMapper(JacksonToJsonMapper(JacksonObjectMapperFactory.build())) // Custom json mapper
+            modelConverterFactory(JacksonModelConverterFactory(JacksonObjectMapperFactory.build())) // Custom OpenApi model converter
             swagger(SwaggerOptions("/swagger")) // Activate the swagger ui
             reDoc(ReDocOptions("/redoc")) // Active the ReDoc UI
         }
