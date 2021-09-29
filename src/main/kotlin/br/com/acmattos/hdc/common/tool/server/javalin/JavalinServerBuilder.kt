@@ -10,7 +10,7 @@ import java.util.function.Consumer
  * @since 23/06/2019.
  */
 object JavalinServerBuilder {
-    private var javalinConfig: Consumer<JavalinConfig> = Consumer {}
+    private var javalinConfig: Consumer<JavalinConfig>? = Consumer {}
     private lateinit var routes: () -> Unit
     private var objectMapper: ObjectMapper = jacksonObjectMapper()
     private var port: Int = 7000

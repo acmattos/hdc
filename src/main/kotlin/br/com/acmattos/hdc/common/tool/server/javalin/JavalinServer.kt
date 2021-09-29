@@ -65,9 +65,10 @@ class JavalinServer(
                             Pair("durationInMillis", duration)).toString()
                     )
                 }
-                path(PATH_HEALTH_CHECK) {
-                    get(::healthCheck)
-                }
+                // TODO Verify OpenAPIPlugin
+//                path(PATH_HEALTH_CHECK) {
+//                    get(::healthCheck)
+//                }
                 routes()
             }
 
@@ -89,12 +90,12 @@ class JavalinServer(
         javalin!!.stop()
     }
 
-    @OpenApi(
-        description = "Health Check Status",
-        tags = ["healthCheck"]
-    )
-    private fun healthCheck(context: Context) =
-        context.json(mapOf("version" to "1.0.0-SNAPSHOT"))
+//    @OpenApi(
+//        description = "Health Check Status",
+//        tags = ["healthCheck"]
+//    )
+//    private fun healthCheck(context: Context) =
+//        context.json(mapOf("version" to "1.0.0-SNAPSHOT"))
 
     private fun setupPrometheusServer() {
         if (isPrometheusServerEnabled()) {
