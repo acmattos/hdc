@@ -33,6 +33,15 @@ class LogEventsAppender(
     }
 
     /**
+     * Sets the level of logging messages.
+     * @param level Level.ALL to Level.ERROR
+     */
+    fun setLevel(level: Level): LogEventsAppender {
+        logger.level = level
+        return this
+    }
+
+    /**
      * Prepares the appender to stop monitoring.
      */
     fun tearDown() {
@@ -40,6 +49,11 @@ class LogEventsAppender(
         logger.detachAppender(this)
         this.stop()
     }
+
+    /**
+     * Return the size of logging events tracked.
+     */
+    fun eventsSize() = events.size
 
     /**
      * Get the logging event by index.

@@ -37,6 +37,24 @@ object HdcLoggerTest: Spek({
             }
         }
 
+        Scenario("trace message not being logged due to Level is higher") {
+            lateinit var logger: HdcLogger
+            lateinit var appender: LogEventsAppender
+            Given("""a prepared ${LogEventsAppender::class.java} with level higher""") {
+                appender = LogEventsAppender(HdcLogger::class.java)
+                    .setLevel(Level.ERROR)
+            }
+            And("""a successful ${HdcLogger::class.java} instantiation""") {
+                logger = HdcLogger(HdcLogger::class.java.name)
+            }
+            When("""#trace is executed""") {
+                logger.trace(TRACE_MESSAGE)
+            }
+            Then("""the size of events is zero""") {
+                assertThat(appender.eventsSize()).isEqualTo(0)
+            }
+        }
+
         Scenario("debug message generation") {
             lateinit var logger: HdcLogger
             lateinit var appender: LogEventsAppender
