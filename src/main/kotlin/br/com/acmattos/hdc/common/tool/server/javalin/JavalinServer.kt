@@ -89,7 +89,7 @@ class JavalinServer(
         prometheusServer?.stop()
         javalin!!.stop()
     }
-
+// TODO Verify OpenAPIPlugin
 //    @OpenApi(
 //        description = "Health Check Status",
 //        tags = ["healthCheck"]
