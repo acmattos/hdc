@@ -16,7 +16,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 private const val NUMBER_OF_DEPENDENCIES = 2
-private const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
+const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
 
 /**
  * @author ACMattos
