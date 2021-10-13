@@ -2,7 +2,6 @@ package br.com.acmattos.hdc.common.tool.uid
 
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
