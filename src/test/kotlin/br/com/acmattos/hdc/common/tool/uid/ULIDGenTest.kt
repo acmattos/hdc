@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.tool.uid
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
@@ -56,7 +57,7 @@ object ULIDGenTest: Spek({
                 ulidCandidate = INVALID_ULID_ID_1
             }
             When("""#parseULID is executed""") {
-                assertion = Assertions.assertThatCode {
+                assertion = assertThatCode {
                     ULIDGen.parseULID(ulidCandidate)
                 }
             }
@@ -77,7 +78,7 @@ object ULIDGenTest: Spek({
                 ulidCandidate = INVALID_ULID_ID_2
             }
             When("""#parseULID is executed""") {
-                assertion = Assertions.assertThatCode {
+                assertion = assertThatCode {
                     ULIDGen.parseULID(ulidCandidate)
                 }
             }
