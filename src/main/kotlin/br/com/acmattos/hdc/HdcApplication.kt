@@ -6,6 +6,7 @@ import br.com.acmattos.hdc.common.tool.config.PropHandler.getProperty
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServer
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
+import br.com.acmattos.hdc.person.config.PersonKoinComponent
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import org.eclipse.jetty.server.handler.StatisticsHandler
 import org.eclipse.jetty.util.thread.QueuedThreadPool
@@ -24,6 +25,7 @@ class HdcApplication {
         startKoin {
             printLogger()
 
+            koin.loadModules(listOf(PersonKoinComponent.loadModule()))
             koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
         }
     }
@@ -33,6 +35,8 @@ class HdcApplication {
     }
 
     companion object: KoinComponent {
+        private val personCommandEndpointDefinition: EndpointDefinition
+            by inject(named("PersonCommandControllerEndpointDefinition"))
         private val scheduleCommandEndpointDefinition: EndpointDefinition
             by inject(named("ScheduleCommandControllerEndpointDefinition"))
 
@@ -65,6 +69,7 @@ class HdcApplication {
                     )
                 }
                 .routes {
+                    personCommandEndpointDefinition.routes()
                     scheduleCommandEndpointDefinition.routes()
                 }
                 .objectMapper(JacksonObjectMapperFactory.build())
