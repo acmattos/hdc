@@ -15,7 +15,7 @@ class EventStoreRepository<T: Event>(
    override fun addEvent(event: T) {
         mdbRepository.save(MdbEventDocument(event))
         logger.trace(
-            "[{}] Add event to store {}...: -> !DONE! <-",
+            "[{}] Add event [{}] to store...: -> !DONE! <-",
             STORE.name,
             event.javaClass.name
         )
