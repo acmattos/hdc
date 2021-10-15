@@ -11,7 +11,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 const val MESSAGE =
-    "[STORE] save entity to repository br.com.acmattos.hdc.common.context.domain.model.TestEntity...: -> !DONE! <-"
+    "[STORE] Save entity [br.com.acmattos.hdc.common.context.domain.model.TestEntity] to repository...: -> !DONE! <-"
 /**
  * @author ACMattos
  * @since 14/10/2021.

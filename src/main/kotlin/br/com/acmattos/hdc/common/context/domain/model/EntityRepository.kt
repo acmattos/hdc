@@ -16,7 +16,7 @@ class EntityRepository<T: Entity>(
     override fun save(entity: T) {
         mdbRepository.save(converter(entity))
         logger.trace(
-            "[{}] save entity to repository {}...: -> !DONE! <-",
+            "[{}] Save entity [{}] to repository...: -> !DONE! <-",
             STORE.name,
             entity.javaClass.name
         )
