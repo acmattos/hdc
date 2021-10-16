@@ -5,6 +5,7 @@ import br.com.acmattos.hdc.person.config.ED
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
+import io.mockk.mockk
 import org.koin.core.Koin
 import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
@@ -18,18 +19,16 @@ import org.spekframework.spek2.style.gherkin.Feature
 object PersonCommandControllerEndpointDefinitionTest: Spek({
     Feature("${PersonCommandControllerEndpointDefinition::class.java} existence") {
         Scenario("endpoint definition exists") {
-            lateinit var koin: Koin
+            lateinit var controller: PersonCommandController
             lateinit var endpoint: EndpointDefinition
-            Given("""a Koin Application properly instantiated""") {
-                koin = koinApplication {
-                    modules(PersonKoinComponent.loadModule())
-                }.koin
+            Given("""a mocked controller""") {
+                controller = mockk()
             }
             And("""a javalin server is configured""") {
                 ApiBuilder.setStaticJavalin(Javalin.create())
             }
-            When("""a the endpoint definition is injected""") {
-                endpoint = koin.get<EndpointDefinition>(named(ED))
+            When("""a ${PersonCommandControllerEndpointDefinition::class.java} is successfully instantiated""") {
+                endpoint = PersonCommandControllerEndpointDefinition(controller)
             }
             Then("""#routes can be called""") {
                 endpoint.routes()

@@ -32,11 +32,6 @@ object PersonKoinComponentTest: Spek({
             Then("""the number of modules loaded is equal to $NUMBER_OF_DEPENDENCIES""") {
                 application.assertDefinitionsCount(NUMBER_OF_DEPENDENCIES)
             }
-            And("the $ED component was loaded") {
-                assertThat(
-                   koin.get<EndpointDefinition>(qualifier=named(ED))
-                ).isNotNull()
-            }
         }
     }
 })
