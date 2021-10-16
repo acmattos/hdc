@@ -26,17 +26,17 @@ object EntityRepositoryTest: Spek({
             Given("""a prepared ${LogEventsAppender::class.java}""") {
                 appender = LogEventsAppender(EntityRepository::class.java)
             }
-            And("""a mdbRepository mock created""") {
+            And("""a ${MdbRepository::class.java} mock created""") {
                 mdbRepository = mockk(relaxed = true)
             }
-            And("""a converter to MdbDocument defined""") {
-                converter = { _ -> TestMdbDocument() }
+            And("""a converter to ${TestMdbDocument::class.java} defined""") {
+                converter = { _ -> TestMdbDocument("id") }
             }
             And("""a successful ${EntityRepository::class.java} instantiation""") {
                 repository = EntityRepository(mdbRepository, converter)
             }
             When("""#save is executed""") {
-                repository.save(TestEntity())
+                repository.save(TestEntity("id"))
             }
             Then("""the message is $MESSAGE""") {
                 assertThat(appender.getMessage(0)).isEqualTo(MESSAGE)
@@ -55,25 +55,25 @@ object EntityRepositoryTest: Spek({
                 mdbRepository = mockk(relaxed = true)
             }
             And("""the mock configured to return a ${MdbDocument::class.java}""") {
-                every { mdbRepository.findByField(any(), any()) } returns TestMdbDocument()
+                every { mdbRepository.findByField(any(), any()) } returns mockk()
             }
             And("""a converter to ${MdbDocument::class.java} defined""") {
-                converter = { _ -> TestMdbDocument() }
+                converter = { _ -> TestMdbDocument("id") }
             }
             And("""a successful ${EntityRepository::class.java} instantiation""") {
                 repository = EntityRepository(mdbRepository, converter)
             }
             When("""#findByField is executed""") {
-                entity = repository.findByField("fie", "")
+                entity = repository.findByField("fieldName", "value")
             }
-            Then("""the message is """) {
+            Then("""the entity is found""") {
                 assertThat(entity).isNotNull()
             }
         }
     }
 })
 
-class TestEntity(): Entity {}
-class TestMdbDocument: MdbDocument() {
-    override fun toType(): Any = TestEntity()
+data class TestEntity(val id: String): Entity
+data class TestMdbDocument(val id: String): MdbDocument() {
+    override fun toType(): Any = TestEntity(id)
 }
