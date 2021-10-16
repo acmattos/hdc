@@ -43,7 +43,7 @@ object MdbRepositoryTest: Spek({
                 repository.save(TestMdbDocument("id"))
             }
             Then("""the message is $MESSAGE_SAVE""") {
-                assertThat(appender.getMessage(0)).isEqualTo(MESSAGE_SAVE)
+                assertThat(appender.containsMessage(MESSAGE_SAVE)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
@@ -122,10 +122,10 @@ object MdbRepositoryTest: Spek({
                 assertThat(entity).isNotNull()
             }
             And("""the message is $MESSAGE_FIND""") {
-                assertThat(appender.getMessage(0)).isEqualTo(MESSAGE_FIND)
+                assertThat(appender.containsMessage(MESSAGE_FIND)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+                assertThat(appender.getMessageLevel(MESSAGE_FIND)).isEqualTo(Level.TRACE)
             }
         }
 
@@ -161,16 +161,16 @@ object MdbRepositoryTest: Spek({
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
             And("""the message is $MESSAGE_FIND""") {
-                assertThat(appender.getMessage(0)).isEqualTo(MESSAGE_FIND)
+                assertThat(appender.containsMessage(MESSAGE_FIND)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
             Then("""the message is $LOGGER_FIND_EXCEPTION_MESSAGE""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_FIND_EXCEPTION_MESSAGE)
+                assertThat(appender.containsMessage(LOGGER_FIND_EXCEPTION_MESSAGE)).isTrue()
             }
             And("the level is ${Level.ERROR}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+                assertThat(appender.getMessageLevel(LOGGER_FIND_EXCEPTION_MESSAGE)).isEqualTo(Level.ERROR)
             }
         }
     }
