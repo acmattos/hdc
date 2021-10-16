@@ -11,8 +11,11 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 private const val LOGGER_MESSAGE = "[TEST] - Trace Message"
 private const val EXCEPTION_MESSAGE = "Exception Message"
+private const val LOGGER_EXCEPTION_MESSAGE = "$EXCEPTION_MESSAGE > [CATCHER] $LOGGER_MESSAGE"
 private const val CAUSE_MESSAGE = "Cause Message"
+private const val LOGGER_CAUSE_MESSAGE = "$CAUSE_MESSAGE > [CATCHER] $LOGGER_MESSAGE"
 private const val NO_MESSAGE = "No message was provided for this exception!"
+private const val LOGGER_NO_MESSAGE = "$NO_MESSAGE > [CATCHER] $LOGGER_MESSAGE"
 
 /**
  * @author ACMattos
@@ -52,6 +55,15 @@ object ExceptionCatcherTest: Spek({
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
+            And("""the message is $LOGGER_EXCEPTION_MESSAGE""") {
+                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_EXCEPTION_MESSAGE)
+            }
+            And("the level is ${Level.ERROR}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+            }
+            And("there is no more log messages") {
+                assertThat(appender.eventsSize()).isEqualTo(2)
+            }
         }
 
         Scenario("ex.cause.message was found") {
@@ -85,6 +97,15 @@ object ExceptionCatcherTest: Spek({
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            }
+            And("""the message is $LOGGER_CAUSE_MESSAGE""") {
+                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_CAUSE_MESSAGE)
+            }
+            And("the level is ${Level.ERROR}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+            }
+            And("there is no more log messages") {
+                assertThat(appender.eventsSize()).isEqualTo(2)
             }
         }
 
@@ -120,6 +141,15 @@ object ExceptionCatcherTest: Spek({
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
+            And("""the message is $LOGGER_NO_MESSAGE""") {
+                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_NO_MESSAGE)
+            }
+            And("the level is ${Level.ERROR}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+            }
+            And("there is no more log messages") {
+                assertThat(appender.eventsSize()).isEqualTo(2)
+            }
         }
 
         Scenario("no ${InternalServerErrorException::class.java} thrown") {
@@ -147,6 +177,9 @@ object ExceptionCatcherTest: Spek({
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            }
+            And("there is no more log messages") {
+                assertThat(appender.eventsSize()).isEqualTo(1)
             }
         }
     }

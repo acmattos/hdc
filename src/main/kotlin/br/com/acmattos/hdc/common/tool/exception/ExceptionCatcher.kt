@@ -20,7 +20,7 @@ object ExceptionCatcher: Loggable() {
                     ?: ex.message
                     ?: "No message was provided for this exception!"
             }
-            logger.error(message, ex, msg)
+            logger.error("$msg > [CATCHER] $message", ex, *values)
             throw InternalServerErrorException(msg, ex)// TODO handle this exception in JavalinServer
         }
 }
