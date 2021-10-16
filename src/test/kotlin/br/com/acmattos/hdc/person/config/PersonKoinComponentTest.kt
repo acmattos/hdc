@@ -1,11 +1,8 @@
 package br.com.acmattos.hdc.person.config
 
-import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.scheduler.config.assertDefinitionsCount
-import org.assertj.core.api.Assertions.assertThat
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
-import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
