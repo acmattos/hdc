@@ -12,7 +12,6 @@ import java.io.Writer
 import java.nio.charset.StandardCharsets
 import java.time.LocalDate
 import java.time.LocalTime
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature

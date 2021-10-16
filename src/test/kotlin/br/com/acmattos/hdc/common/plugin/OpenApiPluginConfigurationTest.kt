@@ -41,7 +41,7 @@ object OpenApiPluginConfigurationTest: Spek({
             And("swagger is configured") {
                 assertThat(
                     plugin.openApiHandler.options.swagger
-                ).isNotNull()
+                ).isNotNull
                 javalin.stop()
            }
         }

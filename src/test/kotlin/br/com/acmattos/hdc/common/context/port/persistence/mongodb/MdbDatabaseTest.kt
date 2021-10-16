@@ -4,7 +4,6 @@ import com.mongodb.client.MongoDatabase
 import io.mockk.every
 import io.mockk.mockk
 import org.assertj.core.api.AbstractThrowableAssert
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature

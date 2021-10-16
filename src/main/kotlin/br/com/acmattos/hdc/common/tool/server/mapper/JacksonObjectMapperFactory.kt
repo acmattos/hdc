@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import java.time.LocalTime
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 19/06/2020.
  */
 object JacksonObjectMapperFactory {

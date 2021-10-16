@@ -6,13 +6,10 @@ import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.prometheus.PrometheusServer
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.javalin.Javalin
-import io.javalin.apibuilder.ApiBuilder.get
-import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.core.JavalinConfig
 import io.javalin.http.Context
 import io.javalin.http.NotFoundResponse
 import io.javalin.plugin.json.JavalinJackson
-import io.javalin.plugin.openapi.annotations.OpenApi
 import java.util.function.Consumer
 import org.eclipse.jetty.http.HttpStatus
 import org.eclipse.jetty.server.handler.StatisticsHandler

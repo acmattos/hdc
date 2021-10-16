@@ -12,7 +12,7 @@ import org.litote.kmongo.util.KMongoConfiguration
  * @since 26/07/2019.
  */
 class MdbDatabase(
-    private val configuration: MdbConfiguration
+    configuration: MdbConfiguration
 ) {
     private val mongoClient: MongoClient
     private val mongoDatabase: MongoDatabase

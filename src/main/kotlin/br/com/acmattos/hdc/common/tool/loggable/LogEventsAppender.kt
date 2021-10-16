@@ -75,7 +75,7 @@ class LogEventsAppender(
     /**
      * Gets the message logging level.
      */
-    fun getMessageLevel(message: String) = events.filter { it.message == message }.map { it.level }.first()
+    fun getMessageLevel(message: String): Level = events.filter { it.message == message }.map { it.level }.first()
 
     override fun append(eventObject: ILoggingEvent) {
         events.add(eventObject)

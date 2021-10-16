@@ -3,7 +3,6 @@ package br.com.acmattos.hdc.common.tool.server.javalin
 import br.com.acmattos.hdc.common.tool.HttpClient
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import com.github.kittinunf.fuel.core.Response
-import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
 import io.javalin.plugin.openapi.annotations.ContentType
 import org.assertj.core.api.Assertions.assertThat

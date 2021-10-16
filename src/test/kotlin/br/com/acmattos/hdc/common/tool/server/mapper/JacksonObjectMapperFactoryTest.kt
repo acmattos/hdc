@@ -18,7 +18,7 @@ object JacksonObjectMapperFactoryTest: Spek({
                 factory = JacksonObjectMapperFactory
             }
             When("""#build is executed""") {
-                mapper =  factory.build()//bbgetConfiguredPlugin()
+                mapper =  factory.build()
             }
             Then("""a mapper is returned""") {
                 assertThat(mapper).isNotNull()

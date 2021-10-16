@@ -1,24 +1,14 @@
 package br.com.acmattos.hdc.person.port.rest
 
-import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
-import br.com.acmattos.hdc.common.context.domain.model.Repository
-import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
-import br.com.acmattos.hdc.person.application.EXCEPTION_MESSAGE
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
-import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
-import br.com.acmattos.hdc.person.domain.model.Person
 import io.javalin.http.Context
-import io.mockk.Runs
 import io.mockk.every
-import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
-import org.assertj.core.api.AbstractThrowableAssert
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature

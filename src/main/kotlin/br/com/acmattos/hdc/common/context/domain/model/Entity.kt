@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 27/07/2019.
  */
 interface Entity

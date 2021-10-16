@@ -8,11 +8,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
-import java.time.format.DateTimeFormatterBuilder
-import java.time.temporal.ChronoField
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 19/06/2020.
  */
 class LocalTimeSerializer: StdSerializer<LocalTime>(LocalTime::class.java) {
@@ -22,7 +20,7 @@ class LocalTimeSerializer: StdSerializer<LocalTime>(LocalTime::class.java) {
 }
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 19/06/2020.
  */
 class LocalTimeDeserializer: StdDeserializer<LocalTime>(LocalTime::class.java) {

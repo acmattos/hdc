@@ -29,7 +29,7 @@ object ScheduleCommandControllerTest: Spek({
                 controller = ScheduleCommandController()
             }
             And("""a successful ${ScheduleCommandController::class.java} instantiation""") {
-                context = mockk<Context>(relaxed = true)
+                context = mockk(relaxed = true)
                 every { context.status(any()) }.returns(context)
             }
             When("""#createScheduleForADentist is executed""") {

@@ -20,7 +20,7 @@ object ScheduleKoinComponent: KoinComponent {
             ScheduleCommandControllerEndpointDefinition(get())
         }
         // 2 - Controller Endpoint
-        single() {
+        single {
             ScheduleCommandController()
         }
    }

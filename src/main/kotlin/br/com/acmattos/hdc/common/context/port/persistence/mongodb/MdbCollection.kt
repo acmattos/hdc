@@ -13,7 +13,7 @@ class MdbCollection<T: MdbDocument>(
 ) {
     fun getCollection(): MongoCollection<T> =
         mdbDatabase.getMongoDatabase().getCollection(
-            "${mdbCollectionConfig.collectionName}",
+            mdbCollectionConfig.collectionName,
             mdbCollectionConfig.documentClass
         ).also { mongoCollection ->
             mdbCollectionConfig.indexes.forEach {

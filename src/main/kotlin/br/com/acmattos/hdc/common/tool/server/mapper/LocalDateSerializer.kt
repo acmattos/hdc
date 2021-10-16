@@ -10,7 +10,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 19/06/2020.
  */
 class LocalDateSerializer: StdSerializer<LocalDate>(LocalDate::class.java) {
@@ -20,7 +20,7 @@ class LocalDateSerializer: StdSerializer<LocalDate>(LocalDate::class.java) {
 }
 
 /**
- * @author acmattos
+ * @author ACMattos
  * @since 19/06/2020.
  */
 class LocalDateDeserializer: StdDeserializer<LocalDate>(LocalDate::class.java) {

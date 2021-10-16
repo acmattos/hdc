@@ -29,7 +29,7 @@ object ScheduleCommandControllerEndpointDefinitionTest: Spek({
                 ApiBuilder.setStaticJavalin(Javalin.create())
             }
             When("""a the endpoint definition is injected""") {
-                 endpoint = koin.get<EndpointDefinition>(named(ED))
+                 endpoint = koin.get(named(ED))
             }
             Then("""#routes can be called""") {
                 endpoint.routes()

@@ -54,7 +54,7 @@ object PersonKoinComponent: KoinComponent {
             PersonCommandControllerEndpointDefinition(get())
         }
         // 2 - Controller Endpoint
-        single() {
+        single {
             PersonCommandController(get(named(CH)))
         }
         // 3 - Command Handler
