@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.scheduler.port.rest
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
-import br.com.acmattos.hdc.scheduler.config.ENDPOINT_DEFINITION
+import br.com.acmattos.hdc.scheduler.config.ED
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import io.javalin.Javalin
 import io.javalin.apibuilder.ApiBuilder
@@ -29,7 +29,7 @@ object ScheduleCommandControllerEndpointDefinitionTest: Spek({
                 ApiBuilder.setStaticJavalin(Javalin.create())
             }
             When("""a the endpoint definition is injected""") {
-                 endpoint = koin.get<EndpointDefinition>(named(ENDPOINT_DEFINITION))
+                 endpoint = koin.get<EndpointDefinition>(named(ED))
             }
             Then("""#routes can be called""") {
                 endpoint.routes()
