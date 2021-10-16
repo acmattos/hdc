@@ -67,6 +67,16 @@ class LogEventsAppender(
      */
     fun getMessage(index: Int): String = getLoggingEvent(index).message
 
+    /**
+     * Verifies if this appender contains a certain @param message.
+     */
+    fun containsMessage(message: String) = events.filter { it.message == message }.map { true }.first()
+
+    /**
+     * Gets the message logging level.
+     */
+    fun getMessageLevel(message: String) = events.filter { it.message == message }.map { it.level }.first()
+
     override fun append(eventObject: ILoggingEvent) {
         events.add(eventObject)
     }
