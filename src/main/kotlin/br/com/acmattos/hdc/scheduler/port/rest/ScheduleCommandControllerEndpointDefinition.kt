@@ -13,7 +13,7 @@ class ScheduleCommandControllerEndpointDefinition(
 ): EndpointDefinition {
     override fun routes() {
         path("schedules") {
-            get(controller::createScheduleForADentist)
+            get(controller::createTheScheduleForTheDentist)
         }
     }
 }
