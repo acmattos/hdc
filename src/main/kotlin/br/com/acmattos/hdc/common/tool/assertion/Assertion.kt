@@ -16,7 +16,7 @@ object Assertion: Loggable() {
             logger.info("[{} {}]: -> '{}' <-", ASSERTION, FAILURE, message)
             throw AssertionFailedException(message)
         }
-        logger.trace("[{}] - Assertion evaluated successfully!: -> '{}' <-", ASSERTION, message)
+        logger.trace("[{}] - Assertion evaluated successfully!", ASSERTION)
     }
 }
 

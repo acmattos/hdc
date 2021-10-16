@@ -10,7 +10,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 private const val MESSAGE = "Condition has failed!"
 private const val LOG_MESSAGE_1 = "[ASSERTION] - Assertion to be evaluated..."
-private const val LOG_MESSAGE_2 = "[ASSERTION] - Assertion evaluated successfully!: -> '$MESSAGE' <-"
+private const val LOG_MESSAGE_2 = "[ASSERTION] - Assertion evaluated successfully!"
 private const val LOG_MESSAGE_3 = "[ASSERTION FAILURE]: -> '$MESSAGE' <-"
 
 /**
@@ -71,10 +71,10 @@ object AssertionTest: Spek({
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
             And("""the message is $LOG_MESSAGE_3""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOG_MESSAGE_3)
+                assertThat(appender.containsMessage(LOG_MESSAGE_3)).isTrue()
             }
             And("the level is ${Level.INFO}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.INFO)
+                assertThat(appender.getMessageLevel(LOG_MESSAGE_3)).isEqualTo(Level.INFO)
             }
             Then("""#assert throws exception""") {
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE))
