@@ -50,12 +50,22 @@ object EntityRepositoryTest: Spek({
             lateinit var repository: EntityRepository<Entity>
             lateinit var mdbRepository: MdbRepository<MdbDocument>
             lateinit var converter: (Entity) -> MdbDocument
+            var document: MdbDocument? = null
             var entity: Entity? = null
             Given("""a mdbRepository mock created""") {
                 mdbRepository = mockk(relaxed = true)
             }
+            And("""a ${MdbDocument::class.java} mock created""") {
+                document = mockk(relaxed = true)
+            }
+            And("""a ${Entity::class.java} mock created""") {
+                entity = mockk(relaxed = true)
+            }
             And("""the mock configured to return a ${MdbDocument::class.java}""") {
-                every { mdbRepository.findByField(any(), any()) } returns mockk()
+                every { mdbRepository.findByField(any(), any()) } returns document
+            }
+            And("""the mock configured to return a ${Entity::class.java}""") {
+                every { document?.toType() } returns entity!!
             }
             And("""a converter to ${MdbDocument::class.java} defined""") {
                 converter = { _ -> TestMdbDocument("id") }

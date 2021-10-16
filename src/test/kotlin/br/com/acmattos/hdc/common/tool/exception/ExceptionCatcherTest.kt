@@ -61,9 +61,6 @@ object ExceptionCatcherTest: Spek({
             And("the level is ${Level.ERROR}") {
                 assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
             }
-            And("there is no more log messages") {
-                assertThat(appender.eventsSize()).isEqualTo(2)
-            }
         }
 
         Scenario("ex.cause.message was found") {
@@ -136,7 +133,7 @@ object ExceptionCatcherTest: Spek({
                 assertion.hasMessage(NO_MESSAGE)
             }
             And("""the message is $LOGGER_MESSAGE""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
+                assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
@@ -146,9 +143,6 @@ object ExceptionCatcherTest: Spek({
             }
             And("the level is ${Level.ERROR}") {
                 assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
-            }
-            And("there is no more log messages") {
-                assertThat(appender.eventsSize()).isEqualTo(2)
             }
         }
 
@@ -173,13 +167,10 @@ object ExceptionCatcherTest: Spek({
                 assertion.doesNotThrowAnyException()
             }
             And("""the message is $LOGGER_MESSAGE""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
+                assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
-            }
-            And("there is no more log messages") {
-                assertThat(appender.eventsSize()).isEqualTo(1)
+                assertThat(appender.getMessageLevel(LOGGER_MESSAGE)).isEqualTo(Level.TRACE)
             }
         }
     }
