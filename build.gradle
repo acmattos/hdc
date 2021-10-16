@@ -24,10 +24,10 @@ compileTestKotlin {
 dependencies {
     //----------------- MAIN DEPENDENCIES -----------------//
     // Javalin Server
-    implementation "io.javalin:javalin:3.10.1" //io.javalin:javalin:3.0.0
+    implementation "io.javalin:javalin:3.10.1"
     implementation 'ch.qos.logback:logback-classic:1.0.13'
     implementation "io.javalin:javalin-openapi:3.10.1"
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0'//implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0'
     // Align versions of all Kotlin components
     implementation platform('org.jetbrains.kotlin:kotlin-bom')
 
@@ -36,6 +36,9 @@ dependencies {
 
     // Use the Kotlin JDK 8 standard library.
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+
+    // MongoDB
+    implementation 'org.litote.kmongo:kmongo:4.2.8'
 
     // Prometeus
     implementation "io.prometheus:simpleclient_httpserver:0.12.0"
