@@ -1,7 +1,6 @@
 package br.com.acmattos.hdc.common.tool.server.javalin
 
 import br.com.acmattos.hdc.common.tool.uid.ULID_ID
-import java.lang.Exception
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
