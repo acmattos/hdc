@@ -8,7 +8,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 private const val VALID_ID = "01EAQK096DJ7T2642FM17RTJJ3"
 private const val INVALID_ID = "A1EAQK096DJ7T2642FINVALID"
-private const val EXCEEDED_MESSAGE = "[8ZZZZZZZZZZZZZZZZZZZZZZZZZ] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
+private const val EXCEEDED_MESSAGE = "ULID [8ZZZZZZZZZZZZZZZZZZZZZZZZZ] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
 
 /**
  * @author ACMattos
@@ -68,7 +68,7 @@ object IdTest: Spek({
                 assertion.hasSameClassAs(IllegalArgumentException(""))
             }
             And("""exception has message 'id [X] must be exactly 26 chars long!'""") {
-                assertion.hasMessage("[A1EAQK096DJ7T2642FINVALID] does not match the expected size: 26 chars long!")
+                assertion.hasMessage("ULID [A1EAQK096DJ7T2642FINVALID] does not match the expected size: 26 chars long!")
             }
         }
 
