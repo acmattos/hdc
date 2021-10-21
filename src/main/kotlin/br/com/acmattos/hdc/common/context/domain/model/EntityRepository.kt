@@ -26,5 +26,9 @@ class EntityRepository<T: Entity>(
         return mdbRepository.findByField(fieldName, value)?.toType() as T?
     }
 
+    override fun findAllByField(fieldName: String, value: Any): List<T>? {
+        return mdbRepository.findByField(fieldName, value)?.toType() as List<T>?
+    }
+
     companion object: Loggable()
 }

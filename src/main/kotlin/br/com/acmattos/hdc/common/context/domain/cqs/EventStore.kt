@@ -6,4 +6,5 @@ package br.com.acmattos.hdc.common.context.domain.cqs
  */
 interface EventStore<T: Event> {
     fun addEvent(event: T)
+    fun findAllByField(fieldName: String, value: Any): List<T>?
 }

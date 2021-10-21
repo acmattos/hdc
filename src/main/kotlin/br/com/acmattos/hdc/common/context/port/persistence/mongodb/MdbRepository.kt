@@ -33,7 +33,18 @@ open class MdbRepository<T: MdbDocument>(
             return@catch getCollection().find(Filters.eq(fieldName, value))
                 .firstOrNull()
         }
-    
+
+    override fun findAllByField(fieldName: String, value: Any): List<T>? =
+        catch(
+            "[{}] - Finding all documents by field in the repository: -> {}={} <-",
+            REPOSITORY.name,
+            fieldName,
+            value.toString()
+        ) {
+            return@catch getCollection().find(Filters.eq(fieldName, value))
+                .map { it }.toList()
+        }
+
     private fun getCollection(): MongoCollection<T> =
         mongoDBCollection.getCollection()
 }
