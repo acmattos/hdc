@@ -12,7 +12,6 @@ import br.com.acmattos.hdc.person.domain.cqs.PersonCommand
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
 import br.com.acmattos.hdc.person.domain.model.Address
 import br.com.acmattos.hdc.person.domain.model.Contact
-import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.domain.model.State
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.HttpMethod
@@ -40,7 +39,7 @@ class PersonCommandController(
         ),
         responses = [
             OpenApiResponse("201",[
-                OpenApiContent(PersonId::class)
+                OpenApiContent(Response::class)
             ]),
             OpenApiResponse("400", [OpenApiContent(Response::class)])
         ],
@@ -53,16 +52,16 @@ class PersonCommandController(
             ENDPOINT.name
         )
         context.bodyValidator<CreateADentistRequest>()
-            .get()
-            .toType(what = context.fullUrl())
-            .also { command ->
-                context.status(HttpStatus.CREATED_201).json(
-                    Response.create(
-                        context.status(),
-                        handler.handle(command)
-                    )
+        .get()
+        .toType(what = context.fullUrl())
+        .also { command ->
+            context.status(HttpStatus.CREATED_201).json(
+                Response.create(
+                    context.status(),
+                    handler.handle(command)
                 )
-            }
+            )
+        }
         logger.info(
             "[{} {}] - Creating a dentist... -> !DONE! <-",
             DENTIST.name,
