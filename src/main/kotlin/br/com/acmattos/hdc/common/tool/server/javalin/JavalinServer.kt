@@ -76,6 +76,10 @@ class JavalinServer(
             exception(AssertionFailedException::class.java) { exception, context ->
                 handleBadRequestException(context, exception)
             }
+
+            exception(Exception::class.java) { exception, context ->
+                handleInternalServerErrorException(context, exception)
+            }
         }
         .logJavalinBanner()
         .start(port)
@@ -126,6 +130,10 @@ class JavalinServer(
 
     private fun handleBadRequestException(context: Context, exception: Exception) {
         handleException(context, HttpStatus.BAD_REQUEST_400, exception)
+    }
+
+    private fun handleInternalServerErrorException(context: Context, exception: Exception) {
+        handleException(context, HttpStatus.INTERNAL_SERVER_ERROR_500, exception)
     }
 
     private fun handleException(context: Context, status:Int, exception: Exception) {
