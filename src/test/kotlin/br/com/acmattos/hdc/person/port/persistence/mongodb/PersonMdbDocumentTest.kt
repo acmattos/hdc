@@ -5,7 +5,6 @@ import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
 import br.com.acmattos.hdc.person.domain.model.Person
 import br.com.acmattos.hdc.person.port.rest.CreateADentistRequest
 import br.com.acmattos.hdc.person.port.rest.PersonRequestBuilder
-import br.com.acmattos.hdc.person.port.rest.STATUS
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -20,7 +19,7 @@ object PersonMdbDocumentTest: Spek({
             lateinit var request: CreateADentistRequest
             lateinit var command: CreateADentistCommand
             lateinit var event: CreateADentistEvent
-            lateinit var person: Person
+            lateinit var entity: Person
             lateinit var document: PersonMdbDocument
             Given("""a ${CreateADentistRequest::class.java} successfully instantiated""") {
                 request = PersonRequestBuilder.buildCreateADentistRequest()
@@ -32,13 +31,13 @@ object PersonMdbDocumentTest: Spek({
                 event = CreateADentistEvent(command)
             }
             And("""a ${Person::class.java} successfully instantiated""") {
-                person = Person.apply(listOf(event))
+                entity = Person.apply(listOf(event))
             }
             When("""${PersonMdbDocument::class.java} is instantiated""") {
-                document = PersonMdbDocument(person)
+                document = PersonMdbDocument(entity)
             }
-            Then("""status is $STATUS""") {
-                assertThat(document.toType().toString()).isEqualTo(person.toString())
+            Then("""document#toType is equal to the entity""") {
+                assertThat(document.toType().toString()).isEqualTo(entity.toString())
             }
         }
     }
