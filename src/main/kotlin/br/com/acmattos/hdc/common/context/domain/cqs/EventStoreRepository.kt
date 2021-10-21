@@ -1,12 +1,9 @@
 package br.com.acmattos.hdc.common.context.domain.cqs
 
-import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStoreEnum.STORE
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
-import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import com.mongodb.client.model.Filters
 
 /**
  * @author ACMattos

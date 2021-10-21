@@ -8,12 +8,12 @@ import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
+import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.StatisticsHandler
 import org.eclipse.jetty.util.thread.QueuedThreadPool
 import org.koin.core.component.KoinComponent
-import org.koin.core.context.startKoin
-import org.eclipse.jetty.server.Server
 import org.koin.core.component.inject
+import org.koin.core.context.startKoin
 import org.koin.core.qualifier.named
 
 /**
