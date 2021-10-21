@@ -10,7 +10,7 @@ import java.time.LocalDateTime
  * @author ACMattos
  * @since 04/10/2021.
  */
-class PersonMdbDocument(
+data class PersonMdbDocument(
     val personId: String,
     val fullName: String,
     val personType: String,
