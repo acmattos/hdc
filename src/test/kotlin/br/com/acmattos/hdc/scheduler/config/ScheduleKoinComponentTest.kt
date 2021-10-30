@@ -12,7 +12,7 @@ import org.koin.dsl.koinApplication
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-private const val NUMBER_OF_DEPENDENCIES = 2
+private const val NUMBER_OF_DEPENDENCIES = 15
 const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
 
 /**
