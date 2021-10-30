@@ -2,8 +2,8 @@ package br.com.acmattos.hdc.common.tool.server.prometheus
 
 import io.prometheus.client.Collector
 import io.prometheus.client.CollectorRegistry
-import org.eclipse.jetty.server.handler.StatisticsHandler
 import java.util.Collections.emptyList
+import org.eclipse.jetty.server.handler.StatisticsHandler
 
 /**
  * @author ACMattos
