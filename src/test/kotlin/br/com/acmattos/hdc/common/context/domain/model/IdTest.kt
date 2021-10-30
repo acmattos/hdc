@@ -34,6 +34,12 @@ object IdTest: Spek({
             And("""'id.id is equal to '$VALID_ID""") {
                 assertThat(sid.id).isEqualTo(VALID_ID)
             }
+            And("""'id is equal to Id('$VALID_ID)""") {
+                assertThat(Id(VALID_ID).equals(sid)).isTrue()
+            }
+            And("""'id hashcode is equal to -599353911""") {
+                assertThat(sid.hashCode()).isEqualTo(-599353911)
+            }
         }
 
         Scenario("""${Id::class.java} is valid and not given""") {
