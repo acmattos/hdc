@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.person.application
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
+import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.DENTIST_ALREADY_EXISTS
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
@@ -112,10 +113,13 @@ object PersonCommandHandlerServiceTest: Spek({
                 }
             }
             Then("""${AssertionFailedException::class.java} is raised with message""") {
-                assertion.hasSameClassAs(AssertionFailedException(EXCEPTION_MESSAGE))
+                assertion.hasSameClassAs(AssertionFailedException(EXCEPTION_MESSAGE, DENTIST_ALREADY_EXISTS.code))
             }
             And("""the message is $EXCEPTION_MESSAGE""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
+            }
+            And("""exception has code ${DENTIST_ALREADY_EXISTS.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", DENTIST_ALREADY_EXISTS.code)
             }
             And("""the repository#findByField is accessed""") {
                 verify(exactly = 1) {

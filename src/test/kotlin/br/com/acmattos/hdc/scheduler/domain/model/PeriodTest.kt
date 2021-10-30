@@ -78,7 +78,7 @@ object PeriodTest: Spek({
                     period = Period(weekDay, from, to, slot)
                 }
             }
-            Then("""instantiation throws no exception""") {
+            Then("""instantiation throws exception""") {
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, FROM_BIGGER_THAN_TO.code))
             }
             And("""exception has code ${FROM_BIGGER_THAN_TO.code}""") {
@@ -116,7 +116,7 @@ object PeriodTest: Spek({
                     period = Period(weekDay, from, to, slot)
                 }
             }
-            Then("""instantiation throws no exception""") {
+            Then("""instantiation throws exception""") {
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, SLOT_BELLOW_ONE.code))
             }
             And("""exception has code ${SLOT_BELLOW_ONE.code}""") {
@@ -154,7 +154,7 @@ object PeriodTest: Spek({
                     period = Period(weekDay, from, to, slot)
                 }
             }
-            Then("""instantiation throws no exception""") {
+            Then("""instantiation throws exception""") {
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_3, OPERATION_GENERATES_REMINDER.code))
             }
             And("""exception has code ${OPERATION_GENERATES_REMINDER.code}""") {
