@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.common.tool.exception
 
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.CAUGHT_EXCEPTION
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
 import ch.qos.logback.classic.Level
@@ -9,7 +10,8 @@ import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-private const val LOGGER_MESSAGE = "[TEST] - Trace Message"
+private const val TEST = "TEST"
+private const val LOGGER_MESSAGE = "[$TEST] - Trace Message"
 private const val EXCEPTION_MESSAGE = "Exception Message"
 private const val LOGGER_EXCEPTION_MESSAGE = "$EXCEPTION_MESSAGE > [CATCHER] $LOGGER_MESSAGE"
 private const val CAUSE_MESSAGE = "Cause Message"
@@ -35,7 +37,11 @@ object ExceptionCatcherTest: Spek({
             }
             When("""#catch is executed""") {
                 assertion = assertThatCode {
-                    catch("[{}] - Trace Message", "TEST") {
+                    catch(
+                        "[{}] - Trace Message",
+                        CAUGHT_EXCEPTION.code,
+                         TEST
+                    ) {
                         block()
                     }
                 }
@@ -43,11 +49,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     EXCEPTION_MESSAGE,
+                    CAUGHT_EXCEPTION.code,
                     Exception(EXCEPTION_MESSAGE)
                 ))
             }
             And("""message is $EXCEPTION_MESSAGE""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
+            }
+            And("""code is ${CAUGHT_EXCEPTION.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
@@ -75,7 +85,10 @@ object ExceptionCatcherTest: Spek({
             }
             When("""#catch is executed""") {
                 assertion = assertThatCode {
-                    catch("[{}] - Trace Message", "TEST") {
+                    catch("[{}] - Trace Message",
+                        CAUGHT_EXCEPTION.code,
+                        TEST
+                    ) {
                         block()
                     }
                 }
@@ -83,11 +96,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     CAUSE_MESSAGE,
+                    CAUGHT_EXCEPTION.code,
                     Exception(Exception(CAUSE_MESSAGE))
                 ))
             }
             And("""message is $CAUSE_MESSAGE""") {
                 assertion.hasMessage(CAUSE_MESSAGE)
+            }
+            And("""code is ${CAUGHT_EXCEPTION.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
@@ -118,7 +135,11 @@ object ExceptionCatcherTest: Spek({
             }
             When("""#catch is executed""") {
                 assertion = assertThatCode {
-                    catch("[{}] - Trace Message", "TEST") {
+                    catch(
+                        "[{}] - Trace Message",
+                        CAUGHT_EXCEPTION.code,
+                        TEST
+                    ) {
                         block()
                     }
                 }
@@ -126,11 +147,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     NO_MESSAGE,
+                    CAUGHT_EXCEPTION.code,
                     Exception()
                 ))
             }
             And("""message is $NO_MESSAGE""") {
                 assertion.hasMessage(NO_MESSAGE)
+            }
+            And("""code is ${CAUGHT_EXCEPTION.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
@@ -139,10 +164,10 @@ object ExceptionCatcherTest: Spek({
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
             And("""the message is $LOGGER_NO_MESSAGE""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_NO_MESSAGE)
+                assertThat(appender.containsMessage(LOGGER_NO_MESSAGE)).isTrue()
             }
             And("the level is ${Level.ERROR}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+                assertThat(appender.getMessageLevel(LOGGER_NO_MESSAGE)).isEqualTo(Level.ERROR)
             }
         }
 
@@ -151,14 +176,18 @@ object ExceptionCatcherTest: Spek({
             lateinit var appender: LogEventsAppender
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a block that does not throw any ${Exception::class.java}""") {
-                block = { true }
+                block = {}
             }
             And("""a prepared ${LogEventsAppender::class.java}""") {
                 appender = LogEventsAppender(ExceptionCatcher::class.java)
             }
             When("""#catch is executed""") {
                 assertion = assertThatCode {
-                    catch("[{}] - Trace Message", "TEST") {
+                    catch(
+                        "[{}] - Trace Message",
+                        CAUGHT_EXCEPTION.code,
+                        TEST
+                    ) {
                         block()
                     }
                 }

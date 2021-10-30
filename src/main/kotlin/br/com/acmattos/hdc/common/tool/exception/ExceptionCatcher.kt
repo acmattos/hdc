@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.tool.exception
 
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
 import com.mongodb.MongoException
 
 /**
@@ -8,7 +9,7 @@ import com.mongodb.MongoException
  * @since 29/06/2020.
  */
 object ExceptionCatcher: Loggable() {
-    fun <T> catch(message: String, vararg values: String, block: () -> T): T =
+    fun <T> catch(message: String, code: ErrorTrackerCode, vararg values: String, block: () -> T): T =
         try {
             logger.trace(message, *values)
             block()
@@ -21,7 +22,7 @@ object ExceptionCatcher: Loggable() {
                     ?: "No message was provided for this exception!"
             }
             logger.error("$msg > [CATCHER] $message", ex, *values)
-            throw InternalServerErrorException(msg, ex)// TODO handle this exception in JavalinServer
+            throw InternalServerErrorException(msg, code, ex)
         }
 }
 
