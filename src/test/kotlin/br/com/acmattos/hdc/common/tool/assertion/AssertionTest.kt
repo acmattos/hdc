@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.tool.assertion
 
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
+import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCodeBuilder
 import ch.qos.logback.classic.Level
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions
@@ -29,7 +30,7 @@ object AssertionTest: Spek({
                 condition = true
             }
             When("""#assert is executed""") {
-                Assertion.assert(MESSAGE) {
+                Assertion.assert(MESSAGE, ErrorTrackerCodeBuilder.build()) {
                     condition
                 }
             }
@@ -59,7 +60,7 @@ object AssertionTest: Spek({
             }
             When("""#assert is executed""") {
                 assertion = Assertions.assertThatCode {
-                    Assertion.assert(MESSAGE) {
+                    Assertion.assert(MESSAGE, ErrorTrackerCodeBuilder.build()) {
                         condition
                     }
                 }
@@ -77,10 +78,16 @@ object AssertionTest: Spek({
                 assertThat(appender.getMessageLevel(LOG_MESSAGE_3)).isEqualTo(Level.INFO)
             }
             Then("""#assert throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, ErrorTrackerCodeBuilder.build()))
+            }
+            And("""code is ${ErrorTrackerCodeBuilder.build()}""") {
+                assertion.hasFieldOrPropertyWithValue("code", ErrorTrackerCodeBuilder.build())
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)
+            }
+            And("""exception has code ${ErrorTrackerCodeBuilder.build()}""") {
+                assertion.hasFieldOrPropertyWithValue("code", ErrorTrackerCodeBuilder.build())
             }
         }
     }

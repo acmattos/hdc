@@ -22,7 +22,6 @@ object EnumAssertionTest: Spek({
             lateinit var term: String
             lateinit var enum: ValidEnum
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            var condition = false
             Given("""a valid term: $VALID""") {
                 term = VALID
             }
@@ -37,13 +36,15 @@ object EnumAssertionTest: Spek({
             And("""term is equal to ${ValidEnum.VALID}""") {
                 assertThat(term.toUpperCase()).isEqualTo(ValidEnum.VALID.name)
             }
+            And("""enum is not null""") {
+                assertThat(enum).isNotNull()
+            }
         }
 
         Scenario("#assertThatTerm throws exception") {
             lateinit var term: String
             var enum: ValidEnum? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            var condition = false
             Given("""a invalid term: $INVALID""") {
                 term = INVALID
             }
@@ -52,7 +53,7 @@ object EnumAssertionTest: Spek({
                     enum = ValidEnum.convert(term)
                 }
             }
-            Then("""#convert throws  exception""") {
+            Then("""#convert throws exception""") {
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE, ErrorTrackerCodeBuilder.build()))
             }
             And("""exception has message $MESSAGE""") {

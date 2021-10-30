@@ -1,22 +1,34 @@
 package br.com.acmattos.hdc.common.tool.assertion
 
+import br.com.acmattos.hdc.common.exception.HdcGenericException
+import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.ASSERTION
+import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.FAILURE
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-
-private const val ASSERTION = "ASSERTION"
-private const val FAILURE = "FAILURE"
+import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
 
 /**
  * @author ACMattos
  * @since 12/06/2020.
  */
 object Assertion: Loggable() {
-    fun assert(message: String, condition: () -> Boolean) {
-        logger.trace("[{}] - Assertion to be evaluated...", ASSERTION)
+    fun assert(message: String, code: ErrorTrackerCode, condition: () -> Boolean) {
+        logger.trace(
+            "[{}] - Assertion to be evaluated...",
+            ASSERTION.name
+        )
         if(!condition()) {
-            logger.info("[{} {}]: -> '{}' <-", ASSERTION, FAILURE, message)
-            throw AssertionFailedException(message)
+            logger.info(
+                "[{} {}]: -> '{}' <-",
+                ASSERTION.name,
+                FAILURE.name,
+                message
+            )
+            throw AssertionFailedException(message, code)
         }
-        logger.trace("[{}] - Assertion evaluated successfully!", ASSERTION)
+        logger.trace(
+            "[{}] - Assertion evaluated successfully!",
+            ASSERTION.name
+        )
     }
 }
 
@@ -25,5 +37,6 @@ object Assertion: Loggable() {
  * @since 31/10/2019.
  */
 data class AssertionFailedException(
-    override val message: String
-): Exception(message)
+    override val message: String,
+    val code: ErrorTrackerCode,
+): HdcGenericException(message, code)
