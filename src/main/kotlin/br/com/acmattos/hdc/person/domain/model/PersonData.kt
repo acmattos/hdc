@@ -1,7 +1,8 @@
 package br.com.acmattos.hdc.person.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.ValueObject
-import br.com.acmattos.hdc.common.tool.assertion.Assertion
+import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
+import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.STATE_CONVERT_FAILED
 import java.time.LocalDateTime
 
 /**
@@ -37,17 +38,11 @@ data class Address (
 enum class State {
     RJ;
     companion object {
-        fun convert(term: String): State {
-            val state: State? = values().firstOrNull { state ->
-                term.toUpperCase() == state.name
-            }
-            Assertion.assert(
-                "[$term] does not correspond to a valid State!"
-            ) {
-                state != null
-            }
-            return state!!
-        }
+        fun convert(term: String): State = assertThatTerm(
+            term,
+            "[$term] does not correspond to a valid State!",
+            STATE_CONVERT_FAILED.code
+        )
     }
 }
 

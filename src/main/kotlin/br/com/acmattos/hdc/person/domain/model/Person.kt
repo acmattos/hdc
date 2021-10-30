@@ -2,7 +2,8 @@ package br.com.acmattos.hdc.person.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
-import br.com.acmattos.hdc.common.tool.assertion.Assertion
+import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
+import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.PERSON_TYPE_CONVERT_FAILED
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
 import java.time.LocalDateTime
@@ -82,17 +83,12 @@ class PersonId: Id {
  */
 enum class PersonType {
     DENTIST, PATIENT;
+
     companion object {
-        fun convert(term: String): PersonType {
-            val type: PersonType? = values().firstOrNull { type ->
-                term.toUpperCase() == type.name
-            }
-            Assertion.assert(
-                "[$term] does not correspond to a valid PersonType!"
-            ) {
-                type != null
-            }
-            return type!!
-        }
+        fun convert(term: String): PersonType = assertThatTerm(
+            term,
+            "[$term] does not correspond to a valid PersonType!",
+            PERSON_TYPE_CONVERT_FAILED.code
+        )
     }
 }
