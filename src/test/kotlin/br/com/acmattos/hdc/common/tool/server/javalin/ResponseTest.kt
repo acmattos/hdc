@@ -1,6 +1,5 @@
 package br.com.acmattos.hdc.common.tool.server.javalin
 
-import br.com.acmattos.hdc.common.tool.uid.ULID_ID
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -84,7 +83,7 @@ object ResponseTest : Spek({
                 exception = IllegalArgumentException("")
             }
             When("""#create is executed""") {
-                response = Response.create(status, null, exception, uid)
+                response = Response.create(ErrorTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
             }
             Then("""a response.uid equal to ULID_ID""") {
                 assertThat(response.uid).isEqualTo(ULID_ID)
@@ -112,7 +111,7 @@ object ResponseTest : Spek({
                 exception = Exception()
             }
             When("""#create is executed""") {
-                response = Response.create(status, null, exception, uid)
+                response = Response.create(ErrorTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
             }
             Then("""a response.uid is strictly between MIN_ULID_ID - MAX_ULID_ID """) {
                 assertThat(response.uid).isStrictlyBetween(MIN_ULID_ID, MAX_ULID_ID)
@@ -140,7 +139,7 @@ object ResponseTest : Spek({
                 message = INVALID_DATA
             }
             When("""#create is executed""") {
-                response = Response.create(status, message, null, uid)
+                response = Response.create(ErrorTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"),status, message, null, uid)//TODO VERIFY
             }
             Then("""a response.uid equal to ULID_ID""") {
                 assertThat(response.uid).isEqualTo(ULID_ID)

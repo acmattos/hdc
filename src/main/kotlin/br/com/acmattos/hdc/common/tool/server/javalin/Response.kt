@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.common.tool.server.javalin
 
+import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.uid.ULIDGen
 
@@ -11,19 +12,27 @@ const val UNKNOWN_REASON = "UNKNOWN REASON"
  */
 data class Response(
     val uid: String,
+    val code: ErrorTrackerCode,
     val status: Int,
     val data: Any,
 ) {
     companion object: ULIDGen() {
         fun create(status: Int, data: Any, uid: String = nextULID()) =
-            ResponseBuilder.build(uid, status, data)
+            ResponseBuilder.build(uid = uid, status = status, data = data)
 
         fun create(
+            code: ErrorTrackerCode,
             status: Int,
             message: Any? = null,
             exception: Throwable?,
             uid: String = nextULID(),
-        ) = ResponseBuilder.build(uid, status, message, exception)
+        ) = ResponseBuilder.build(
+            code = code,
+            uid = uid,
+            status = status,
+            message = message,
+            exception = exception
+        )
     }
 }
 
@@ -34,31 +43,43 @@ data class Response(
 private class ResponseBuilder {
     companion object: Loggable() {
         fun build(
+            code: ErrorTrackerCode = ErrorTrackerCode("01FK6ADSETKTN1BYZW6BRHFZFJ"),//TODO SINGLE OR MULTIPLE OK?
             uid: String,
             status: Int,
             data: Any
         ) = Response(
-                uid = uid,
-                status = status,
-                data = data
-            ).also { response ->
-                logger.info("Successful response created: [{}]", response.toString())
-            }
+            code = code,
+            uid = uid,
+            status = status,
+            data = data
+        ).also { response ->
+            logger.info("Successful response created: [{}]", response.toString())
+        }
 
         fun build(
+            code: ErrorTrackerCode,
             uid: String,
             status: Int,
             message: Any? = null,
             exception: Throwable?
         ) = Response(
-                uid = uid,
-                status = status,
-                data = message
-                    ?: exception!!.localizedMessage
-                    ?: exception!!.message
-                    ?: UNKNOWN_REASON
-            ).also { response ->
-                logger.info("Error response created: [{}]", response.toString())
-            }
+            code = code,
+            uid = uid,
+            status = status,
+            data = message
+                ?: exception!!.localizedMessage
+                ?: exception!!.message
+                ?: UNKNOWN_REASON
+        ).also { response ->
+            logger.info("Error response created: [{}]", response.toString())
+        }
     }
+}
+
+/**
+ * @author ACMattos
+ * @since 29/10/2021.
+ */
+class ErrorTrackerCode: Id  {
+    constructor(id: String): super(id)
 }
