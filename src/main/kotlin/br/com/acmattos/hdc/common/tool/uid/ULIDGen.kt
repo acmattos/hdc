@@ -32,11 +32,11 @@ open class ULIDGen {
             } catch(ex: IllegalArgumentException) {
                 if("ulidString must be exactly 26 chars long." === ex.message ) {
                     throw IllegalArgumentException(
-                        "[$candidate] does not match the expected size: 26 chars long!"
+                         "ULID [$candidate] does not match the expected size: 26 chars long!"
                     )
                 } else {
                     throw IllegalArgumentException(
-                        "[$candidate] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
+                        "ULID [$candidate] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
                     )
                 }
             }

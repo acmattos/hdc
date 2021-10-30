@@ -50,7 +50,7 @@ object ULIDGenTest: Spek({
         Scenario("parse ULID fails - 26 chars long") {
             lateinit var ulidCandidate: String
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            val message = "[$INVALID_ULID_ID_1] does not match the expected size: 26 chars long!"
+            val message = "ULID [$INVALID_ULID_ID_1] does not match the expected size: 26 chars long!"
 
             Given("""an invalid ULID candidate""") {
                 ulidCandidate = INVALID_ULID_ID_1
@@ -71,7 +71,7 @@ object ULIDGenTest: Spek({
         Scenario("parse ULID fails - must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'") {
             lateinit var ulidCandidate: String
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            val message = "[$INVALID_ULID_ID_2] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
+            val message = "ULID [$INVALID_ULID_ID_2] must not exceed '7ZZZZZZZZZZZZZZZZZZZZZZZZZ'!"
 
             Given("""an invalid ULID candidate""") {
                 ulidCandidate = INVALID_ULID_ID_2
