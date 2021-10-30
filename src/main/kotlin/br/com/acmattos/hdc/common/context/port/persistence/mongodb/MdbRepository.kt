@@ -1,6 +1,9 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_BY_FIELD_FAILED
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_BY_FIELD_FAILED
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.SAVE_FAILED
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import com.mongodb.client.MongoCollection
@@ -16,6 +19,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun save(document: T) {
         catch(
             "[{}] - Save document into the repository: -> {} <-",
+            SAVE_FAILED.code,
             REPOSITORY.name,
             document.toString()
         ) {
@@ -26,6 +30,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findByField(fieldName: String, value: Any): T? =
         catch(
             "[{}] - Finding document by field in the repository: -> {}={} <-",
+            FIND_BY_FIELD_FAILED.code,
             REPOSITORY.name,
             fieldName,
             value.toString()
@@ -37,6 +42,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findAllByField(fieldName: String, value: Any): List<T>? =
         catch(
             "[{}] - Finding all documents by field in the repository: -> {}={} <-",
+            FIND_ALL_BY_FIELD_FAILED.code,
             REPOSITORY.name,
             fieldName,
             value.toString()
