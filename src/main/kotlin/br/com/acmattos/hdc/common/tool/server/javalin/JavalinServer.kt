@@ -1,7 +1,9 @@
 package br.com.acmattos.hdc.common.tool.server.javalin
 
+import br.com.acmattos.hdc.common.exception.HdcGenericException
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.common.tool.config.PropHandler.getProperty
+import br.com.acmattos.hdc.common.tool.exception.InternalServerErrorException
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.prometheus.PrometheusServer
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -77,6 +79,10 @@ class JavalinServer(
                 handleBadRequestException(context, exception)
             }
 
+            exception(InternalServerErrorException::class.java) { exception, context ->
+                handleInternalServerErrorException(context, exception)
+            }
+
             exception(Exception::class.java) { exception, context ->
                 handleInternalServerErrorException(context, exception)
             }
@@ -128,7 +134,7 @@ class JavalinServer(
         handleException(context, HttpStatus.NOT_FOUND_404, exception)
     }
 
-    private fun handleBadRequestException(context: Context, exception: Exception) {
+    private fun handleBadRequestException(context: Context, exception: HdcGenericException) {
         handleException(context, HttpStatus.BAD_REQUEST_400, exception)
     }
 
@@ -137,15 +143,15 @@ class JavalinServer(
     }
 
     private fun handleException(context: Context, status:Int, exception: Exception) {
-        val errorResponse = createErrorResponse(
+        val errorResponse = createErrorResponse(ErrorTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"),// TODO FIX THIS
             status,
             exception
         )
         setupErrorResponse(context, errorResponse, exception)
     }
 
-    private fun createErrorResponse(status: Int, exception: Throwable) =
-        Response.create(status, null, exception)
+    private fun createErrorResponse(code: ErrorTrackerCode, status: Int, exception: Throwable) =
+        Response.create(code, status, null, exception) // TODO VERIFY
 
     private fun setupErrorResponse(
         context: Context,

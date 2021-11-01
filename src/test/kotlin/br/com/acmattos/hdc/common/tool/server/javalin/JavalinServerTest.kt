@@ -2,6 +2,7 @@ package br.com.acmattos.hdc.common.tool.server.javalin
 
 import br.com.acmattos.hdc.common.tool.HttpClient
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
+import br.com.acmattos.hdc.common.tool.exception.InternalServerErrorException
 import com.github.kittinunf.fuel.core.Response
 import io.javalin.apibuilder.ApiBuilder
 import io.javalin.plugin.openapi.annotations.ContentType
@@ -46,6 +47,31 @@ object JavalinServerTest : Spek({
             }
         }
 
+        Scenario("Javalin Server GET access is ${HttpStatus.INTERNAL_SERVER_ERROR_500}") {
+            val uri = "/internal-server-error"
+
+            Given("""a HTTP Server GET route is defined but throws ${InternalServerErrorException::class.java}""") {
+                getRoute = {
+                    ApiBuilder.get(uri) {
+                        throw InternalServerErrorException("Condition not met!", ErrorTrackerCodeBuilder.build(), Exception()) // TODO FIND CODE
+                    }
+                }
+            }
+            And("""an instance of ${JavalinServer::class.java} instantiated""") {
+                server = JavalinServerBuilder.routes { getRoute() }.port(++port).build()
+            }
+            When("""a HTTP GET connection to a valid resource is done to ${JavalinServer::class.java}""") {
+                response = HttpClient.port(port).get(uri)
+            }
+            Then("""response status is ${HttpStatus.INTERNAL_SERVER_ERROR_500}""") {
+                assertThat(response.statusCode).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR_500)
+            }
+            And("response body contains 'Condition not met!'") {
+                assertThat(response.body().asString("text/json"))
+                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":500,\"data\":\"Condition not met!\"")
+            }
+        }
+
         Scenario("Javalin Server GET access is ${HttpStatus.NOT_FOUND_404}") {
             val uri = "/not-found"
 
@@ -63,7 +89,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Not found'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"status\":404,\"data\":\"Not found\"")
+                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":404,\"data\":\"Not found")
             }
         }
 
@@ -73,7 +99,7 @@ object JavalinServerTest : Spek({
             Given("""a HTTP Server GET route is defined but throws ${AssertionFailedException::class.java}""") {
                 getRoute = {
                     ApiBuilder.get(uri) {
-                        throw AssertionFailedException("Condition not met!")
+                        throw AssertionFailedException("Condition not met!", ErrorTrackerCodeBuilder.build()) // TODO FIND CODE
                     }
                 }
             }
@@ -88,7 +114,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Condition not met!'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"status\":400,\"data\":\"Condition not met!\"")
+                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":400,\"data\":\"Condition not met!\"}")
             }
         }
 // TODO Fix OpenApiPlugin
