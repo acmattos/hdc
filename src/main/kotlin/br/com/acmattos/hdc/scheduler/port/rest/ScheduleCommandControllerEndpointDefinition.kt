@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.scheduler.port.rest
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
-import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.apibuilder.ApiBuilder.post
 
 /**
 * @author ACMattos
@@ -13,7 +13,7 @@ class ScheduleCommandControllerEndpointDefinition(
 ): EndpointDefinition {
     override fun routes() {
         path("schedules") {
-            get(controller::createTheScheduleForTheDentist)
+            post(controller::createAScheduleForTheDentist)
         }
     }
 }

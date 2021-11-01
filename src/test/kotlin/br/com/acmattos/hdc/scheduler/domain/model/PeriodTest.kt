@@ -12,9 +12,9 @@ import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-const val MESSAGE_1 = "from=[09:00] must be smaller than to=[08:00]!"
-const val MESSAGE_2 = "slot=[0] must be bigger than zero!"
-const val MESSAGE_3 = "(to=[09:00] - from=[08:00]) % duration=[61] generates a reminder!"
+private const val MESSAGE_1 = "from=[09:00] must be smaller than to=[08:00]!"
+private const val MESSAGE_2 = "slot=[0] must be bigger than zero!"
+private const val MESSAGE_3 = "(to=[09:00] - from=[08:00]) % duration=[61] generates a reminder!"
 
 /**
  * @author ACMattos
