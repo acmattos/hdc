@@ -7,7 +7,7 @@ import java.time.LocalTime
  * @since 31/10/2019.
  */
 object PeriodBuilder {
-    fun createListWithoutOverlap(weekDay: WeekDay = WeekDay.MONDAY) =
+    fun buildListWithoutOverlap(weekDay: WeekDay = WeekDay.MONDAY) =
         listOf(
             Period(weekDay, LocalTime.parse("17:00"), LocalTime.parse("19:00"), 60),
             Period(weekDay, LocalTime.parse("13:00"), LocalTime.parse("17:00"), 15),
@@ -15,7 +15,7 @@ object PeriodBuilder {
             Period(weekDay, LocalTime.parse("09:00"), LocalTime.parse("11:00"), 15)
         )
 
-    fun createListWithOverlap(weekDay: WeekDay = WeekDay.MONDAY) =
+    fun buildListWithOverlap(weekDay: WeekDay = WeekDay.MONDAY) =
         listOf(
             Period(weekDay, LocalTime.parse("17:00"), LocalTime.parse("19:00"), 60),
             Period(weekDay, LocalTime.parse("13:00"), LocalTime.parse("17:00"), 15),
@@ -23,7 +23,7 @@ object PeriodBuilder {
             Period(weekDay, LocalTime.parse("09:00"), LocalTime.parse("11:00"), 15)
         )
 
-    fun createListWithThreeWeekDays() =
+    fun buildListWithThreeWeekDays() =
         listOf<Period>(
             Period(WeekDay.MONDAY, LocalTime.parse("08:00"), LocalTime.parse("12:00"), 60),
             Period(WeekDay.MONDAY, LocalTime.parse("13:00"), LocalTime.parse("17:00"), 30),
