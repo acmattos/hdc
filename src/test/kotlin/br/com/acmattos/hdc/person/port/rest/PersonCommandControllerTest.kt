@@ -13,7 +13,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-const val STATUS = 201
+private const val STATUS = 201
 
 /**
  * @author ACMattos
@@ -61,7 +61,7 @@ object PersonCommandControllerTest: Spek({
             And("""context#json returns ${Context::class.java}""") {
                 every { context.json(any<Response>()) } returns context
             }
-            And("""a ${PersonCommandHandlerService::class.java} successfully instantiated""") {
+            And("""a ${PersonCommandController::class.java} successfully instantiated""") {
                 controller = PersonCommandController(service)
             }
             When("""#createADentist is executed""") {
