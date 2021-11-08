@@ -8,6 +8,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
  */
 enum class ErrorTrackerCodeEnum(val code: ErrorTrackerCode) {
     SCHEDULE_ALREADY_DEFINED(ErrorTrackerCode("01FJZAH7JVKTN1BYZW6BRHFZFJ")),
+    DENTIST_NOT_REGISTERED(ErrorTrackerCode("01FKXA1PFXQ2MJX8PESM4KVKSP")),
     FROM_BIGGER_THAN_TO(ErrorTrackerCode("01FJZAHV5HKTN1BYZW6BRHFZFJ")),
     OPERATION_GENERATES_REMINDER(ErrorTrackerCode("01FJZAK70FKTN1BYZW6BRHFZFJ")),
     SLOT_BELLOW_ONE(ErrorTrackerCode("01FJZAJFMGKTN1BYZW6BRHFZFJ")),
