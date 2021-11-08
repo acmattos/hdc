@@ -3,6 +3,9 @@ package br.com.acmattos.hdc.person.config
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStoreRepository
+import br.com.acmattos.hdc.common.context.domain.cqs.QueryHandler
+import br.com.acmattos.hdc.common.context.domain.cqs.QueryStore
+import br.com.acmattos.hdc.common.context.domain.cqs.QueryStoreRepository
 import br.com.acmattos.hdc.common.context.domain.model.EntityRepository
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCollection
@@ -10,14 +13,18 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCollection
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbConfiguration
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDatabase
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbQueryDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
+import br.com.acmattos.hdc.person.application.PersonQueryHandlerService
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
+import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
 import br.com.acmattos.hdc.person.domain.model.Person
 import br.com.acmattos.hdc.person.port.persistence.mongodb.PersonMdbDocument
 import br.com.acmattos.hdc.person.port.rest.PersonCommandController
-import br.com.acmattos.hdc.person.port.rest.PersonCommandControllerEndpointDefinition
+import br.com.acmattos.hdc.person.port.rest.PersonControllerEndpointDefinition
+import br.com.acmattos.hdc.person.port.rest.PersonQueryController
 import com.mongodb.client.model.Indexes
 import org.koin.core.component.KoinComponent
 import org.koin.core.qualifier.named
@@ -43,6 +50,16 @@ const val PMO = "PersonMdbCollection"
 const val PMR = "PersonMdbRepository"
 const val PRE = "PersonRepository"
 
+const val QH = "PersonQueryHandlerService"
+const val QMC = "PersonQueryMdbConfiguration"
+const val QMU = "PERSON_QUERY_MONGO_URL"
+const val QMD = "PersonQueryMdbDatabase"
+const val QCC = "PersonQueryMdbCollectionConfig"
+const val PQN = "person_query"
+const val QMO = "PersonQueryMdbCollection"
+const val QMR = "PersonQueryMdbRepository"
+const val PQS = "PersonQueryStore"
+
 /**
  * @author ACMattos
  * @since 05/10/2021.
@@ -51,9 +68,9 @@ object PersonKoinComponent: KoinComponent {
     fun loadModule() = module {
         // 1 - Endpoint Definition
         single<EndpointDefinition>(named(ED)) {
-            PersonCommandControllerEndpointDefinition(get())
+            PersonControllerEndpointDefinition(get(), get())
         }
-        // 2 - Controller Endpoint
+        // 2 - Command Controller Endpoint
         single {
             PersonCommandController(get(named(CH)))
         }
@@ -116,6 +133,42 @@ object PersonKoinComponent: KoinComponent {
             EntityRepository(get(named(PMR))) { entity ->
                 PersonMdbDocument(entity)
             }
+        }
+        // 16 - Query Controller Endpoint
+        single {
+            PersonQueryController(get(named(QH)))
+        }
+        // 17 - Query Handler
+        single<QueryHandler<Person>>(named(QH)) {
+            PersonQueryHandlerService(get(named(PQS)), get(named(PRE)))
+        }
+        // 18 - Query Store - MongoDB Configuration
+        single(named(QMC)) {
+            MdbConfiguration(QMU)
+        }
+        // 19 - Query Store - MongoDB Database
+        single(named(QMD)) {
+            MdbDatabase(get(named(QMC)))
+        }
+        // 20 - Query Store - MongoDB Collection Config
+        single(named(QCC)) {
+            MdbCollectionConfig(PQN, MdbQueryDocument::class.java)
+                .addIndexes(
+                    Indexes.ascending("query.id.id"),
+                    Indexes.ascending("query.audit_log.who"),
+                )
+        }
+        // 21 - Query Store - MongoDB Collection
+        single(named(QMO)) {
+            MdbCollection<MdbEventDocument>(get(named(QMD)), get(named(QCC)))
+        }
+        // 22 - Query Store - MongoDB Repository
+        single(named(QMR)) {
+            MdbRepository<MdbQueryDocument>(get(named(QMO)))
+        }
+        // 23 - Query Store - Event Store Repository
+        single<QueryStore<PersonQuery>>(named(PQS)) {
+            QueryStoreRepository(get(named(QMR)))
         }
     }
 }
