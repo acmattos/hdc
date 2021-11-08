@@ -82,7 +82,7 @@ data class CreateADentistRequest(
     val personalId: String?,
     val addresses: List<AddressRequest>,
     val contacts: List<ContactRequest>,
-): Request<PersonCommand> {
+): Request<PersonCommand>() {
     override fun toType(who: String, what: String): PersonCommand =
         CreateADentistCommand(
             fullName,
@@ -106,7 +106,7 @@ data class AddressRequest (
     val neighborhood: String,
     val state: String,
     val city: String,
-): Request<Address> {
+): Request<Address>() {
     override fun toType(who: String, what: String): Address =
         Address(
             street,
@@ -126,7 +126,7 @@ data class AddressRequest (
 data class ContactRequest(
     val info: String,
     val type: String? = null,
-): Request<Contact> {
+): Request<Contact>() {
     override fun toType(who: String, what: String): Contact =
         Contact(info, type)
 }

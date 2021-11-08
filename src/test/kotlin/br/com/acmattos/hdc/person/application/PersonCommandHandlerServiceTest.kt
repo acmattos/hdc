@@ -22,7 +22,7 @@ import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-const val EXCEPTION_MESSAGE = "There is a dentist already defined for the given full name: [fullName]!"
+private const val EXCEPTION_MESSAGE = "There is a dentist already defined for the given full name: [fullName]!"
 
 /**
  * @author ACMattos
