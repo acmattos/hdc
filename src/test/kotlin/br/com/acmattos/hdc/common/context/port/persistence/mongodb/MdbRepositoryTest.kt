@@ -122,7 +122,7 @@ object MdbRepositoryTest: Spek({
                 repository = MdbRepository(mdbCollection)
             }
             When("""#findByField is executed""") {
-                entity = repository.findByField("field", "id")
+                entity = repository.findByField("field", "id").get()
             }
             Then("""the message is """) {
                 assertThat(entity).isNotNull()

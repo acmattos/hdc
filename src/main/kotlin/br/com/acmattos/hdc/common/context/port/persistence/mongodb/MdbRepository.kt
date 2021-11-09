@@ -8,6 +8,7 @@ import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import com.mongodb.client.MongoCollection
 import com.mongodb.client.model.Filters
+import java.util.Optional
 
 /**
  * @author ACMattos
@@ -27,7 +28,7 @@ open class MdbRepository<T: MdbDocument>(
         }
     }
 
-    override fun findByField(fieldName: String, value: Any): T? =
+    override fun findByField(fieldName: String, value: Any): Optional<T> =
         catch(
             "[{}] - Finding document by field in the repository: -> {}={} <-",
             FIND_BY_FIELD_FAILED.code,
@@ -35,11 +36,17 @@ open class MdbRepository<T: MdbDocument>(
             fieldName,
             value.toString()
         ) {
-            return@catch getCollection().find(Filters.eq(fieldName, value))
+            val document = getCollection().find(Filters.eq(fieldName, value))
                 .firstOrNull()
+            val optionalDocument = if(document != null) {
+                Optional.of(document)
+            } else {
+                Optional.empty()
+            }
+            return@catch optionalDocument
         }
 
-    override fun findAllByField(fieldName: String, value: Any): List<T>? =
+    override fun findAllByField(fieldName: String, value: Any): List<T> =
         catch(
             "[{}] - Finding all documents by field in the repository: -> {}={} <-",
             FIND_ALL_BY_FIELD_FAILED.code,
