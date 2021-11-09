@@ -8,7 +8,7 @@ import io.javalin.apibuilder.ApiBuilder.post
 * @author ACMattos
 * @since 27/03/2021.
 */
-class ScheduleCommandControllerEndpointDefinition(
+class ScheduleControllerEndpointDefinition(
     private val controller: ScheduleCommandController
 ): EndpointDefinition {
     override fun routes() {

@@ -15,8 +15,8 @@ import org.spekframework.spek2.style.gherkin.Feature
  * @author ACMattos
  * @since 27/09/2021.
  */
-object ScheduleCommandControllerEndpointDefinitionTest: Spek({
-    Feature("${ScheduleCommandControllerEndpointDefinition::class.java} existence") {
+object ScheduleControllerEndpointDefinitionTest: Spek({
+    Feature("${ScheduleControllerEndpointDefinition::class.java} existence") {
         Scenario("endpoint definition exists") {
             lateinit var koin: Koin
             lateinit var endpoint: EndpointDefinition
