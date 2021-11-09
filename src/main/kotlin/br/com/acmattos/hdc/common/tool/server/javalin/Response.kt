@@ -12,10 +12,12 @@ const val UNKNOWN_REASON = "UNKNOWN REASON"
  */
 data class Response(
     val uid: String,
-    val code: ErrorTrackerCode,
+    val code: String,
     val status: Int,
     val data: Any,
 ) {
+    constructor():this("","", 0, Any())
+
     companion object: ULIDGen() {
         fun create(status: Int, data: Any, uid: String = nextULID()) =
             ResponseBuilder.build(uid = uid, status = status, data = data)
@@ -48,7 +50,7 @@ private class ResponseBuilder {
             status: Int,
             data: Any
         ) = Response(
-            code = code,
+            code = code.id,
             uid = uid,
             status = status,
             data = data
@@ -63,7 +65,7 @@ private class ResponseBuilder {
             message: Any? = null,
             exception: Throwable?
         ) = Response(
-            code = code,
+            code = code.id,
             uid = uid,
             status = status,
             data = message
@@ -80,6 +82,4 @@ private class ResponseBuilder {
  * @author ACMattos
  * @since 29/10/2021.
  */
-class ErrorTrackerCode: Id  {
-    constructor(id: String): super(id)
-}
+class ErrorTrackerCode(id: String): Id(id)
