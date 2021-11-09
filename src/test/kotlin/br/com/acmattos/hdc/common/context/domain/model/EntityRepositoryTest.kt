@@ -6,6 +6,7 @@ import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
 import ch.qos.logback.classic.Level
 import io.mockk.every
 import io.mockk.mockk
+import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -50,8 +51,8 @@ object EntityRepositoryTest: Spek({
             lateinit var repository: EntityRepository<Entity>
             lateinit var mdbRepository: MdbRepository<MdbDocument>
             lateinit var converter: (Entity) -> MdbDocument
-            var document: MdbDocument? = null
-            var entity: Entity? = null
+            lateinit var document: Optional<MdbDocument>
+            var entity: Optional<Entity>? = null
             Given("""a mdbRepository mock created""") {
                 mdbRepository = mockk(relaxed = true)
             }
@@ -65,7 +66,7 @@ object EntityRepositoryTest: Spek({
                 every { mdbRepository.findByField(any(), any()) } returns document
             }
             And("""the mock configured to return a ${Entity::class.java}""") {
-                every { document?.toType() } returns entity!!
+                every { document.get().toType() } returns entity!!
             }
             And("""a converter to ${MdbDocument::class.java} defined""") {
                 converter = { _ -> TestMdbDocument("id") }
