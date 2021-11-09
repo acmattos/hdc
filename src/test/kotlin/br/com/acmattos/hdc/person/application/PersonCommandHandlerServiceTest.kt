@@ -94,9 +94,13 @@ object PersonCommandHandlerServiceTest: Spek({
             }
             And("""repository#findByField returns null""") {
                 every {
-                    repository.findByField("full_name", "fullName").get()
-                } returns Person.apply(
-                    CreateADentistEvent(buildCreateADentistRequest().toType() as CreateADentistCommand)
+                    repository.findByField("full_name", "fullName")
+                } returns Optional.of(
+                    Person.apply(
+                        CreateADentistEvent(
+                            buildCreateADentistRequest().toType() as CreateADentistCommand
+                        )
+                    )
                 )
             }
             And("""repository#save just runs""") {
