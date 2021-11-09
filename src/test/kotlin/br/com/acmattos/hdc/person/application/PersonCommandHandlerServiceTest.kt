@@ -16,6 +16,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
+import java.util.Optional
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
@@ -46,7 +47,7 @@ object PersonCommandHandlerServiceTest: Spek({
                 repository = mockk()
             }
             And("""repository#findByField returns null""") {
-                every { repository.findByField("full_name", "fullName") } returns null
+                every { repository.findByField("full_name", "fullName") } returns Optional.empty()
             }
             And("""repository#save just runs""") {
                 every { repository.save(any()) } just Runs
@@ -93,7 +94,7 @@ object PersonCommandHandlerServiceTest: Spek({
             }
             And("""repository#findByField returns null""") {
                 every {
-                    repository.findByField("full_name", "fullName")
+                    repository.findByField("full_name", "fullName").get()
                 } returns Person.apply(
                     CreateADentistEvent(buildCreateADentistRequest().toType() as CreateADentistCommand)
                 )

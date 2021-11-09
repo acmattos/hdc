@@ -101,7 +101,7 @@ class PersonCommandHandlerService(
                     """.trimIndent(),
                 DENTIST_ALREADY_EXISTS.code
             ) {
-                it == null
+                !it.isPresent
             }
         }
     }
