@@ -27,6 +27,7 @@ object PropHandler {
         return if (value is String && clazzName != "String") {
             when (clazzName) {
                 "Integer" -> value.toIntOrNull()
+                "Long" -> value.toLongOrNull()
                 "Float" -> value.toFloatOrNull()
                 "Boolean" -> value.toBoolean()
                 else -> value
