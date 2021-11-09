@@ -68,7 +68,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Condition not met!'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":500,\"data\":\"Condition not met!\"")
+                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":500,\"data\":\"Condition not met!\"")
             }
         }
 
@@ -89,7 +89,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Not found'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":404,\"data\":\"Not found")
+                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":404,\"data\":\"Not found")
             }
         }
 
@@ -114,7 +114,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Condition not met!'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":{\"id\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\"},\"status\":400,\"data\":\"Condition not met!\"}")
+                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":400,\"data\":\"Condition not met!\"}")
             }
         }
 // TODO Fix OpenApiPlugin
