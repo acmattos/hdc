@@ -2,6 +2,7 @@ package br.com.acmattos.hdc.scheduler.port.persistence.mongodb
 
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
+import br.com.acmattos.hdc.scheduler.domain.model.DentistBuilder
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
 import br.com.acmattos.hdc.scheduler.port.rest.CreateAScheduleForTheDentistRequest
 import br.com.acmattos.hdc.scheduler.port.rest.ScheduleRequestBuilder
@@ -25,7 +26,7 @@ object ScheduleMdbDocumentTest: Spek({
                 request = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
             }
             And("""a ${CreateAScheduleForTheDentistCommand::class.java} successfully generated""") {
-                command = request.toType() as CreateAScheduleForTheDentistCommand
+                command = (request.toType() as CreateAScheduleForTheDentistCommand).copy(dentist = DentistBuilder.build())
             }
             And("""a ${CreateAScheduleForTheDentistEvent::class.java} successfully instantiated""") {
                 event = CreateAScheduleForTheDentistEvent(command)

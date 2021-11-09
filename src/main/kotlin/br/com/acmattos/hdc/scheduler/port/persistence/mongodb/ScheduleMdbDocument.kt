@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.scheduler.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
+import br.com.acmattos.hdc.scheduler.domain.model.Dentist
 import br.com.acmattos.hdc.scheduler.domain.model.Period
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
-import br.com.acmattos.hdc.scheduler.domain.model.ScheduleDentistId
 import br.com.acmattos.hdc.scheduler.domain.model.ScheduleId
 import java.time.LocalDateTime
 
@@ -13,7 +13,7 @@ import java.time.LocalDateTime
  */
 data class ScheduleMdbDocument(
     val scheduleId: String,
-    val scheduleDentistId: String,
+    val dentist: Dentist,
     val periods: List<Period>,
     val enabled: Boolean,
     val createdAt: LocalDateTime,
@@ -23,7 +23,7 @@ data class ScheduleMdbDocument(
         schedule: Schedule
     ): this(
         scheduleId = schedule.scheduleId.id,
-        scheduleDentistId = schedule.scheduleDentistId!!.id,
+        dentist = schedule.dentist,
         periods = schedule.periods,
         enabled = schedule.enabled,
         createdAt = schedule.createdAt,
@@ -33,7 +33,7 @@ data class ScheduleMdbDocument(
     override fun toType(): Schedule =
         Schedule(
             scheduleIdData = ScheduleId(scheduleId),
-            scheduleDentistIdData = ScheduleDentistId(scheduleDentistId),
+            dentistData = dentist,
             periodsData = periods,
             enabledData = enabled,
             createdAtData = createdAt,
