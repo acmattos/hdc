@@ -2,8 +2,9 @@ package br.com.acmattos.hdc.scheduler.domain.cqs
 
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
+import br.com.acmattos.hdc.scheduler.domain.model.Dentist
 import br.com.acmattos.hdc.scheduler.domain.model.Period
-import br.com.acmattos.hdc.scheduler.domain.model.ScheduleDentistId
+import br.com.acmattos.hdc.scheduler.domain.model.DentistId
 import br.com.acmattos.hdc.scheduler.domain.model.ScheduleId
 import java.time.LocalDateTime
 
@@ -22,19 +23,21 @@ open class ScheduleCommand(
  */
 data class CreateAScheduleForTheDentistCommand(
     override val scheduleId: ScheduleId,
-    val scheduleDentistId: ScheduleDentistId,
+    val dentistId: DentistId,
+    val dentist: Dentist?,
     val periods: List<Period>,
     val enabled: Boolean,
     val createdAt: LocalDateTime,
     override val auditLog: AuditLog
 ): ScheduleCommand(scheduleId, auditLog) {
     constructor(
-        scheduleDentistId: String,
+        dentistId: String,
         periods: List<Period>,
         auditLog: AuditLog
     ): this(
         ScheduleId(),
-        ScheduleDentistId(scheduleDentistId),
+        DentistId(dentistId),
+        null,
         periods,
         true,
         LocalDateTime.now(),

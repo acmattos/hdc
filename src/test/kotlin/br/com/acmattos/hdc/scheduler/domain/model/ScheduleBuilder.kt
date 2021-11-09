@@ -3,7 +3,6 @@ package br.com.acmattos.hdc.scheduler.domain.model
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
-import br.com.acmattos.hdc.scheduler.port.rest.PeriodRequest
 import java.time.LocalDateTime
 
 /**
@@ -13,7 +12,7 @@ import java.time.LocalDateTime
 object ScheduleBuilder {
     fun buildSuccessfull() = Schedule(
         ScheduleId("01FK96GENJKTN1BYZW6BRHFZFJ"),
-        ScheduleDentistId("01FK96HFJQKTN1BYZW6BRHFZFJ"),
+        DentistBuilder.build(),
         PeriodBuilder.buildListWithThreeWeekDays(),
         true,
         LocalDateTime.of(2021, 10, 30, 15, 16, 0),
@@ -24,7 +23,8 @@ object ScheduleBuilder {
         CreateAScheduleForTheDentistEvent(
             CreateAScheduleForTheDentistCommand(
                 ScheduleId("01FK96GENJKTN1BYZW6BRHFZFJ"),
-                ScheduleDentistId("01FK96HFJQKTN1BYZW6BRHFZFJ"),
+                DentistId("01FK96HFJQKTN1BYZW6BRHFZFJ"),
+                DentistBuilder.build(),
                 periods,
                 true,
                 LocalDateTime.of(2021, 10, 30, 15, 16, 0),

@@ -6,6 +6,7 @@ import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
 import br.com.acmattos.hdc.scheduler.application.ScheduleCommandApplicationService
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
+import br.com.acmattos.hdc.scheduler.domain.model.DentistBuilder
 import io.javalin.http.Context
 import io.mockk.every
 import io.mockk.mockk
@@ -35,7 +36,7 @@ object ScheduleCommandControllerTest: Spek({
                 request = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
             }
             And("""a ${CreateAScheduleForTheDentistCommand::class.java} successfully generated""") {
-                command = request.toType() as CreateAScheduleForTheDentistCommand
+                command = (request.toType() as CreateAScheduleForTheDentistCommand).copy(dentist = DentistBuilder.build())
             }
             And("""a ${CreateAScheduleForTheDentistEvent::class.java} successfully instantiated""") {
                 event = CreateAScheduleForTheDentistEvent(command)

@@ -56,10 +56,10 @@ class ScheduleCommandController(
         .toType(what = context.fullUrl())
         .also { command ->
             context.status(HttpStatus.CREATED_201).json(
-                    Response.create(
-                        context.status(),
-                        handler.handle(command)
-                    )
+                Response.create(
+                    context.status(),
+                    handler.handle(command)
+                )
             )
         }
         logger.info(
@@ -79,7 +79,7 @@ class ScheduleCommandController(
 data class CreateAScheduleForTheDentistRequest(
     val scheduleDentistId: String,
     val periods: List<PeriodRequest>
-): Request<ScheduleCommand> {
+): Request<ScheduleCommand>() {
     override fun toType(who: String, what: String): ScheduleCommand =
         CreateAScheduleForTheDentistCommand(
             scheduleDentistId,
@@ -97,7 +97,7 @@ data class PeriodRequest(
     val from: String,
     val to: String,
     val slot: Int
-): Request<Period> {
+): Request<Period>() {
     override fun toType(
         who: String,
         what: String

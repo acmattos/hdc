@@ -12,12 +12,14 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDatabase
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
+import br.com.acmattos.hdc.common.tool.http.Http
 import br.com.acmattos.hdc.scheduler.application.ScheduleCommandApplicationService
 import br.com.acmattos.hdc.scheduler.domain.cqs.ScheduleEvent
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
 import br.com.acmattos.hdc.scheduler.port.persistence.mongodb.ScheduleMdbDocument
 import br.com.acmattos.hdc.scheduler.port.rest.ScheduleCommandController
-import br.com.acmattos.hdc.scheduler.port.rest.ScheduleCommandControllerEndpointDefinition
+import br.com.acmattos.hdc.scheduler.port.rest.ScheduleControllerEndpointDefinition
+import br.com.acmattos.hdc.scheduler.port.service.DentistRestServiceBuilder
 import com.mongodb.client.model.Indexes
 import org.koin.core.component.KoinComponent
 import org.koin.core.qualifier.named
@@ -43,6 +45,10 @@ const val PMO = "ScheduleMdbCollection"
 const val PMR = "ScheduleMdbRepository"
 const val PRE = "ScheduleRepository"
 
+const val DRS = "DentistRestService"
+const val DHC = "DentistHttpClient"
+const val DBU = "DENTIST_BASE_URL"
+
 /**
  * @author ACMattos
  * @since 14/08/2019.
@@ -51,7 +57,7 @@ object ScheduleKoinComponent: KoinComponent {
     fun loadModule() = module {
         // 1 - Endpoint Definition
         single<EndpointDefinition>(named(ED)) {
-            ScheduleCommandControllerEndpointDefinition(get())
+            ScheduleControllerEndpointDefinition(get())
         }
         // 2 - Controller Endpoint
         single {
@@ -59,7 +65,11 @@ object ScheduleKoinComponent: KoinComponent {
         }
         // 3 - Command Handler
         single<CommandHandler<ScheduleEvent>>(named(CH)) {
-            ScheduleCommandApplicationService(get(named(PES)), get(named(PRE)))
+            ScheduleCommandApplicationService(
+                get(named(PES)),
+                get(named(PRE)),
+                get(named(DRS))
+            )
         }
         // 4 - Event Store - MongoDB Configuration
         single(named(EMC)) {
@@ -116,6 +126,15 @@ object ScheduleKoinComponent: KoinComponent {
             EntityRepository(get(named(PMR))) { entity ->
                 ScheduleMdbDocument(entity)
             }
+        }
+        // 16 - Dentist HTTP Client
+        single(named(DHC)) {
+            Http(DBU)
+        }
+        // 17 - Dentist Rest Service
+        single(named(DRS)) {
+            DentistRestServiceBuilder(get(named(DHC)))
+                .build()
         }
     }
 }

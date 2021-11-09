@@ -17,14 +17,14 @@ import java.time.LocalDateTime
  */
 data class Schedule(
     private var scheduleIdData: ScheduleId? = null,
-    private var scheduleDentistIdData: ScheduleDentistId? = null,
+    private var dentistData: Dentist? = null,
     private var periodsData: List<Period>? = null,
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
 ): Entity {
     val scheduleId get() = scheduleIdData!!
-    val scheduleDentistId get() = scheduleDentistIdData!!
+    val dentist get() = dentistData!!
     val periods get() = periodsData!!
     val enabled get() = enabledData
     val createdAt get() = createdAtData
@@ -47,7 +47,7 @@ data class Schedule(
     
     private fun apply(event: CreateAScheduleForTheDentistEvent) {
         scheduleIdData = event.scheduleId
-        scheduleDentistIdData = event.scheduleDentistId
+        dentistData = event.dentist
         periodsData = event.periods
         enabledData = event.enabled
         createdAtData = event.createdAt
@@ -99,7 +99,7 @@ data class Schedule(
 
         for(period in sortedPeriods) {
             if(period.weekDay === basePeriod.weekDay) {
-                var list = mapOfPeriods[period.weekDay]
+                val list = mapOfPeriods[period.weekDay]
                 list!!.add(period)
             } else {
                 basePeriod = period

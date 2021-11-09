@@ -12,7 +12,7 @@ import org.koin.dsl.koinApplication
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-private const val NUMBER_OF_DEPENDENCIES = 15
+private const val NUMBER_OF_DEPENDENCIES = 17
 const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
 
 /**
@@ -47,6 +47,7 @@ object ScheduleKoinComponentTest: Spek({
     }
 })
 
+// TODO MOVE TO ANOTHER FILE
 @OptIn(KoinInternalApi::class)
 fun KoinApplication.assertDefinitionsCount(count: Int) {
     assertEquals(count, this.koin.instanceRegistry.size(), "definitions count")
