@@ -22,7 +22,7 @@ import br.com.acmattos.hdc.scheduler.port.service.DentistRestService
  * @author ACMattos
  * @since 28/09/2019.
  */
-class ScheduleCommandApplicationService(// TODO ScheduleCommandHandlerService
+class ScheduleCommandHandlerService(
     private val eventStore: EventStore<ScheduleEvent>,
     private val repository: Repository<Schedule>,
     private val service: DentistRestService,

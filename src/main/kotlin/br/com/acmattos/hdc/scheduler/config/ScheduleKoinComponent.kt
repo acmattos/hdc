@@ -13,7 +13,7 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocum
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.http.Http
-import br.com.acmattos.hdc.scheduler.application.ScheduleCommandApplicationService
+import br.com.acmattos.hdc.scheduler.application.ScheduleCommandHandlerService
 import br.com.acmattos.hdc.scheduler.domain.cqs.ScheduleEvent
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
 import br.com.acmattos.hdc.scheduler.port.persistence.mongodb.ScheduleMdbDocument
@@ -65,7 +65,7 @@ object ScheduleKoinComponent: KoinComponent {
         }
         // 3 - Command Handler
         single<CommandHandler<ScheduleEvent>>(named(CH)) {
-            ScheduleCommandApplicationService(
+            ScheduleCommandHandlerService(
                 get(named(PES)),
                 get(named(PRE)),
                 get(named(DRS))
@@ -82,9 +82,9 @@ object ScheduleKoinComponent: KoinComponent {
         // 6 - Event Store - MongoDB Collection Config
         single(named(ECC)) {
             MdbCollectionConfig(PEN, MdbEventDocument::class.java)
-                .addIndexes(
-                    Indexes.ascending("event.schedule_id.id"),
-                )
+            .addIndexes(
+                Indexes.ascending("event.schedule_id.id"),
+            )
         }
         // 7 - Event Store - MongoDB Collection
         single(named(EMO)) {
@@ -110,7 +110,7 @@ object ScheduleKoinComponent: KoinComponent {
         single(named(PCC)) {
             MdbCollectionConfig(PET, ScheduleMdbDocument::class.java)
                 .addIndexes(
-                    Indexes.ascending("Schedule_id"),
+                    Indexes.ascending("schedule_id"),
                 )
         }
         // 13 - Entity Repository - MongoDB Collection

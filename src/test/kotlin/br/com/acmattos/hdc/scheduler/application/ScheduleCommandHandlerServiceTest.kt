@@ -34,14 +34,14 @@ private const val EXCEPTION_MESSAGE_2 = "There is no dentist defined for the giv
  * @author ACMattos
  * @since 21/10/2021.
  */
-object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHandlerService
-    Feature("${ScheduleCommandApplicationService::class.java} usage") {
+object ScheduleCommandHandlerServiceTest: Spek({
+    Feature("${ScheduleCommandHandlerService::class.java} usage") {
         Scenario("handling ${CreateAScheduleForTheDentistCommand::class.java} successfully") {
             lateinit var command: CreateAScheduleForTheDentistCommand
             lateinit var eventStore: EventStore<ScheduleEvent>
             lateinit var repository: Repository<Schedule>
             lateinit var dentistService: DentistRestService
-            lateinit var service: ScheduleCommandApplicationService
+            lateinit var service: ScheduleCommandHandlerService
             lateinit var event: CreateAScheduleForTheDentistEvent
             Given("""a ${EventStore::class.java} mock""") {
                 eventStore = mockk()
@@ -75,8 +75,8 @@ object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHand
                 command = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
                     .toType() as CreateAScheduleForTheDentistCommand
             }
-            And("""a ${ScheduleCommandApplicationService::class.java} successfully instantiated""") {
-                service = ScheduleCommandApplicationService(eventStore, repository, dentistService)
+            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
             }
             When("""#handle is executed""") {
                 event = service.handle(command) as CreateAScheduleForTheDentistEvent
@@ -110,7 +110,7 @@ object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHand
             lateinit var eventStore: EventStore<ScheduleEvent>
             lateinit var repository: Repository<Schedule>
             lateinit var dentistService: DentistRestService
-            lateinit var service: ScheduleCommandApplicationService
+            lateinit var service: ScheduleCommandHandlerService
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a ${EventStore::class.java} mock""") {
                 eventStore = mockk()
@@ -141,8 +141,8 @@ object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHand
             And("""a ${DentistRestService::class.java} mock""") {
                 dentistService = mockk()
             }
-            And("""a ${ScheduleCommandApplicationService::class.java} successfully instantiated""") {
-                service = ScheduleCommandApplicationService(eventStore, repository, dentistService)
+            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
             }
             When("""#handle is executed""") {
                 assertion = assertThatCode {
@@ -191,7 +191,7 @@ object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHand
             lateinit var eventStore: EventStore<ScheduleEvent>
             lateinit var repository: Repository<Schedule>
             lateinit var dentistService: DentistRestService
-            lateinit var service: ScheduleCommandApplicationService
+            lateinit var service: ScheduleCommandHandlerService
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a ${EventStore::class.java} mock""") {
                 eventStore = mockk()
@@ -219,8 +219,8 @@ object ScheduleCommandApplicationServiceTest: Spek({ // TODO ScheduleCommandHand
                     dentistService.findTheDentist(any())
                 } returns Optional.empty<Dentist>()
             }
-            And("""a ${ScheduleCommandApplicationService::class.java} successfully instantiated""") {
-                service = ScheduleCommandApplicationService(eventStore, repository, dentistService)
+            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
             }
             When("""#handle is executed""") {
                 assertion = assertThatCode {
