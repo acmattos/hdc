@@ -55,20 +55,12 @@ class PersonCommandHandlerService(
             SERVICE.name
         )
 
-        val event = CreateADentistEvent(command).also { event ->
+        return CreateADentistEvent(command).also { event ->
             logger.trace(
                 "[{} {}] - Event created: -> {} <-",
                 PERSON.name,
                 SERVICE.name,
                 event.toString()
-            )
-
-            eventStore.addEvent(event)
-            logger.trace(
-                "[{} {}] - Event added: -> {} <-",
-                PERSON.name,
-                SERVICE.name,
-                event.javaClass.name
             )
 
             Person.apply(event).also { entity ->
@@ -79,6 +71,14 @@ class PersonCommandHandlerService(
                     entity.toString()
                 )
 
+                eventStore.addEvent(event)
+                logger.trace(
+                    "[{} {}] - Event added: -> {} <-",
+                    PERSON.name,
+                    SERVICE.name,
+                    event.javaClass.name
+                )
+
                 repository.save(entity)
                 logger.trace(
                     "[{} {}] - Entity saved: -> {} <-",
@@ -87,8 +87,8 @@ class PersonCommandHandlerService(
                     entity.javaClass.name
                 )
             }
+            event
         }
-        return event
     }
 
     private fun validateDentistDoesNotExist(command: PersonCommand) {
