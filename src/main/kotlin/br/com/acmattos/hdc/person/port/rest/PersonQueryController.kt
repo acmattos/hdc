@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
-import br.com.acmattos.hdc.common.tool.server.javalin.getQueryRequest
+import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.DENTIST_ID_INVALID
 import br.com.acmattos.hdc.person.config.PersonLogEnum.DENTIST
 import br.com.acmattos.hdc.person.domain.cqs.FindTheDentistQuery
@@ -55,7 +55,7 @@ class PersonQueryController(
             DENTIST.name,
             ENDPOINT.name
         )
-        context.getQueryRequest<FindTheDentistRequest>(::FindTheDentistRequest)
+        context.getRequest<FindTheDentistRequest>(::FindTheDentistRequest)
         .toType(what = context.fullUrl())
         .also { query ->
             context.status(HttpStatus.OK_200).json(
@@ -86,11 +86,11 @@ class FindTheDentistRequest(val context: Context): Request<PersonQuery>(context)
             "dentist_id can't be null or empty",
             DENTIST_ID_INVALID.code
         ) {
-            dentistId != null && dentistId.isNotBlank()
+            dentistId.isNotBlank()
         }
 
         return FindTheDentistQuery(
-            PersonId(dentistId!!),
+            PersonId(dentistId),
             AuditLog(who, what)
         )
     }
