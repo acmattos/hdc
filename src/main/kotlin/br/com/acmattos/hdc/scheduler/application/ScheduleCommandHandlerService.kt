@@ -75,20 +75,20 @@ class ScheduleCommandHandlerService(
                     event.toString()
                 )
 
-                eventStore.addEvent(event)
-                logger.trace(
-                    "[{} {}] - Event added: -> {} <-",
-                    SCHEDULE.name,
-                    SERVICE.name,
-                    event.javaClass.name
-                )
-
                 Schedule.apply(event).also { entity ->
                     logger.trace(
                         "[{} {}] - Entity created: -> {} <-",
                         SCHEDULE.name,
                         SERVICE.name,
                         entity.toString()
+                    )
+
+                    eventStore.addEvent(event)
+                    logger.trace(
+                        "[{} {}] - Event added: -> {} <-",
+                        SCHEDULE.name,
+                        SERVICE.name,
+                        event.javaClass.name
                     )
 
                     repository.save(entity)
