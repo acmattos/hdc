@@ -8,11 +8,14 @@ import br.com.acmattos.hdc.common.context.domain.model.Id
  * @since 07/11/2021.
  */
 data class Dentist(
-    private var dentistIdData: DentistId? = null,
-    private var fullNameData: String? = null,
+    val dentistId: DentistId,
+    val fullName: String
 ): Entity {
-    val dentistId get() = dentistIdData
-    val fullName get() = fullNameData
+    fun getAcronym() = fullName
+        .split(" ")
+        .map { it[0] }
+        .joinToString(",")
+        .replace(",","")
 }
 
 /**
