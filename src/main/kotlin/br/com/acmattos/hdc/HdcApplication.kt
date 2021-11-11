@@ -7,6 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServer
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
+import br.com.acmattos.hdc.scheduler.config.AppointmentKoinConfig
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.StatisticsHandler
@@ -25,6 +26,7 @@ class HdcApplication {
         startKoin {
             printLogger()
 
+            koin.loadModules(listOf(AppointmentKoinConfig.loadModule()))
             koin.loadModules(listOf(PersonKoinComponent.loadModule()))
             koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
         }
@@ -35,6 +37,8 @@ class HdcApplication {
     }
 
     companion object: KoinComponent {
+        private val appointmentEndpointDefinition: EndpointDefinition
+            by inject(named("AppointmentControllerEndpointDefinition"))
         private val personCommandEndpointDefinition: EndpointDefinition
             by inject(named("PersonCommandControllerEndpointDefinition"))
         private val scheduleCommandEndpointDefinition: EndpointDefinition
@@ -69,6 +73,7 @@ class HdcApplication {
                     )
                 }
                 .routes {
+                    appointmentEndpointDefinition.routes()
                     personCommandEndpointDefinition.routes()
                     scheduleCommandEndpointDefinition.routes()
                 }
@@ -83,6 +88,11 @@ fun main(){
     HdcApplication().init()
     println("Check out ReDoc docs at http://localhost:7000/redoc")
     println("Check out Swagger UI docs at http://localhost:7000/swagger")
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
     println(
         de.huxhorn.sulky.ulid.ULID(
             java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
