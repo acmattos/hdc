@@ -3,7 +3,7 @@ package br.com.acmattos.hdc.scheduler.port.rest
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
-import br.com.acmattos.hdc.scheduler.application.ScheduleCommandApplicationService
+import br.com.acmattos.hdc.scheduler.application.ScheduleCommandHandlerService
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
 import br.com.acmattos.hdc.scheduler.domain.model.DentistBuilder
@@ -28,7 +28,7 @@ object ScheduleCommandControllerTest: Spek({
             lateinit var request: CreateAScheduleForTheDentistRequest
             lateinit var command: CreateAScheduleForTheDentistCommand
             lateinit var event: CreateAScheduleForTheDentistEvent
-            lateinit var service: ScheduleCommandApplicationService
+            lateinit var service: ScheduleCommandHandlerService
             lateinit var context: Context
             lateinit var controller: ScheduleCommandController
 
@@ -41,7 +41,7 @@ object ScheduleCommandControllerTest: Spek({
             And("""a ${CreateAScheduleForTheDentistEvent::class.java} successfully instantiated""") {
                 event = CreateAScheduleForTheDentistEvent(command)
             }
-            And("""a ${ScheduleCommandApplicationService::class.java} mock""") {
+            And("""a ${ScheduleCommandHandlerService::class.java} mock""") {
                 service = mockk()
             }
             And("""service#handle returning the ${CreateADentistCommand::class.java}""") {
