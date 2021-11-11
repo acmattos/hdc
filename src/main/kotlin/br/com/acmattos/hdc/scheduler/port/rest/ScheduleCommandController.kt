@@ -96,7 +96,7 @@ data class PeriodRequest(
     val weekDay: String,
     val from: String,
     val to: String,
-    val slot: Int
+    val slot: Long
 ): Request<Period>() {
     override fun toType(
         who: String,
