@@ -13,7 +13,7 @@ import java.time.LocalDateTime
  */
 data class ScheduleMdbDocument(
     val scheduleId: String,
-    val dentist: Dentist,
+    val dentist: DentistMdbDocument,
     val periods: List<Period>,
     val enabled: Boolean,
     val createdAt: LocalDateTime,
@@ -23,7 +23,7 @@ data class ScheduleMdbDocument(
         schedule: Schedule
     ): this(
         scheduleId = schedule.scheduleId.id,
-        dentist = schedule.dentist,
+        dentist = DentistMdbDocument(schedule.dentist),
         periods = schedule.periods,
         enabled = schedule.enabled,
         createdAt = schedule.createdAt,
@@ -33,7 +33,7 @@ data class ScheduleMdbDocument(
     override fun toType(): Schedule =
         Schedule(
             scheduleIdData = ScheduleId(scheduleId),
-            dentistData = dentist,
+            dentistData = dentist.toType(),
             periodsData = periods,
             enabledData = enabled,
             createdAtData = createdAt,
