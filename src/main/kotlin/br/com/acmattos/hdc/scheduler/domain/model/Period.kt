@@ -20,7 +20,7 @@ data class Period(
     val weekDay: WeekDay,
     val from: LocalTime,
     val to: LocalTime,
-    val slot: Int
+    val slot: Long
 ): ValueObject {
     init {
         assertValid()
@@ -56,6 +56,10 @@ data class Period(
     }
 }
 
+/**
+ * @author ACMattos
+ * @since 11/07/2019.
+ */
 enum class WeekDay {
     SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY;
 

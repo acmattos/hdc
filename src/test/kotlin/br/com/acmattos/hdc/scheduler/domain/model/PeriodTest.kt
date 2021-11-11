@@ -26,7 +26,7 @@ object PeriodTest: Spek({
             lateinit var weekDay: WeekDay
             lateinit var from: LocalTime
             lateinit var to: LocalTime
-            var slot = 0
+            var slot = 0L
             var period: Period? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a valid ${WeekDay::class.java}""") {
@@ -58,7 +58,7 @@ object PeriodTest: Spek({
             lateinit var weekDay: WeekDay
             lateinit var from: LocalTime
             lateinit var to: LocalTime
-            var slot = 0
+            var slot = 0L
             var period: Period? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a valid ${WeekDay::class.java}""") {
@@ -96,7 +96,7 @@ object PeriodTest: Spek({
             lateinit var weekDay: WeekDay
             lateinit var from: LocalTime
             lateinit var to: LocalTime
-            var slot = 0
+            var slot = 0L
             var period: Period? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a valid ${WeekDay::class.java}""") {
@@ -134,7 +134,7 @@ object PeriodTest: Spek({
             lateinit var weekDay: WeekDay
             lateinit var from: LocalTime
             lateinit var to: LocalTime
-            var slot = 0
+            var slot = 0L
             var period: Period? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             Given("""a valid ${WeekDay::class.java}""") {
