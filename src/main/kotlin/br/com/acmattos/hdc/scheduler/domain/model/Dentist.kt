@@ -2,6 +2,9 @@ package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
+import br.com.acmattos.hdc.common.tool.assertion.Assertion
+import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.INVALID_DENTIST_FULL_NAME
+import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 
 /**
  * @author ACMattos
@@ -11,6 +14,20 @@ data class Dentist(
     val dentistId: DentistId,
     val fullName: String
 ): Entity {
+    init {
+        assertFullName()
+    }
+
+    private fun assertFullName(){
+        Assertion.assert(
+            "Invalid name for the Dentist",
+            SCHEDULE.name,
+            INVALID_DENTIST_FULL_NAME.code
+        ) {
+            fullName.isNotBlank()
+        }
+    }
+
     fun getAcronym() = fullName
         .split(" ")
         .map { it[0] }
