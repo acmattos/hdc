@@ -7,6 +7,7 @@ import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.DURATION_CREATE
 import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.FROM_LESS_THAN_TO
 import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.VALID_SLOT
 import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.WEEK_DAY_CONVERT_FAILED
+import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
@@ -36,6 +37,7 @@ data class Period(
     private fun assertFromLessThanTo(minutes: Long) {
         Assertion.assert(
             "from=[$from] must be smaller than to=[$to]!",
+            SCHEDULE.name,
             FROM_LESS_THAN_TO.code
         ) { minutes > 0 }
     }
@@ -43,6 +45,7 @@ data class Period(
     private fun assertValidSlot() {
         Assertion.assert(
             "slot=[$slot] must be bigger than zero!",
+            SCHEDULE.name,
             VALID_SLOT.code
         ) { slot > 0 }
     }
@@ -51,6 +54,7 @@ data class Period(
         val division = minutes % this.slot
         Assertion.assert(
             "(to=[$to] - from=[$from]) % duration=[$slot] generates a reminder!",
+            SCHEDULE.name,
             DURATION_CREATES_PERFECT_SLOTS.code
         ) { division == 0L }
     }
@@ -65,10 +69,11 @@ enum class WeekDay {
 
     companion object {
         fun convert(term: String): WeekDay = assertThatTerm(
-                term,
-                "[$term] does not correspond to a valid WeekDay!",
-                WEEK_DAY_CONVERT_FAILED.code
-            )
+            term,
+            "[$term] does not correspond to a valid WeekDay!",
+            SCHEDULE.name,
+            WEEK_DAY_CONVERT_FAILED.code
+        )
     }
 }
 
