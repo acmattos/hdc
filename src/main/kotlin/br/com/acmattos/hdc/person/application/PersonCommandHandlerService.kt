@@ -99,6 +99,7 @@ class PersonCommandHandlerService(
                 """
     There is a dentist already defined for the given full name: [${command.fullName}]!
                     """.trimIndent(),
+                PERSON.name,
                 DENTIST_ALREADY_EXISTS.code
             ) {
                 !it.isPresent
