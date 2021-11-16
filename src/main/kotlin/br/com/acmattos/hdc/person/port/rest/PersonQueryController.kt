@@ -84,6 +84,7 @@ class FindTheDentistRequest(val context: Context): Request<PersonQuery>(context)
         val dentistId = context.pathParam("dentist_id")
         Assertion.assert(
             "dentist_id can't be null or empty",
+            DENTIST.name,
             DENTIST_ID_INVALID.code
         ) {
             dentistId.isNotBlank()
