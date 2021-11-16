@@ -10,9 +10,10 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 private const val MESSAGE = "Condition has failed!"
-private const val LOG_MESSAGE_1 = "[ASSERTION] - Assertion to be evaluated..."
-private const val LOG_MESSAGE_2 = "[ASSERTION] - Assertion evaluated successfully!"
-private const val LOG_MESSAGE_3 = "[ASSERTION FAILURE]: -> '$MESSAGE' <-"
+private const val CONTEXT = "TEST"
+private const val LOG_MESSAGE_1 = "[$CONTEXT ASSERTION] - Assertion to be evaluated..."
+private const val LOG_MESSAGE_2 = "[$CONTEXT ASSERTION] - Assertion evaluated successfully!"
+private const val LOG_MESSAGE_3 = "[$CONTEXT ASSERTION FAILURE]: -> '$MESSAGE' <-"
 
 /**
  * @author ACMattos
@@ -30,18 +31,18 @@ object AssertionTest: Spek({
                 condition = true
             }
             When("""#assert is executed""") {
-                Assertion.assert(MESSAGE, ErrorTrackerCodeBuilder.build()) {
+                Assertion.assert(MESSAGE, CONTEXT, ErrorTrackerCodeBuilder.build()) {
                     condition
                 }
             }
             Then("""the message is $LOG_MESSAGE_1""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOG_MESSAGE_1)
+                assertThat(appender.containsMessage(LOG_MESSAGE_1)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
             }
             And("""the message is $LOG_MESSAGE_2""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOG_MESSAGE_2)
+                assertThat(appender.containsMessage(LOG_MESSAGE_2)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.TRACE)
@@ -60,13 +61,13 @@ object AssertionTest: Spek({
             }
             When("""#assert is executed""") {
                 assertion = Assertions.assertThatCode {
-                    Assertion.assert(MESSAGE, ErrorTrackerCodeBuilder.build()) {
+                    Assertion.assert(MESSAGE, CONTEXT, ErrorTrackerCodeBuilder.build()) {
                         condition
                     }
                 }
             }
             Then("""the message is $LOG_MESSAGE_1""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOG_MESSAGE_1)
+                assertThat(appender.containsMessage(LOG_MESSAGE_1)).isTrue()
             }
             And("the level is ${Level.TRACE}") {
                 assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)

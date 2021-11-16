@@ -10,12 +10,13 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
 inline fun <reified T: Enum<T>> assertThatTerm(
     term: String,
     assertionMessage: String,
+    context: String,
     code: ErrorTrackerCode
 ): T {
     val element = enumValues<T>().firstOrNull { t ->
         term.toUpperCase() == t.name
     }
-    Assertion.assert(assertionMessage, code) {
+    Assertion.assert(assertionMessage, context, code) {
         element != null
     }
     return element!!

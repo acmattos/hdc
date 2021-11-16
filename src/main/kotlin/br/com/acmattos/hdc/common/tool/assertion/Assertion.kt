@@ -11,14 +11,21 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
  * @since 12/06/2020.
  */
 object Assertion: Loggable() {
-    fun assert(message: String, code: ErrorTrackerCode, condition: () -> Boolean) {
+    fun assert(
+        message: String,
+        context: String,
+        code: ErrorTrackerCode,
+        condition: () -> Boolean
+    ) {
         logger.trace(
-            "[{}] - Assertion to be evaluated...",
+            "[{} {}] - Assertion to be evaluated...",
+            context,
             ASSERTION.name
         )
         if(!condition()) {
             logger.info(
-                "[{} {}]: -> '{}' <-",
+                "[{} {} {}]: -> '{}' <-",
+                context,
                 ASSERTION.name,
                 FAILURE.name,
                 message
@@ -26,7 +33,8 @@ object Assertion: Loggable() {
             throw AssertionFailedException(message, code)
         }
         logger.trace(
-            "[{}] - Assertion evaluated successfully!",
+            "[{} {}] - Assertion evaluated successfully!",
+            context,
             ASSERTION.name
         )
     }

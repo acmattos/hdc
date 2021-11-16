@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
+private const val CONTEXT = "TEST"
 private const val MESSAGE = "[invalid] does not correspond to a valid ValidEnum!"
 private const val VALID = "valid"
 private const val INVALID = "invalid"
@@ -76,6 +77,7 @@ enum class ValidEnum {
             return assertThatTerm(
                 term,
                 "[$term] does not correspond to a valid ValidEnum!",
+                CONTEXT,
                 ErrorTrackerCodeBuilder.build()
             )
         }
