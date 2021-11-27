@@ -31,6 +31,7 @@ class PersonBuilder {
                 LocalDateTime.now(),
                 null
             )),
+            null,
             true,
             LocalDateTime.now(),
             null
