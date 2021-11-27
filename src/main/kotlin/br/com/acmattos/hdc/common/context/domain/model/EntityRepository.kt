@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.cqs.StoreEnum.STORE
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCriteria
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
@@ -34,6 +35,10 @@ class EntityRepository<T: Entity>(
 
     override fun findAllByField(fieldName: String, value: Any): List<T> {
         return mdbRepository.findAllByField(fieldName, value).map { it.toType() }.toList() as List<T>
+    }
+
+    override fun findAllByCriteria(criteria: MdbCriteria): List<T> {
+        return mdbRepository.findAllByCriteria(criteria).map { it.toType() }.toList() as List<T>
     }
 
     companion object: Loggable()
