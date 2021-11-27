@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCriteria
 import java.util.Optional
 
 /**
@@ -7,7 +8,8 @@ import java.util.Optional
  * @since 25/07/2019.
  */
 interface Repository<T> {
-    fun save(entity: T)
+    fun save(t: T)
     fun findByField(fieldName: String, value: Any): Optional<T>
     fun findAllByField(fieldName: String, value: Any): List<T>
+    fun findAllByCriteria(criteria: MdbCriteria): List<T>
 }

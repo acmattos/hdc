@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_BY_CRITERIA_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_BY_FIELD_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_BY_FIELD_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.SAVE_FAILED
@@ -57,6 +58,19 @@ open class MdbRepository<T: MdbDocument>(
             return@catch getCollection().find(Filters.eq(fieldName, value))
                 .map { it }.toList()
         }
+
+    override fun findAllByCriteria(criteria: MdbCriteria): List<T> {
+        return catch(
+            "[{}] - Finding all documents by criteria in the repository: -> {} <-",
+            FIND_ALL_BY_CRITERIA_FAILED.code,
+            REPOSITORY.name,
+            criteria.toString()
+        ) {
+            return@catch getCollection().find(criteria.filters)
+                .map { it }.toList()
+        }
+    }
+
 
     private fun getCollection(): MongoCollection<T> =
         mongoDBCollection.getCollection()
