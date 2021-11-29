@@ -5,7 +5,7 @@ import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleE
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheScheduleCommand
 import br.com.acmattos.hdc.scheduler.domain.model.Appointment
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
-import br.com.acmattos.hdc.scheduler.port.rest.AppointmentBuilder
+import br.com.acmattos.hdc.scheduler.port.rest.AppointmentRequestBuilder
 import br.com.acmattos.hdc.scheduler.port.rest.CreateAppointmentsForTheScheduleRequestBuilder
 import br.com.acmattos.hdc.scheduler.port.rest.ScheduleRequestBuilder
 import org.assertj.core.api.Assertions.assertThat
@@ -27,7 +27,7 @@ object AppointmentMdbDocumentTest: Spek({
             lateinit var entity: Appointment
             lateinit var document: AppointmentMdbDocument
             Given("""a ${CreateAppointmentsForTheScheduleRequestBuilder::class.java} successfully instantiated""") {
-                request = AppointmentBuilder.buildCreateAppointmentsForTheScheduleRequestBuilder()
+                request = AppointmentRequestBuilder.buildCreateAppointmentsForTheScheduleRequestBuilder()
             }
             And("""a ${Schedule::class.java} successfully generated""") {
                 schedule = ScheduleRequestBuilder.buildSchedule()
