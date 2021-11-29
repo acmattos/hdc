@@ -13,7 +13,9 @@ class PatientMdbDocument(
     val cpf: String,
     val fullName: String,
     val contact: String,
-    val healthInsurance: String,
+    val companyName: String?,
+    val planNumber: String?,
+    val planName: String?,
 ): MdbDocument() {
     constructor(
         patient: Patient
@@ -22,7 +24,9 @@ class PatientMdbDocument(
         cpf = patient.cpf,
         fullName = patient.fullName,
         contact = patient.contact,
-        healthInsurance = patient.healthInsurance,
+        companyName = patient.companyName,
+        planNumber = patient.planNumber,
+        planName = patient.planName,
     )
 
     override fun toType(): Patient =
@@ -31,6 +35,8 @@ class PatientMdbDocument(
             cpf,
             fullName,
             contact,
-            healthInsurance,
+            companyName,
+            planNumber,
+            planName,
         )
 }
