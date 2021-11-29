@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.tool.server.javalin
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.uid.ULIDGen
+import io.swagger.v3.oas.annotations.media.Schema
 
 const val UNKNOWN_REASON = "UNKNOWN REASON"
 
@@ -10,6 +11,7 @@ const val UNKNOWN_REASON = "UNKNOWN REASON"
  * @author ACMattos
  * @since 03/08/2021.
  */
+@Schema(example = "{id=01FMMZJBC4Q2MJX8PESM4KVKSP, code:01FMMZJBC59FE3F55670TQCPE3, status: 200, data: {}}")//TODO Document response
 data class Response(
     val uid: String,
     val code: String,
