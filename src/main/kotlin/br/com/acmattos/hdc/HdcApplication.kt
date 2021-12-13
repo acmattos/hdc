@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServer
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
-import br.com.acmattos.hdc.scheduler.config.AppointmentKoinConfig
+import br.com.acmattos.hdc.scheduler.config.AppointmentKoinComponent
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.StatisticsHandler
@@ -26,7 +26,7 @@ class HdcApplication {
         startKoin {
             printLogger()
 
-            koin.loadModules(listOf(AppointmentKoinConfig.loadModule()))
+            koin.loadModules(listOf(AppointmentKoinComponent.loadModule()))
             koin.loadModules(listOf(PersonKoinComponent.loadModule()))
             koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
         }
