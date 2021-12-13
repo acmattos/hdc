@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse
  * @author ACMattos
  * @since 27/11/2021.
  */
-object ContextBuilder {
+class ContextBuilder {
     val req = mockk<HttpServletRequest>()
     val res = mockk<HttpServletResponse>()
 
