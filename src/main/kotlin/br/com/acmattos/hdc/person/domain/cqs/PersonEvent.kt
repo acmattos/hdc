@@ -4,6 +4,7 @@ import br.com.acmattos.hdc.common.context.domain.cqs.Event
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.person.domain.model.Address
 import br.com.acmattos.hdc.person.domain.model.Contact
+import br.com.acmattos.hdc.person.domain.model.HealthInsurance
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.domain.model.PersonType
 import com.fasterxml.jackson.annotation.JsonTypeName
@@ -30,6 +31,7 @@ open class CreateAPersonEvent(
     open val personalId: String?,
     open val addresses: List<Address>,
     open val contacts: List<Contact>,
+    open val healthInsuranceData: HealthInsurance?,
     open val enabled: Boolean,
     open val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -59,6 +61,7 @@ data class CreateADentistEvent(
     personalId,
     addresses,
     contacts,
+    null,
     enabled,
     createdAt,
     auditLog
