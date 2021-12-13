@@ -1,19 +1,18 @@
 package br.com.acmattos.hdc.scheduler.config
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
+import br.com.acmattos.hdc.common.tool.assertDefinitionsCount
 import br.com.acmattos.hdc.scheduler.port.rest.ScheduleCommandController
-import kotlin.test.assertEquals
 import org.assertj.core.api.Assertions.assertThat
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
-import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.qualifier.named
 import org.koin.dsl.koinApplication
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 private const val NUMBER_OF_DEPENDENCIES = 17
-const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
+private const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefinition"
 
 /**
  * @author ACMattos
@@ -46,9 +45,3 @@ object ScheduleKoinComponentTest: Spek({
         }
     }
 })
-
-// TODO MOVE TO ANOTHER FILE
-@OptIn(KoinInternalApi::class)
-fun KoinApplication.assertDefinitionsCount(count: Int) {
-    assertEquals(count, this.koin.instanceRegistry.size(), "definitions count")
-}
