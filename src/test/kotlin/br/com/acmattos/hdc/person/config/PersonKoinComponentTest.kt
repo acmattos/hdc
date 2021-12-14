@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.person.config
 
-import br.com.acmattos.hdc.scheduler.config.assertDefinitionsCount
+import br.com.acmattos.hdc.common.tool.assertDefinitionsCount
 import org.assertj.core.api.Assertions.assertThat
 import org.koin.core.Koin
 import org.koin.core.KoinApplication
