@@ -8,18 +8,18 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ContextBuilder
  */
 object AppointmentRequestBuilder {
     fun buildCreateAppointmentsForTheScheduleRequestBuilder(): CreateAppointmentsForTheScheduleRequestBuilder {
-        val context = ContextBuilder.mockContext(
-            "schedule_id",
-            """
+        return CreateAppointmentsForTheScheduleRequestBuilder(
+            getContext()
+        )
+    }
+
+    fun getContext() = ContextBuilder().mockContext(
+        "schedule_id",
+        """
             {
                "from":"2021-11-07",
                "to":"2021-11-12"
             }
             """.trimIndent()
-        )
-
-        return CreateAppointmentsForTheScheduleRequestBuilder(
-            context
-        )
-    }
+    )
 }
