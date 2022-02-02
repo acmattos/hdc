@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.person.port.rest
 
+import br.com.acmattos.hdc.common.tool.server.javalin.ContextBuilder
 import io.javalin.http.Context
 import io.javalin.http.util.ContextUtil
 import io.mockk.mockk
@@ -28,18 +29,7 @@ object PersonRequestBuilder {
         listOf(ContactRequest("info", "type")),
     )
 
-    fun buildFindTheDentistRequest() = FindTheDentistRequest(mockContext())
-
-    private fun mockContext(): Context {
-        val req = mockk<HttpServletRequest>()
-        val res = mockk<HttpServletResponse>()
-        val context: Context = ContextUtil.init(
-            req,
-            res,
-            "dentist_id",
-            mapOf("dentist_id" to "01FJJDJKDXN4K558FMCKEMQE6B")
-        )
-
-        return context
-    }
+    fun buildFindTheDentistRequest() = FindTheDentistRequest(
+        ContextBuilder().mockContext("dentist_id")
+    )
 }
