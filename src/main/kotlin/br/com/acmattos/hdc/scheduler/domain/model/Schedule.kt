@@ -1,21 +1,30 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.DomainLogEnum.ENTITY
+import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.FROM_LESSER_OR_EQUAL_TO_TO
 import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.NO_PERIODS_DEFINED
 import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.THERE_IS_A_COLLISION
+import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT
+import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
+import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
+import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleCommand
+import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheScheduleCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.ScheduleEvent
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.LocalTime
 
 /**
  * @author ACMattos
  * @since 10/07/2019.
  */
-data class Schedule(
+data class Schedule(// TODO Test
     private var scheduleIdData: ScheduleId? = null,
     private var dentistData: Dentist? = null,
     private var periodsData: List<Period>? = null,
@@ -57,12 +66,14 @@ data class Schedule(
     private fun assertHasNoPeriodsIssues() {
         Assertion.assert(
             "No periods were defined!",
+            SCHEDULE.name,
             NO_PERIODS_DEFINED.code
         ) {
             periodsData!!.isNotEmpty()
         }
         Assertion.assert(
             "There is a collision for existing periods [$periodsData]",
+            SCHEDULE.name,
             THERE_IS_A_COLLISION.code
         ) {
             !hasSomePeriodCollision()
@@ -80,12 +91,21 @@ data class Schedule(
     }
 
     private fun convertListOfPeriodsInMap(): Map<WeekDay, List<Period>> {
+        logger.trace(
+            "[{} {}] - Converting list of periods in a map...",
+            SCHEDULE.name,
+            ENTITY.name,
+        )
         val sortedPeriods = periodsData!!.sortedWith(
             compareBy(
                 { it.weekDay }, { it.from }
             )
         )
-        logger.trace("[{}] Periods sorted...", ENTITY.name)
+        logger.trace(
+            "[{} {}] Periods sorted...",
+            SCHEDULE.name,
+            ENTITY.name
+        )
 
         var basePeriod = sortedPeriods.first()
         val mapOfPeriods = mutableMapOf(
@@ -93,14 +113,14 @@ data class Schedule(
         )
         logger.trace(
             "[{}] Map of periods created...: -> {} <-",
+            SCHEDULE.name,
             ENTITY.name,
             mapOfPeriods.toString()
         )
 
         for(period in sortedPeriods) {
             if(period.weekDay === basePeriod.weekDay) {
-                val list = mapOfPeriods[period.weekDay]
-                list!!.add(period)
+                mapOfPeriods[period.weekDay]!!.add(period)
             } else {
                 basePeriod = period
                 mapOfPeriods[basePeriod.weekDay] =
@@ -108,7 +128,8 @@ data class Schedule(
             }
         }
         logger.trace(
-            "[{}] Map of periods updated...: -> {} <-",
+            "[{} {}]Converting list of periods in a map: -> {} <-",
+            SCHEDULE.name,
             ENTITY.name,
             mapOfPeriods.toString()
         )
@@ -122,6 +143,134 @@ data class Schedule(
             }
         }
         return false
+    }
+
+    fun createAppointmentCommands(
+        command: CreateAppointmentsForTheScheduleCommand
+    ): List<AppointmentCommand> {
+        logger.trace(
+            "[{} {}] - Creating appointment commands...",
+            SCHEDULE.name,
+            ENTITY.name,
+        )
+        val commands: MutableList<AppointmentCommand> = mutableListOf()
+        val dates: MutableList<LocalDate> = createPeriodOfDates(command)
+        val periods: Map<WeekDay, List<Period>> = convertListOfPeriodsInMap()
+        for(date in dates) {
+            val weekday = WeekDay.convert(date.dayOfWeek.name)
+            val weekdayPeriods: List<Period>? = periods[weekday]
+            if (weekdayPeriods != null) {
+                for (period in weekdayPeriods) {
+                    commands.addAll(
+                        buildCreateAppointmentForTheScheduleCommandList(
+                            date,
+                            period,
+                            command.auditLog
+                        )
+                    )
+                }
+            }
+        }
+        logger.debug(
+            "[{} {}] - Creating appointment commands: -> size: {} <-",
+            SCHEDULE.name,
+            ENTITY.name,
+            commands.size.toString()
+        )
+        return commands
+    }
+
+    private fun createPeriodOfDates(
+        command: CreateAppointmentsForTheScheduleCommand
+    ): MutableList<LocalDate> {
+        logger.trace(
+            "[{} {}] - Creating period of dates...",
+            SCHEDULE.name,
+            ENTITY.name,
+        )
+        assertFromLesserOrEqualToTo(command)// TODO TEST or just validate on SCHEDULE??????
+        val dates = mutableListOf(command.from)
+        var date = command.from.plusDays(1)
+        while(date.isBefore(command.to) || date.isEqual(command.to)) {
+            dates.add(date)
+            date = date.plusDays(1)
+        }
+        logger.debug(
+            "[{} {}] - Creating period of dates: -> [{} - {}] <-",
+            SCHEDULE.name,
+            ENTITY.name,
+            dates.first().toString(),
+            dates.last().toString(),
+        )
+        return dates
+    }
+
+    private fun assertFromLesserOrEqualToTo(
+        command: CreateAppointmentsForTheScheduleCommand
+    ) {
+        val days = java.time.Period.between(command.from, command.to).days
+        Assertion.assert(
+            "from=[$command.from] must be lesser or equal to to=[$command.to]!",
+            APPOINTMENT.name,
+            FROM_LESSER_OR_EQUAL_TO_TO.code
+        ) { days >= 0 }
+    }
+
+    private fun buildCreateAppointmentForTheScheduleCommandList(
+        date: LocalDate,
+        period: Period,
+        auditLog: AuditLog
+    ): List<CreateAppointmentForTheScheduleCommand> {
+        logger.trace(
+            "[{} {}] - Building list of ${CreateAppointmentForTheScheduleCommand::class.java}...",
+            SCHEDULE.name,
+            ENTITY.name,
+        )
+        val commands = mutableListOf<CreateAppointmentForTheScheduleCommand>()
+        val slots = createAppointmentSlotsForPeriod(period)
+        for(slot in slots) {
+            commands.add(
+                CreateAppointmentForTheScheduleCommand(
+                    scheduleId = this.scheduleId,
+                    acronym = this.dentist.getAcronym(),
+                    date = date,
+                    time = slot,
+                    duration = period.slot,
+                    auditLog = auditLog
+                )
+            )
+        }
+        logger.debug(
+            "[{} {}] - Building list of ${CreateAppointmentForTheScheduleCommand::class.java}: -> size: {} <-",
+            SCHEDULE.name,
+            ENTITY.name,
+            commands.size.toString()
+        )
+        return commands
+    }
+
+    private fun createAppointmentSlotsForPeriod(
+       period: Period
+    ):MutableList<LocalTime> {
+        logger.trace(
+            "[{} {}] - Creating appointment slots for period...",
+            SCHEDULE.name,
+            ENTITY.name,
+        )
+        val slots = mutableListOf(period.from)
+        var slot = period.from.plusMinutes(period.slot)
+        while(slot.isBefore(period.to)) {
+            slots.add(slot)
+            slot = slot.plusMinutes(period.slot)
+        }
+        logger.debug(
+            "[{} {}] - Creating  appointment slots for period: -> [{} - {}] <-",
+            SCHEDULE.name,
+            ENTITY.name,
+            slots.first().toString(),
+            slots.last().toString(),
+        )
+        return slots
     }
 
     companion object: Loggable() {
