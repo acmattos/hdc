@@ -2,8 +2,11 @@ package br.com.acmattos.hdc.person.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
+import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
+import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.INVALID_PERSON_FULL_NAME
 import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.PERSON_TYPE_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
 import java.time.LocalDateTime
@@ -12,7 +15,7 @@ import java.time.LocalDateTime
  * @author ACMattos
  * @since 30/09/2021.
  */
-data class Person (
+data class Person(
     private var personIdData: PersonId? = null,
     private var fullNameData: String? = null,
     private var personTypeData: PersonType? = null,
@@ -20,6 +23,7 @@ data class Person (
     private var personalIdData: String? = null,
     private var addressesData: List<Address>? = null,
     private var contactsData: List<Contact>? = null,
+    private var healthInsuranceData: HealthInsurance? = null,
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
@@ -31,6 +35,7 @@ data class Person (
     val personalId get() = personalIdData!!
     val addresses get() = addressesData!!
     val contacts get() = contactsData!!
+    val healthInsurance get() = healthInsuranceData
     val enabled get() = enabledData
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
@@ -60,6 +65,17 @@ data class Person (
         contactsData = event.contacts
         enabledData = event.enabled
         createdAtData = event.createdAt
+        assertFullName()
+    }
+
+    private fun assertFullName() { // TODO Test
+        Assertion.assert(
+            "Invalid name for the Person",
+            PERSON.name,
+            INVALID_PERSON_FULL_NAME.code
+        ) {
+            fullName.isNotBlank()
+        }
     }
 
     companion object {
@@ -88,6 +104,7 @@ enum class PersonType {
         fun convert(term: String): PersonType = assertThatTerm(
             term,
             "[$term] does not correspond to a valid PersonType!",
+            PERSON.name,
             PERSON_TYPE_CONVERT_FAILED.code
         )
     }
