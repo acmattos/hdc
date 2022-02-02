@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'br.com.acmattos'
-version '0.0.5-snapshot'
+version '0.0.5'
 
 application {
     // Define the main class for the application.
@@ -95,5 +95,3 @@ test {
 jacocoTestReport {
     dependsOn test
 }
-
-
