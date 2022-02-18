@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_BY_CRITERIA_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_BY_FIELD_FAILED
+import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_ALL_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_BY_FIELD_FAILED
 import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.SAVE_FAILED
 import br.com.acmattos.hdc.common.context.domain.model.Repository
@@ -45,6 +46,17 @@ open class MdbRepository<T: MdbDocument>(
                 Optional.empty()
             }
             return@catch optionalDocument
+        }
+
+    override fun findAll(): List<T> =// TODO Subject to change (APPLY a filter)
+        catch(
+            "[{}] - Finding all documents in the repository: -> {}={} <-",
+            FIND_ALL_FAILED.code,
+            REPOSITORY.name,
+            REPOSITORY.name // TODO Verify this log
+        ) {
+            return@catch getCollection().find()
+                .map { it }.toList()
         }
 
     override fun findAllByField(fieldName: String, value: Any): List<T> =

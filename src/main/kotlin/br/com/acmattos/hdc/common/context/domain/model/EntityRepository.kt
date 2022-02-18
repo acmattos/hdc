@@ -33,6 +33,10 @@ class EntityRepository<T: Entity>(
         }
     }
 
+    override fun findAll(): List<T> {// TODO Subject to change (APPLY a filter)
+        return mdbRepository.findAll().map { it.toType() }.toList() as List<T>
+    }
+
     override fun findAllByField(fieldName: String, value: Any): List<T> {
         return mdbRepository.findAllByField(fieldName, value).map { it.toType() }.toList() as List<T>
     }
