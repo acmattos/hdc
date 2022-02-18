@@ -10,11 +10,12 @@ import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.DENTIST_ID_INVALID
 import br.com.acmattos.hdc.person.config.PersonLogEnum.DENTIST
+import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
+import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonsQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindTheDentistQuery
 import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
 import br.com.acmattos.hdc.person.domain.model.Person
 import br.com.acmattos.hdc.person.domain.model.PersonId
-import br.com.acmattos.hdc.scheduler.domain.model.ScheduleId
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.HttpMethod
 import io.javalin.plugin.openapi.annotations.OpenApi
@@ -31,6 +32,39 @@ class PersonQueryController(
     private val handler: QueryHandler<Person>
 ) {
     @OpenApi(
+        summary = "Find all persons.",
+        operationId = "findAllPersons",
+        tags = ["Person"],
+        responses = [
+            OpenApiResponse("200", [OpenApiContent(Response::class)]),
+            OpenApiResponse("404", [OpenApiContent(Response::class)])
+        ],
+        method = HttpMethod.GET
+    )
+    fun findAllPersons(context: Context) {// TODO Test
+        logger.debug(
+            "[{} {}] - Finding all persons...",
+            PERSON.name,
+            ENDPOINT.name
+        )
+        context.getRequest(::FindAllPersonsRequest)
+            .toType(what = context.fullUrl())
+            .also { query ->
+                context.status(HttpStatus.OK_200).json(
+                    Response.create(
+                        context.status(),
+                        handler.handle(query)
+                    )
+                )
+            }
+        logger.info(
+            "[{} {}] - Finding all persons: -> !DONE! <-",
+            PERSON.name,
+            ENDPOINT.name
+        )
+    }
+
+    @OpenApi(
         summary = "Find the dentist identified by the given ID.",
         operationId = "findTheDentist",
         tags = ["Dentist"],
@@ -44,7 +78,7 @@ class PersonQueryController(
             isRepeatable = false
         )],
         responses = [
-            OpenApiResponse("200", [OpenApiContent(ScheduleId::class)]),
+            OpenApiResponse("200", [OpenApiContent(Response::class)]),
             OpenApiResponse("404", [OpenApiContent(Response::class)])
         ],
         method = HttpMethod.GET
@@ -55,7 +89,7 @@ class PersonQueryController(
             DENTIST.name,
             ENDPOINT.name
         )
-        context.getRequest<FindTheDentistRequest>(::FindTheDentistRequest)
+        context.getRequest(::FindTheDentistRequest)
         .toType(what = context.fullUrl())
         .also { query ->
             context.status(HttpStatus.OK_200).json(
@@ -66,13 +100,25 @@ class PersonQueryController(
             )
         }
         logger.info(
-            "[{} {}] - Finding the dentist... -> !DONE! <-",
+            "[{} {}] - Finding the dentist: -> !DONE! <-",
             DENTIST.name,
             ENDPOINT.name
         )
     }
 
     companion object: Loggable()
+}
+
+/**
+ * @author ACMattos
+ * @since 04/02/2022.
+ */
+class FindAllPersonsRequest(val context: Context): Request<PersonQuery>(context) {
+    override fun toType(who: String, what: String): PersonQuery {
+        return FindAllPersonsQuery(
+            AuditLog(who, what)
+        )
+    }
 }
 
 /**

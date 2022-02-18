@@ -8,6 +8,7 @@ import br.com.acmattos.hdc.common.context.domain.cqs.QueryStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
+import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonsQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindTheDentistQuery
 import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
 import br.com.acmattos.hdc.person.domain.model.Person
@@ -30,7 +31,7 @@ class PersonQueryHandlerService(
         )
 
         val result = when(query){
-            is FindTheDentistQuery -> handle(query)
+            is FindAllPersonsQuery -> handle(query)
             else -> handle(query as FindTheDentistQuery)
         }
 
@@ -42,6 +43,24 @@ class PersonQueryHandlerService(
             result.javaClass.name
         )
         return result
+    }
+
+    private fun handle(query: FindAllPersonsQuery): QueryResult<Person> {// TODO Test
+        queryStore.addQuery(query)
+        logger.trace(
+            "[{} {}] - Query added: -> {} <-",
+            PERSON.name,
+            SERVICE.name,
+            query.javaClass.name
+        )
+        val entities = repository.findAll()
+        logger.trace(
+            "[{} {}] - Entity found?: -> {} <-",
+            PERSON.name,
+            SERVICE.name,
+            entities.toString() // TODO change the approach to log
+        )
+        return QueryResult.build(entities)
     }
 
     private fun handle(query: FindTheDentistQuery): QueryResult<Person> {

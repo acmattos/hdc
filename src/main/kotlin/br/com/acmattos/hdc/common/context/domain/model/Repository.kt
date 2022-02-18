@@ -10,6 +10,7 @@ import java.util.Optional
 interface Repository<T> {
     fun save(t: T)
     fun findByField(fieldName: String, value: Any): Optional<T>
+    fun findAll(): List<T>// TODO Subject to change (APPLY a filter)
     fun findAllByField(fieldName: String, value: Any): List<T>
     fun findAllByCriteria(criteria: MdbCriteria): List<T>
 }

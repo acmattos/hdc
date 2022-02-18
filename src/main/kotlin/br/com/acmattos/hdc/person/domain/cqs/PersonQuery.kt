@@ -9,9 +9,18 @@ import br.com.acmattos.hdc.common.context.domain.model.Id
  * @since 01/11/2021.
  */
 open class PersonQuery(
-    override val id: Id,
+    override val id: Id, // TODO Change it to FILTER
     override val auditLog: AuditLog
 ): Query(id, auditLog)
+
+
+/**
+ * @author ACMattos
+ * @since 04/02/2022.
+ */
+data class FindAllPersonsQuery(
+    override val auditLog: AuditLog
+): PersonQuery(Id(), auditLog)
 
 /**
  * @author ACMattos

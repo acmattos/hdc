@@ -19,11 +19,13 @@ class PersonControllerEndpointDefinition(
     override fun routes() {
         path(PERSONS) {
             post(command::createADentist)
+            get(query::findAllPersons)
             path(DENTIST_ID) {
                 get(query::findTheDentist)
             }
         }
         logger.info("Route loaded: -> POST /$PERSONS <-")
+        logger.info("Route loaded: -> GET /$PERSONS <-")
         logger.info("Route loaded: -> GET /$PERSONS/$DENTIST_ID <-")
         logger.info("All routes loaded for: -> ${PersonControllerEndpointDefinition::class.java} <-")
     }

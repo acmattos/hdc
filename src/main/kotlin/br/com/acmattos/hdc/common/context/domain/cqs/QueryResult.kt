@@ -11,11 +11,14 @@ data class QueryResult<T: Entity>(
     val results: List<T>
 ): Message {
     companion object {
-        fun <T: Entity> build(optionalEntity: Optional<T>): QueryResult<T> =
+        fun <T: Entity> build(entities: List<T>): QueryResult<T> =// TODO test
+           QueryResult(entities)
+
+        fun <T: Entity> build(optionalEntity: Optional<T>): QueryResult<T> = // TODO test
             if(optionalEntity.isPresent) {
-                QueryResult<T>(listOf(optionalEntity.get()))
+                QueryResult(listOf(optionalEntity.get()))
             } else {
-                QueryResult<T>(listOf())
+                QueryResult(listOf())
             }
     }
 }
