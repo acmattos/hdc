@@ -98,4 +98,44 @@ fun main(){
             java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
         ).nextULID()
     )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
+    println(
+        de.huxhorn.sulky.ulid.ULID(
+            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+        ).nextULID()
+    )
 }
