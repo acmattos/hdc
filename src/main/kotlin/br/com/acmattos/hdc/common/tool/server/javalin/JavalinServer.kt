@@ -143,7 +143,7 @@ class JavalinServer(
     }
 
     private fun handleException(context: Context, status:Int, exception: Exception) {
-        val errorResponse = createErrorResponse(ErrorTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"),// TODO FIX THIS
+        val errorResponse = createErrorResponse(ErrorTrackerCode("01FVPVJN7G52MV85FW4ZTYTE6F"),// TODO FIX THIS FOR EACH CASE WITH DIFFERENT ID
             status,
             exception
         )
