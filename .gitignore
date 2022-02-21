@@ -6,3 +6,5 @@ build
 
 .idea
 /git.text
+/config/0_gui/
+/config/0_storage/
