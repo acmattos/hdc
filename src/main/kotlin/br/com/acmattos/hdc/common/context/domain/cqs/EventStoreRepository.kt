@@ -21,6 +21,10 @@ open class EventStoreRepository<T: Event>(
             event.javaClass.name
         )
     }
+    override fun findAllByFilter(filter: Filter<*>) : List<T> =
+        mdbRepository.findAllByFilter(filter)
+            .map { it.toType() }
+            .toList() as List<T>
 
     override fun findAllByField(fieldName: String, value: Any): List<T> =
         mdbRepository.findAllByField(fieldName, value).map { it.toType() } as List<T>
