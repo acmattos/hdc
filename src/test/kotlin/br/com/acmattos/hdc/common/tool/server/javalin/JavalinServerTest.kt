@@ -18,7 +18,7 @@ import org.spekframework.spek2.style.gherkin.Feature
 object JavalinServerTest : Spek({
     Feature("${JavalinServer::class.java} usage") {
         var server: JavalinServer? = null
-        var port = 7000
+        var port = 7001
         lateinit var getRoute: (() -> Unit)
         lateinit var response: Response
 
@@ -34,10 +34,10 @@ object JavalinServerTest : Spek({
                 }
             }
             And("""an instance of ${JavalinServer::class.java} instantiated""" ) {
-                server = JavalinServerBuilder.routes { getRoute() }.build()
+                server = JavalinServerBuilder.routes { getRoute() }.port(port).build()
             }
             When("""a HTTP GET connection to a valid resource is done to ${JavalinServer::class.java}""") {
-                response = HttpClient.get(uri)
+                response = HttpClient.port(port).get(uri)
             }
             Then("""response status is ${HttpStatus.OK_200}""") {
                 assertThat(response.statusCode).isEqualTo(HttpStatus.OK_200)
