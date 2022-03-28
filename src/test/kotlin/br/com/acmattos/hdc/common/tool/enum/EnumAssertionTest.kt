@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.tool.enum
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCodeBuilder
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCodeBuilder
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
@@ -55,13 +55,13 @@ object EnumAssertionTest: Spek({
                 }
             }
             Then("""#convert throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, ErrorTrackerCodeBuilder.build()))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build()))
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)
             }
-            And("""exception has code ${ErrorTrackerCodeBuilder.build()}""") {
-                assertion.hasFieldOrPropertyWithValue("code", ErrorTrackerCodeBuilder.build())
+            And("""exception has code ${MessageTrackerCodeBuilder.build()}""") {
+                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())
             }
             And("""no enum was retrieved""") {
                 assertThat(enum).isNull()
@@ -78,7 +78,7 @@ enum class ValidEnum {
                 term,
                 "[$term] does not correspond to a valid ValidEnum!",
                 CONTEXT,
-                ErrorTrackerCodeBuilder.build()
+                MessageTrackerCodeBuilder.build()
             )
         }
     }
