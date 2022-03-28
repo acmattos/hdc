@@ -7,8 +7,8 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.OVERLAPPING_APPOINTMENT
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.SCHEDULE_NOT_DEFINED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.OVERLAPPING_APPOINTMENT
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.SCHEDULE_NOT_DEFINED
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentEvent
@@ -59,20 +59,20 @@ class AppointmentCommandHandlerService(// TODO Test
     ): AppointmentEvent {
         val scheduleEvents = validateScheduleExists(command)
         logger.trace(
-            "[{} {}] - Schedule exist...",
+            "[{} {}] - Schedule exists...",
             APPOINTMENT.name,
             SERVICE.name
         )
 
 
-        return Schedule.apply(scheduleEvents).let { schedule ->
+        return Schedule.apply(scheduleEvents).let { entity ->
             logger.trace(
-                "[{} {}] - Schedule recreated: -> {} <-",
+                "[{} {}] - Schedule re-created: -> {} <-",
                 APPOINTMENT.name,
                 SERVICE.name,
-                schedule.toString()
+                entity.toString()
             )
-            val events = schedule.createAppointmentCommands(command).map {
+            val events = entity.createAppointmentCommands(command).map {
                 // TODO validateHasNoConflictingAppointments(command)
                 handle(it as CreateAppointmentForTheScheduleCommand) as CreateAppointmentForTheScheduleEvent
             }.toList()
