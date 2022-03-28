@@ -4,7 +4,7 @@ import br.com.acmattos.hdc.common.exception.HdcGenericException
 import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.ASSERTION
 import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.FAILURE
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
 
 /**
  * @author ACMattos
@@ -14,7 +14,7 @@ object Assertion: Loggable() {
     fun assert(
         message: String,
         context: String,
-        code: ErrorTrackerCode,
+        code: MessageTrackerCode,
         condition: () -> Boolean
     ) {
         logger.trace(
@@ -46,5 +46,5 @@ object Assertion: Loggable() {
  */
 data class AssertionFailedException(
     override val message: String,
-    val code: ErrorTrackerCode,
+    val code: MessageTrackerCode,
 ): HdcGenericException(message, code)
