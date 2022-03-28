@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.DENTIST_ALREADY_EXISTS
+import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.DENTIST_ALREADY_EXISTS
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent

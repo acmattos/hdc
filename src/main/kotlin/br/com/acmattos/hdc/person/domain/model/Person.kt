@@ -4,8 +4,8 @@ import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
-import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.INVALID_PERSON_FULL_NAME
-import br.com.acmattos.hdc.person.config.ErrorTrackerCodeEnum.PERSON_TYPE_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_FULL_NAME
+import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_TYPE_CONVERT_FAILED
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
