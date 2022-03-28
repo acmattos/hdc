@@ -17,7 +17,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
 const val EXCEPTION_MESSAGE = "No message was provided for this exception!"
-const val MESSAGE_SAVE = "[REPOSITORY] - Save document into the repository: -> TestMdbDocument(id=id) <-"
+const val MESSAGE_SAVE = "[REPOSITORY] - Saving document into the repository: -> TestMdbDocument(id=id) <-"
 const val LOGGER_SAVE_EXCEPTION_MESSAGE = "No message was provided for this exception! > [CATCHER] $MESSAGE_SAVE"
 const val MESSAGE_FIND = "[REPOSITORY] - Finding document by field in the repository: -> field=id <-"
 const val LOGGER_FIND_EXCEPTION_MESSAGE = "No message was provided for this exception! > [CATCHER] $MESSAGE_FIND"
