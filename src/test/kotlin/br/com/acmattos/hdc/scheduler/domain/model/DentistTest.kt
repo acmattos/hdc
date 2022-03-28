@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.INVALID_DENTIST_FULL_NAME
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.INVALID_DENTIST_FULL_NAME
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
