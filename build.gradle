@@ -37,7 +37,7 @@ dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
-    // MongoDB
+    // MongoDB - KMongo
     implementation 'org.litote.kmongo:kmongo:4.2.8'
 
     // Prometeus
