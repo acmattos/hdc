@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.common.tool.exception
 
-import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.CAUGHT_EXCEPTION
+import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.CAUGHT_EXCEPTION
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
 import ch.qos.logback.classic.Level
