@@ -7,6 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServer
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
+import br.com.acmattos.hdc.procedure.config.ProcedureKoinComponent
 import br.com.acmattos.hdc.scheduler.config.AppointmentKoinComponent
 import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import org.eclipse.jetty.server.Server
@@ -29,6 +30,7 @@ class HdcApplication {
             koin.loadModules(listOf(AppointmentKoinComponent.loadModule()))
             koin.loadModules(listOf(PersonKoinComponent.loadModule()))
             koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
+            koin.loadModules(listOf(ProcedureKoinComponent.loadModule()))
         }
     }
 
@@ -43,6 +45,8 @@ class HdcApplication {
             by inject(named("PersonCommandControllerEndpointDefinition"))
         private val scheduleCommandEndpointDefinition: EndpointDefinition
             by inject(named("ScheduleCommandControllerEndpointDefinition"))
+        private val procedureEndpointDefinition: EndpointDefinition
+            by inject(named("ProcedureControllerEndpointDefinition"))// TODO REVIEW NAMES
 
         private fun startHttpServer (): JavalinServer {
             return JavalinServerBuilder
@@ -76,6 +80,7 @@ class HdcApplication {
                     appointmentEndpointDefinition.routes()
                     personCommandEndpointDefinition.routes()
                     scheduleCommandEndpointDefinition.routes()
+                    procedureEndpointDefinition.routes()
                 }
                 .objectMapper(JacksonObjectMapperFactory.build())
                 .port( getProperty("JAVALIN_SERVER_PORT", 7000))
