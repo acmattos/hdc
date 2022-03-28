@@ -10,6 +10,7 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCollection
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbConfiguration
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDatabase
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbFilterTranslator
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.scheduler.application.AppointmentCommandHandlerService
@@ -86,7 +87,10 @@ object AppointmentKoinComponent: KoinComponent {
         }
         // 8 - Event Store - MongoDB Repository
         single(named(AEMR)) {
-            MdbRepository<MdbEventDocument>(get(named(AEMO)))
+            MdbRepository<MdbEventDocument>(
+                get(named(AEMO)),
+                MdbFilterTranslator()
+            )
         }
         // 9 - Event Store - Event Store Repository
         single<EventStore<AppointmentEvent>>(named(APES)) {
@@ -113,7 +117,10 @@ object AppointmentKoinComponent: KoinComponent {
         }
         // 14 - Entity Repository - MongoDB Repository
         single(named(APMR)) {
-            MdbRepository<AppointmentMdbDocument>(get(named(APMO)))
+            MdbRepository<AppointmentMdbDocument>(
+                get(named(APMO)),
+                MdbFilterTranslator()
+            )
         }
         // 15 - Entity Repository - Entity Repository
         single<Repository<Appointment>>(named(APRE)) {
