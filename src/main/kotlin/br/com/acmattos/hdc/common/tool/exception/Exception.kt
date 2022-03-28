@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.tool.exception
 
 import br.com.acmattos.hdc.common.exception.HdcGenericException
-import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
 
 /**
  * @author ACMattos
@@ -9,7 +9,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
  */
 class InternalServerErrorException(
     message: String,
-    val code: ErrorTrackerCode,
+    val code: MessageTrackerCode,
     throwable: Throwable
 ): HdcGenericException(message, code, throwable)
 
