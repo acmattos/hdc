@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.tool.exception
 
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
 import com.mongodb.MongoException
 
 /**
@@ -9,7 +9,7 @@ import com.mongodb.MongoException
  * @since 29/06/2020.
  */
 object ExceptionCatcher: Loggable() {
-    fun <T> catch(message: String, code: ErrorTrackerCode, vararg values: String, block: () -> T): T =
+    fun <T> catch(message: String, code: MessageTrackerCode, vararg values: String, block: () -> T): T =
         try {
             logger.trace(message, *values)
             block()
