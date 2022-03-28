@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.tool.enum
 
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
-import br.com.acmattos.hdc.common.tool.server.javalin.ErrorTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
 
 /**
  * @author ACMattos
@@ -11,7 +11,7 @@ inline fun <reified T: Enum<T>> assertThatTerm(
     term: String,
     assertionMessage: String,
     context: String,
-    code: ErrorTrackerCode
+    code: MessageTrackerCode
 ): T {
     val element = enumValues<T>().firstOrNull { t ->
         term.toUpperCase() == t.name
