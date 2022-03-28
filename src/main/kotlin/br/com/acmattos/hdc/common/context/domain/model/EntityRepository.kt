@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
+import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.StoreEnum.STORE
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCriteria
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
@@ -18,11 +19,48 @@ class EntityRepository<T: Entity>(
     override fun save(entity: T) {
         mdbRepository.save(converter(entity))
         logger.trace(
-            "[{}] Save entity [{}] to repository...: -> !DONE! <-",
+            "[{}] Saving entity [{}] to repository...: -> !DONE! <-",
             STORE.name,
             entity.javaClass.name
         )
     }
+
+    override fun update(filter: Filter<*>, entity: T) {
+        mdbRepository.update(filter, converter(entity))
+        logger.trace(
+            "[{}] Updating entity [{}] to repository...: -> !DONE! <-",
+            STORE.name,
+            entity.javaClass.name
+        )
+    }
+
+    override fun delete(filter: Filter<*>) {
+        mdbRepository.delete(filter)
+        logger.trace(
+            "[{}] Deleting entity [{}] to repository...: -> !DONE! <-",
+            STORE.name,
+            filter.toString()
+        )
+    }
+
+    override fun findOneByFilter(filter: Filter<*>) : Optional<T> =
+        mdbRepository.findOneByFilter(filter).let { document ->
+            return if(document.isPresent) {
+                logger.trace(
+                    "[{}] Finding one entity [{}] on the repository...: -> !DONE! <-",
+                    STORE.name,
+                    filter.toString()
+                )
+                Optional.of(document.get().toType() as T)
+            } else {
+                Optional.empty()
+            }
+        }
+
+    override fun findAllByFilter(filter: Filter<*>) : List<T> =
+        mdbRepository.findAllByFilter(filter)
+            .map { it.toType() }
+            .toList() as List<T>
 
     override fun findByField(fieldName: String, value: Any): Optional<T> {
         val document = mdbRepository.findByField(fieldName, value)

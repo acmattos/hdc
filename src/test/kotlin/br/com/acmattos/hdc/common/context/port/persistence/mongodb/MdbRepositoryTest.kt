@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
-import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.FIND_BY_FIELD_FAILED
-import br.com.acmattos.hdc.common.context.config.ErrorTrackerCodeEnum.SAVE_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_BY_FIELD_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAILED
 import br.com.acmattos.hdc.common.context.domain.model.TestMdbDocument
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher
 import br.com.acmattos.hdc.common.tool.exception.InternalServerErrorException
@@ -39,7 +39,7 @@ object MdbRepositoryTest: Spek({
                 mongoDBCollection = mockk(relaxed = true)
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mongoDBCollection)
+                repository = MdbRepository(mongoDBCollection, MdbFilterTranslator())
             }
             When("""#save is executed""") {
                 repository.save(TestMdbDocument("id"))
@@ -67,7 +67,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().insertOne(any()) } throws Exception()
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection)
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
             }
             When("""#save is executed""") {
                 assertion = assertThatCode {
@@ -119,7 +119,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().find(any<Bson>()).firstOrNull() } returns entity
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection)
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
             }
             When("""#findByField is executed""") {
                 entity = repository.findByField("field", "id").get()
@@ -150,7 +150,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().find(any<Bson>()) } throws Exception()
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection)
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
             }
             When("""#findByField is executed""") {
                 assertion = assertThatCode {
