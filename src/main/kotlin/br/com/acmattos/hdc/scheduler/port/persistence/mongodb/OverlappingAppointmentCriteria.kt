@@ -11,6 +11,7 @@ import org.bson.conversions.Bson
  * @author ACMattos
  * @since 21/11/2021.
  */
+@Deprecated("Change it to Filter")
 data class OverlappingAppointmentCriteria(
     val scheduleId: ScheduleId,
     val date: LocalDate,
