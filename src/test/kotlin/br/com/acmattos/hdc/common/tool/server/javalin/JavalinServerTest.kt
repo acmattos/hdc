@@ -53,7 +53,7 @@ object JavalinServerTest : Spek({
             Given("""a HTTP Server GET route is defined but throws ${InternalServerErrorException::class.java}""") {
                 getRoute = {
                     ApiBuilder.get(uri) {
-                        throw InternalServerErrorException("Condition not met!", ErrorTrackerCodeBuilder.build(), Exception()) // TODO FIND CODE
+                        throw InternalServerErrorException("Condition not met!", MessageTrackerCodeBuilder.build(), Exception()) // TODO FIND CODE
                     }
                 }
             }
@@ -68,7 +68,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Condition not met!'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":500,\"data\":\"Condition not met!\"")
+                    .contains("\"code\":\"01FVPVJN7G52MV85FW4ZTYTE6F\",\"status\":500,\"data\":\"Condition not met!\"")
             }
         }
 
@@ -89,7 +89,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Not found'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":404,\"data\":\"Not found")
+                    .contains("\"code\":\"01FVPVJN7G52MV85FW4ZTYTE6F\",\"status\":404,\"data\":\"Not found")
             }
         }
 
@@ -99,7 +99,7 @@ object JavalinServerTest : Spek({
             Given("""a HTTP Server GET route is defined but throws ${AssertionFailedException::class.java}""") {
                 getRoute = {
                     ApiBuilder.get(uri) {
-                        throw AssertionFailedException("Condition not met!", ErrorTrackerCodeBuilder.build()) // TODO FIND CODE
+                        throw AssertionFailedException("Condition not met!", MessageTrackerCodeBuilder.build()) // TODO FIND CODE
                     }
                 }
             }
@@ -114,7 +114,7 @@ object JavalinServerTest : Spek({
             }
             And("response body contains 'Condition not met!'") {
                 assertThat(response.body().asString("text/json"))
-                    .contains("\"code\":\"01FK6PF0DWKTN1BYZW6BRHFZFJ\",\"status\":400,\"data\":\"Condition not met!\"}")
+                    .contains("\"code\":\"01FVPVJN7G52MV85FW4ZTYTE6F\",\"status\":400,\"data\":\"Condition not met!\"}")
             }
         }
 // TODO Fix OpenApiPlugin
