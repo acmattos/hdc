@@ -19,7 +19,7 @@ class ScheduleControllerEndpointDefinition(
             post(controller::createAScheduleForTheDentist)
         }
         logger.info("Route loaded: -> POST /$SCHEDULES <-")
-        logger.info("All routes loaded for: -> ${ScheduleControllerEndpointDefinition::class.java} <-")
+        logger.info("All routes loaded for: -> ${ScheduleControllerEndpointDefinition::class.java.simpleName} <-")
     }
 
     companion object: Loggable()

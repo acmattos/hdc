@@ -25,7 +25,7 @@ data class Response(
             ResponseBuilder.build(uid = uid, status = status, data = data)
 
         fun create(
-            code: ErrorTrackerCode,
+            code: MessageTrackerCode,
             status: Int,
             message: Any? = null,
             exception: Throwable?,
@@ -47,7 +47,7 @@ data class Response(
 private class ResponseBuilder {
     companion object: Loggable() {
         fun build(
-            code: ErrorTrackerCode = ErrorTrackerCode("01FK6ADSETKTN1BYZW6BRHFZFJ"),//TODO SINGLE OR MULTIPLE OK?
+            code: MessageTrackerCode = MessageTrackerCode("01FK6ADSETKTN1BYZW6BRHFZFJ"),//TODO SINGLE OR MULTIPLE OK?
             uid: String,
             status: Int,
             data: Any
@@ -61,7 +61,7 @@ private class ResponseBuilder {
         }
 
         fun build(
-            code: ErrorTrackerCode,
+            code: MessageTrackerCode,
             uid: String,
             status: Int,
             message: Any? = null,
@@ -84,4 +84,4 @@ private class ResponseBuilder {
  * @author ACMattos
  * @since 29/10/2021.
  */
-class ErrorTrackerCode(id: String): Id(id)
+class MessageTrackerCode(id: String): Id(id)
