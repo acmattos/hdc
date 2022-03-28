@@ -4,9 +4,9 @@ import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.APPOINTMENT_STATUS_CONVERT_FAILED
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.APPOINTMENT_STATUS_CONVERT_FAILED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentEvent
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleEvent
