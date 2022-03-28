@@ -3,7 +3,7 @@ package br.com.acmattos.hdc.scheduler.domain.model
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
-import br.com.acmattos.hdc.scheduler.config.ErrorTrackerCodeEnum.INVALID_DENTIST_FULL_NAME
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.INVALID_DENTIST_FULL_NAME
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 
 /**
