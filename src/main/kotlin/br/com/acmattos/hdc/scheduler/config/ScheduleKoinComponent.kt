@@ -10,6 +10,7 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCollection
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbConfiguration
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDatabase
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbFilterTranslator
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.http.Http
@@ -92,7 +93,10 @@ object ScheduleKoinComponent: KoinComponent {
         }
         // 8 - Event Store - MongoDB Repository
         single(named(EMR)) {
-            MdbRepository<MdbEventDocument>(get(named(EMO)))
+            MdbRepository<MdbEventDocument>(
+                get(named(EMO)),
+                MdbFilterTranslator()
+            )
         }
         // 9 - Event Store - Event Store Repository
         single<EventStore<ScheduleEvent>>(named(PES)) {
@@ -119,7 +123,10 @@ object ScheduleKoinComponent: KoinComponent {
         }
         // 14 - Entity Repository - MongoDB Repository
         single(named(PMR)) {
-            MdbRepository<ScheduleMdbDocument>(get(named(PMO)))
+            MdbRepository<ScheduleMdbDocument>(
+                get(named(PMO)),
+                MdbFilterTranslator()
+            )
         }
         // 15 - Entity Repository - Entity Repository
         single<Repository<Schedule>>(named(PRE)) {

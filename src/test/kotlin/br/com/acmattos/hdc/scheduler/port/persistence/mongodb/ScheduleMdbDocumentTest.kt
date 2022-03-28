@@ -15,26 +15,26 @@ import org.spekframework.spek2.style.gherkin.Feature
  * @since 21/10/2021.
  */
 object ScheduleMdbDocumentTest: Spek({
-    Feature("${ScheduleMdbDocument::class.java} usage") {
-        Scenario("${ScheduleMdbDocument::class.java} population") {
+    Feature("${ScheduleMdbDocument::class.java.simpleName} usage") {
+        Scenario("${ScheduleMdbDocument::class.java.simpleName} population") {
             lateinit var request: CreateAScheduleForTheDentistRequest
             lateinit var command: CreateAScheduleForTheDentistCommand
             lateinit var event: CreateAScheduleForTheDentistEvent
             lateinit var entity: Schedule
             lateinit var document: ScheduleMdbDocument
-            Given("""a ${CreateAScheduleForTheDentistRequest::class.java} successfully instantiated""") {
+            Given("""a ${CreateAScheduleForTheDentistRequest::class.java.simpleName} successfully instantiated""") {
                 request = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
             }
-            And("""a ${CreateAScheduleForTheDentistCommand::class.java} successfully generated""") {
+            And("""a ${CreateAScheduleForTheDentistCommand::class.java.simpleName} successfully generated""") {
                 command = (request.toType() as CreateAScheduleForTheDentistCommand).copy(dentist = DentistBuilder.build())
             }
-            And("""a ${CreateAScheduleForTheDentistEvent::class.java} successfully instantiated""") {
+            And("""a ${CreateAScheduleForTheDentistEvent::class.java.simpleName} successfully instantiated""") {
                 event = CreateAScheduleForTheDentistEvent(command)
             }
             And("""a ${Schedule::class.java} successfully instantiated""") {
                 entity = Schedule.apply(listOf(event))
             }
-            When("""${ScheduleMdbDocument::class.java} is instantiated""") {
+            When("""${ScheduleMdbDocument::class.java.simpleName} is instantiated""") {
                 document = ScheduleMdbDocument(entity)
             }
             Then("""document#toType is equal to the entity""") {

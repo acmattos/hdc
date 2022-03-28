@@ -19,7 +19,7 @@ private const val ENDPOINT_DEFINITION = "ScheduleCommandControllerEndpointDefini
  * @since 23/09/2021.
  */
 object ScheduleKoinComponentTest: Spek({
-    Feature("${ScheduleKoinComponent::class.java} usage") {
+    Feature("${ScheduleKoinComponent::class.java.simpleName} usage") {
         Scenario("assertion succeed") {
             lateinit var koin: Koin
             lateinit var application: KoinApplication
@@ -39,7 +39,7 @@ object ScheduleKoinComponentTest: Spek({
                     koin.get<EndpointDefinition>(named(ENDPOINT_DEFINITION))
                 ).isNotNull()
             }
-            And("""the ${ScheduleCommandController::class.java} component was loaded""") {
+            And("""the ${ScheduleCommandController::class.java.simpleName} component was loaded""") {
                 assertThat(koin.get<ScheduleCommandController>()).isNotNull()
             }
         }
