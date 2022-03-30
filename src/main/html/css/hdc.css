@@ -1,0 +1,72 @@
+:root{
+    --azul-principal: #006298;
+    --azul-escuro: #004165;
+    --cinza-azulado: #002e48;
+    --cinza-principal: #838a90;
+    --cinza-escuro: #54595d;
+    --cor-sucesso: #008542;
+    --cor-perigo: #dc3545;
+    --cor-perigo-hover:#a20716;
+    --fundo-perigo: #fff2f3;
+    --sombra-botoes: 0 0 3px rgba(0, 0, 0, 0.9);
+    --bordas-escuras: #9e9e9e;
+    --bordas-medias: #ccc;
+    --bordas-claras:#d9d9d9;
+}
+
+input.invalid {
+    border-color: red;
+}
+
+td.details-control, td.details-control2{
+    text-align: center;
+}
+td.details-control:after, td.details-control2:after {
+    content: "\f0fe";
+    cursor: pointer;
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+tr.shown td.details-control:after, tr.shown td.details-control2:after{
+    content: "\f146";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+
+td.details-control.details-edit:after {
+    color: var(--azul-principal);
+    content: "\f303";
+    cursor: pointer;
+    font-family: "Font Awesome 5 Free";
+    font-size: 1.12em;
+    font-weight: 900;
+    padding:0 5px;
+}
+tr.shown td.details-control.details-edit:after {
+    color: var(--cor-perigo)!important;
+    content: "\f00d";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+}
+.table tr[data-toggle]:hover {
+    cursor: pointer;
+}
+
+.fa-times, a .fa-times, a .fa-trash-alt, .fa-trash-alt, .fa-exclamation-circle{
+    color: var(--cor-perigo)!important;
+}
+a:hover .fa-times, a:hover .fa-trash-alt{
+    color: var(--cor-perigo-hover)!important;
+}
+.fa-check-circle, a .fa-check-circle, .fa-check, a .fa-check {
+    color: #28a745!important;
+}
+.fa-pencil-alt{
+    color: var(--azul-principal);
+}
+.fa-pencil-alt:hover, td:hover .fa-pencil-alt{
+    color: var(--azul-escuro);
+}
+.btn .fa-pencil-alt, .btn .fa-trash-alt{
+    color: #fff!important;
+}

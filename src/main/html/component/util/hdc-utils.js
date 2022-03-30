@@ -1,18 +1,18 @@
 (function () {
    'use strict';
 
-   String.prototype.formatMessage = function (...elements) {
-      let args = elements[0]; logger.alert('#formatMessage elements, args, this.replace', elements, args,this.replace(/{([0-9]+)}/g, function (match, index) {//logger.alert('#formatMessage', args[index], match)
-         return typeof args[index] == 'undefined' ? match : args[index];
-      }))
-      return this.replace(/{([0-9]+)}/g, function (match, index) {//logger.alert('#formatMessage', args[index], match)
-         return typeof args[index] == 'undefined' ? match : args[index];
-      });
-   };
-   String.prototype.format = function () {
+   // String.prototype.formatMessage = function (...elements) {
+   //    let args = elements[0]; logger.alert('#formatMessage elements', elements)
+   //    return this.replace(/{([0-9]+)}/g, function (match, index) {
+   //       logger.alert('#formatMessage - replace -> (args[index] == \'undefined\'),args[index], match',
+   //          (args[index] == 'undefined'), index, args, args[index], match)
+   //       return typeof args[index] === 'undefined' ? match : args[index];
+   //    });
+   // };
+   String.prototype.format = function() {
       let args = arguments;
       return this.replace(/{([0-9]+)}/g, function (match, index) {
-         return typeof args[index] == 'undefined' ? match : args[index];
+         return typeof args[index] === 'undefined' ? match : args[index];
       });
    };
 
@@ -46,19 +46,19 @@
       constructor(filePath) {
          $.getJSON(filePath, (data) => {
             this.messages = data;
-            logger.info('Messages loaded succseefuly!')
+            logger.info('Messages loaded successfuly!', this.messages)
          });
          this.messageNotFoundKey = '01FVQ2NP5PKKHVWHP57PKD8N62'
       }
-      get(...keys) {
+      get(key, ...replaceables) {
          try {
-
-            logger.debug('to Message#get', keys);
-            return this.messages[keys[0]].formatMessage(keys);
+            logger.delete('AQUI Message#get: key, replaceables',this.messages, key,  replaceables);
+            return this.messages[key].format(replaceables);
          } catch (e) {
-            logger.info('Message#get - [EXCEPTION] = ', e, keys);
-            logger.alert('Message#get keys[0]', keys[0],this.messages[this.messageNotFoundKey].formatMessage(keys[0]));
-            return this.messages[this.messageNotFoundKey].formatMessage(keys[0]);
+            logger.info('[EXCEPTION] = APAGAR Message#get keys[0]', key,
+               this.messages/*[this.messageNotFoundKey]*/);
+            logger.info('Message#get - [EXCEPTION] = ', e, key);
+            return this.messages[this.messageNotFoundKey].format(key);
          }
       }
    }
@@ -105,6 +105,7 @@
       }
       post(uri, payload, done, fail) {
          let config = $.extend( this.config || {}, {
+            type: 'POST',
             url: this.getFullUrl(uri)
          });
          //var config = {
@@ -117,6 +118,28 @@
             //    jqXHR.url = settings.url;
             // }
          //}
+         if(payload) {
+            config.data = JSON.stringify(payload);
+         }
+         logger.debug(config.type, payload, config);
+         return this.send(config, done, fail);
+      }
+      put(uri, payload, done, fail) {
+         let config = $.extend( this.config || {}, {
+            type: 'PUT',
+            url: this.getFullUrl(uri)
+         });
+         if(payload) {
+            config.data = JSON.stringify(payload);
+         }
+         logger.debug(config.type, payload, config);
+         return this.send(config, done, fail);
+      }
+      delete(uri, payload, done, fail) {
+         let config = $.extend( this.config || {}, {
+            type: 'DELETE',
+            url: this.getFullUrl(uri)
+         });
          if(payload) {
             config.data = JSON.stringify(payload);
          }
