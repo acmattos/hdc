@@ -12,7 +12,6 @@ import java.time.LocalDateTime
  */
 open class ProcedureEvent(
     open val procedureId: ProcedureId,
-//    open val code: Int,
     override val auditLog: AuditLog
 ): Event(auditLog)
 

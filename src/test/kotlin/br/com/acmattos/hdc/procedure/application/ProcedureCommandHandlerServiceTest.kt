@@ -35,7 +35,6 @@ import org.spekframework.spek2.style.gherkin.Feature
 private const val EXCEPTION_MESSAGE_1 = "There is a dental procedure already defined for the given code [81000014]!"
 private const val EXCEPTION_MESSAGE_2 = "Code is out of range (81000014-87000199)!"
 private const val EXCEPTION_MESSAGE_3 = "Description length is out of range (3-120)!"
-
 private const val EXCEPTION_MESSAGE_4 = "There is no dental procedure defined for the given id [12345678901234567890123456]!"
 
 /**
