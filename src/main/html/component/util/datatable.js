@@ -2,27 +2,36 @@
    'use strict';
 
    class DtConfig {
-      constructor(uri, columns, columnDefs) {
+      constructor(uri, columns, columnDefs, initComplete) {
          this.uri = uri;
          this.columns = columns;
          this.columnDefs = !columnDefs ? [] : columnDefs;
+         this.initComplete = !initComplete ? () => {} : initComplete;
       }
       config() {
+         let initComplete = this.initComplete;
          return {
-            'processing': true,
-            'serverSide': true,
-            "processing": true,
+             // 'processing': true,
+             // 'serverSide': true,
             'ajax': {
                'url': resource.getFullUrl(this.uri),
                'type': 'GET',
                'dataType': 'json',
                'dataSrc': 'data.results',
-               'error': function(jqXHR, textStatus, errorThrown){ toast.show(jqXHR.responseJSON)}
+               'error': function(jqXHR, textStatus, errorThrown) {
+                  toast.show({'status': 499 ,
+                     'code': '01FVQ2NP5N57RMXBZDKHVT7ZGJ',
+                     'data': '01FVQ2NP5N57RMXBZDKHVT7ZGJ'
+                  });
+               }
             },
             'columns': this.columns,
             'columnDefs': this.columnDefs,
+            'initComplete': function(settings, json) {
+               initComplete(settings, json);
+            },
             'language': {
-               'emptyTable': 'Nenhum resultado encontrado',
+               'emptyTable': 'Tabela vazia',
                'zeroRecords': 'Nenhum resultado encontrado',
                'processing': 'Carregando...'//TODO USE loader
             },
