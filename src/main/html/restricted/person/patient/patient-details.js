@@ -5,14 +5,16 @@
    class Patient {
       constructor() {
          this.personIdId = "#personId";
-         this.fullNameId = "#personId";
-         this.personTypeId = "#personTypeId";
-         this.cpfId = "#cpfId";
-         this.personalId = "#personalIdId";
-         this.enabledId = "#enabledId";
+         this.fullNameId = "#fullName";
+         this.dobId = "#dob";
+         this.personTypeId = "#personType";
+         this.cpfId = "#cpf";
+         this.personalIdId = "#personalId";
+         this.enabledId = "#enabled";
          if (Array.isArray(arguments[0])) {
             this.personId = arguments[0][0].person_id.id;
             this.fullName = arguments[0][0].full_name;
+            this.dob = arguments[0][0].dob;
             this.personType = arguments[0][0].person_type;
             this.cpf = arguments[0][0].cpf;
             this.personalId = arguments[0][0].personalId;
@@ -23,6 +25,7 @@
          } else {
             this.personId = $.inputText('#personId');
             this.fullName = $.inputText('#fullName');
+            this.dob = $.inputText(this.dobId);
             this.personType = $.inputText('#personType');
             this.cpf = $.inputText('#cpf');
             this.personalId = $.inputText('#personalId');
@@ -77,46 +80,68 @@
 // //                   toast.show(response);
 // //                });
 // //          }
-      toPage(){
-         $.inputText('#personId', this.personId);
-         $.inputText('#fullName', this.fullName);
-         $.inputText('#personType', this.personType);
-         $.inputText('#cpf', this.cpf);
-         $.inputText('#personalId', this.personalId);
+      toPage(contactTypes, personTypes, states){
+         $.inputText(this.personIdId, this.personId);
+         $.inputText(this.fullNameId, this.fullName);
+         $.inputText(this.dobId, this.dob, 'Dd/Mm/YYYY', {
+            onInvalid: (val, e, f, invalid, options) => {
+               var error = invalid[0];
+               logger.info("Digit: " + error.v + " is invalid for the position: " +
+                  error.p + ". We expect something like: " + error.e);
+            },
+            translation: {
+               'M': { pattern: /[0-1]/ },
+               'm': { pattern: /[0-9]/ },
+               'D': { pattern: /[0-3]/ },
+               'd': { pattern: /[0-9]/ },
+               'Y': { pattern: /[0-9]/ },
+               '/': { pattern: /[\/]/, fallback:'/' }
+            },
+            reverse: false
+         });
+         $(this.dobId).datepicker({
+            constrainInput: true,
+            changeMonth: true,
+            changeYear: true,
+            showAnim: 'fade',
+            // minDate: minDate,
+            // maxDate: maxDate
+            dateFormat: 'dd/mm/yy',
+            dayNames: ['Domingo','Segunda','Terça','Quarta', 'Quinta','Sexta',
+               'Sábado','Domingo'],
+            dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+            dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex', 'Sáb','Dom'],
+            monthNames: ['Janeiro','Fevereiro','Março','Abril', 'Maio','Junho',
+               'Julho','Agosto','Setembro','Outubro','Novembro', 'Dezembro'],
+            monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun', 'Jul','Ago',
+               'Set','Out','Nov','Dez']
+         });
+         let personTypeId = this.personTypeId;
+         let personType = this.personType;
+         $.selectBuilder(this.personTypeId, this.personType, personTypes);
+         $.inputText(this.cpfId, this.cpf, '999.999.999-99');
+         $.inputText(this.personalIdId, this.personalId);
          this.addresses.forEach((item, index, array) => {
-            array[index].toPage();
+            array[index].toPage(states);
          });
          this.contacts.forEach((item, index, array) => {
-            array[index].toPage();
+            array[index].toPage(contactTypes);
          });
          // new HealthInsurance();//                  healthInsuranc, this.healthInsurancee,
-         $.checkBox('#enabled', this.enabled);
+         $.checkBox(this.enabledId, this.enabled);
       }
       fromPage(){
-         // var deferred = $.Deferred();
-         // var promise = deferred.promise();
-         // this.fullName = $.inputText('#fullName');
-         // this.personType = $.inputText('#personType');
-         // this.cpf = $.inputText('#cpf');
-         // this.personalId = $.inputText('#personalId');
-         // this.addresses.forEach((item, index, array) => {
-         //    array[index].toPage();
-         // });
-         // this.contacts.forEach((item, index, array) => {
-         //    array[index].toPage();
-         // });
-         // // new HealthInsurance();//                  healthInsuranc, this.healthInsurancee,
-         // $.checkBox('#enabled', this.enabled);
-         // return this;
-         // return promise;
          return this.validate();
       }
-      validate() {//logger.alert('PATIENT UPD')
+      validate() {
          let fullNameV = new StringValidator(this.fullNameId, {
             len: { min: 3, max: 100, message: '01FV2HXNN69FE3F55670TQCPE3' }
          });
          let personTypeV = new SelectValidator(this.personTypeId, {
-            select: { invalid: '', message: '01FV2J1YQ69FE3F55670TQCPE3' }
+            select: { invalid: '-1', message: '01FV2J1YQ69FE3F55670TQCPE3' }
+         });
+         let dobV = new SelectValidator(this.personTypeId, {
+            select: { invalid: '-1', message: '' }
          });
          let cpfV = new CpfValidator(this.cpfId, {
             format: { message: '01FVPVJN7G27PHS1MQ52NS823F' }
@@ -166,19 +191,19 @@
                this.street = address.street;
                this.number = address.number;
                this.complement = address.complement;
-               this.zipCode = address.zipCode;
+               this.zipCode = address.zip_code;
                this.neighborhood = address.neighborhood;
                this.state = address.state;
                this.city = address.city;
             } else {
                this.index = 0;
-               this.street = $.inputText(this.streetId + this.index);
-               this.number = $.inputText(this.numberId + this.index);
-               this.complement = $.inputText(this.complementId + this.index);
-               this.zipCode = $.inputText(this.zipCodeId + this.index);
-               this.neighborhood = $.inputText(this.neighborhoodId + this.index);
-               this.state = $.inputText(this.stateId + this.index);
-               this.city = $.inputText(this.cityId + this.index);
+               this.street = $.inputText(this.streetId);
+               this.number = $.inputText(this.numberId);
+               this.complement = $.inputText(this.complementId);
+               this.zipCode = $.inputText(this.zipCodeId);
+               this.neighborhood = $.inputText(this.neighborhoodId);
+               this.state = $.inputText(this.stateId);
+               this.city = $.inputText(this.cityId);
             }
          }
          static read(addresses) {
@@ -188,35 +213,38 @@
             });
             return result;
          }
-         toPage(){
+         toPage(states){
             $.inputText(this.streetId, this.street);
             $.inputText(this.numberId, this.number);
             $.inputText(this.complementId, this.complement);
-            $.inputText(this.zipCodeId, this.zipCode);
+            $.inputText(this.zipCodeId, this.zipCode, '00000-000');
             $.inputText(this.neighborhoodId, this.neighborhood);
-            $.inputText(this.stateId, this.state);
+            $.selectBuilder(this.stateId, this.state, states);
             $.inputText(this.cityId, this.city);
          }
          fromPage() {
             return this.validate();
          }
          validate() {//logger.alert('ADDRESS UPD')
-            let streetV = new StringValidator(this.streetId + this.index, {
-               len: { min: 3, max: 100, message: '01FV2HXNN69FE3F55670TQCPE3' }
+            let streetV = new StringValidator(this.streetId, {
+               len: { min: 3, max: 100, message: '01FVQ2NP5H3PG1JPAG867MJ6XZ' }
             });
-            let numberV = new StringValidator(this.numberId + this.index, {
+            let numberV = new StringValidator(this.numberId, {
                len: { min: 1, max: 10, message: '01FV2J1YQ69FE3F55670TQCPE3' }
             });
-            let zipCodeV = new StringValidator(this.zipCodeId + this.index, {
+            let complementV = new StringValidator(this.complementId, {
+               len: { min: 1, max: 50, message: '01FVQ2NP5KGRN5Q8KG39FK090X' }
+            });
+            let zipCodeV = new StringValidator(this.zipCodeId, {
                len: { min: 9, max: 9, message: '01FVPVJN7D9FE3F55670TQCPE3' }
             });
-            let neighborhoodV = new StringValidator(this.neighborhoodId + this.index, {
+            let neighborhoodV = new StringValidator(this.neighborhoodId, {
                len: { min: 3, max: 100, message: '01FVPVJN7FGRN5Q8KG39FK090X' }
             });
             let stateV = new SelectValidator(this.stateId, {
-               select: { invalid: '', message: '01FVPVJN7F19FBHY10QF033G7Y' }
+               select: { invalid: '-1', message: '01FVPVJN7F19FBHY10QF033G7Y' }
             });
-            let cityV = new StringValidator(this.cityId + this.index, {
+            let cityV = new StringValidator(this.cityId, {
                len: { min: 3, max: 50, message: '01FVPVJN7F2XQ2K4549SYH51FN' }
             });
             let isValid = streetV.validate() && numberV.validate() && zipCodeV.validate()
@@ -237,14 +265,14 @@
          constructor(contact, index) {
             this.infoId = '#info' + index;
             this.contactTypeId = '#contactType' + index;
-            if (arguments) {
+            if (arguments[0]) {
                this.index = arguments[1];
                this.info = contact.info;
                this.contactType = contact.type;
             } else {
-               this.index = 0;
+               this.index = index;
                this.info = $.inputText('#info0');
-               this.contactType = $.inputText('#type0');
+               this.contactType = 'EMAIL';
             }
          }
          static read(contacts) {
@@ -252,19 +280,35 @@
             contacts.forEach((item, index, array) => {
                result.push(new Contact(array[index], index));
             });
+            if(contacts.length === 1) {
+               result.push(new Contact(null, 1));
+            }
             return result;
          }
-         toPage(){
+         toPage(contactTypes){
             $.inputText(this.infoId, this.info);
-            $.inputText(this.contactTypeId, this.contactType);
+            $.selectBuilder(this.contactTypeId, this.contactType, contactTypes,() => {
+               if(this.info) {
+                  $.disabled(this.contactTypeId, true);
+               }
+               $.text(this.infoId + 'Label', message.get(this.contactType));
+            });
+            let contactTypeId = this.contactTypeId;
+            $.bodyListener(this.contactTypeId + '-changed',
+               (event, data) => {
+                  $.text(this.infoId + 'Label', message.get(data));
+                  $.attribute(this.infoId, 'placeholder',
+                     message.get('placeholder_' + data));
+               }
+            );
          }
          fromPage() {
             return this.validate();
          }
-         validate() {//logger.alert('CONTACT UPD')
+         validate() {
             let infoV = this.getInfoValidator();
             let contactTypeV = new SelectValidator(this.contactTypeId, {
-               select: { invalid: '', message: '01FVPVJN7F19FBHY10QF033G7Y' }
+               select: { invalid: '-1', message: '01FVPVJN7F19FBHY10QF033G7Y' }
             });
             let isValid = infoV.validate() && contactTypeV.validate() ;
             if(isValid) {
@@ -339,22 +383,42 @@
 //             this.resource = 'restricted/person/patient/patient-details';
 //             this.endpoint = ':7000/persons/';
             this.patient = null;
+            this.personTypes = [];
          }
-         initPage(personId) {
-            //logger.alert('PatientDetails#initPage');
-             Patient.read(personId)
-            .done((patient) => {
-               this.patient = patient;
-               logger.delete('LOADED: ', patient);
-               // configure actions and validations
-               // update page
-               patient.toPage();
-            });
-            $.click('#updatePatient', () => {
-               //logger.alert('#updatePatient click');
-               this.updatePatient();
-            });
+         initPage(personId, contactTypes, personTypes, states) {
+            // logger.alert('PatientDetails#initPage');
+            // $.when(this.initPersonTypes())
+            // .done(() => {
+               Patient.read(personId)
+               .done((patient) => {
+                  this.patient = patient;
+                  logger.delete('LOADED: ', patient);
+                  // configure actions and validations
+                  // update page
+                  patient.toPage(contactTypes, personTypes, states);
+               });
+               $.click('#updatePatient', () => {
+                  //logger.alert('#updatePatient click');
+                  this.updatePatient();
+               });
+            // });
          }
+         // initPersonTypes() {
+         //    var deferred = $.Deferred();
+         //    var promise = deferred.promise();
+         //    resource.get(':7000/persons/person_types')
+         //    .done((response) => {
+         //       response.data.forEach(element => {
+         //          this.personTypes.push({"id": element, "text": message.get(element)})
+         //       });
+         //       deferred.resolve(this.personTypes);
+         //    })
+         //    .fail((response) => {
+         //       toast.show(response);
+         //       deferred.reject([{"id":"INVALID", "text":"INVALID"}]);
+         //    });
+         //    return promise;
+         // }
          updatePatient() {
             this.patient.update();
          }

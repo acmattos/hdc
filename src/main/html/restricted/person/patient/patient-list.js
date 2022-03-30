@@ -5,13 +5,16 @@
    $(document).ready(() => {
       class PersonList {
          constructor() {
-            this.table = 'NONE';
+            this.table = {};
+            this.contactTypes = []
+            this.personTypes = []
+            this.states = []
          }
          tableId() { return '#patientList';  }
          uri() { return ':7000/persons';  }
          columns() {
             return  [
-               { 'class': 'details-control', 'orderable': false, 'data': null, 'defaultContent': ''  },
+               { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
                { 'data': 'full_name', 'defaultContent': '', 'orderable': true },
                { 'data': 'personal_id', 'defaultContent': '', 'orderable': true },
                { 'data': 'cpf', 'defaultContent': '', 'orderable': true},
@@ -44,6 +47,9 @@
          datatable() {
             this.table = new Datatable(this.tableId(), this.datatableConfig()).table();
             let table = this.table;
+            let contactTypes = this.contactTypes;
+            let personTypes = this.personTypes;
+            let states = this.states;
             // Array to track the ids of the details displayed rows
             var detailRows = [];
             $('#patientList tbody').off('click').on( 'click', 'tr td.details-control', function () {
@@ -63,7 +69,8 @@
                   }
                   row.child('<div id="patientDetailsDiv" class="container-fluid border"></div>').show();
                   resource.component('#patientDetailsDiv','restricted/person/patient/patient-details').done(() => {
-                     patientDetails.initPage(tr.find('.id').val());
+                     patientDetails.initPage(tr.find('.id').val(), contactTypes,
+                        personTypes, states);
                   });
                   tr.addClass('shown');
                   tr.addClass('selected');
@@ -85,9 +92,64 @@
             // });
             return this.table;
          }
-         initPage() {
-            this.datatable();
+         initContactTypes() {
+            var deferred = $.Deferred();
+            var promise = deferred.promise();
+            resource.get(':7000/persons/contact_types')
+               .done((response) => {
+                  response.data.forEach(element => {
+                     this.contactTypes.push({"id": element, "text": message.get(element)})
+                  });
+                  deferred.resolve(this.contactTypes);
+               })
+               .fail((response) => {
+                  toast.show(response);
+                  deferred.reject([{"id":"INVALID", "text":"INVALID"}]);
+               });
+            return promise;
          }
+
+         initPersonTypes() {
+            var deferred = $.Deferred();
+            var promise = deferred.promise();
+            resource.get(':7000/persons/person_types')
+               .done((response) => {
+                  response.data.forEach(element => {
+                     this.personTypes.push({"id": element, "text": message.get(element)})
+                  });
+                  deferred.resolve(this.personTypes);
+               })
+               .fail((response) => {
+                  toast.show(response);
+                  deferred.reject([{"id":"INVALID", "text":"INVALID"}]);
+               });
+            return promise;
+         }
+
+         initStates() {
+            var deferred = $.Deferred();
+            var promise = deferred.promise();
+            resource.get(':7000/persons/states')
+               .done((response) => {
+                  response.data.forEach(element => {
+                     this.states.push({"id": element, "text": message.get(element)})
+                  });
+                  deferred.resolve(this.states);
+               })
+               .fail((response) => {
+                  toast.show(response);
+                  deferred.reject([{"id":"INVALID", "text":"INVALID"}]);
+               });
+            return promise;
+         }
+         initPage() {
+            $.when(this.initContactTypes(),this.initPersonTypes(),
+               this.initStates())
+            .done(() => {
+               this.datatable();
+            });
+         }
+
       }
       const personList = new PersonList();
       personList.initPage();
