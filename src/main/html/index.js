@@ -44,6 +44,12 @@
          post(uri, payload, done, fail) {
             return http.post(uri, payload, done, fail);
          }
+         put(uri, payload, done, fail) {
+            return http.put(uri, payload, done, fail);
+         }
+         delete(uri, payload, done, fail) {
+            return http.delete(uri, payload, done, fail);
+         }
       }
       window.resource = new Resource();
 
@@ -51,7 +57,9 @@
          // resource.component('#toastHolder', 'component/toast/toast'),
          resource.script('component/toast/toast'),
          resource.script('component/util/validator'),
-         resource.component('#workspace', 'restricted/person/patient/patient-list')
+         //resource.component('#workspace', 'restricted/person/patient/patient-list')
+         resource.component('#workspace', 'restricted/procedure/procedure-list')
+         //resource.component('#workspace', 'restricted/procedure/procedure-details')
       ).done(() => {
          let logger = new Logger("index.js");
          logger.info('HDC is now loaded.', window.location);
