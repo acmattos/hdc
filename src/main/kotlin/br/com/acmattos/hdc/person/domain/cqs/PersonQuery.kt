@@ -13,7 +13,6 @@ open class PersonQuery(
     override val auditLog: AuditLog
 ): Query(id, auditLog)
 
-
 /**
  * @author ACMattos
  * @since 04/02/2022.
@@ -30,3 +29,27 @@ data class FindTheDentistQuery(
     override val id: Id,
     override val auditLog: AuditLog
 ): PersonQuery(id, auditLog)
+
+/**
+ * @author ACMattos
+ * @since 23/02/2022.
+ */
+data class FindAllPersonTypesQuery(
+    override val auditLog: AuditLog
+): PersonQuery(Id(), auditLog)
+
+/**
+ * @author ACMattos
+ * @since 10/03/2022.
+ */
+data class FindAllStatesQuery(
+    override val auditLog: AuditLog
+): PersonQuery(Id(), auditLog)
+
+/**
+ * @author ACMattos
+ * @since 10/03/2022.
+ */
+data class FindAllContactTypesQuery(
+    override val auditLog: AuditLog
+): PersonQuery(Id(), auditLog)

@@ -7,7 +7,11 @@ import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 
 private const val PERSONS = "persons"
+private const val CONTACT_TYPES = "contact_types"
+private const val PERSON_TYPES = "person_types"
+private const val STATES = "states"
 private const val DENTIST_ID = ":dentist_id"
+
 /**
  * @author ACMattos
  * @since 05/10/2021.
@@ -20,12 +24,24 @@ class PersonControllerEndpointDefinition(
         path(PERSONS) {
             post(command::createADentist)
             get(query::findAllPersons)
+            path(CONTACT_TYPES){
+                get(query::findAllContactTypes)
+            }
+            path(PERSON_TYPES){
+                get(query::findAllPersonTypes)
+            }
+            path(STATES){
+                get(query::findAllStates)
+            }
             path(DENTIST_ID) {
                 get(query::findTheDentist)
             }
         }
         logger.info("Route loaded: -> POST /$PERSONS <-")
         logger.info("Route loaded: -> GET /$PERSONS <-")
+        logger.info("Route loaded: -> GET /$PERSONS/$CONTACT_TYPES <-")
+        logger.info("Route loaded: -> GET /$PERSONS/$PERSON_TYPES <-")
+        logger.info("Route loaded: -> GET /$PERSONS/$STATES <-")
         logger.info("Route loaded: -> GET /$PERSONS/$DENTIST_ID <-")
         logger.info("All routes loaded for: -> ${PersonControllerEndpointDefinition::class.java} <-")
     }
