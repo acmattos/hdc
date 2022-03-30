@@ -8,6 +8,7 @@ import br.com.acmattos.hdc.common.context.domain.cqs.QueryStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
+import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonTypesQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonsQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindTheDentistQuery
 import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
@@ -32,7 +33,8 @@ class PersonQueryHandlerService(
 
         val result = when(query){
             is FindAllPersonsQuery -> handle(query)
-            else -> handle(query as FindTheDentistQuery)
+            is FindTheDentistQuery -> handle(query)
+            else -> handle(query as FindAllPersonTypesQuery)
         }
 
         logger.info(
@@ -80,6 +82,24 @@ class PersonQueryHandlerService(
         )
         return QueryResult.build(optionalEntity)
     }
+
+//    private fun handle(query: FindAllPersonTypesQuery): QueryResult<PersonType> {// TODO Test
+//        queryStore.addQuery(query)
+//        logger.trace(
+//            "[{} {}] - Query added: -> {} <-",
+//            PERSON.name,
+//            SERVICE.name,
+//            query.javaClass.name
+//        )
+//        val entities = PersonType.values().toList()
+//        logger.trace(
+//            "[{} {}] - Entity found?: -> {} <-",
+//            PERSON.name,
+//            SERVICE.name,
+//            entities.toString() // TODO change the approach to log
+//        )
+//        return QueryResult.build(entities)
+//    }
 
     companion object: Loggable()
 }
