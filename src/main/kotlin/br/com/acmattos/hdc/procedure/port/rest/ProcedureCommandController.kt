@@ -45,7 +45,7 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun createDentalProcedure(context: Context) { // TODO TEST
+    fun createDentalProcedure(context: Context) {
         logger.debug(
             "[{} {}] - Create dental procedure...",
             PROCEDURE.name,
@@ -86,7 +86,7 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun updateDentalProcedure(context: Context) { // TODO TEST
+    fun updateDentalProcedure(context: Context) {
         logger.debug(
             "[{} {}] - Update dental procedure...",
             PROCEDURE.name,
@@ -127,7 +127,7 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun deleteDentalProcedure(context: Context) { // TODO TEST
+    fun deleteDentalProcedure(context: Context) {
         logger.debug(
             "[{} {}] - Delete dental procedure...",
             PROCEDURE.name,
@@ -198,14 +198,6 @@ data class DeleteDentalProcedureRequest(
 ): Request<ProcedureCommand>(context) {
     override fun toType(who: String, what: String): ProcedureCommand {
         val procedureId = context.pathParam("procedure_id")
-//        Assertion.assert(
-//            "dentist_id can't be null or empty",
-//            PROCEDURE.name,
-//            DENTIST_ID_INVALID.code
-//        ) {
-//            dentistId.isNotBlank()
-//        }
-
         return DeleteDentalProcedureCommand(
             procedureId,
             AuditLog(who = who, what = what)

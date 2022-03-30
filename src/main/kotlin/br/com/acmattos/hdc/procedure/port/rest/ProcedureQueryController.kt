@@ -66,7 +66,7 @@ class ProcedureQueryController(
         operationId = "findTheProcedure",
         tags = ["Procedure"],
 //        pathParams = [OpenApiParam(
-//            name = "dentist_id",
+//            name = "procedure_id",
 //            type = String::class,
 //            description = "The dentist ID",
 //            deprecated = false,
@@ -125,14 +125,6 @@ class FindAllProceduresRequest(val context: Context): Request<ProcedureQuery>(co
 class FindTheProcedureRequest(val context: Context): Request<ProcedureQuery>(context) {
     override fun toType(who: String, what: String): ProcedureQuery {
         val procedureId = context.pathParam("procedure_id")
-//        Assertion.assert(
-//            "dentist_id can't be null or empty",
-//            PROCEDURE.name,
-//            DENTIST_ID_INVALID.code
-//        ) {
-//            dentistId.isNotBlank()
-//        }
-
         return FindTheProcedureQuery(
             ProcedureId(procedureId),
             AuditLog(who, what)
