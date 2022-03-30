@@ -10,7 +10,7 @@ import java.time.LocalDateTime
  * @since 30/10/2021.
  */
 object ScheduleBuilder {
-    fun buildSuccessfull() = Schedule(
+    fun build() = Schedule(
         ScheduleId("01FK96GENJKTN1BYZW6BRHFZFJ"),
         DentistBuilder.build(),
         PeriodBuilder.buildListWithThreeWeekDays(),

@@ -32,7 +32,7 @@ object ScheduleTest: Spek({
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
             When("a successful schedule instantiation is done") {
                 assertion = Assertions.assertThatCode {
-                    entity = ScheduleBuilder.buildSuccessfull()
+                    entity = ScheduleBuilder.build()
                 }
             }
             Then("no exception is raised") {
