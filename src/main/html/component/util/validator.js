@@ -3,7 +3,7 @@
 
    const logger = new Logger('component/util/validator.js');
    // let ruleSample = {
-   //    empty: { message: 'message id for empty' }, // TODO APPLY THE SAME AS BELLOW
+   //    empty: {},
    //    len: { min: 1, max: 50, message: 'messade id for invalid length' }
    // };
    String.prototype.validate = function(rule) {
@@ -16,13 +16,13 @@
             let isInvalidSize = rule && rule.len
                ?  value.length < rule.len.min
                || value.length > rule.len.max : false;
-            if (isInvalidSize) {//logger.alert(rule.len.message);
-               error.push({'status': 452 , 'code': rule.len.message, 'data': rule.len.message});//TODO CHANGE CODE 452-499	Unassigned
+            if (isInvalidSize) {
+               error.push({'status': 452 , 'code': rule.len.message, 'data': rule.len.message});
             }
             return error.length == 0 ? null : error;
          }
       } else {
-         logger.alert('No available rule to execute String#validate!');
+         logger.alert('No available <rule> to execute String#validate!');
          return null;
       }
    };
@@ -39,12 +39,67 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
    window.StringValidator = StringValidator;
+   // let ruleSample = {
+   //    between: { min: 1, max: 50, message: 'messade id for invalid length' }
+   // };
+   String.prototype.validateInt = function(rule) {
+      let error = [];
+      try {
+         let value = parseInt(this);
+         if (rule) {
+            if(isNaN(value)) {
+               error.push({'status': 453 , 'code': rule.between.message, 'data': rule.between.message});
+               logger.info('Invalid int number!', this);
+               return error;
+            }
+            if(rule.between) {
+               let isInvalidRange =  value < rule.between.min
+                  || value > rule.between.max;
+               if (isInvalidRange) {
+                  error.push({'status': 453 , 'code': rule.between.message, 'data': rule.between.message});
+               }
+               return error.length == 0 ? null : error;
+            }
+         } else {
+            logger.alert('No available <rule> to execute String#validateInt!');
+            return null;
+         }
+      } catch(e) {
+         error.push({'status': 453 , 'code': rule.between.message, 'data': rule.between.message});
+         logger.info('Invalid int number!', this, e);
+         return  error;
+      }
+   };
+   class IntValidator {
+      constructor(component, rule) {
+         this.component = component;
+         this.rule = rule;
+         this.value = null;
+      }
+      validate(disableToast) {
+         this.value = $.inputText(this.component);
+         let errors = this.value.validateInt(this.rule);
+         if(errors) {
+            if(!disableToast) {
+               toast.show(errors);
+            }
+            $(this.component).addClass('invalid');
+            return false;
+         }
+         $(this.component).removeClass('invalid');
+         this.value = parseInt(this.value);
+         return true;
+      }
+   }
+   window.IntValidator = IntValidator;
    // let ruleSample = {
    //    empty: {},
    //    format: { message: 'messade id for invalid email format' }
@@ -58,13 +113,13 @@
          } else {
             let regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             let isInvalidEmail = rule.format ? !regex.test(this) : false;
-            if(isInvalidEmail) {//logger.alert(rule.format.message);
-               error.push({'status': 453 , 'code': rule.format.message, 'data': rule.format.message});
+            if(isInvalidEmail) {
+               error.push({'status': 454 , 'code': rule.format.message, 'data': rule.format.message});
             }
             return error.length == 0 ? null : error;
          }
       } else {
-         logger.alert('No available rule to execute String#validateEmail!');
+         logger.alert('No available <rule> to execute String#validateEmail!');
          return null;
       }
    };
@@ -81,13 +136,15 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
    window.EmailValidator = EmailValidator;
-//
+
    // let ruleSample = {
    //    empty: {},
    //    format: { message: 'messade id for invalid phonr format' }
@@ -101,13 +158,13 @@
          } else {
             let regex = /^(([9]{0,1}[0-9]{8})|([9]{0,1}[0-9]{4})-([0-9]{4}))$/;
             let isInvalidPhone = rule.format ? !regex.test(this) : false;
-            if(isInvalidPhone) {//logger.alert(rule.format.message);
-               error.push({'status': 454 , 'code': rule.format.message, 'data': rule.format.message});
+            if(isInvalidPhone) {
+               error.push({'status': 455 , 'code': rule.format.message, 'data': rule.format.message});
             }
             return error.length == 0 ? null : error;
          }
       } else {
-         logger.alert('No available rule to execute String#validatePhone!');
+         logger.alert('No available <rule> to execute String#validatePhone!');
          return null;
       }
    };
@@ -124,8 +181,10 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
@@ -144,13 +203,13 @@
          } else {
             let regex = /^(([0-9]{8})|([0-9]{3})-([0-9]{5}))$/;
             let isInvalidZipCode = rule.format ? !regex.test(this) : false;
-            if(isInvalidZipCode) {//logger.alert(rule.format.message);
-               error.push({'status': 454, 'code': rule.format.message, 'data': rule.format.message});
+            if(isInvalidZipCode) {
+               error.push({'status': 456, 'code': rule.format.message, 'data': rule.format.message});
             }
             return error.length == 0 ? null : error;
          }
       } else {
-         logger.alert('No available rule to execute String#validateZipCode!');
+         logger.alert('No available <rule> to execute String#validateZipCode!');
          return null;
       }
    };
@@ -167,13 +226,14 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
    window.ZipCodeValidator = ZipCodeValidator;
-
    // let ruleSample = {
    //    format: { message: 'messade id for invalid phonr format' }
    // };
@@ -181,16 +241,15 @@
       let value = this;
       let error = [];
       if (rule) {
-         let cpf = value.trim().replace(/\./g, '').replace('-', '').split('');
+         let cpf = value.trim().replace(/\./g, '').replace('-', '');
          let valid = false;
          for (let i = 1; cpf.length > i; i++) {
             if (cpf[i - 1] != cpf[i]) {
                valid = true;
             }
          }
-
-         if (!valid) {//logger.alert(rule.format.message);
-            error.push({'status': 455, 'code': rule.format.message, 'data': rule.format.message});
+         if (!valid) {
+            error.push({'status': 457, 'code': rule.format.message, 'data': rule.format.message});
          } else {
             let v1 = 0;
             for (let i = 0, p = 10; (cpf.length - 2) > i; i++, p--) {
@@ -200,8 +259,8 @@
             if (v1 === 10) {
                v1 = 0;
             }
-            if (v1 !== cpf[9]) {//logger.alert(rule.format.message);
-               error.push({'status': 455, 'code': rule.format.message});
+            if (v1 != cpf[9]) {
+               error.push({'status': 457, 'code': rule.format.message});
             } else {
                let v2 = 0;
                for (let i = 0, p = 11; (cpf.length - 1) > i; i++, p--) {
@@ -211,14 +270,14 @@
                if (v2 === 10) {
                   v2 = 0;
                }
-               if (v2 !== cpf[10]) {//logger.alert(rule.format.message);
-                  error.push({'status': 455, 'code': rule.format.message});
+               if (v2 != cpf[10]) {
+                  error.push({'status': 457, 'code': rule.format.message});
                }
             }
          }
          return error.length == 0 ? null : error;
       } else {
-         logger.alert('No available rule to execute String#validateZipCode!');
+         logger.alert('No available <rule> to execute String#validateZipCode!');
          return null;
       }
    };
@@ -235,12 +294,14 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
-   window.CpfValidator = ZipCodeValidator;
+   window.CpfValidator = CpfValidator;
 
    // let ruleSample = {
    //    select: { invalid: 'invalid value', message: 'messade id for invalid phonr format' }
@@ -249,19 +310,19 @@
       let value = this;
       let error = [];
       if (rule) {
-         if(rule.invalid) {
+         if(rule.select.invalid) {
             let regex = /^(([9]{0,1}[0-9]{8})|([9]{0,1}[0-9]{4})-([0-9]{4}))$/;
             let isInvalidSelected = !(value !== rule.invalid && value !== undefined);
-            if(isInvalidSelected) {//logger.alert(rule.select.message);
-               error.push({'status': 456 , 'code': rule.select.message, 'data': rule.select.message});
+            if(isInvalidSelected) {
+               error.push({'status': 458 , 'code': rule.select.message, 'data': rule.select.message});
             }
             return error.length == 0 ? null : error;
          } else {
-            logger.alert('No available rule.invalid to execute String#validateSelect!');
+            logger.alert('No available <rule.select.invalid> to execute String#validateSelect: ' + value);
             return null;
          }
       } else {
-         logger.alert('No available rule to execute String#validateSelect!');
+         logger.alert('No available <rule> to execute String#validateSelect: ' + value);
          return null;
       }
    };
@@ -278,10 +339,58 @@
             if(!disableToast) {
                toast.show(errors);
             }
+            $(this.component).addClass('invalid');
             return false;
          }
+         $(this.component).removeClass('invalid');
          return true;
       }
    }
-   window.SelectValidator = PhoneValidator;
+   window.SelectValidator = SelectValidator;
+
+   // let ruleSample = {// TODO FIX
+   //    empty: {},
+   //    format: { message: 'messade id for invalid phonr format' }
+   //    date: { le: date }
+   // };
+   String.prototype.validateDate = function(rule) {
+      let value = this;
+      let error = [];
+      if (rule) {
+         if(rule.empty && !value) {
+            return null;
+         } else {
+            let regex = /^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-]\d{4}$/;
+            let isInvalidDate = rule.format ? !regex.test(this) : false;
+            if(isInvalidDate) {
+               error.push({'status': 459, 'code': rule.format.message, 'data': rule.format.message});
+            }
+            return error.length == 0 ? null : error;
+         }
+      } else {
+         logger.alert('No available <rule> to execute String#validateZipCode!');
+         return null;
+      }
+   };
+   class DateValidator {
+      constructor(component, rule) {
+         this.component = component;
+         this.rule = rule;
+         this.value = null;
+      }
+      validate(disableToast) {
+         this.value = $.inputText(this.component);
+         let errors = this.value.validateDate(this.rule);
+         if(errors) {
+            if(!disableToast) {
+               toast.show(errors);
+            }
+            $(this.component).addClass('invalid');
+            return false;
+         }
+         $(this.component).removeClass('invalid');
+         return true;
+      }
+   }
+   window.DateValidator = DateValidator;
 })();
