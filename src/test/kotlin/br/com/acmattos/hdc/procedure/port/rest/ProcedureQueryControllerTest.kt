@@ -18,6 +18,7 @@ import io.mockk.verify
 import io.mockk.verifyOrder
 import java.util.Optional
 import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
@@ -76,7 +77,7 @@ object ProcedureQueryControllerTest: Spek({
                 controller.findAllProcedures(context)
             }
             Then("""status is $STATUS""") {
-                Assertions.assertThat(context.status()).isEqualTo(STATUS)
+                assertThat(context.status()).isEqualTo(STATUS)
             }
             And("""the context is accessed in the right order""") {
                 verifyOrder {
@@ -141,7 +142,7 @@ object ProcedureQueryControllerTest: Spek({
                 controller.findTheProcedure(context)
             }
             Then("""status is $STATUS""") {
-                Assertions.assertThat(context.status()).isEqualTo(STATUS)
+                assertThat(context.status()).isEqualTo(STATUS)
             }
             And("""the context is accessed in the right order""") {
                 verifyOrder {
