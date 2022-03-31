@@ -6,6 +6,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.procedure.application.ProcedureQueryHandlerService
+import br.com.acmattos.hdc.procedure.domain.cqs.FindAllProceduresQuery
 import br.com.acmattos.hdc.procedure.domain.cqs.FindTheProcedureQuery
 import br.com.acmattos.hdc.procedure.domain.model.Procedure
 import br.com.acmattos.hdc.procedure.domain.model.ProcedureBuilder
@@ -27,10 +28,72 @@ private const val STATUS = 200
  * @since 30/03/2022.
  */
 object ProcedureQueryControllerTest: Spek({
-    afterEachTest { // Avoids error when all tests are executed at the same time
-        JavalinJackson.configure(JacksonObjectMapperFactory.build())
-    }
     Feature("${ProcedureQueryController::class.java} usage") {
+        Scenario("handling ${FindAllProceduresQuery::class.java} successfully") {
+            lateinit var request: FindAllProceduresRequest
+            lateinit var query: FindAllProceduresQuery
+            lateinit var result: QueryResult<Procedure>
+            lateinit var service: ProcedureQueryHandlerService
+            lateinit var context: Context
+            lateinit var controller: ProcedureQueryController
+            Given("""a ${FindAllProceduresRequest::class.java} successfully instantiated""") {
+                request = ProcedureRequestBuilder.buildFindAllProceduresRequest()
+            }
+            And("""a ${FindAllProceduresQuery::class.java} successfully generated""") {
+                query = request.toType() as FindAllProceduresQuery
+            }
+            And("""a ${QueryResult::class.java} successfully instantiated""") {
+                result = QueryResult.build(listOf(ProcedureBuilder.build()))
+            }
+            And("""a ${ProcedureQueryHandlerService::class.java} mock""") {
+                service = mockk()
+            }
+            And("""service#handle returning the ${QueryResult::class.java}""") {
+                every { service.handle(any<FindAllProceduresQuery>()) } returns result
+            }
+            And("""a ${Context::class.java} mock""") {
+                context = ContextBuilder().mockContext("procedure_id")
+            }
+            And("""${JavalinJackson::class.java} is properly configured""") {
+                JavalinJackson.configure(JacksonObjectMapperFactory.build())
+            }
+            And("""context#fullUrl returns fullUrl""") {
+                every { context.fullUrl() } returns "fullUrl"
+            }
+            And("""context#status returns ${Context::class.java}""") {
+                every { context.status(STATUS) } returns context
+            }
+            And("""context#status returns $STATUS""") {
+                every { context.status() } returns STATUS
+            }
+            And("""context#json returns ${Context::class.java}""") {
+                every { context.json(Response("", "", 0, "")) } returns context
+            }
+            And("""a ${ProcedureQueryController::class.java} successfully instantiated""") {
+                controller = ProcedureQueryController(service)
+            }
+            When("""#findTheProcedure is executed""") {
+                controller.findAllProcedures(context)
+            }
+            Then("""status is $STATUS""") {
+                Assertions.assertThat(context.status()).isEqualTo(STATUS)
+            }
+            And("""the context is accessed in the right order""") {
+                verifyOrder {
+                    context.getRequest(::FindAllProceduresRequest)
+                    context.fullUrl()
+                    context.status(STATUS)
+                    context.status()
+                    context.json(Response("", "", 0, ""))
+                }
+            }
+            And("""the service store is accessed as well""") {
+                verify(exactly = 1) {
+                    service.handle(any<FindAllProceduresQuery>())
+                }
+            }
+        }
+
         Scenario("handling ${FindTheProcedureQuery::class.java} successfully") {
             lateinit var request: FindTheProcedureRequest
             lateinit var query: FindTheProcedureQuery
