@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.scheduler.application
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
@@ -105,9 +106,11 @@ class ScheduleCommandHandlerService(
     }
 
     private fun validateScheduleDoesNotExist(command: CreateAScheduleForTheDentistCommand) {
-        eventStore.findAllByField(
+        eventStore.findAllByFilter(
+            EqFilter<String, String>(
             "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
             command.dentistId.id
+            )
         ).also {
             Assertion.assert(
                 """

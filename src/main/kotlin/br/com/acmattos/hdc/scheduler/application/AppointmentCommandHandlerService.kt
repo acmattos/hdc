@@ -1,8 +1,10 @@
 package br.com.acmattos.hdc.scheduler.application
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
+import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
@@ -19,7 +21,8 @@ import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheSchedule
 import br.com.acmattos.hdc.scheduler.domain.cqs.ScheduleEvent
 import br.com.acmattos.hdc.scheduler.domain.model.Appointment
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
-import br.com.acmattos.hdc.scheduler.port.persistence.mongodb.OverlappingAppointmentCriteria
+import java.time.LocalDate
+import java.time.LocalTime
 
 /**
  * @author ACMattos
@@ -131,9 +134,11 @@ class AppointmentCommandHandlerService(// TODO Test
         }
 
     private fun validateScheduleExists(command: AppointmentCommand) =
-        scheduleEventStore.findAllByField(
-            "event.schedule_id.id",// TODO TRACK THIS FIELD
-            command.scheduleId.id
+        scheduleEventStore.findAllByFilter(
+            EqFilter<String, String>(
+                "event.schedule_id.id",// TODO TRACK THIS FIELD
+                command.scheduleId.id
+            )
         ).also { events ->
             Assertion.assert(
                 """
@@ -150,12 +155,20 @@ class AppointmentCommandHandlerService(// TODO Test
     private fun validateHasNoConflictingAppointment(
         command: CreateAppointmentForTheScheduleCommand
     ) {
-        eventStore.findAllByCriteria(
-            OverlappingAppointmentCriteria(
-                command.scheduleId,
-                command.date,
-                command.time
+        eventStore.findAllByFilter(
+            AndFilter<String, Any>(
+                listOf(
+                    EqFilter<String, String>("event.schedule_id.id", command.scheduleId.id), // TODO TRACK THIS FIELD
+                    EqFilter<String, LocalDate>("event.date", command.date), // TODO TRACK THIS FIELD
+                    EqFilter<String, LocalTime>("event.time", command.time) // TODO TRACK THIS FIELD
+                )
             )
+            // TODO VERIFY AND THEN REMOVE!
+//            OverlappingAppointmentCriteria(
+//                command.scheduleId,
+//                command.date,
+//                command.time
+//            )
         ).also { events ->
             Assertion.assert(
                 """

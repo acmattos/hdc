@@ -10,7 +10,7 @@ import br.com.acmattos.hdc.common.context.domain.model.Id
  */
 open class Query(
     open val queryId: QueryId,
-    open val id: Id,
+    open val id: Id,// TODO REPLACE BY FILTER
     open val auditLog: AuditLog
 ): Entity  {
     constructor(

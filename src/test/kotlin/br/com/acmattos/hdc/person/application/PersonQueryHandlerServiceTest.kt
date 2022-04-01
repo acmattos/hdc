@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.person.application
 
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
@@ -14,7 +15,7 @@ import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
-import java.util.*
+import java.util.Optional
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -40,9 +41,11 @@ object PersonQueryHandlerServiceTest: Spek({
             And("""a ${Repository::class.java} mock""") {
                 repository = mockk()
             }
-            And("""repository#findByField returns a dentist""") {
+            And("""repository#findOneByFilter returns a dentist""") {
                 every {
-                    repository.findByField("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
+                    repository.findOneByFilter(
+                        EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
+                    )
                 } returns Optional.of(PersonBuilder.buildDentist())
             }
             And("""a ${FindTheDentistQuery::class.java} created from ${Context::class.java}""") {
@@ -62,7 +65,7 @@ object PersonQueryHandlerServiceTest: Spek({
             }
             And("""the repository is accessed""") {
                 verify {
-                    repository.findByField("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
+                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
                 }
             }
             And("""the query store is accessed as well""") {
@@ -87,9 +90,9 @@ object PersonQueryHandlerServiceTest: Spek({
             And("""a ${Repository::class.java} mock""") {
                 repository = mockk()
             }
-            And("""repository#findByField returns null""") {
+            And("""repository#findOneByFilter returns null""") {
                 every {
-                    repository.findByField("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
+                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
                 } returns Optional.empty()
             }
             And("""a ${FindTheDentistQuery::class.java} created from ${Context::class.java}""") {
@@ -106,7 +109,7 @@ object PersonQueryHandlerServiceTest: Spek({
             }
             And("""the repository is accessed""") {
                 verify {
-                    repository.findByField("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
+                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
                 }
             }
             And("""the query store is accessed as well""") {

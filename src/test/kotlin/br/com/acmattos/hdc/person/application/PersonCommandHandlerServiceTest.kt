@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.person.application
 
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
@@ -46,8 +47,10 @@ object PersonCommandHandlerServiceTest: Spek({
             And("""a ${Repository::class.java} mock""") {
                 repository = mockk()
             }
-            And("""repository#findByField returns null""") {
-                every { repository.findByField("full_name", "fullName") } returns Optional.empty()
+            And("""repository#findOneByFilter returns null""") {
+                every { repository.findOneByFilter(
+                    EqFilter<String, String>("full_name", "fullName")
+                ) } returns Optional.empty()
             }
             And("""repository#save just runs""") {
                 every { repository.save(any()) } just Runs
@@ -66,7 +69,7 @@ object PersonCommandHandlerServiceTest: Spek({
             }
             And("""the repository is accessed in the right order""") {
                 verifyOrder {
-                    repository.findByField("full_name", "fullName")
+                    repository.findOneByFilter(EqFilter<String, String>("full_name", "fullName"))
                     repository.save(any())
                 }
             }
@@ -92,9 +95,9 @@ object PersonCommandHandlerServiceTest: Spek({
             And("""a ${Repository::class.java} mock""") {
                 repository = mockk()
             }
-            And("""repository#findByField returns null""") {
+            And("""repository#findOneByFilter returns null""") {
                 every {
-                    repository.findByField("full_name", "fullName")
+                    repository.findOneByFilter(EqFilter<String, String>("full_name", "fullName"))
                 } returns Optional.of(
                     Person.apply(
                         CreateADentistEvent(
@@ -126,9 +129,9 @@ object PersonCommandHandlerServiceTest: Spek({
             And("""exception has code ${DENTIST_ALREADY_EXISTS.code}""") {
                 assertion.hasFieldOrPropertyWithValue("code", DENTIST_ALREADY_EXISTS.code)
             }
-            And("""the repository#findByField is accessed""") {
+            And("""the repository#findOneByFilter is accessed""") {
                 verify(exactly = 1) {
-                    repository.findByField("full_name", "fullName")
+                    repository.findOneByFilter(EqFilter<String, String>("full_name", "fullName"))
                 }
             }
             And("""the repository#save is not accessed""") {

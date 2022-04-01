@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.person.application
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
@@ -92,8 +93,11 @@ class PersonCommandHandlerService(
     }
 
     private fun validateDentistDoesNotExist(command: PersonCommand) {
-        repository.findByField(
-            "full_name", command.fullName
+        repository.findOneByFilter(
+            EqFilter<String, String>(
+                "full_name", // TODO MAP FIELD
+                command.fullName
+            )
         ).also {
             Assertion.assert(
                 """

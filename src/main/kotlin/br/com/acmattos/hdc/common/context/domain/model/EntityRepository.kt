@@ -2,7 +2,6 @@ package br.com.acmattos.hdc.common.context.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.StoreEnum.STORE
-import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbCriteria
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
@@ -25,7 +24,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun update(filter: Filter<*>, entity: T) {
+    override fun update(filter: Filter<*, *>, entity: T) {
         mdbRepository.update(filter, converter(entity))
         logger.trace(
             "[{}] Updating entity [{}] to repository...: -> !DONE! <-",
@@ -34,7 +33,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun delete(filter: Filter<*>) {
+    override fun delete(filter: Filter<*, *>) {
         mdbRepository.delete(filter)
         logger.trace(
             "[{}] Deleting entity [{}] to repository...: -> !DONE! <-",
@@ -43,7 +42,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun findOneByFilter(filter: Filter<*>) : Optional<T> =
+    override fun findOneByFilter(filter: Filter<*, *>) : Optional<T> =
         mdbRepository.findOneByFilter(filter).let { document ->
             return if(document.isPresent) {
                 logger.trace(
@@ -57,30 +56,13 @@ class EntityRepository<T: Entity>(
             }
         }
 
-    override fun findAllByFilter(filter: Filter<*>) : List<T> =
+    override fun findAllByFilter(filter: Filter<*, *>) : List<T> =
         mdbRepository.findAllByFilter(filter)
             .map { it.toType() }
             .toList() as List<T>
 
-    override fun findByField(fieldName: String, value: Any): Optional<T> {
-        val document = mdbRepository.findByField(fieldName, value)
-        return if(document.isPresent) {
-            Optional.of(document.get().toType() as T)
-        } else {
-            Optional.empty()
-        }
-    }
-
     override fun findAll(): List<T> {// TODO Subject to change (APPLY a filter)
         return mdbRepository.findAll().map { it.toType() }.toList() as List<T>
-    }
-
-    override fun findAllByField(fieldName: String, value: Any): List<T> {
-        return mdbRepository.findAllByField(fieldName, value).map { it.toType() }.toList() as List<T>
-    }
-
-    override fun findAllByCriteria(criteria: MdbCriteria): List<T> {
-        return mdbRepository.findAllByCriteria(criteria).map { it.toType() }.toList() as List<T>
     }
 
     companion object: Loggable()

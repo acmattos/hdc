@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.person.application
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryHandler
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
@@ -73,7 +74,12 @@ class PersonQueryHandlerService(
             SERVICE.name,
             query.javaClass.name
         )
-        val optionalEntity = repository.findByField("person_id", query.id.id)
+        val optionalEntity = repository.findOneByFilter(
+            EqFilter<String, String>(
+                "person_id", // TODO MAP FIELD
+                query.id.id
+            )
+        )
         logger.trace(
             "[{} {}] - Entity found?: -> {} <-",
             PERSON.name,

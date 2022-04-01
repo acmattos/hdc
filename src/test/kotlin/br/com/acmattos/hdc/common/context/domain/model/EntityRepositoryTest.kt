@@ -1,5 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
@@ -63,7 +64,7 @@ object EntityRepositoryTest: Spek({
                 entity = mockk(relaxed = true)
             }
             And("""the mock configured to return a ${MdbDocument::class.java}""") {
-                every { mdbRepository.findByField(any(), any()) } returns document
+                every { mdbRepository.findOneByFilter(any()) } returns document
             }
             And("""the mock configured to return a ${Entity::class.java}""") {
                 every { document.get().toType() } returns entity!!
@@ -75,7 +76,9 @@ object EntityRepositoryTest: Spek({
                 repository = EntityRepository(mdbRepository, converter)
             }
             When("""#findByField is executed""") {
-                entity = repository.findByField("fieldName", "value")
+                entity = repository.findOneByFilter(
+                    EqFilter<String, String>("fieldName", "value")
+                )
             }
             Then("""the entity is found""") {
                 assertThat(entity).isNotNull()
