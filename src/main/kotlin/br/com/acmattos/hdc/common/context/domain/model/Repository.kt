@@ -9,9 +9,9 @@ import java.util.Optional
  */
 interface Repository<T> {
     fun save(t: T)
-    fun update(filter: Filter<*, *>, t: T)
-    fun delete(filter: Filter<*, *>)
-    fun findOneByFilter(filter: Filter<*, *>): Optional<T>
-    fun findAllByFilter(filter: Filter<*, *>): List<T>
+    fun update(filter: Filter<*>, t: T)
+    fun delete(filter: Filter<*>)
+    fun findOneByFilter(filter: Filter<*>): Optional<T>
+    fun findAllByFilter(filter: Filter<*>): List<T>
     fun findAll(): List<T>// TODO Subject to change (APPLY a filter)
 }

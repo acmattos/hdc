@@ -35,7 +35,7 @@ open class MdbRepository<T: MdbDocument>(
         }
     }
 
-    override fun update(filter: Filter<*, *>, document: T) {
+    override fun update(filter: Filter<*>, document: T) {
         catch(
             "[{}] - Updating document into the repository: -> {} <-",
             UPDATE_FAILED.code,
@@ -43,13 +43,13 @@ open class MdbRepository<T: MdbDocument>(
             document.toString()
         ) {
             getCollection().replaceOne(
-                filterTranslator.translate(filter as Filter<Bson, *>),
+                filterTranslator.createTranslation(filter as Filter<Bson>),
                 document
             )
         }
     }
 
-    override fun delete(filter: Filter<*, *>) {
+    override fun delete(filter: Filter<*>) {
         catch(
             "[{}] - Deleting document into the repository: -> {} <-",
             UPDATE_FAILED.code,
@@ -57,12 +57,12 @@ open class MdbRepository<T: MdbDocument>(
             filter.toString()
         ) {
             getCollection().deleteOne(
-                filterTranslator.translate(filter as Filter<Bson, *>)
+                filterTranslator.createTranslation(filter as Filter<Bson>)
             )
         }
     }
 
-    override fun findOneByFilter(filter: Filter<*, *>) : Optional<T> =
+    override fun findOneByFilter(filter: Filter<*>) : Optional<T> =
         catch(
             "[{}] - Finding document by filter in the repository: -> {}={} <-",
             FIND_ONE_BY_FILTER_FAILED.code,
@@ -71,12 +71,12 @@ open class MdbRepository<T: MdbDocument>(
             filter.toString()
         ) {
             return@catch Optional.ofNullable(getCollection().find(
-                filterTranslator.translate(filter as Filter<Bson, *>)
+                filterTranslator.createTranslation(filter as Filter<Bson>)
             )
             .firstOrNull())
         }
 
-    override fun findAllByFilter(filter: Filter<*, *>) : List<T> =
+    override fun findAllByFilter(filter: Filter<*>) : List<T> =
         catch(
             "[{}] - Finding all document by filter the repository: -> {}={} <-",
             FIND_ALL_BY_FILTER_FAILED.code,
@@ -85,7 +85,7 @@ open class MdbRepository<T: MdbDocument>(
             filter.toString()
         ) {
             return@catch getCollection().find(
-                filterTranslator.translate(filter as Filter<Bson, *>)
+                filterTranslator.createTranslation(filter as Filter<Bson>)
             )
             .map { it }.toList()
         }

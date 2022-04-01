@@ -6,5 +6,5 @@ package br.com.acmattos.hdc.common.context.domain.cqs
  */
 interface EventStore<T: Event> {
     fun addEvent(event: T)
-    fun findAllByFilter(filter: Filter<*, *>) : List<T>
+    fun findAllByFilter(filter: Filter<*>) : List<T>
 }

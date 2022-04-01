@@ -24,7 +24,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun update(filter: Filter<*, *>, entity: T) {
+    override fun update(filter: Filter<*>, entity: T) {
         mdbRepository.update(filter, converter(entity))
         logger.trace(
             "[{}] Updating entity [{}] to repository...: -> !DONE! <-",
@@ -33,7 +33,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun delete(filter: Filter<*, *>) {
+    override fun delete(filter: Filter<*>) {
         mdbRepository.delete(filter)
         logger.trace(
             "[{}] Deleting entity [{}] to repository...: -> !DONE! <-",
@@ -42,7 +42,7 @@ class EntityRepository<T: Entity>(
         )
     }
 
-    override fun findOneByFilter(filter: Filter<*, *>) : Optional<T> =
+    override fun findOneByFilter(filter: Filter<*>) : Optional<T> =
         mdbRepository.findOneByFilter(filter).let { document ->
             return if(document.isPresent) {
                 logger.trace(
@@ -56,7 +56,7 @@ class EntityRepository<T: Entity>(
             }
         }
 
-    override fun findAllByFilter(filter: Filter<*, *>) : List<T> =
+    override fun findAllByFilter(filter: Filter<*>) : List<T> =
         mdbRepository.findAllByFilter(filter)
             .map { it.toType() }
             .toList() as List<T>

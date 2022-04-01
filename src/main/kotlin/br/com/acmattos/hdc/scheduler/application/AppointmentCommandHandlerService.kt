@@ -21,7 +21,6 @@ import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheSchedule
 import br.com.acmattos.hdc.scheduler.domain.cqs.ScheduleEvent
 import br.com.acmattos.hdc.scheduler.domain.model.Appointment
 import br.com.acmattos.hdc.scheduler.domain.model.Schedule
-import java.time.LocalDate
 import java.time.LocalTime
 
 /**
@@ -156,10 +155,10 @@ class AppointmentCommandHandlerService(// TODO Test
         command: CreateAppointmentForTheScheduleCommand
     ) {
         eventStore.findAllByFilter(
-            AndFilter<String, Any>(
+            AndFilter(
                 listOf(
-                    EqFilter<String, String>("event.schedule_id.id", command.scheduleId.id), // TODO TRACK THIS FIELD
-                    EqFilter<String, LocalDate>("event.date", command.date), // TODO TRACK THIS FIELD
+                    EqFilter("event.schedule_id.id", command.scheduleId.id), // TODO TRACK THIS FIELD
+                    EqFilter("event.date", command.date), // TODO TRACK THIS FIELD
                     EqFilter<String, LocalTime>("event.time", command.time) // TODO TRACK THIS FIELD
                 )
             )
