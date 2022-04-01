@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
@@ -84,6 +85,28 @@ object MdbFilterTranslatorTest: Spek({
                 assertThat(bson.toString()).isEqualTo(
                     "And Filter{filters=[Filter{fieldName='fieldName', value=10}, Filter{fieldName='fieldName', value=10}, Filter{fieldName='fieldName', value=10}]}"
                 )
+            }
+        }
+
+        Scenario("${EmptyFilter::class.java.simpleName} usage") {
+            lateinit var translator: FilterTranslator<Bson>
+            lateinit var filter: Filter<Any>
+            lateinit var bson: Any
+            var value = 0
+            Given("""a ${EmptyFilter::class.java.simpleName} filter""") {
+                filter = EmptyFilter()
+            }
+            And("""a ${MdbFilterTranslator::class.java.simpleName} filter translator""") {
+                translator = MdbFilterTranslator()
+            }
+            When("""filter#translate is executed""") {
+                bson = filter.translate(translator as FilterTranslator<Any>)
+            }
+            Then("""the filter is equal to a ${Bson::class.java.simpleName} equivalent""") {
+                assertThat(bson).isEqualTo(Filters.empty())
+            }
+            And("""the #toString representation matches the expected""") {
+                assertThat(bson.toString()).isEqualTo("{}")
             }
         }
     }

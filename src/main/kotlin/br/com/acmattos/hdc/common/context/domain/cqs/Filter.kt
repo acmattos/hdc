@@ -20,11 +20,23 @@ interface FilterTranslator<TRANSLATION> {
  * @author ACMattos
  * @since 01/04/2022.
  */
+class EmptyFilter: Filter<Any> {
+    override fun translate(
+        translator: FilterTranslator<Any>
+    ): Any = translator.createTranslation(this)
+}
+
+/**
+ * @author ACMattos
+ * @since 01/04/2022.
+ */
 open class FieldFilter<TRANSLATION, TYPE>(
     open val fieldName: String,
     open val value: TYPE
 ): Filter<TRANSLATION> {
-    override fun translate(translator: FilterTranslator<TRANSLATION>): TRANSLATION =
+    override fun translate(
+        translator: FilterTranslator<TRANSLATION>
+    ): TRANSLATION =
         translator.createTranslation(this)
 }
 
@@ -35,7 +47,9 @@ open class FieldFilter<TRANSLATION, TYPE>(
 open class CollectionFilter<TRANSLATION>(
     open val filters: List<Filter<TRANSLATION>>
 ): Filter<TRANSLATION> {
-    override fun translate(translator: FilterTranslator<TRANSLATION>): TRANSLATION =
+    override fun translate(
+        translator: FilterTranslator<TRANSLATION>
+    ): TRANSLATION =
         translator.createTranslation(this)
 }
 

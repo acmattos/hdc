@@ -1,7 +1,6 @@
 package br.com.acmattos.hdc.procedure.application
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryHandler
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
@@ -13,7 +12,6 @@ import br.com.acmattos.hdc.procedure.domain.cqs.FindAllProceduresQuery
 import br.com.acmattos.hdc.procedure.domain.cqs.FindTheProcedureQuery
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureQuery
 import br.com.acmattos.hdc.procedure.domain.model.Procedure
-import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedField.PROCEDURE_ID
 
 /**
  * @author ACMattos
@@ -73,12 +71,8 @@ class ProcedureQueryHandlerService(
             SERVICE.name,
             query.javaClass.name
         )
-        val optionalEntity = repository.findOneByFilter(
-            EqFilter<String, String>(
-                PROCEDURE_ID.fieldName,
-                query.id.id
-            )
-        )
+        val optionalEntity = repository.findOneByFilter(query.filter)
+
         logger.trace(
             "[{} {}] - Entity found?: -> {} <-",
             PROCEDURE.name,

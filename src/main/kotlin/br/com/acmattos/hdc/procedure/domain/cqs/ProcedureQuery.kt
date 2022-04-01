@@ -1,17 +1,21 @@
 package br.com.acmattos.hdc.procedure.domain.cqs
 
+import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.domain.model.Id
+import br.com.acmattos.hdc.procedure.domain.model.ProcedureId
+import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedField.PROCEDURE_ID
 
 /**
  * @author ACMattos
  * @since 20/03/2021.
  */
 open class ProcedureQuery(
-    override val id: Id, // TODO Change it to FILTER
+    override val filter: Filter<*>,
     override val auditLog: AuditLog
-): Query(id, auditLog)
+): Query(filter, auditLog)
 
 /**
  * @author ACMattos
@@ -19,13 +23,24 @@ open class ProcedureQuery(
  */
 data class FindAllProceduresQuery(
     override val auditLog: AuditLog
-): ProcedureQuery(Id(), auditLog)
+): ProcedureQuery(EmptyFilter(), auditLog)
 
 /**
  * @author ACMattos
  * @since 24/03/2022.
  */
 data class FindTheProcedureQuery(
-    override val id: Id,
+    override val filter: Filter<*>,
     override val auditLog: AuditLog
-): ProcedureQuery(id, auditLog)
+): ProcedureQuery(filter, auditLog) {
+    constructor(
+        id: ProcedureId,
+        auditLog: AuditLog
+    ): this(
+        EqFilter<String, String>(
+            PROCEDURE_ID.fieldName,
+            id.id
+        ),
+        auditLog
+    )
+}

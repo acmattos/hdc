@@ -1,7 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.cqs
 
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbQueryDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
@@ -50,6 +49,17 @@ object QueryStoreRepositoryTest: Spek({
  * @since 06/11/2021.
  */
 class TestQuery(
-    override val id: Id,
+    override val filter: Filter<String>,
     override val auditLog: AuditLog
-): Query(id, auditLog)
+): Query(filter, auditLog) {
+    constructor(
+        id: QueryId,
+        auditLog: AuditLog
+    ): this(
+        EqFilter<String, String>(
+            "query_id",
+            id.id
+        ),
+        auditLog
+    )
+}

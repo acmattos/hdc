@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
@@ -16,7 +17,7 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
         when(filter){
             is EqFilter<Bson, *> -> translate(filter)
             is AndFilter<Bson> -> translate(filter)
-            else -> translate(filter as EqFilter<Bson, *>)
+            else -> translate(filter as EmptyFilter)
         }
 
     private fun translate(filter: EqFilter<Bson, *>): Bson =
@@ -28,4 +29,6 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
                 .filters
                 .map { filter ->  createTranslation(filter) }
         )
+
+    private fun translate(filter: EmptyFilter): Bson = Filters.empty()
 }
