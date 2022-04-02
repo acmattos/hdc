@@ -56,7 +56,7 @@ class ProcedureQueryController(
             }
         logger.info(
             "[{} {}] - Finding all procedures: -> !DONE! <-",
-            PERSON.name,
+            PROCEDURE.name,
             ENDPOINT.name
         )
     }

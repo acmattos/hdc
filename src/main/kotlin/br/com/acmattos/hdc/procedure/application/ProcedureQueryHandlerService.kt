@@ -55,10 +55,10 @@ class ProcedureQueryHandlerService(
         )
         val entities = repository.findAll()
         logger.trace(
-            "[{} {}] - Entity found?: -> {} <-",
+            "[{} {}] - Entities found?: -> {} <-",
             PROCEDURE.name,
             SERVICE.name,
-            entities.toString() // TODO change the approach to log
+            entities.toString()
         )
         return QueryResult.build(entities)
     }
