@@ -36,8 +36,7 @@ open class FieldFilter<TRANSLATION, TYPE>(
 ): Filter<TRANSLATION> {
     override fun translate(
         translator: FilterTranslator<TRANSLATION>
-    ): TRANSLATION =
-        translator.createTranslation(this)
+    ): TRANSLATION = translator.createTranslation(this)
 }
 
 /**
@@ -49,8 +48,7 @@ open class CollectionFilter<TRANSLATION>(
 ): Filter<TRANSLATION> {
     override fun translate(
         translator: FilterTranslator<TRANSLATION>
-    ): TRANSLATION =
-        translator.createTranslation(this)
+    ): TRANSLATION = translator.createTranslation(this)
 }
 
 /**
@@ -58,6 +56,15 @@ open class CollectionFilter<TRANSLATION>(
  * @since 25/03/2022.
  */
 data class EqFilter<TRANSLATION, TYPE>(
+    override val fieldName: String,
+    override val value: TYPE
+): FieldFilter<TRANSLATION, TYPE>(fieldName, value)
+
+/**
+ * @author ACMattos
+ * @since 05/04/2022.
+ */
+data class RegexFilter<TRANSLATION, TYPE>(
     override val fieldName: String,
     override val value: TYPE
 ): FieldFilter<TRANSLATION, TYPE>(fieldName, value)
