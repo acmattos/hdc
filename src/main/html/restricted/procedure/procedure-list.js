@@ -15,6 +15,7 @@
                { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
                { 'data': 'code', 'defaultContent': '', 'orderable': true },
                { 'data': 'description', 'defaultContent': '', 'orderable': true },
+               //{ 'data': 'enabled', 'defaultContent': '', 'orderable': true },
                { 'className': "text-center", 'defaultContent': '', 'orderable': false }
             ];
          }
@@ -32,13 +33,17 @@
                },
                {
                   targets: [ 1 ],
-                  width: "90px",
+                  width: "100px",
                   title:'<span>Código</span>',
                },
                {
                   targets: [ 2 ],
                   title:'<span>Descrição</span>',
                },
+               // {
+               //    targets: [ 3 ],
+               //    title:'<span>Habilitado</span>',
+               // },
                {
                   targets: [ 3 ],
                   width: "15px",
@@ -84,25 +89,22 @@
          }
          datatable() {
             this.table = new Datatable(this.prefixId(),
-               new DtConfig(this.uri(), this.columns(), this.columnDefs(), this.initComplete))
-                   .table();
+               new DtConfig(this.uri(), this.columns(), this.columnDefs(),
+                  this.initComplete)).table();
             let table = this.table;
             let detailRows = [];
             let procedureList = this;
             let prefixId = this.prefixId();
-            $(prefixId + ' tbody').off('click').on( 'click', 'tr td.details-control', function () {
+            $(prefixId + ' tbody').off('click').on(
+               'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
                let row = table.row(tr);
-               //let idx = $.inArray(tr.attr('id'), detailRows);
-logger.delete('tr e row',tr, row);
                if (row.child.isShown()) {
                   row.child.remove();
                   tr.removeClass('shown');
                   tr.removeClass('selected');
                } else {
-                  $(this).prop('id', 'ID');
                   if (table.row('.shown').length) {
-                     //$(prefixId + 'DetailsDiv').parent().parent().remove();
                      $('#newItem').remove();
                      $('.shown').find('.details-control').click();
                   }
@@ -115,20 +117,11 @@ logger.delete('tr e row',tr, row);
                   tr.addClass('selected');
                }
             });
-            // On each draw, loop over the `detailRows` array and show any child rows
             this.table.on('draw', () => {
                $.each(detailRows, (i, id) => {
                   $.trigger('#' + id + ' td.details-control');
                });
             });
-            //    createdRow: function( row, data, dataIndex) {
-            //       $(row).attr('data-toggle', 'modal');
-            //       $(row).attr('data-target', '#modalEditar');
-            //       $(row).attr('onclick', '_configuraModalEditaCheckList("'
-            //          + data.id +'")');
-            //    },
-            // });
-            // });
             return this.table;
          }
          setupNewProcedure() {
@@ -178,7 +171,7 @@ logger.delete('tr e row',tr, row);
                      //    $('#newItem').remove();
                      //    clicou = false;
                      // });
-                     clicou = true;
+                     // clicou = true;
                   });
                //}
             });
