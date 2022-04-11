@@ -16,12 +16,13 @@
          this.enabled = '';
          // Validators
          this.codeV = new IntValidator(this.codeId, {
-            between: { min: 81000014, max: 87000199, message: '01FVQ2NP5PKKHVWHP57PKD8N62' }
+            between: { min: 81000014, max: 87000199,
+               message: '01FVQ2NP5PKKHVWHP57PKD8N62' }
          });
          this.descriptionV = new StringValidator(this.descriptionId, {
             len: { min: 3, max: 120, message: '01FVT3QG3MQ2MJX8PESM4KVKSP' }
          });
-         if (Array.isArray(arguments[0])) {logger.delete(arguments[0][0].procedure_id.id)
+         if (Array.isArray(arguments[0])) {
             this.procedureId = arguments[0][0].procedure_id.id;
             this.code = arguments[0][0].code;
             this.description = arguments[0][0].description;
@@ -166,7 +167,7 @@
                   'data': message
                });
                $('#newItem').remove();
-               //$('#filtrar').trigger('click');TODO RELOAD
+               $('#filter').trigger('click');
             })
             .fail((error) => {
                toast.show(error);
@@ -180,13 +181,13 @@
          });
       }
       initDeleteAction(id) {
-         $('#delete').off('click').on('click', (event) => {alert()
+         $('#delete').off('click').on('click', (event) => {
             event.preventDefault();
 
             //clicou = false;
             let promise = null;
             let message = null;
-            if(!id) {alert('JUST REMOVE LINE' + id)
+            if(!id) {
                $('#newItem').remove();
             } else { alert('JUST DELETE ' + id)
                promise = this.procedure.delete();
@@ -199,7 +200,7 @@
                   'code':'01FVT3QG3N9FE3F55670TQCPE3',
                   'data': message
                });
-               //$('#filtrar').trigger('click');TODO RELOAD
+               $('#filter').trigger('click');
             })
             .fail((error) => {
                 toast.show(error);
