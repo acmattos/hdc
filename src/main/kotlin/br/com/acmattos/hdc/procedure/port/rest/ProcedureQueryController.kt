@@ -7,7 +7,6 @@ import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
-import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
 import br.com.acmattos.hdc.procedure.domain.cqs.FindAllProceduresQuery
 import br.com.acmattos.hdc.procedure.domain.cqs.FindTheProcedureQuery
@@ -110,7 +109,9 @@ class ProcedureQueryController(
  * @author ACMattos
  * @since 20/03/2022.
  */
-class FindAllProceduresRequest(val context: Context): Request<ProcedureQuery>(context) {
+class FindAllProceduresRequest(
+    val context: Context
+): Request<ProcedureQuery>(context) {
     override fun toType(who: String, what: String): ProcedureQuery {
         return FindAllProceduresQuery(
             AuditLog(who, what)
@@ -122,7 +123,9 @@ class FindAllProceduresRequest(val context: Context): Request<ProcedureQuery>(co
  * @author ACMattos
  * @since 24/03/2022.
  */
-class FindTheProcedureRequest(val context: Context): Request<ProcedureQuery>(context) {
+class FindTheProcedureRequest(
+    val context: Context
+): Request<ProcedureQuery>(context) {
     override fun toType(who: String, what: String): ProcedureQuery {
         val procedureId = context.pathParam("procedure_id")
         return FindTheProcedureQuery(
