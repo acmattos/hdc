@@ -2,6 +2,7 @@ package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_BY_FILTER_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_BY_PAGE
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_FAILED
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ONE_BY_FILTER_FAILED
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAILED
@@ -10,10 +11,11 @@ import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
+import br.com.acmattos.hdc.common.tool.page.Page
+import br.com.acmattos.hdc.common.tool.page.PageResult
 import com.mongodb.client.MongoCollection
 import java.util.Optional
 import org.bson.conversions.Bson
-
 
 /**
  * @author ACMattos
@@ -99,6 +101,27 @@ open class MdbRepository<T: MdbDocument>(
         ) {
             return@catch getCollection().find()
                 .map { it }.toList()
+        }
+
+    override fun findAllByPage(page: Page): PageResult<T> =
+        catch(
+            "[{}] - Finding documents by page in the repository: -> {}={} <-",
+            FIND_ALL_BY_PAGE.code,
+            REPOSITORY.name,
+            page.toString() // TODO Verify this log
+        ) {
+            val filter: Bson = filterTranslator.createTranslation(
+                page.filter as Filter<Bson>
+            )
+            val total = getCollection().countDocuments(filter)
+            val results = getCollection().find(filter)
+//            .sort(
+//                sortTranslator.createTranslation(page.sort as Sort<Bson>)
+//            )
+            .limit(page.size)
+            .skip(page.page)
+            .map { it }.toList()
+            return@catch PageResult.create(results, page, total)
         }
 
     private fun getCollection(): MongoCollection<T> =

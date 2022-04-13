@@ -5,6 +5,8 @@ import br.com.acmattos.hdc.common.context.domain.cqs.StoreEnum.STORE
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.common.tool.page.Page
+import br.com.acmattos.hdc.common.tool.page.PageResult
 import java.util.Optional
 
 /**
@@ -64,6 +66,17 @@ class EntityRepository<T: Entity>(
     override fun findAll(): List<T> {// TODO Subject to change (APPLY a filter)
         return mdbRepository.findAll().map { it.toType() }.toList() as List<T>
     }
+
+    override fun findAllByPage(page: Page) : PageResult<T> =
+        mdbRepository.findAllByPage(page).let { result ->
+            PageResult.create(
+                result.results
+                    .map { it.toType() }
+                    .toList() as List<T>,
+                result.page,
+                result.total
+            )
+        }
 
     companion object: Loggable()
 }
