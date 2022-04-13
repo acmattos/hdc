@@ -94,8 +94,7 @@ object MdbSortTranslatorTest: Spek({
         }
 
 
-
-        Scenario("${CollectionSort::class.java.simpleName} usage2") {
+        Scenario("${CollectionSort::class.java.simpleName} usage - no field to sort") {
             lateinit var translator: SortTranslator<Bson>
             lateinit var sort: Sort<Bson>
             lateinit var fieldName: String
@@ -110,7 +109,7 @@ object MdbSortTranslatorTest: Spek({
             And("""a ${FieldSort::class.java.simpleName} sort""") {
                 sort = FieldSort(fieldName, ASC)
             }
-            And("""a ${CollectionSort::class.java.simpleName} sort""") {
+            And("""an empty ${CollectionSort::class.java.simpleName} sort""") {
                 sort = CollectionSort()
             }
             And("""a ${MdbSortTranslator::class.java.simpleName} sort translator""") {
@@ -120,20 +119,10 @@ object MdbSortTranslatorTest: Spek({
                 bson = sort.translate(translator)
             }
             Then("""the sort is equal to a ${Bson::class.java.simpleName} equivalent""") {
-                assertThat(bson).isEqualTo(
-                    Sorts.orderBy(
-                        listOf(
-                            Sorts.ascending(fieldName),
-                            Sorts.ascending(fieldName),
-                            Sorts.ascending(fieldName)
-                        )
-                    )
-                )
+                assertThat(bson).isEqualTo(Sorts.orderBy(listOf()))
             }
             And("""the #toString representation matches the expected""") {
-                assertThat(bson.toString()).isEqualTo(
-                    "Compound Sort{sorts=[{\"fieldName\": 1}, {\"fieldName\": 1}, {\"fieldName\": 1}]}"
-                )
+                assertThat(bson.toString()).isEqualTo("Compound Sort{sorts=[]}")
             }
         }
     }
