@@ -30,6 +30,7 @@ class ContextBuilder {
         every { req.inputStream } returns DelegatingServletInputStream(
             jsonBody.byteInputStream()
         )
+        every { req.queryString } returns "qs"
         return context
     }
 }
