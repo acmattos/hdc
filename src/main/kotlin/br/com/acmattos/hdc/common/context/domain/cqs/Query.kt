@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.context.domain.cqs
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
+import br.com.acmattos.hdc.common.tool.page.Page
 
 /**
  * @author ACMattos
@@ -10,15 +11,15 @@ import br.com.acmattos.hdc.common.context.domain.model.Id
  */
 open class Query(
     open val queryId: QueryId,
-    open val filter: Filter<*>,
+    open val page: Page,
     open val auditLog: AuditLog
 ): Entity  {
     constructor(
-        id: Filter<*>,
+        page: Page,
         auditLog: AuditLog
     ): this(
         QueryId(),
-        id,
+        page,
         auditLog
     )
 }

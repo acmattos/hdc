@@ -24,11 +24,12 @@ data class Page private constructor(
         private const val DEFAULT_SIZE = 10
         private const val FIRST_PAGE = 0
 
-        fun first(
+        fun create(
             filter: Filter<*> = EmptyFilter(),
             sort: Sort<*> = CollectionSort<Any>(),
+            number: String? = null,
             size: Int = DEFAULT_SIZE
-        ) = Page(filter, sort, FIRST_PAGE, size)
+        ) = Page(filter, sort, number?.toInt() ?: FIRST_PAGE, size)
     }
 }
 

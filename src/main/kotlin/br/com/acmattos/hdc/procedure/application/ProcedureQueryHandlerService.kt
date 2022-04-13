@@ -71,7 +71,7 @@ class ProcedureQueryHandlerService(
             SERVICE.name,
             query.javaClass.name
         )
-        val optionalEntity = repository.findOneByFilter(query.filter)
+        val optionalEntity = repository.findOneByFilter(query.page.filter)
 
         logger.trace(
             "[{} {}] - Entity found?: -> {} <-",

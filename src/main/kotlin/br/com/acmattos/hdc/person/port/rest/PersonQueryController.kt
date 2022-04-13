@@ -222,7 +222,7 @@ class PersonQueryController(
 class FindAllPersonsRequest(val context: Context): Request<PersonQuery>(context) {
     override fun toType(who: String, what: String): PersonQuery {
         return FindAllPersonsQuery(
-            AuditLog(who, what)
+            auditLog = AuditLog(who, what)
         )
     }
 }

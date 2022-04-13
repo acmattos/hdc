@@ -4,6 +4,7 @@ import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbQueryDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
+import br.com.acmattos.hdc.common.tool.page.Page
 import ch.qos.logback.classic.Level
 import io.mockk.mockk
 import org.assertj.core.api.Assertions
@@ -49,16 +50,18 @@ object QueryStoreRepositoryTest: Spek({
  * @since 06/11/2021.
  */
 class TestQuery(
-    override val filter: Filter<String>,
+    override val page: Page,
     override val auditLog: AuditLog
-): Query(filter, auditLog) {
+): Query(page, auditLog) {
     constructor(
         id: QueryId,
         auditLog: AuditLog
     ): this(
-        EqFilter<String, String>(
-            "query_id",
-            id.id
+        Page.create(filter =
+            EqFilter<String, String>(
+                "query_id",
+                id.id
+            )
         ),
         auditLog
     )

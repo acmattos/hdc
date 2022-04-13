@@ -74,7 +74,7 @@ class PersonQueryHandlerService(
             query.javaClass.name
         )
         val optionalEntity = repository.findOneByFilter(
-            query.filter
+            query.page.filter
 //            EqFilter<String, String>(
 //                "person_id", // TODO MAP FIELD
 //                .Anyid

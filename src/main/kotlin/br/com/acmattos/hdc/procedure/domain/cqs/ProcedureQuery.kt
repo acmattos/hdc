@@ -1,10 +1,14 @@
 package br.com.acmattos.hdc.procedure.domain.cqs
 
+import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
+import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
+import br.com.acmattos.hdc.common.tool.page.Page
+import br.com.acmattos.hdc.common.tool.server.javalin.filterParam
 import br.com.acmattos.hdc.procedure.domain.model.ProcedureId
 import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedField.PROCEDURE_ID
 
@@ -13,33 +17,74 @@ import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedFie
  * @since 20/03/2021.
  */
 open class ProcedureQuery(
-    override val filter: Filter<*>,
+    override val page: Page,
     override val auditLog: AuditLog
-): Query(filter, auditLog)
+): Query(page, auditLog)
 
 /**
  * @author ACMattos
  * @since 20/03/2022.
  */
 data class FindAllProceduresQuery(
+    override val page: Page,
     override val auditLog: AuditLog
-): ProcedureQuery(EmptyFilter(), auditLog)
+): ProcedureQuery(Page.create(), auditLog) {
+    constructor(
+        code: String?,
+        description: String?,
+        pageNumber: String?,
+        auditLog: AuditLog
+    ): this(
+        Page.create(filter = filter(code, description), number = pageNumber),
+        auditLog
+    )
+
+    companion object {
+        private fun filter(code: String?, description: String?): Filter<*> {
+            val codeFilter = codeFilter(code)
+            val descriptionFilter = descriptionFilter(description)
+            return if(codeFilter != null && descriptionFilter != null) {
+                AndFilter(listOf(codeFilter, descriptionFilter))
+            } else if(codeFilter != null && descriptionFilter == null) {
+                codeFilter
+            } else if(codeFilter == null && descriptionFilter != null) {
+                descriptionFilter
+            } else {
+                EmptyFilter()
+            }
+        }
+
+        private fun codeFilter(code: String?): EqFilter<String, Int>? =
+            code?.let {
+                EqFilter("code", it.toInt())
+            }
+
+        private fun descriptionFilter(
+            description: String?
+        ): RegexFilter<String, String>? =
+            description?.let {
+                RegexFilter("description", it)
+            }
+    }
+}
+
 
 /**
  * @author ACMattos
  * @since 24/03/2022.
  */
 data class FindTheProcedureQuery(
-    override val filter: Filter<*>,
+    override val page: Page,
     override val auditLog: AuditLog
-): ProcedureQuery(filter, auditLog) {
+): ProcedureQuery(page, auditLog) {
     constructor(
         id: ProcedureId,
         auditLog: AuditLog
     ): this(
-        EqFilter<String, String>(
-            PROCEDURE_ID.fieldName,
-            id.id
+        Page.create(filter = EqFilter<String, String>(
+                PROCEDURE_ID.fieldName,
+                id.id
+            )
         ),
         auditLog
     )
