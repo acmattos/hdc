@@ -55,14 +55,14 @@ class PersonQueryHandlerService(
             SERVICE.name,
             query.javaClass.name
         )
-        val entities = repository.findAll()
+        val pageResult = repository.findAllByPage(query.page)
         logger.trace(
             "[{} {}] - Entity found?: -> {} <-",
             PERSON.name,
             SERVICE.name,
-            entities.toString() // TODO change the approach to log
+            pageResult.toString() // TODO change the approach to log
         )
-        return QueryResult.build(entities)
+        return pageResult
     }
 
     private fun handle(query: FindTheDentistQuery): QueryResult<Person> {
