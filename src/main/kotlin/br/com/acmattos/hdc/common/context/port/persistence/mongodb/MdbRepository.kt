@@ -108,7 +108,8 @@ open class MdbRepository<T: MdbDocument>(
             "[{}] - Finding documents by page in the repository: -> {}={} <-",
             FIND_ALL_BY_PAGE.code,
             REPOSITORY.name,
-            page.toString() // TODO Verify this log
+            page.javaClass.simpleName,
+            page.toString()
         ) {
             val filter: Bson = filterTranslator.createTranslation(
                 page.filter as Filter<Bson>
@@ -117,7 +118,7 @@ open class MdbRepository<T: MdbDocument>(
             val results = getCollection().find(filter)
 //            .sort(
 //                sortTranslator.createTranslation(page.sort as Sort<Bson>)
-//            )
+//            ) TODO VERIFY SORT CONSTRUCTION
             .limit(page.size)
             .skip(page.page)
             .map { it }.toList()
