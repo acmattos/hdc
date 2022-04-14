@@ -8,7 +8,6 @@ import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.tool.page.Page
-import br.com.acmattos.hdc.common.tool.server.javalin.filterParam
 import br.com.acmattos.hdc.procedure.domain.model.ProcedureId
 import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedField.PROCEDURE_ID
 
@@ -33,9 +32,14 @@ data class FindAllProceduresQuery(
         code: String?,
         description: String?,
         pageNumber: String?,
+        //pageSize: String?,
         auditLog: AuditLog
     ): this(
-        Page.create(filter = filter(code, description), number = pageNumber),
+        Page.create(
+            filter = filter(code, description),
+            number = pageNumber,
+            //size = pageSize
+        ),
         auditLog
     )
 
@@ -55,15 +59,19 @@ data class FindAllProceduresQuery(
         }
 
         private fun codeFilter(code: String?): EqFilter<String, Int>? =
-            code?.let {
-                EqFilter("code", it.toInt())
+            if(!code.isNullOrEmpty()) {
+                EqFilter("code", code.toInt())
+            } else {
+                null
             }
 
         private fun descriptionFilter(
             description: String?
         ): RegexFilter<String, String>? =
-            description?.let {
-                RegexFilter("description", it)
+            if(!description.isNullOrEmpty()) {
+                RegexFilter("description", description)
+            } else {
+                null
             }
     }
 }
