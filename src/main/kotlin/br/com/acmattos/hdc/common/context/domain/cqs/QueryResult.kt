@@ -6,8 +6,8 @@ import java.util.Optional
  * @author ACMattos
  * @since 02/11/2021.
  */
-data class QueryResult<T>(
-    val results: List<T>
+open class QueryResult<T>(
+    open val results: List<T>
 ): Message {
     companion object {
         fun <T> build(entities: List<T>): QueryResult<T> =
@@ -15,7 +15,7 @@ data class QueryResult<T>(
 
         fun <T> build(optionalEntity: Optional<T>): QueryResult<T> =
             optionalEntity
-                .map{entity -> QueryResult(listOf(entity)) }
+                .map{ entity -> QueryResult(listOf(entity)) }
                 .orElseGet { QueryResult(listOf()) }
     }
 }
