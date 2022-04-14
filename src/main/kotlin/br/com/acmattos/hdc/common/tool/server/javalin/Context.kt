@@ -19,10 +19,16 @@ inline fun <reified T: Request<*>> Context.getRequest(
  */
 inline fun Context.filterParam(
     name: String
-): String?  = this.queryParam("f_$name")
+): String? = this.queryParam("f_$name")
 
 /**
  * @author ACMattos
  * @since 11/04/2022.
  */
 inline fun Context.pageNumber(): String? = this.queryParam("pn")
+
+/**
+ * @author ACMattos
+ * @since 13/04/2022.
+ */
+inline fun Context.pageSize(): String? = this.queryParam("ps")
