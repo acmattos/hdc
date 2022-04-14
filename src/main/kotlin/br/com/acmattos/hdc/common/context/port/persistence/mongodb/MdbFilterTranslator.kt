@@ -34,38 +34,35 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
        if(!filter.value.toString().contains("*")) {
             Filters.eq(filter.fieldName, filter.value.toString())
        } else if(filter.value.toString().matches(TERM_X)) {
-            Filters.eq(
-                filter.fieldName,
-                "/^${filter.value.toString().replace("*", "")}/"
+           Filters.regex(
+               filter.fieldName,
+               Pattern.compile(
+                   "^" + "${filter.value.toString().replace("*", "")}"
+                       + ".*$",
+                   Pattern.CASE_INSENSITIVE
+               )
             )
         } else if(filter.value.toString().matches(X_TERM)) {
-            Filters.eq(
-                filter.fieldName,
-                "/${filter.value.toString().replace("*", "")}\$/"
-            )
+           Filters.regex(
+               filter.fieldName,
+               Pattern.compile(
+                   "^.*" + "${filter.value.toString().replace("*", "")}"
+                       + "$",
+                   Pattern.CASE_INSENSITIVE
+               )
+           )
         } else if(filter.value.toString().matches(X_TERM_X)) {
-            Filters.eq(
-                filter.fieldName,
-                "/.*${filter.value.toString().replace("*", "")}.*/"
-            )
+           Filters.regex(
+               filter.fieldName,
+               Pattern.compile(
+                   "^.*" + "${filter.value.toString().replace("*", "")}"
+                       + ".*$",
+                   Pattern.CASE_INSENSITIVE
+               )
+           )
         } else {
            Filters.empty()
         }
-//        MySQL - SELECT * FROM users  WHERE name LIKE '%m%'
-//        MongoDb
-//        1) db.users.find({ "name": { "$regex": "m", "$options": "i" } })
-//        2) db.users.find({ "name": { $regex: new RegExp("m", 'i') } })
-//        3) db.users.find({ "name": { $regex:/m/i } })
-//        4) db.users.find({ "name": /mail/ })
-//        5) db.users.find({ "name": /.*m.*/ })
-//
-//        MySQL - SELECT * FROM users  WHERE name LIKE 'm%'
-//        MongoDb Any of Above with /^String/
-//        6) db.users.find({ "name": /^m/ })
-//
-//        MySQL - SELECT * FROM users  WHERE name LIKE '%m'
-//        MongoDb Any of Above with /String$/
-//        7) db.users.find({ "name": /m$/ })
 
     private fun translate(filter: AndFilter<Bson>): Bson =
         Filters.and(
