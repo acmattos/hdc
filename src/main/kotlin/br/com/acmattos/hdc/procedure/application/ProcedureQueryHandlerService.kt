@@ -53,14 +53,14 @@ class ProcedureQueryHandlerService(
             SERVICE.name,
             query.javaClass.name
         )
-        val entities = repository.findAll()
+        val pageResult = repository.findAllByPage(query.page)
         logger.trace(
             "[{} {}] - Entities found?: -> {} <-",
             PROCEDURE.name,
             SERVICE.name,
-            entities.toString()
+            pageResult.toString()
         )
-        return QueryResult.build(entities)
+        return pageResult
     }
 
     private fun handle(query: FindTheProcedureQuery): QueryResult<Procedure> {
