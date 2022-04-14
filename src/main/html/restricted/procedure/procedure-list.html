@@ -9,17 +9,18 @@
   <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
    <div class="accordion-body">
      <form class="form-inline row">
+      <input type="hidden" id="pageNumber">
       <div class="form-group col-2">
-       <label for="codeFilter" class="mr-2"><span
+       <label for="fcode" class="mr-2"><span
        >Código</span>:</label>
-       <input id="codeFilter" type="number"
+       <input id="fcode" type="number"
               class="form-control form-control-sm" min= "81000014" max="87000199">
       </div>
       <div class="form-group col-8">
-       <label for="descriptionFilter" class="mr-2">
+       <label for="fdescription" class="mr-2">
         <span>Descrição</span>:
        </label>
-       <input id="descriptionFilter" type="text"
+       <input id="fdescription" type="text"
               class="form-control form-control-sm" minlength="3" maxlength="120">
       </div>
       <div class="form-group col-2">

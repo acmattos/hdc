@@ -5,6 +5,14 @@
    $(document).ready(() => {
       class ProcedureList {
          constructor() {
+            // Component's IDs
+            this.fcodeId = "#fcode";
+            this.fdescriptionId = "#fdescription";
+            this.pageNumberId = "#pageNumber"
+            // Attributes
+            this.codeFilter = "";
+            this.descriptionFilter = "";
+            this.pageNumber = 1;
             this.table = {};
          }
          prefixId() { return '#procedureList'; }
@@ -87,9 +95,9 @@
                executeAfterLoadCallback();
             });
          }
-         datatable() {
+         datatable(uri) {
             this.table = new Datatable(this.prefixId(),
-               new DtConfig(this.uri(), this.columns(), this.columnDefs(),
+               new DtConfig(uri, this.columns(), this.columnDefs(),
                   this.initComplete)).table();
             let table = this.table;
             let detailRows = [];
@@ -127,7 +135,8 @@
          setupNewProcedure() {
             let clicou = false;
             let procedureList = this;
-            $(this.prefixId() + 'New').off('click').on('click', (event) => {
+            $.click(this.prefixId() + 'New', (event) => {
+            //$(this.prefixId() + 'New').off('click').on('click', (event) => {
                $(procedureList.newItemId()).remove();
                //tr.removeClass('shown');
                //if (!clicou) {
@@ -176,8 +185,54 @@
                //}
             });
          }
+         read() {
+            let deferred = $.Deferred();
+            let promise = deferred.promise();
+            resource.get(':7000/procedures' + this.queryString())
+            .done((response) => {
+               //deferred.resolve(new Procedure(response.data));
+            })
+            .fail((error) => {
+               toast.show(error);
+               //deferred.reject(new Procedure());
+            });
+            return promise;
+         }
+         queryString() {
+            this.fcode = $.inputText(this.fcodeId);
+            this.fdescription = $.inputText(this.fdescriptionId);
+            this.pageNumber = $.inputText(this.pageNumberId);
+            logger.alert("?f_code={0}&f_description={1}&pn={2}".format(
+               this.fcode, this.fdescription, this.pageNumber))
+            return "?f_code={0}&f_description={1}&pn={2}".format(
+               this.fcode, this.fdescription, this.pageNumber);
+         }
+         filterList() {
+            $.click('#filter', (event) => {
+               // this.read()
+               // .done((response) => {
+                  $.inputText(this.pageNumberId, this.pageNumber);
+                  this.datatable(this.uri() + this.queryString());
+                  // toast.show({
+                  //    'status': response.status,
+                  //    'code':'01FVT3QG3N9FE3F55670TQCPE3',
+                  //    'data': message
+                  // });
+                  // $('#newItem').remove();
+                  // $.trigger('#filter');
+            //    })
+            //    .fail((error) => {
+            //       toast.show(error);
+            //    });
+            });
+            $.trigger('#filter');
+         }
+         previousPage() {}
+         nextPage() {
+         }
          initPage() {
-            this.datatable();
+            this.filterList();
+            // this.datatable(this.uri() + this.queryString());
             this.setupNewProcedure();
          }
       }
