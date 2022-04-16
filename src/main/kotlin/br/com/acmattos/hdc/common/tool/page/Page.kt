@@ -22,19 +22,19 @@ data class Page private constructor(
         }
 
     companion object {
-        private const val DEFAULT_SIZE = "10"//10
+        private const val DEFAULT_SIZE = 10
         internal const val FIRST_PAGE = 0
 
         fun create(
             filter: Filter<*> = EmptyFilter(),
             sort: Sort<*> = CollectionSort<Any>(),
             number: String? = null,
-            size: String? = DEFAULT_SIZE
+            size: String? = null
         ) = Page(
             filter,
             sort,
             number?.toIntOrDefault(FIRST_PAGE) ?: FIRST_PAGE,
-            20
+            size?.toIntOrDefault(DEFAULT_SIZE) ?: DEFAULT_SIZE
         )
     }
 }
