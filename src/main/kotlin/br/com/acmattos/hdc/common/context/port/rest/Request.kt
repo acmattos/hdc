@@ -1,6 +1,5 @@
 package br.com.acmattos.hdc.common.context.port.rest
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import io.javalin.http.Context
 
 /**
