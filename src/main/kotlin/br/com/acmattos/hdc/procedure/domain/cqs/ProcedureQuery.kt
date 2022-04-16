@@ -32,13 +32,13 @@ data class FindAllProceduresQuery(
         code: String?,
         description: String?,
         pageNumber: String?,
-        //pageSize: String?,
+        pageSize: String?,
         auditLog: AuditLog
     ): this(
         Page.create(
             filter = filter(code, description),
             number = pageNumber,
-            //size = pageSize
+            size = pageSize
         ),
         auditLog
     )
@@ -76,7 +76,6 @@ data class FindAllProceduresQuery(
     }
 }
 
-
 /**
  * @author ACMattos
  * @since 24/03/2022.
@@ -89,7 +88,8 @@ data class FindTheProcedureQuery(
         id: ProcedureId,
         auditLog: AuditLog
     ): this(
-        Page.create(filter = EqFilter<String, String>(
+        Page.create(
+            filter = EqFilter<String, String>(
                 PROCEDURE_ID.fieldName,
                 id.id
             )
