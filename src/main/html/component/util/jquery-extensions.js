@@ -65,20 +65,21 @@
    };
 
    $.click = (component, selector, action) => {
-      if(arguments.length === 2) {
+      if(!action) {
          $(component).off('click')
-            .on('click', selector,
+            .on('click',
                (event) => {
                   event.preventDefault();
                   event.stopImmediatePropagation();
-                  action(event);
+                  selector(event);
                });
       } else {
          $(component).off('click')
             .on('click', selector,
                (event) => {
                   event.preventDefault();
-                  selector(event);
+                  event.stopImmediatePropagation();
+                  action(event);
                });
       }
    };
