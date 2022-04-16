@@ -1,4 +1,4 @@
-<div id="procedureListBreadCrumb" class="topo-pagina">
+<div id="procedureListBreadCrumb">
 <div class="accordion accordion-flush" id="accordionFlushExample">
  <div class="accordion-item">
    <button class="accordion-button collapsed" type="button"
@@ -6,19 +6,19 @@
            aria-expanded="false" aria-controls="flush-collapseOne">
     Filtrar Listagem de Procedimentos Odontológicos
    </button>
-  <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+  <div id="flush-collapseOne" class="accordion-collapse collapse"
+       aria-labelledby="flush-headingOne"
+       data-bs-parent="#accordionFlushExample">
    <div class="accordion-body">
      <form class="form-inline row">
       <div class="form-group col-2">
-       <label for="fcode" class="mr-2"><span
-       >Código</span>:</label>
+       <label for="fcode" class="mr-2"><span>Código</span>:</label>
        <input id="fcode" type="number"
-              class="form-control form-control-sm" min= "81000014" max="87000199">
+              class="form-control form-control-sm"
+              min= "81000014" max="87000199">
       </div>
       <div class="form-group col-8">
-       <label for="fdescription" class="mr-2">
-        <span>Descrição</span>:
-       </label>
+       <label for="fdescription" class="mr-2"><span>Descrição</span>:</label>
        <input id="fdescription" type="text"
               class="form-control form-control-sm" minlength="3" maxlength="120">
       </div>
@@ -34,10 +34,12 @@
   </div>
  </div>
 </div>
-<div class="botoes-topo row">
+<div class="row">
  <div class="col-12">
   <button id="procedureListNew" class="btn btn-primary form-control form-control-sm"
           type="button">Novo Procedimento Odontológico</button>
  </div>
 </div>
-<table id="procedureList" class="display table table-bordered table-striped" style="width:100%"></table>
+ <div class="row">&nbsp;</div>
+<table id="procedureList" class="display table table-bordered table-striped"
+       style="width:100%"></table>
