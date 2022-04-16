@@ -9,6 +9,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.filterParam
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.javalin.pageNumber
+import br.com.acmattos.hdc.common.tool.server.javalin.pageSize
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
 import br.com.acmattos.hdc.procedure.domain.cqs.FindAllProceduresQuery
 import br.com.acmattos.hdc.procedure.domain.cqs.FindTheProcedureQuery
@@ -119,6 +120,7 @@ class FindAllProceduresRequest(
             context.filterParam("code"),
             context.filterParam("description"),
             context.pageNumber(),
+            context.pageSize(),
             AuditLog(who, what)
         )
     }
