@@ -59,7 +59,6 @@
             ];
          }
          initComplete(settings, json) {
-            logger.delete(settings, json)
             let api = new $.fn.dataTable.Api(settings);
             let columns = [];
             // var span = '';
@@ -136,7 +135,6 @@
             let clicou = false;
             let procedureList = this;
             $.click(this.prefixId() + 'New', (event) => {
-            //$(this.prefixId() + 'New').off('click').on('click', (event) => {
                $(procedureList.newItemId()).remove();
                //tr.removeClass('shown');
                //if (!clicou) {
@@ -185,45 +183,16 @@
                //}
             });
          }
-         read() {
-            let deferred = $.Deferred();
-            let promise = deferred.promise();
-            resource.get(':7000/procedures' + this.queryString())
-            .done((response) => {
-               //deferred.resolve(new Procedure(response.data));
-            })
-            .fail((error) => {
-               toast.show(error);
-               //deferred.reject(new Procedure());
-            });
-            return promise;
-         }
          queryString() {
             this.fcode = $.inputText(this.fcodeId);
             this.fdescription = $.inputText(this.fdescriptionId);
             this.pageNumber = $.inputText(this.pageNumberId);
-            logger.alert("?f_code={0}&f_description={1}&pn={2}".format(
-               this.fcode, this.fdescription, this.pageNumber))
-            return "?f_code={0}&f_description={1}&pn={2}".format(
-               this.fcode, this.fdescription, this.pageNumber);
+            return "?f_code={0}&f_description={1}".format(
+               this.fcode, this.fdescription);
          }
          filterList() {
             $.click('#filter', (event) => {
-               // this.read()
-               // .done((response) => {
-                  $.inputText(this.pageNumberId, this.pageNumber);
                   this.datatable(this.uri() + this.queryString());
-                  // toast.show({
-                  //    'status': response.status,
-                  //    'code':'01FVT3QG3N9FE3F55670TQCPE3',
-                  //    'data': message
-                  // });
-                  // $('#newItem').remove();
-                  // $.trigger('#filter');
-            //    })
-            //    .fail((error) => {
-            //       toast.show(error);
-            //    });
             });
             $.trigger('#filter');
          }
@@ -232,11 +201,9 @@
          }
          initPage() {
             this.filterList();
-            // this.datatable(this.uri() + this.queryString());
             this.setupNewProcedure();
          }
       }
-      const list = new ProcedureList();
-      list.initPage();
+      new ProcedureList().initPage();
    });
 })();
