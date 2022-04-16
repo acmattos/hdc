@@ -173,46 +173,15 @@
                toast.show(error);
             });
          });
-         // $('#save').off('click').on('click', (event) => {
-         //    let promise = null;
-         //    let message = null;
-         //    if(!id) {
-         //       promise = this.procedure.create();
-         //       message = 'Procedimento Criado!';
-         //    } else {
-         //       promise = this.procedure.update();
-         //       message = 'Procedimento Atualizado!';
-         //    }
-         //    promise
-         //    .done((response) => {
-         //       toast.show({
-         //          'status': response.status,
-         //          'code':'01FVT3QG3N9FE3F55670TQCPE3',
-         //          'data': message
-         //       });
-         //       $('#newItem').remove();
-         //       $.trigger('#filter');
-         //    })
-         //    .fail((error) => {
-         //       toast.show(error);
-         //    });
-         // });
       }
       initCancelAction(id) {
          $.click('#cancel', (event) => {
             $('#newItem').remove();
             //clicou = false;
          });
-         // $('#cancel').off('click').on('click', (event) => {
-         //    $('#newItem').remove();
-         //    //clicou = false;
-         // });
       }
       initDeleteAction(id) {
          $.click('#delete', (event) => {
-         //$('#delete').off('click').on('click', (event) => {
-         //   event.preventDefault();
-
             //clicou = false;
             let promise = null;
             let message = null;
