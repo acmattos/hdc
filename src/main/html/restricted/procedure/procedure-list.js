@@ -18,6 +18,13 @@
          prefixId() { return '#procedureList'; }
          newItemId() { return '#newItem'; }
          uri() { return ':7000/procedures'; }
+         queryString() {
+            this.fcode = $.inputText(this.fcodeId);
+            this.fdescription = $.inputText(this.fdescriptionId);
+            this.pageNumber = $.inputText(this.pageNumberId);
+            return "?f_code={0}&f_description={1}".format(
+               this.fcode, this.fdescription);
+         }
          columns() {
             return  [
                { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
@@ -131,6 +138,11 @@
             });
             return this.table;
          }
+         filterList() {
+            $.click('#filter', (event) => {
+               this.datatable(this.uri() + this.queryString());
+            });
+         }
          setupNewProcedure() {
             let clicou = false;
             let procedureList = this;
@@ -183,25 +195,10 @@
                //}
             });
          }
-         queryString() {
-            this.fcode = $.inputText(this.fcodeId);
-            this.fdescription = $.inputText(this.fdescriptionId);
-            this.pageNumber = $.inputText(this.pageNumberId);
-            return "?f_code={0}&f_description={1}".format(
-               this.fcode, this.fdescription);
-         }
-         filterList() {
-            $.click('#filter', (event) => {
-                  this.datatable(this.uri() + this.queryString());
-            });
-            $.trigger('#filter');
-         }
-         previousPage() {}
-         nextPage() {
-         }
          initPage() {
             this.filterList();
             this.setupNewProcedure();
+            $.trigger('#filter');
          }
       }
       new ProcedureList().initPage();
