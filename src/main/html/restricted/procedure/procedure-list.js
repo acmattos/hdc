@@ -142,6 +142,11 @@
             $.click('#filter', (event) => {
                this.datatable(this.uri() + this.queryString());
             });
+            $(this.fdescriptionId).off('keyup').on('keyup', (event) => {
+               if($.inputText(this.fdescriptionId).length > 4) {
+                  $.trigger('#filter');
+               }
+            });
          }
          setupNewProcedure() {
             let clicou = false;
