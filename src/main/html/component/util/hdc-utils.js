@@ -79,6 +79,32 @@
    }
    window.Response = Response;
 
+   class Router {
+      constructor() {
+         this.routeMap = new Map();
+         this.setupRoutes();
+         this.listenToRouteEvents();
+      }
+      setupRoutes() {
+         this.routeMap.set('PROCEDURE', 'restricted/procedure/procedure-list');
+         this.routeMap.set('PATIENT', 'restricted/person/patient/patient-list');
+      }
+      listenToRouteEvents() {
+         $.bodyListener('route',
+            (event, data) => {
+               resource.component('#workspace', this.routeMap.get(data));
+            },
+            (event) => {
+               resource.component('#workspace', this.routeMap.get(data));
+            }
+         );
+      }
+      redirect(route) {
+         $('#menu').trigger('route-valid', route);
+      }
+   }
+   window.router = new Router();
+
    class Http {
       constructor() {
          this.baseUrl = window.location.protocol + '//' + window.location.hostname;// + ':8080/service';
@@ -234,7 +260,7 @@
       set(key, value) {
          this.storage.setItem(key, value);
       }
-      get(key) {
+      get(key) {alert(key)
          this.storage.get(key);
       }
       remove(key) {
