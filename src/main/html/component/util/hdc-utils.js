@@ -64,6 +64,25 @@
    }
    window.message = new Message('component/i18n/messages_pt-BR.json');
 
+   class Loader {
+      constructor() {
+         this.calls = [];
+      }
+      start() {
+         $('#loader').addClass('is-active');
+         this.calls.push("call");
+         return this;
+      }
+      stop() {
+         this.calls.shift();
+         if(this.calls.length === 0) {
+            $('#loader').removeClass('is-active');
+         }
+         return this;
+      }
+   };
+   window.loader = new Loader();
+
    // "{"uid":"01FTK4VMJEKMR8GJMY4TH61D3F"," +
    // ""code":"01FK6PF0DWKTN1BYZW6BRHFZFJ","status":500," +
    // ""data":"ULID [1] does not match the expected size: 26 chars long!"}"
@@ -252,6 +271,38 @@
       }
    }
    window.http = new Http();
+
+   class Resource {
+      constructor() {}
+      getFullUrl(uri) {
+         return http.getFullUrl(uri);
+      }
+      script(resource) {
+         return http.script(resource);
+      }
+      html(component, resource) {
+         return http.html(component, resource);
+      }
+      text(resource) {
+         return http.text(resource);
+      }
+      component(component, resource) {// TODO Redirect to Home if not in the right place: $('#workspace')[0].outerHTML
+         return http.component(component, resource);
+      }
+      get(uri, done, fail) {
+         return http.get(uri, done, fail);
+      }
+      post(uri, payload, done, fail) {
+         return http.post(uri, payload, done, fail);
+      }
+      put(uri, payload, done, fail) {
+         return http.put(uri, payload, done, fail);
+      }
+      delete(uri, payload, done, fail) {
+         return http.delete(uri, payload, done, fail);
+      }
+   }
+   window.resource = new Resource();
 
    class Storage {
       constructor() {
