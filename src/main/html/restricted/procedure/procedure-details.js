@@ -29,15 +29,19 @@
             this.enabled = arguments[0][0].enabled;
          }
       }
+      createRequest() {
+         let procedure = this;
+         let request = {
+            'code': procedure.code,
+            'description': procedure.description
+         };
+         return request;
+      }
       create() {
          let deferred = $.Deferred();
          let promise = deferred.promise();
          if(this.fromPage()) {
-            let procedure = this;
-            let request = {
-               'code': procedure.code,
-               'description': procedure.description
-            };
+            let request = this.createRequest();
             resource.post(':7000/procedures', request)
             .done((response) => {
                deferred.resolve(response);
@@ -58,7 +62,7 @@
          let deferred = $.Deferred();
          let promise = deferred.promise();
          resource.get(':7000/procedures/' + procedureId)
-         .done((response) => {
+         .done((response) => {logger.delete(response)
             deferred.resolve(new Procedure(response.data));
          })
          .fail((error) => {
@@ -72,12 +76,9 @@
          let promise = deferred.promise();
          if (this.fromPage()) {
             let procedure = this;
-            let request = {
-               'procedure_id': procedure.procedureId,
-               'code': procedure.code,
-               'description': procedure.description,
-               'enabled': procedure.enabled ? true : true// TODO ADJUST
-            };
+            let request = this.createRequest();
+            request.procedure_id = procedure.procedureId;
+            request.enabled = procedure.enabled ? true : true// TODO ADJUST
             resource.put(':7000/procedures', request)
             .done((response) => {
                deferred.resolve(response);
@@ -126,7 +127,6 @@
          return this.codeV.validate() && this.descriptionV.validate();
       }
    }
-
    class ProcedureDetails {
       constructor() {
          this.procedure = null;
