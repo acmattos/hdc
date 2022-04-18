@@ -8,11 +8,9 @@
             // Component's IDs
             this.fcodeId = "#fcode";
             this.fdescriptionId = "#fdescription";
-            this.pageNumberId = "#pageNumber"
             // Attributes
-            this.codeFilter = "";
-            this.descriptionFilter = "";
-            this.pageNumber = 1;
+            this.fcode = "";
+            this.fdescription = "";
             this.table = {};
          }
          prefixId() { return '#procedureList'; }
@@ -21,7 +19,6 @@
          queryString() {
             this.fcode = $.inputText(this.fcodeId);
             this.fdescription = $.inputText(this.fdescriptionId);
-            this.pageNumber = $.inputText(this.pageNumberId);
             return "?f_code={0}&f_description={1}".format(
                this.fcode, this.fdescription);
          }
@@ -148,7 +145,7 @@
                }
             });
          }
-         setupNewProcedure() {
+         setupNewItem() {
             let clicou = false;
             let procedureList = this;
             $.click(this.prefixId() + 'New', (event) => {
@@ -202,7 +199,7 @@
          }
          initPage() {
             this.filterList();
-            this.setupNewProcedure();
+            this.setupNewItem();
             $.trigger('#filter');
          }
       }
