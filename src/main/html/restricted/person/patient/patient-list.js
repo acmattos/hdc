@@ -5,13 +5,34 @@
    $(document).ready(() => {
       class PersonList {
          constructor() {
+            // Component's IDs
+            this.fcpfId = "#fcpf";
+            this.ffullNameId = "#ffullName";
+            this.fcontactId = "#fcontact";
+            this.fcompanyNameId = "#fcompanyName";
+            this.pageNumberId = "#pageNumber"
+            // Attributes
+            this.fcpf = "";
+            this.ffullName = "";
+            this.fcontact = "";
+            this.fcompanyName = "";
             this.table = {};
             this.contactTypes = []
             this.personTypes = []
             this.states = []
          }
-         tableId() { return '#patientList';  }
+         prefixId() { return '#patientList';  }
+         newItemId() { return '#newItem'; }
          uri() { return ':7000/persons';  }
+         queryString() {
+            this.fcpf = $.inputText(this.fcpfId);;
+            this.ffullName = $.inputText(this.ffullNameId);;
+            this.fcontact = $.inputText(this.fcontactId);;
+            this.fcompanyName = $.inputText(this.fcompanyNameId);;
+            return "?f_cpf={0}&f_full_name={1}&f_contact={2}&f_company_name={3}"
+               .format(this.fcpf, this.ffullName, this.fcontact,
+                  this.fcompanyName);
+         }
          columns() {
             return  [
                { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
@@ -25,6 +46,7 @@
             return [
                {
                   targets: [ 0 ],
+                  //width: "30px",
                   createdCell: function (td, cellData, rowData, row, col) {
                      let html = "<input id='id_" +  row + col
                         + "' type='hidden' value='" + rowData.person_id.id
@@ -41,34 +63,47 @@
                },
             ];
          }
-         datatableConfig() {
-            return new DtConfig(this.uri(), this.columns(), this.columnDefs());
+         newLine() {
+            return '<tr id="newItem1" role="row"><td colspan="5">' +
+               '<div id="newItem" class="container-fluid border"></div></td></tr>';
          }
-         datatable() {
-            this.table = new Datatable(this.tableId(), this.datatableConfig()).table();
+         addNewLine(addNewLineCallback, executeAfterLoadCallback) {
+            addNewLineCallback();
+            resource.component(this.newItemId(),
+               'restricted/person/patient/patient-details')
+               .done(() => {
+                  executeAfterLoadCallback();
+               });
+         }
+         datatable(uri) {
+            this.table = new Datatable(this.prefixId(),
+               new DtConfig(uri, this.columns(), this.columnDefs(),
+                  this.initComplete)).table();
             let table = this.table;
+            let detailRows = [];
+            let patientList = this;
             let contactTypes = this.contactTypes;
             let personTypes = this.personTypes;
             let states = this.states;
-            // Array to track the ids of the details displayed rows
-            var detailRows = [];
-            $('#patientList tbody').off('click').on( 'click', 'tr td.details-control', function () {
-               var tr = $(this).closest('tr');
-               var row = table.row( tr );
-               var idx = $.inArray( tr.attr('id'), detailRows );
-
+            let prefixId = this.prefixId();
+            $(prefixId + ' tbody').off('click').on(
+               'click', 'tr td.details-control', function () {
+               let tr = $(this).closest('tr');
+               let row = table.row( tr );
+               //var idx = $.inArray( tr.attr('id'), detailRows );
                if ( row.child.isShown() ) {
                   row.child.remove();
                   tr.removeClass('shown');
                   tr.removeClass('selected');
                } else {
-                  $(this).prop('id', 'ID');
+                  // $(this).prop('id', 'ID');
                   if ( table.row('.shown').length ) {
-                     $('#patientDetailsDiv').parent().parent().remove();
+                     $('#newItem').remove();
                      $('.shown').find('.details-control').click();
                   }
-                  row.child('<div id="patientDetailsDiv" class="container-fluid border"></div>').show();
-                  resource.component('#patientDetailsDiv','restricted/person/patient/patient-details').done(() => {
+                  patientList.addNewLine(() => {
+                     row.child($(patientList.newLine())).show();
+                  }, () => {
                      patientDetails.initPage(tr.find('.id').val(), contactTypes,
                         personTypes, states);
                   });
@@ -76,10 +111,9 @@
                   tr.addClass('selected');
                }
             } );
-            // On each draw, loop over the `detailRows` array and show any child rows
             this.table.on('draw', () => {
                $.each(detailRows, (i, id) => {
-                  $.trigger('#'+id+' td.details-control');
+                  $.trigger('#' + id + ' td.details-control');
                });
             });
             //    createdRow: function( row, data, dataIndex) {
@@ -92,9 +126,44 @@
             // });
             return this.table;
          }
+         filterList() {
+            $.click('#filter', (event) => {
+               this.datatable(this.uri() + this.queryString());
+            });
+            // $(this.fdescriptionId).off('keyup').on('keyup', (event) => {
+            //    if($.inputText(this.fdescriptionId).length > 4) {
+            //       $.trigger('#filter');
+            //    }
+            // });
+         }
+         setupNewItem() {
+            let clicou = false;
+            let procedureList = this;
+            let contactTypes = this.contactTypes;
+            let personTypes = this.personTypes;
+            let states = this.states;
+            $.click(this.prefixId() + 'New', (event) => {
+               $(procedureList.newItemId()).remove();
+               this.addNewLine(() => {
+                  $(this.prefixId() + ' tr:first').before(this.newLine());
+               }, () => {
+                  patientDetails.initPage(null, contactTypes,
+                     personTypes, states);
+               });
+            });
+         }
+         initPage() {
+            $.when(this.initContactTypes(),this.initPersonTypes(),
+               this.initStates())
+            .done(() => {
+               this.filterList();
+               this.setupNewItem();
+               $.trigger('#filter');
+            });
+         }
          initContactTypes() {
-            var deferred = $.Deferred();
-            var promise = deferred.promise();
+            let deferred = $.Deferred();
+            let promise = deferred.promise();
             resource.get(':7000/persons/contact_types')
                .done((response) => {
                   response.data.forEach(element => {
@@ -108,7 +177,6 @@
                });
             return promise;
          }
-
          initPersonTypes() {
             var deferred = $.Deferred();
             var promise = deferred.promise();
@@ -125,7 +193,6 @@
                });
             return promise;
          }
-
          initStates() {
             var deferred = $.Deferred();
             var promise = deferred.promise();
@@ -142,16 +209,7 @@
                });
             return promise;
          }
-         initPage() {
-            $.when(this.initContactTypes(),this.initPersonTypes(),
-               this.initStates())
-            .done(() => {
-               this.datatable();
-            });
-         }
-
       }
-      const personList = new PersonList();
-      personList.initPage();
+      new PersonList().initPage();
    });
 })();
