@@ -82,6 +82,7 @@
       constructor(component, dtConfig) {
          this.component = component;
          this.dtConfig = dtConfig;
+         this.datatable = null;
       }
       table() {
          let component = $(this.component);
@@ -89,8 +90,26 @@
             component.DataTable().destroy();
             component.find("tbody tr:gt(0)").remove();
          }
-
-         return component.DataTable(this.dtConfig.config());
+         this.datatable = component.DataTable(this.dtConfig.config());
+         return this.datatable;
+      }
+      toggleRow(addLineCallback) {
+         let tr = $('td.details-control').closest('tr');
+         let row = this.datatable.row(tr);
+         if (row.child.isShown()) {
+            row.child.remove();
+            tr.removeClass('shown').removeClass('selected');
+         } else {
+            // if (this.datatable.row('.shown').length) { // TODO THIS MUST WORK WITH MULTIPLE LINES
+            //    $(this.newItemId()).remove();
+            //    $('.shown').find('.details-control').click();
+            // }
+            if(addLineCallback) {
+               addLineCallback();
+            }
+            tr.addClass('shown');
+            tr.addClass('selected');
+         }
       }
    }
    window.Datatable = Datatable;
