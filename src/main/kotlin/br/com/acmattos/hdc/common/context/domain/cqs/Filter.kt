@@ -76,3 +76,12 @@ data class RegexFilter<TRANSLATION, TYPE>(
 data class AndFilter<TRANSLATION>(
     override val filters: List<Filter<TRANSLATION>>
 ): CollectionFilter<TRANSLATION>(filters)
+
+
+/**
+ * @author ACMattos
+ * @since 26/05/2022.
+ */
+data class OrFilter<TRANSLATION>(
+    override val filters: List<Filter<TRANSLATION>>
+): CollectionFilter<TRANSLATION>(filters)
