@@ -29,9 +29,11 @@ class ProcedureControllerEndpointDefinition(
                 delete(command::deleteDentalProcedure)
             }
         }
-        logger.info("Route loaded: -> POST /$PROCEDURES <-")
-        logger.info("Route loaded: -> GET /$PROCEDURES <-")
-        logger.info("Route loaded: -> GET /$PROCEDURES/$PROCEDURE_ID <-")
+        logger.info("Route loaded: -> POST   /$PROCEDURES <-")
+        logger.info("Route loaded: -> PUT    /$PROCEDURES <-")
+        logger.info("Route loaded: -> GET    /$PROCEDURES <-")
+        logger.info("Route loaded: -> GET    /$PROCEDURES/$PROCEDURE_ID <-")
+        logger.info("Route loaded: -> DELETE /$PROCEDURES/$PROCEDURE_ID <-")
         logger.info("All routes loaded for: -> ${ProcedureControllerEndpointDefinition::class.java.simpleName} <-")
     }
 
