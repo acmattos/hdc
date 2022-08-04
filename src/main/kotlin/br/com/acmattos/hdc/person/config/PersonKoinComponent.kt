@@ -22,6 +22,12 @@ import br.com.acmattos.hdc.person.application.PersonQueryHandlerService
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
 import br.com.acmattos.hdc.person.domain.model.Person
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACTS_INFO
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.DENTAL_PLAN_NAME
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.PERSON_ID
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.QUERY_AUDIT_LOG_WHO
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.QUERY_ID_ID
 import br.com.acmattos.hdc.person.port.persistence.mongodb.PersonMdbDocument
 import br.com.acmattos.hdc.person.port.rest.PersonCommandController
 import br.com.acmattos.hdc.person.port.rest.PersonControllerEndpointDefinition
@@ -121,7 +127,10 @@ object PersonKoinComponent: KoinComponent {
         single(named(PCC)) {
             MdbCollectionConfig(PET, PersonMdbDocument::class.java)
             .addIndexes(
-                Indexes.ascending("person_id"),
+                Indexes.ascending(PERSON_ID.fieldName),
+                Indexes.ascending(CPF.fieldName),
+                Indexes.ascending(CONTACTS_INFO.fieldName),
+                Indexes.ascending(DENTAL_PLAN_NAME.fieldName),
             )
         }
         // 13 - Entity Repository - MongoDB Collection 
@@ -161,8 +170,8 @@ object PersonKoinComponent: KoinComponent {
         single(named(QCC)) {
             MdbCollectionConfig(PQN, MdbQueryDocument::class.java)
                 .addIndexes(
-                    Indexes.ascending("query.id.id"),
-                    Indexes.ascending("query.audit_log.who"),
+                    Indexes.ascending(QUERY_ID_ID.fieldName),
+                    Indexes.ascending(QUERY_AUDIT_LOG_WHO.fieldName),
                 )
         }
         // 21 - Query Store - MongoDB Collection
