@@ -4,7 +4,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
-import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
+import br.com.acmattos.hdc.person.domain.cqs.CreateDentistCommand
 import br.com.acmattos.hdc.scheduler.application.AppointmentCommandHandlerService
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheScheduleCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentsForTheScheduleEvent
@@ -29,7 +29,7 @@ object AppointmentCommandControllerTest: Spek({
         JavalinJackson.configure(JacksonObjectMapperFactory.build())
     }
     Feature("${AppointmentCommandController::class.java} usage") {
-        Scenario("handling ${CreateADentistCommand::class.java} successfully") {
+        Scenario("handling ${CreateDentistCommand::class.java} successfully") {
             lateinit var request: CreateAppointmentsForTheScheduleRequestBuilder
             lateinit var command: CreateAppointmentsForTheScheduleCommand
             lateinit var event: CreateAppointmentsForTheScheduleEvent
@@ -49,8 +49,8 @@ object AppointmentCommandControllerTest: Spek({
             And("""a ${AppointmentCommandHandlerService::class.java} mock""") {
                 service = mockk()
             }
-            And("""service#handle returning the ${CreateADentistCommand::class.java}""") {
-                every { service.handle(any<CreateADentistCommand>()) } returns event
+            And("""service#handle returning the ${CreateDentistCommand::class.java}""") {
+                every { service.handle(any<CreateDentistCommand>()) } returns event
             }
             And("""a ${Context::class.java} mock""") {
                 context = AppointmentRequestBuilder.getContext()
