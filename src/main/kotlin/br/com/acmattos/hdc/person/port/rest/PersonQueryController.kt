@@ -8,21 +8,32 @@ import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
+import br.com.acmattos.hdc.common.tool.server.javalin.filterParam
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
+import br.com.acmattos.hdc.common.tool.server.javalin.pageNumber
+import br.com.acmattos.hdc.common.tool.server.javalin.pageSize
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.DENTIST_ID_INVALID
 import br.com.acmattos.hdc.person.config.PersonLogEnum.DENTIST
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.FindAllContactTypesQuery
+import br.com.acmattos.hdc.person.domain.cqs.FindAllGendersQuery
+import br.com.acmattos.hdc.person.domain.cqs.FindAllMaritalStatusesQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonTypesQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindAllPersonsQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindAllStatesQuery
+import br.com.acmattos.hdc.person.domain.cqs.FindAllStatusesQuery
 import br.com.acmattos.hdc.person.domain.cqs.FindTheDentistQuery
 import br.com.acmattos.hdc.person.domain.cqs.PersonQuery
 import br.com.acmattos.hdc.person.domain.model.ContactType
+import br.com.acmattos.hdc.person.domain.model.Gender
+import br.com.acmattos.hdc.person.domain.model.MaritalStatus
 import br.com.acmattos.hdc.person.domain.model.Person
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.domain.model.PersonType
 import br.com.acmattos.hdc.person.domain.model.State
+import br.com.acmattos.hdc.person.domain.model.Status
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.FULL_NAME
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.HttpMethod
 import io.javalin.plugin.openapi.annotations.OpenApi
@@ -114,6 +125,105 @@ class PersonQueryController(
     }
 
     @OpenApi(
+        summary = "Find all contact types",
+        operationId = "findAllContactTypes",
+        tags = ["Person"],
+        responses = [
+            OpenApiResponse("200", [OpenApiContent(Response::class)]),
+            OpenApiResponse("404", [OpenApiContent(Response::class)])
+        ],
+        method = HttpMethod.GET
+    )
+    fun findAllContactTypes(context: Context) {// TODO Test
+        logger.debug(
+            "[{} {}] - Finding all contact types...",
+            PERSON.name,
+            ENDPOINT.name
+        )
+        context.getRequest(::FindAllContactTypesRequest)
+            .toType(what = context.fullUrl())
+            .also { _ ->
+                context.status(HttpStatus.OK_200).json(
+                    Response.create(
+                        context.status(),
+                        QueryResult.build(ContactType.values().toList())
+                    )
+                )
+            }
+        logger.info(
+            "[{} {}] - Finding all contact types: -> !DONE! <-",
+            PERSON.name,
+            ENDPOINT.name
+        )
+    }
+
+    @OpenApi(
+        summary = "Find all genders",
+        operationId = "findAllGenders",
+        tags = ["Person"],
+        responses = [
+            OpenApiResponse("200", [OpenApiContent(Response::class)]),
+            OpenApiResponse("404", [OpenApiContent(Response::class)])
+        ],
+        method = HttpMethod.GET
+    )
+    fun findAllGenders(context: Context) {// TODO Test
+        logger.debug(
+            "[{} {}] - Finding all genders...",
+            PERSON.name,
+            ENDPOINT.name
+        )
+        context.getRequest(::FindAllGendersRequest)
+            .toType(what = context.fullUrl())
+            .also { _ ->
+                context.status(HttpStatus.OK_200).json(
+                    Response.create(
+                        context.status(),
+                        QueryResult.build(Gender.values().toList())
+                    )
+                )
+            }
+        logger.info(
+            "[{} {}] - Finding all genders: -> !DONE! <-",
+            PERSON.name,
+            ENDPOINT.name
+        )
+    }
+
+    @OpenApi(
+        summary = "Find all contact types",
+        operationId = "findAllMaritalStatuses",
+        tags = ["Person"],
+        responses = [
+            OpenApiResponse("200", [OpenApiContent(Response::class)]),
+            OpenApiResponse("404", [OpenApiContent(Response::class)])
+        ],
+        method = HttpMethod.GET
+    )
+    fun findAllMaritalStatuses(context: Context) {// TODO Test
+        logger.debug(
+            "[{} {}] - Finding all marital statuses...",
+            PERSON.name,
+            ENDPOINT.name
+        )
+        context.getRequest(::FindAllMaritalStatusesRequest)
+            .toType(what = context.fullUrl())
+            .also { _ ->
+                context.status(HttpStatus.OK_200).json(
+                    Response.create(
+                        context.status(),
+                        QueryResult.build(MaritalStatus.values().toList())
+                    )
+                )
+            }
+        logger.info(
+            "[{} {}] - Finding all marital statuses: -> !DONE! <-",
+            PERSON.name,
+            ENDPOINT.name
+        )
+    }
+
+    @OpenApi(
         summary = "Find all person types",
         operationId = "findAllPersonTypes",
         tags = ["Person"],
@@ -131,7 +241,7 @@ class PersonQueryController(
         )
         context.getRequest(::FindAllPersonTypesRequest)
             .toType(what = context.fullUrl())
-            .also { query ->
+            .also { _ ->
                 context.status(HttpStatus.OK_200).json(
                     Response.create(
                         context.status(),
@@ -164,7 +274,7 @@ class PersonQueryController(
         )
         context.getRequest(::FindAllStatesRequest)
             .toType(what = context.fullUrl())
-            .also { query ->
+            .also { _ ->
                 context.status(HttpStatus.OK_200).json(
                     Response.create(
                         context.status(),
@@ -180,8 +290,8 @@ class PersonQueryController(
     }
 
     @OpenApi(
-        summary = "Find all contact types",
-        operationId = "findAllContactTypes",
+        summary = "Find all statuses",
+        operationId = "findAllStatuses",
         tags = ["Person"],
         responses = [
             OpenApiResponse("200", [OpenApiContent(Response::class)]),
@@ -189,24 +299,24 @@ class PersonQueryController(
         ],
         method = HttpMethod.GET
     )
-    fun findAllContactTypes(context: Context) {// TODO Test
+    fun findAllStatuses(context: Context) {// TODO Test
         logger.debug(
-            "[{} {}] - Finding all contact types...",
+            "[{} {}] - Finding all statuses...",
             PERSON.name,
             ENDPOINT.name
         )
-        context.getRequest(::FindAllContactTypesRequest)
+        context.getRequest(::FindAllStatusesRequest)
             .toType(what = context.fullUrl())
-            .also { query ->
+            .also { _ ->
                 context.status(HttpStatus.OK_200).json(
                     Response.create(
                         context.status(),
-                        QueryResult.build(ContactType.values().toList())
+                        QueryResult.build(Status.values().toList())
                     )
                 )
             }
         logger.info(
-            "[{} {}] - Finding all contact types: -> !DONE! <-",
+            "[{} {}] - Finding all statuses: -> !DONE! <-",
             PERSON.name,
             ENDPOINT.name
         )
@@ -222,7 +332,14 @@ class PersonQueryController(
 class FindAllPersonsRequest(val context: Context): Request<PersonQuery>(context) {
     override fun toType(who: String, what: String): PersonQuery {
         return FindAllPersonsQuery(
-            auditLog = AuditLog(who, what)
+            context.filterParam(FULL_NAME.fieldName),
+            context.filterParam(CPF.fieldName),
+            context.filterParam("contact"),
+            context.filterParam("dental_plan_name"),
+            context.filterParam("person_ids"),
+            context.pageNumber(),
+            context.pageSize(),
+            AuditLog(who, what)
         )
     }
 }
@@ -244,6 +361,42 @@ class FindTheDentistRequest(val context: Context): Request<PersonQuery>(context)
 
         return FindTheDentistQuery(
             PersonId(dentistId),
+            AuditLog(who, what)
+        )
+    }
+}
+
+/**
+ * @author ACMattos
+ * @since 10/03/2022.
+ */
+class FindAllContactTypesRequest(val context: Context): Request<PersonQuery>(context) {
+    override fun toType(who: String, what: String): PersonQuery {
+        return FindAllContactTypesQuery(
+            AuditLog(who, what)
+        )
+    }
+}
+
+/**
+ * @author ACMattos
+ * @since 04/05/2022.
+ */
+class FindAllGendersRequest(val context: Context): Request<PersonQuery>(context) {
+    override fun toType(who: String, what: String): PersonQuery {
+        return FindAllGendersQuery(
+            AuditLog(who, what)
+        )
+    }
+}
+
+/**
+ * @author ACMattos
+ * @since 04/05/2022.
+ */
+class FindAllMaritalStatusesRequest(val context: Context): Request<PersonQuery>(context) {
+    override fun toType(who: String, what: String): PersonQuery {
+        return FindAllMaritalStatusesQuery(
             AuditLog(who, what)
         )
     }
@@ -275,11 +428,11 @@ class FindAllStatesRequest(val context: Context): Request<PersonQuery>(context) 
 
 /**
  * @author ACMattos
- * @since 10/03/2022.
+ * @since 04/05/2022.
  */
-class FindAllContactTypesRequest(val context: Context): Request<PersonQuery>(context) {
+class FindAllStatusesRequest(val context: Context): Request<PersonQuery>(context) {
     override fun toType(who: String, what: String): PersonQuery {
-        return FindAllContactTypesQuery(
+        return FindAllStatusesQuery(
             AuditLog(who, what)
         )
     }
