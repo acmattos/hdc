@@ -43,6 +43,7 @@
             return false;
          }
          $(this.component).removeClass('invalid');
+         this.value = ("" == this.value) ? null : this.value;
          return true;
       }
    }
@@ -156,7 +157,7 @@
          if(rule.empty && !value) {
             return null;
          } else {
-            let regex = /^(([9]{0,1}[0-9]{8})|([9]{0,1}[0-9]{4})-([0-9]{4}))$/;
+            let regex = /^(\(\d{2}\))( )(\d{4,5})(-)(\d{4})$/;
             let isInvalidPhone = rule.format ? !regex.test(this) : false;
             if(isInvalidPhone) {
                error.push({'status': 455 , 'code': rule.format.message, 'data': rule.format.message});
@@ -347,11 +348,9 @@
       }
    }
    window.SelectValidator = SelectValidator;
-
-   // let ruleSample = {// TODO FIX
+   // let ruleSample = {
    //    empty: {},
-   //    format: { message: 'messade id for invalid phonr format' }
-   //    date: { le: date }
+   //    between: { min: dateMin, max: dateMax, message: 'messade id for invalid date' }
    // };
    String.prototype.validateDate = function(rule) {
       let value = this;
@@ -359,11 +358,12 @@
       if (rule) {
          if(rule.empty && !value) {
             return null;
-         } else {
-            let regex = /^(0[1-9]|[12][0-9]|3[01])[\/\-](0[1-9]|1[012])[\/\-]\d{4}$/;
-            let isInvalidDate = rule.format ? !regex.test(this) : false;
-            if(isInvalidDate) {
-               error.push({'status': 459, 'code': rule.format.message, 'data': rule.format.message});
+         } else if (rule.between) {
+            value = value.toDate();
+            let isInvalidRange = value.getTime() < rule.between.min.getTime()
+               || value.getTime() > rule.between.max.getTime();
+            if ('Invalid Date' == value || isInvalidRange) {
+               error.push({'status': 453 , 'code': rule.between.message, 'data': rule.between.message});
             }
             return error.length == 0 ? null : error;
          }
@@ -372,6 +372,42 @@
          return null;
       }
    };
+   String.prototype.toDate = function() {
+      let value = this;
+      if(value.includes("/")) {
+         let elements = value.split("/");
+         return new Date(elements[2], parseInt(elements[1]) - 1, elements[0],
+            0, 0, 0);
+      } else {
+         return new Date(value);
+      }
+   }
+   String.prototype.toLocalDate = function() {
+      let value = this;
+      if(value.includes("/")) {
+         return value.toDate().toISOString().split("T")[0];
+      } else {
+         return new Date(value);
+      }
+   }
+   String.prototype.fromLocalDate = function() {
+      let value = this;
+      if(value.includes("-")) {
+         let elements = value.split("-");
+         let date = new Date(elements[0], parseInt(elements[1]) -1, elements[2]);
+         return date.toBrString();
+      } else {
+         return new Date(value);
+      }
+   }
+   Date.prototype.toBrString = function () {
+      let value = this;
+      let month = '0' + (value.getMonth() + 1);
+      month = month.substr(month.length - 2);
+      let day = '0' + this.getDate();
+      day = day.substr(day.length -2);
+      return day + "/" + month + "/" + value.getFullYear();
+   }
    class DateValidator {
       constructor(component, rule) {
          this.component = component;
@@ -389,6 +425,7 @@
             return false;
          }
          $(this.component).removeClass('invalid');
+         this.value = this.value.toLocalDate();
          return true;
       }
    }
