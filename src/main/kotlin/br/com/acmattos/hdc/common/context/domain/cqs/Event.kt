@@ -3,6 +3,8 @@ package br.com.acmattos.hdc.common.context.domain.cqs
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
+import br.com.acmattos.hdc.person.domain.cqs.CreatePatientEvent
+import br.com.acmattos.hdc.person.domain.cqs.UpdatePatientEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureEvent
@@ -26,6 +28,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
     JsonSubTypes.Type(value = CreateDentalProcedureEvent::class, name = "CreateDentalProcedureEvent"),
     JsonSubTypes.Type(value = UpdateDentalProcedureEvent::class, name = "UpdateDentalProcedureEvent"),
     JsonSubTypes.Type(value = DeleteDentalProcedureEvent::class, name = "DeleteDentalProcedureEvent"),
+    JsonSubTypes.Type(value = CreatePatientEvent::class, name = "CreatePatientEvent"),
+    JsonSubTypes.Type(value = UpdatePatientEvent::class, name = "UpdatePatientEvent"),
+//    JsonSubTypes.Type(value = DeletePatientEvent::class, name = "DeletePatientEvent"),
 )
 open class Event(
     open val eventId: EventId,
