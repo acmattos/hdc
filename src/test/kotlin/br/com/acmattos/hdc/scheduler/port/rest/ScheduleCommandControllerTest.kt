@@ -2,7 +2,7 @@ package br.com.acmattos.hdc.scheduler.port.rest
 
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
-import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
+import br.com.acmattos.hdc.person.domain.cqs.CreateDentistCommand
 import br.com.acmattos.hdc.scheduler.application.ScheduleCommandHandlerService
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
@@ -24,7 +24,7 @@ private const val STATUS = 201
  */
 object ScheduleCommandControllerTest: Spek({
     Feature("${ScheduleCommandController::class.java} usage") {
-        Scenario("handling ${CreateADentistCommand::class.java} successfully") {
+        Scenario("handling ${CreateDentistCommand::class.java} successfully") {
             lateinit var request: CreateAScheduleForTheDentistRequest
             lateinit var command: CreateAScheduleForTheDentistCommand
             lateinit var event: CreateAScheduleForTheDentistEvent
@@ -44,8 +44,8 @@ object ScheduleCommandControllerTest: Spek({
             And("""a ${ScheduleCommandHandlerService::class.java} mock""") {
                 service = mockk()
             }
-            And("""service#handle returning the ${CreateADentistCommand::class.java}""") {
-                every { service.handle(any<CreateADentistCommand>()) } returns event
+            And("""service#handle returning the ${CreateDentistCommand::class.java}""") {
+                every { service.handle(any<CreateDentistCommand>()) } returns event
             }
             And("""a ${Context::class.java} mock""") {
                 context = mockk()
