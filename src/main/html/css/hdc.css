@@ -70,3 +70,107 @@ a:hover .fa-times, a:hover .fa-trash-alt{
 .btn .fa-pencil-alt, .btn .fa-trash-alt{
     color: #fff!important;
 }
+
+.filter-wrapper{
+    position: relative;
+    background-color: #e9eef0;
+    border:1px solid #ccd7dd;
+    border-top-width:0;
+    border-radius: 0 0 .25rem .25rem;
+    padding:1rem .7rem 0;
+}
+
+.middle .filter{
+    background-color: transparent;
+    border:0;
+    border-radius: 0;
+    margin-top:1rem;
+    padding:0;
+}
+.infos-tag .filter{
+    margin-top:.5rem;
+}
+
+.form-group, .form-inline .form-group{
+    margin-bottom: 1rem;
+}
+.form-inline .form-group label, .d-flex > label{
+    justify-content: flex-end;
+    margin-right: .5rem;
+}
+.form-group, .form-inline .form-group{
+    margin-bottom: 1rem;
+}
+.form-sm .form-group{
+    margin-bottom: .75EM;
+}
+.form-control-sm{
+    font-size: 1em;
+    height: calc(1.6rem + 1px);
+    height: -webkit-calc(1.6rem + 1px);
+    height: expression(1.6rem + 1px);
+    height: -moz-calc(1.6rem + 1px);
+    height: -o-calc(1.6rem + 1px);
+    padding: .15rem .4rem;
+}
+.form-group, .form-inline .form-group{
+    margin-bottom: 1rem;
+}
+.form-inline .form-group label, .d-flex > label{
+    justify-content: flex-end;
+    margin-right: .5rem;
+}
+
+/* typeahead */
+.empty-message {
+    padding: 5px 10px;
+    text-align: center;
+}
+.tt-menu {
+    text-align: left;
+}
+.typeahead, .tt-query, .tt-hint {
+    width: 300px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    outline: none;
+}
+.tt-hint {
+    color: #999
+}
+.tt-menu {
+    width: 300px;
+    margin: 12px 0;
+    padding: 2px 0;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+.tt-menu {
+    max-height: 60px;
+    overflow-y: auto;
+}
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+.tt-suggestion:hover {
+    cursor: pointer;
+    color: #fff;
+    background-color: #0097cf;
+}
+.tt-suggestion.tt-cursor {
+    color: #fff;
+    background-color: #0097cf;
+}
+.tt-suggestion p {
+    margin: 0;
+}
