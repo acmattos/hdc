@@ -5,6 +5,7 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
+import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
 import com.mongodb.client.model.Filters
 import java.util.regex.Pattern
@@ -24,6 +25,7 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
             is EqFilter<Bson, *> -> translate(filter)
             is RegexFilter<Bson, *> -> translate(filter)
             is AndFilter<Bson> -> translate(filter)
+            is OrFilter<Bson> -> translate(filter)
             else -> translate(filter as EmptyFilter)
         }
 
@@ -37,8 +39,8 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
            Filters.regex(
                filter.fieldName,
                Pattern.compile(
-                   "^" + "${filter.value.toString().replace("*", "")}"
-                       + ".*$",
+                   "^${filter.value.toString()
+                       .replace("*", "")}.*$",
                    Pattern.CASE_INSENSITIVE
                )
             )
@@ -66,6 +68,13 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
 
     private fun translate(filter: AndFilter<Bson>): Bson =
         Filters.and(
+            filter
+                .filters
+                .map { filter ->  createTranslation(filter) }
+        )
+
+    private fun translate(filter: OrFilter<Bson>): Bson =
+        Filters.or(
             filter
                 .filters
                 .map { filter ->  createTranslation(filter) }
