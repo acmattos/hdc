@@ -3,6 +3,8 @@ package br.com.acmattos.hdc.person.port.persistence.mongodb
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.person.domain.model.Address
 import br.com.acmattos.hdc.person.domain.model.Contact
+import br.com.acmattos.hdc.person.domain.model.ContactType
+import br.com.acmattos.hdc.person.domain.model.DentalPlan
 import br.com.acmattos.hdc.person.domain.model.State
 import java.time.LocalDateTime
 
@@ -37,15 +39,15 @@ data class AddressMdbDocument (
 
     override fun toType(): Address =
         Address(
-            streetData = street,
-            numberData = number,
-            complementData = complement,
-            zipCodeData = zipCode,
-            neighborhoodData = neighborhood,
-            stateData = State.convert(state),
-            cityData = city,
-            createdAtData = createdAt,
-            updatedAtData = updatedAt,
+            street = street,
+            number = number,
+            complement = complement,
+            zipCode = zipCode,
+            neighborhood = neighborhood,
+            state = State.convert(state?:"RJ"),
+            city = city,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
         )
 }
 
@@ -55,7 +57,8 @@ data class AddressMdbDocument (
  */
 data class ContactMdbDocument (
     val info: String,
-    val type: String?,
+    val type: String,
+    val obs: String?,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime?
 ): MdbDocument() {
@@ -63,16 +66,46 @@ data class ContactMdbDocument (
         contact: Contact
     ): this(
         info = contact.info,
-        type = contact.type,
+        type = contact.type.name,
+        obs = contact.obs,
         createdAt = contact.createdAt,
         updatedAt = contact.updatedAt,
     )
 
     override fun toType(): Contact =
         Contact(
-            infoData = info,
-            typeData = type,
-            createdAtData = createdAt,
-            updatedAtData = updatedAt,
+            info = info,
+            type = ContactType.convert(type?:"EMERGENCY"),
+            obs = obs,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+        )
+}
+
+/**
+ * @author ACMattos
+ * @since 21/04/2022.
+ */
+data class DentalPlanMdbDocument(
+    val name: String,
+    val number: String,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime?
+): MdbDocument() {
+    constructor(
+        dentalPlan: DentalPlan
+    ): this(
+        name = dentalPlan.name,
+        number = dentalPlan.number,
+        createdAt = dentalPlan.createdAt,
+        updatedAt = dentalPlan.updatedAt,
+    )
+
+    override fun toType(): DentalPlan =
+        DentalPlan(
+            name = name,
+            number = number,
+            createdAt = createdAt,
+            updatedAt = updatedAt,
         )
 }
