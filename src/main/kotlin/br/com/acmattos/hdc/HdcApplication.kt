@@ -7,9 +7,8 @@ import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServer
 import br.com.acmattos.hdc.common.tool.server.javalin.JavalinServerBuilder
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.config.PersonKoinComponent
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENDPOINT_DEFINITION
 import br.com.acmattos.hdc.procedure.config.ProcedureKoinComponent
-import br.com.acmattos.hdc.scheduler.config.AppointmentKoinComponent
-import br.com.acmattos.hdc.scheduler.config.ScheduleKoinComponent
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.server.handler.StatisticsHandler
 import org.eclipse.jetty.util.thread.QueuedThreadPool
@@ -27,9 +26,9 @@ class HdcApplication {
         startKoin {
             printLogger()
 
-            koin.loadModules(listOf(AppointmentKoinComponent.loadModule()))
+//            koin.loadModules(listOf(AppointmentKoinComponent.loadModule()))
             koin.loadModules(listOf(PersonKoinComponent.loadModule()))
-            koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
+//            koin.loadModules(listOf(ScheduleKoinComponent.loadModule()))
             koin.loadModules(listOf(ProcedureKoinComponent.loadModule()))
         }
     }
@@ -46,7 +45,7 @@ class HdcApplication {
         private val scheduleCommandEndpointDefinition: EndpointDefinition
             by inject(named("ScheduleCommandControllerEndpointDefinition"))
         private val procedureEndpointDefinition: EndpointDefinition
-            by inject(named("ProcedureControllerEndpointDefinition"))// TODO REVIEW NAMES
+            by inject(named(ENDPOINT_DEFINITION.value))
 
         private fun startHttpServer (): JavalinServer {
             return JavalinServerBuilder
@@ -77,9 +76,9 @@ class HdcApplication {
                     )
                 }
                 .routes {
-                    appointmentEndpointDefinition.routes()
+//                    appointmentEndpointDefinition.routes()
                     personCommandEndpointDefinition.routes()
-                    scheduleCommandEndpointDefinition.routes()
+//                    scheduleCommandEndpointDefinition.routes()
                     procedureEndpointDefinition.routes()
                 }
                 .objectMapper(JacksonObjectMapperFactory.build())
