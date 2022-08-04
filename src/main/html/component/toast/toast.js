@@ -4,7 +4,7 @@
       show(response){
          if(!response.length) {
             response = [response];
-         }logger.delete('TOAST', response);
+         }
          response.forEach((item, index, array) => {
             resource.text('component/toast/toast.html').done((text) => {
                let id = new Date().getTime();
