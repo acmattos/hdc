@@ -1,17 +1,9 @@
 (function () {
    'use strict';
 
-   // String.prototype.formatMessage = function (...elements) {
-   //    let args = elements[0]; logger.alert('#formatMessage elements', elements)
-   //    return this.replace(/{([0-9]+)}/g, function (match, index) {
-   //       logger.alert('#formatMessage - replace -> (args[index] == \'undefined\'),args[index], match',
-   //          (args[index] == 'undefined'), index, args, args[index], match)
-   //       return typeof args[index] === 'undefined' ? match : args[index];
-   //    });
-   // };
    String.prototype.format = function() {
       let args = arguments;
-      return this.replace(/{([0-9]+)}/g, function (match, index) {
+      return this.replace(/{(\d+)}/g, function (match, index) {
          return typeof args[index] === 'undefined' ? match : args[index];
       });
    };
@@ -80,14 +72,15 @@
          }
          return this;
       }
-   };
+   }
    window.loader = new Loader();
 
    // "{"uid":"01FTK4VMJEKMR8GJMY4TH61D3F"," +
    // ""code":"01FK6PF0DWKTN1BYZW6BRHFZFJ","status":500," +
    // ""data":"ULID [1] does not match the expected size: 26 chars long!"}"
    class Response {
-      constructor(response) {logger.delete('RAW',response)
+      constructor(response) {
+         logger.debug('Incoming Response', response);
          this.uid = response.uid;
          this.code = response.code;
          this.status = response.status;
@@ -229,11 +222,19 @@
          let promise = deferred.promise();
          $(component).load(resource + '.html', /*data*/null,
             /*complete*/(responseText, textStatus, jqXHR) => {
-               /*return*/ $.getCachedScript(resource + '.js')
-               .done((responseTextCs, textStatusCs,jqXHRcs) => {
+               if (textStatus == "error") {
+                  logger.alert('404 - ' + resource + '.html');
                   loader.stop();
-                  deferred.resolve(jqXHRcs);
-               });
+               } else {
+                  $.getCachedScript(resource + '.js')
+                  .done((responseTextCs, textStatusCs,jqXHRcs) => {
+                     if (textStatusCs == "error") {
+                        logger.alert('404 - ' + resource + '.js');
+                     }
+                     loader.stop();
+                     deferred.resolve(jqXHRcs);
+                  });
+               }
             }
          );
          return promise;
