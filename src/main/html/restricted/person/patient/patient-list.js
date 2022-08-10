@@ -23,6 +23,7 @@
             this.personTypes = [];
             this.states = [];
             this.statuses = [];
+            this.table = {};
          }
          prefixId() { return '#patientList';  }
          newItemId() { return '#newItem'; }
@@ -167,25 +168,21 @@
                'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
                let row = datatable.row(tr);
-               if ( row.child.isShown() ) {
-                  row.child.remove();
-                  tr.removeClass('shown');
-                  tr.removeClass('selected');
-               } else {
-                  if ( datatable.row('.shown').length ) {
-                     $(newItemId()).remove();
-                     $('.shown').find('.details-control').click();
+               let dtTr = new DtTr(datatable, tr, newItemId());
+               dtTr.toggleRow(
+                  () => {
+                     patientList.addNewLine(
+                        () => {
+                           row.child($(patientList.newLine())).show();
+                        },
+                        () => {
+                           patientDetails.initPage(dtTr, tr.find('.id').val(), contactTypes,
+                              genders, maritalStatuses, personTypes, states, statuses);
+                        }
+                     );
                   }
-                  patientList.addNewLine(() => {
-                     row.child($(patientList.newLine())).show();
-                  }, () => {
-                     patientDetails.initPage(table, tr.find('.id').val(), contactTypes,
-                        genders, maritalStatuses, personTypes, states, statuses);
-                  });
-                  tr.addClass('shown');
-                  tr.addClass('selected');
-               }
-            } );
+               );
+            });
             datatable.on('draw', () => {
                $.each(detailRows, (i, id) => {
                   $.trigger('#' + id + ' td.details-control');
@@ -226,7 +223,6 @@
             $.keyup(this.fdentalPlanNameId, 4, () => {$.trigger('#filter');});
          }
          setupNewItem() {
-            let clicou = false;
             let patientList = this;
             let contactTypes = this.contactTypes;
             let genders = this.genders;
@@ -234,7 +230,8 @@
             let personTypes = this.personTypes;
             let states = this.states;
             let statuses = this.statuses;
-            let table = this.table;
+            // let table = this.table;
+            let table = new DtTr(null, $('td.details-control').closest('tr'), this.newItemId());
             $.click(this.prefixId() + 'New', (event) => {
                $(patientList.newItemId()).remove();
                this.addNewLine(() => {

@@ -80,31 +80,21 @@
             'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
                let row = datatable.row(tr);
-               /*table.toggleRow(() => {
-                  familyGroupList.addNewLine(() => {
-                     row.child($(familyGroupList.newLine())).show();
-                  }, () => {
-                     familyGroupDetails.initPage(table, patient, tr.find('.id').val());
-                  });
-               }, this);*/
-               if (row.child.isShown()) {
-                  row.child.remove();
-                  tr.removeClass('shown');
-                  tr.removeClass('selected');
-               } else {
-                  if (datatable.row('.shown').length) {
-                     $(newItemId()).remove();
-                     $('.shown').find('.details-control').click();
+               let dtTr = new DtTr(datatable, tr, newItemId());
+               dtTr.toggleRow(
+                  () => {
+                     familyGroupList.addNewLine(
+                        () => {
+                           row.child($(familyGroupList.newLine())).show();
+                        },
+                        () => {
+                           familyGroupDetails.initPage(dtTr, patient, tr.find('.id').val());
+                        }
+                     );
                   }
-                  familyGroupList.addNewLine(() => {
-                     row.child($(familyGroupList.newLine())).show();
-                  }, () => {
-                     familyGroupDetails.initPage(table, patient, tr.find('.id').val());
-                  });
-                  tr.addClass('shown');
-                  tr.addClass('selected');
-               }
-            });
+               );
+            }
+         );
          datatable.on('draw', () => {
             $.each(detailRows, (i, id) => {
                $.trigger('#' + id + ' td.details-control');
@@ -118,7 +108,6 @@
          });
       }
       setupNewItem() {
-         let clicou = false;
          let familyGroupList = this;
          let patient = this.patient;
          let table = this.table;

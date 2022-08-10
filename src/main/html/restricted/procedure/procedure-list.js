@@ -52,10 +52,6 @@
                   targets: [ 2 ],
                   title:'<span>Descrição</span>',
                },
-               // {
-               //    targets: [ 3 ],
-               //    title:'<span>Habilitado</span>',
-               // },
                {
                   targets: [ 3 ],
                   width: "15px",
@@ -65,27 +61,6 @@
          initComplete(settings, json) {
             let api = new $.fn.dataTable.Api(settings);
             let columns = [];
-            // var span = '';
-            // colunas.push(3);
-            // if(data.ordemServicoSituacao === 'ATRASADA'){
-            //    colunas.push(5);
-            // } else if(data.ordemServicoSituacao === 'ABERTA') {
-            //    colunas.push(5);
-            // } else if(data.ordemServicoSituacao === 'ANDAMENTO') {
-            //    colunas.pop();
-            //    span = '<span i18n="Data Andamento">Data Andamento</span>';
-            // } else if(data.ordemServicoSituacao === 'EXECUTADA') {
-            //    span = '<span i18n="Data Fechamento">Data Fechamento</span>';
-            // } else if(data.ordemServicoSituacao === 'REPROGRAMADA') {
-            //    span =
-            //       '<span i18n="Data Reprogramação">Data Reprogramação</span>';
-            // } else if(data.ordemServicoSituacao === 'CANCELADA') {
-            //    span =
-            //       '<span i18n="Data Cancelamento">Data Cancelamento</span>';
-            // }
-            // $('.tp').tooltip();
-            // api.columns(colunas).visible(false);
-            // $(componente.DataTable().columns(5).header()).empty().append(span);
          }
          newLine() {
             return '<tr id="newItem" role="row"></tr>';
@@ -101,105 +76,61 @@
          datatable(uri) {
             this.table = new Datatable(this.prefixId(),
                new DtConfig(uri, this.columns(), this.columnDefs(),
-                  this.initComplete)).table();
+                  this.initComplete));
             let table = this.table;
+            let datatable = table.table();
             let detailRows = [];
             let procedureList = this;
             let prefixId = this.prefixId();
+            let newItemId = this.newItemId;
             $(prefixId + ' tbody').off('click').on(
                'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
-               let row = table.row(tr);
-               if (row.child.isShown()) {
-                  row.child.remove();
-                  tr.removeClass('shown');
-                  tr.removeClass('selected');
-               } else {
-                  if (table.row('.shown').length) {
-                     $('#newItem').remove();
-                     $('.shown').find('.details-control').click();
+               let row = datatable.row(tr);
+               let dtTr = new DtTr(datatable, tr, newItemId());
+               dtTr.toggleRow(
+                  () => {
+                     procedureList.addNewLine(
+                        () => {
+                           row.child($(procedureList.newLine())).show();
+                        },
+                        () => {
+                           procedureDetails.initPage(dtTr, tr.find('.id').val());
+                        }
+                     );
                   }
-                  procedureList.addNewLine(() => {
-                     row.child($(procedureList.newLine())).show();
-                  }, () => {
-                     procedureDetails.initPage(tr.find('.id').val());
-                  });
-                  tr.addClass('shown');
-                  tr.addClass('selected');
-               }
+               );
             });
-            this.table.on('draw', () => {
+            datatable.on('draw', () => {
                $.each(detailRows, (i, id) => {
                   $.trigger('#' + id + ' td.details-control');
                });
             });
-            return this.table;
+            return datatable;
          }
          filterList() {
             $.click('#filter', (event) => {
                this.datatable(this.uri() + this.queryString());
             });
-            $(this.fdescriptionId).off('keyup').on('keyup', (event) => {
-               if($.inputText(this.fdescriptionId).length > 4) {
-                  $.trigger('#filter');
-               }
-            });
+            $.keyup(this.fdescriptionId, 4, () => {$.trigger('#filter');});
          }
          setupNewItem() {
-            let clicou = false;
             let procedureList = this;
+            let table = this.table;
             $.click(this.prefixId() + 'New', (event) => {
                $(procedureList.newItemId()).remove();
-               //tr.removeClass('shown');
-               //if (!clicou) {
                   this.addNewLine(() => {
+                     $(this.newItemId()).remove();
                      $(this.prefixId() + ' tr:first').before(this.newLine());
                   }, () => {
-                     procedureDetails.initPage();
-                     // $('#save').off('click').on('click', (e) => {alert('SALVAR')
-                     //    var payload = _montaUnidadeVO();
-                     //    payload['unidadeTO']['nome'] = $('#nome').val();
-                     //    payload['unidadeTO']['prefixoOS'] =
-                     //       $('#prefixo').val();
-                     //    payload['unidadeTO']['setorOperacionalTO'] =
-                     //       JSON.parse($('.setor option:selected').val());
-                     //    payload['unidadeTO']['status'] = true;
-                     //
-                     //    if(_validaCampos(payload)){
-                     //       httpClient(
-                     //          '/unidade/criar',
-                     //          'POST',
-                     //          'text',
-                     //          payload,
-                     //          (data, textStatus, jqXHR) => {
-                     //             $('#newItem').remove();
-                     //             clicou = false;
-                     //             return exibeModalSucesso(data,() => {
-                     //                $('#filtrar').trigger('click');
-                     //             });
-                     //          },
-                     //          fail,
-                     //          always
-                     //       );
-                     //    }
-                     // });
-                     // $('#cancel').off('click').click( (e) => {
-                     //    $('#newItem').remove();
-                     //    clicou = false;
-                     // });
-                     // $('#delete').off('click').click( (e) => {
-                     //    e.preventDefault();
-                     //    $('#newItem').remove();
-                     //    clicou = false;
-                     // });
-                     // clicou = true;
+                     procedureDetails.initPage(table);
                   });
-               //}
             });
          }
          initPage() {
-            this.filterList();
+            logger.debug('Initialize page...');
             this.setupNewItem();
+            this.filterList();
             $.trigger('#filter');
          }
       }

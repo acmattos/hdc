@@ -530,6 +530,7 @@
       constructor() {
          this.patient = null;
          this.personTypes = [];
+         this.trId = '#newItem';
          this.table = {};
       }
       initPage(table, id, contactTypes, genders, maritalStatuses, personTypes, states, statuses) {

@@ -71,17 +71,24 @@
          let patient = this.patient;
          let responsibleForList = this;
          let prefixId = this.prefixId();
+         let newItemId = this.newItemId;
          $(prefixId + ' tbody').off('click').on(
             'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
                let row = datatable.row(tr);
-               table.toggleRow(() => {
-                  responsibleForList.addNewLine(() => {
-                     row.child($(responsibleForList.newLine())).show();
-                  }, () => {
-                     responsibleForDetails.initPage(table, patient, tr.find('.id').val());
-                  });
-               });
+               let dtTr = new DtTr(datatable, tr, newItemId());
+               dtTr.toggleRow(
+                  () => {
+                     responsibleForList.addNewLine(
+                        () => {
+                           row.child($(responsibleForList.newLine())).show();
+                        },
+                        () => {
+                           responsibleForDetails.initPage(dtTr, patient, tr.find('.id').val());
+                        }
+                     );
+                  }
+               );
             });
          datatable.on('draw', () => {
             $.each(detailRows, (i, id) => {

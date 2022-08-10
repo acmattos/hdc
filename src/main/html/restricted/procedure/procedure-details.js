@@ -130,8 +130,12 @@
    class ProcedureDetails {
       constructor() {
          this.procedure = null;
+         this.trId = '#newItem';
+         this.table = {};
       }
-      initPage(id) {
+      initPage(table, id) {
+         logger.debug('Initialize page..., [id]', id);
+         this.table = table;
          if (id) {
             Procedure.read(id)
             .done((procedure) => {
@@ -175,19 +179,23 @@
          });
       }
       initCancelAction(id) {
+         let table = this.table;
+         let trId = this.trId;
          $.click('#cancel', (event) => {
-            $('#newItem').remove();
-            //clicou = false;
+            if(id) {
+               table.toggleRow();
+            } else {
+               $(trId).remove();
+            }
          });
       }
       initDeleteAction(id) {
          $.click('#delete', (event) => {
-            //clicou = false;
             let promise = null;
             let message = null;
             if(!id) {
                $('#newItem').remove();
-            } else { alert('JUST DELETE ' + id)
+            } else {
                promise = this.procedure.delete();
                message = 'Procedimento Excluído!';
             }
