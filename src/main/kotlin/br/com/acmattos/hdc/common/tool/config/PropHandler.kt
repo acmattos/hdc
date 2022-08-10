@@ -1,6 +1,9 @@
 package br.com.acmattos.hdc.common.tool.config
 
+import java.io.File
+import java.io.FileReader
 import java.util.Properties
+
 
 /**
  * @author ACMattos
@@ -20,10 +23,24 @@ object PropHandler {
 
     inline fun <reified T> getValue(key: String): T? {
         val clazzName = T::class.java.simpleName
-        val value = System.getProperty(key) ?: System.getenv(key)
-            ?: javaClass.classLoader.getResourceAsStream("application.properties").use {
-            Properties().apply { load(it) }.getProperty(key)
-        }
+        val value = System.getProperty(key)
+            ?: System.getenv(key)
+            ?: Properties().run {
+                this.load(
+                    FileReader(
+                        File(".").canonicalPath
+                            + File.separator
+                            + "application.properties"
+                    )
+                )
+                this
+            }[key]
+            ?: javaClass.classLoader.getResourceAsStream(
+                "application.properties"
+               )
+            .use {
+                Properties().apply { load(it) }.getProperty(key)
+            }
         return if (value is String && clazzName != "String") {
             when (clazzName) {
                 "Integer" -> value.toIntOrNull()
