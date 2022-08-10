@@ -108,13 +108,14 @@
 0.0.? -> Introducing Entity's Value Object representation (View Model)
 0.0.? -> Introducing Set appointment to patient
 0.0.? -> Extending Dentist data and CRUD operations;
-0.0.7 ->
+
 --- Released:
+0.0.7 ->
+- Implementing Patient CRUD operations.
 
 0.0.6 -> 
 - GUI to access the application. 
 - Implementing Procedure CRUD operations.
-- Implementing Patient CRUD operations.
 - Changing Error Tracking Code to Message Error Code. 
 - Creating filter capabilities to restrict data from being retrieved. 
 - Adding compound indexes capabilities.

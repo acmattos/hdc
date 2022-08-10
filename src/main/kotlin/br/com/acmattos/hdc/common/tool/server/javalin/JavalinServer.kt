@@ -190,7 +190,7 @@ fun Javalin.logJavalinBanner(): Javalin {
           |     / __  // /_/ // /___   ___/ //  __// /    | |/ //  __// /    
           |    /_/ /_//_____/ \____/  /____/ \___//_/     |___/ \___//_/
           |         
-          |    Javalin Based Server - Version 0.0.6
+          |    Javalin Based Server - Version 0.0.7
           |""".trimMargin()
         )
         this.config.showJavalinBanner = false
