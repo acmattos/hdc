@@ -282,7 +282,7 @@ data class UpdatePatientRequest(
     val dentalPlan: DentalPlanRequest?,
     val responsibleFor: PersonId?,
     val indicatedBy: String?,
-    val familyGroup: List<String>?,
+    val familyGroup: List<PersonId>,
     val status: String,
     val enabled: Boolean
 ): Request<PersonCommand>() {
