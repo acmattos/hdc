@@ -1,13 +1,24 @@
 <configuration>
+    <timestamp key="byDay" datePattern="yyyyMMdd'T'HHmmss"/>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file> HDC-${byDay}.log </file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%r [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
     <logger name="br.com.acmattos.hdc" level="trace"/>
+<!--    <logger name="io.mockk" level="trace"/>-->
     <logger name="org.eclipse.jetty" level="info"/>
-    <logger name="org.mongodb" level="info"/>
+<!--    <logger name="org.mongodb" level="debug"/>-->
     <root level="info">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>
