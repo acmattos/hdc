@@ -12,7 +12,7 @@
       fromPatient() {
          let personIds = '';
          this.patient.familyGroup.forEach((item, index, array) => {
-            personIds += array[index] + ',';
+            personIds += (array[index].id ? array[index].id : array[index]) + ',';
          });
          return personIds;
       }
