@@ -39,13 +39,13 @@
          let deferred = $.Deferred();
          let promise = deferred.promise();
          resource.get(':7000/persons/' + memberId)
-            .done((response) => {
-               deferred.resolve(response.data);
-            })
-            .fail((error) => {
-               toast.show(error);
-               deferred.reject(null);
-            });
+         .done((response) => {
+            deferred.resolve(response.data);
+         })
+         .fail((error) => {
+            toast.show(error);
+            deferred.reject(null);
+         });
          return promise;
       }
       delete() {
