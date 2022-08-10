@@ -24,7 +24,7 @@
          let deferred = $.Deferred();
          let promise = deferred.promise();
          if(this.fromPage()) {
-            this.patient.familyGroup.push(this.memberId);
+            this.patient.familyGroup.push({ 'id': this.memberId });
             deferred.resolve(true);
          } else {
             deferred.reject({
@@ -50,7 +50,7 @@
       }
       delete() {
          this.patient.familyGroup.splice(
-            this.patient.familyGroup.indexOf(this.memberId), 1);
+            this.patient.familyGroup.indexOf( { 'id': this.memberId } ), 1);
       }
       toPage(){
          $.inputText(this.memberIdId, this.memberId);
