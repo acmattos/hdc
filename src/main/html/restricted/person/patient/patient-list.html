@@ -10,16 +10,16 @@
              data-bs-parent="#filter">
             <div class="accordion-body">
                 <form class="form-inline row">
-                    <div class="form-group col-2">
-                        <label for="fcpf" class="mr-2"><span>CPF</span>:</label>
-                        <input id="fcpf" type="number"
-                               class="form-control form-control-sm"
-                               min= "81000014" max="87000199">
-                    </div>
                     <div class="form-group col-4">
                         <label for="ffullName" class="mr-2"><span>Nome</span>:</label>
                         <input id="ffullName" type="text"
                                class="form-control form-control-sm" minlength="3" maxlength="120">
+                    </div>
+                    <div class="form-group col-2">
+                        <label for="fcpf" class="mr-2"><span>CPF</span>:</label>
+                        <input id="fcpf" type="text"
+                               class="form-control form-control-sm"
+                               placeholder="123.456.789-01">
                     </div>
                     <div class="form-group col-2">
                         <label for="fcontact" class="mr-2"><span>Contato</span>:</label>
@@ -27,8 +27,8 @@
                                class="form-control form-control-sm" minlength="3" maxlength="120">
                     </div>
                     <div class="form-group col-2">
-                        <label for="fcompanyName" class="mr-2"><span>Convênio</span>:</label>
-                        <input id="fcompanyName" type="text"
+                        <label for="fdentalPlanName" class="mr-2"><span>Convênio</span>:</label>
+                        <input id="fdentalPlanName" type="text"
                                class="form-control form-control-sm" minlength="3" maxlength="120">
                     </div>
                     <div class="form-group col-2">
@@ -50,4 +50,3 @@
 <div class="row">&nbsp;</div>
 <table id="patientList" class="display table table-bordered table-striped"
        style="width:100%"></table>
-<!--<div id="modalItem" class="modal collapse"></div>-->

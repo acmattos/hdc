@@ -1,33 +1,83 @@
 <div class='text-left form-sm form-row'>
     <div class="row row-cols-2">
+        <input id="personId" type="hidden">
     <div class='col-4'>
+        <!--this.enabled = '';-->
         <div class='form-group'>
             <label for="fullName">Nome Completo</label>*:
             <input id='fullName' type='text'
                    class='form-control form-control-sm w100px' maxlength="100">
         </div>
-        <div class='form-group'>
-            <label for='personType'>Tipo</label>*:
-            <select id='personType' class='form-control form-control-sm'>
-            </select>
+        <div class='row'>
+            <div class='form-group col-6'>
+                <label for='status'>Status</label>*:
+                <select id='status' class='form-control form-control-sm'>
+                </select>
+            </div>
+            <div class='form-group  col-6'>
+                <label for="dob">Nascimento</label>*:
+                <input id='dob' type='text'
+                       class='form-control form-control-sm w100px datepicker'
+                       placeholder="__/__/____">
+            </div>
         </div>
-        <div class='form-group'>
-            <label for="dob">Nascimento</label>*:
-            <input id='dob' type='text'
-                   class='form-control form-control-sm w100px datepicker'
-                   placeholder="__/__/____">
+        <div class='row'>
+            <div class='form-group col-6'>
+                <label for='maritalStatus'>Estado Civil</label>*:
+                <select id='maritalStatus' class='form-control form-control-sm'>
+                </select>
+            </div>
+            <div class='form-group col-6'>
+                <label for='gender'>Sexo</label>*:
+                <select id='gender' class='form-control form-control-sm'>
+                </select>
+            </div>
         </div>
-        <div class='form-group'>
-            <label for='cpf'>CPF</label>*:
-            <input id='cpf' type='text' class='form-control form-control-sm w100px'
-                   placeholder="123.456.789-01">
+        <div class='row'>
+            <div class='form-group col-6'>
+                <label for='cpf'>CPF</label>*:
+                <input id='cpf' type='text' class='form-control form-control-sm w100px'
+                       placeholder="123.456.789-01">
+            </div>
+            <div class='form-group col-6'>
+                <label for='personalId' class='form-check-label'>Identidade</label>:
+                <input id='personalId' type='text' class='form-control form-control-sm w100px'>
+            </div>
         </div>
-        <div class='form-group'>
-            <label for='personalId' class='form-check-label'>Identidade</label>:
-            <input id='personalId' type='text' class='form-control form-control-sm w100px'>
+        <div class='row'>
+            <div class='form-group col-6'>
+                <label for='occupation' class='form-check-label'>Profissão</label>:
+                <input id='occupation' type='text' class='form-control form-control-sm w100px'>
+            </div>
+            <div class='form-group col-6'>
+                <label for='indicatedBy' class='form-check-label'>Indicação</label>:
+                <input id='indicatedBy' type='text' class='form-control form-control-sm w100px'>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-12 text-right'>
+             <button id="cancel" type='button'
+                     class='btn btn-secondary'>Cancelar</button>
+             <button id="save" type='button'
+                     class='btn btn-primary'>Salvar</button>
+            </div>
         </div>
     </div>
     <div class='col-4'>
+        <div class='row'>
+            <div class='form-group col-6'>
+                <label for='responsibleFor' class='form-check-label'>Responsável por</label>:
+                <button id="responsibleForButton" type="button"
+                        class="btn btn-primary mb-0" data-bs-toggle="modal"
+                        data-bs-target="#modal">Ver</button>
+            </div>
+            <div class='form-group col-6'>
+                 <label for='familyGroup' class='form-check-label'>Grupo Famíliar</label>:
+                    <button id="familyGroupButton" type="button"
+                            class="btn btn-primary mb-0" data-bs-toggle="modal"
+                            data-bs-target="#modal">Ver</button>
+            </div>
+        </div>
         <div class='form-group'>
             <label for='street0'>Logradouro</label>*:
             <input id='street0' type='text' class='form-control form-control-sm w100px'>
@@ -54,11 +104,9 @@
             </div>
         </div>
         <div class='form-group'>
-<!--            <div class='form-group col-6'>-->
            <label for='city0'>Cidade</label>:
            <input id='city0' type='text'
                   class='form-control form-control-sm w100px'>
-<!--            </div>-->
         </div>
         <div class='form-group'>
             <label for='zipCode0'>CEP</label>:
@@ -70,52 +118,56 @@
     <div class='col-4'>
         <div class='row'>
             <div class='form-group col-4'>
-                <label for='contactType0'>Tipo</label>:
-                <select id='contactType0' class='form-control form-control-sm'>
-                </select>
+                <label id='info0Label' for='info0'></label>:
             </div>
             <div class='form-group col-8'>
-                <label id='info0Label' for='info0'>Telefone</label>:
                 <input id='info0' type='text'
+                       class='form-control form-control-sm w100px'
+                       placeholder="">
+            </div>
+            <div class='form-group col-4'>
+                <label id='info1Label' for='info1'></label>:
+            </div>
+            <div class='form-group col-8'>
+                <input id='info1' type='text'
+                       class='form-control form-control-sm w100px'
+                       placeholder="">
+            </div>
+        </div>
+        <div class='row'>
+            <div class='form-group col-4'>
+                <label id='info2Label' for='info2'></label>:
+            </div>
+            <div class='form-group col-8'>
+                <input id='info2' type='text'
+                       class='form-control form-control-sm w100px'
+                       placeholder="">
+            </div>
+            <div class='form-group col-4'>
+                <label id='info3Label' for='info3'></label>:
+            </div>
+            <div class='form-group col-8'>
+                <input id='info3' type='text'
                        class='form-control form-control-sm w100px'
                        placeholder="(00) 99999-9999">
             </div>
-            <div class='form-group col-4'>
-                <label for='contactType1'>Tipo</label>:
-                <select id='contactType1' class='form-control form-control-sm'>
-                </select>
-            </div>
-            <div class='form-group col-8'>
-                <label id='info1Label' for='info1'>Email</label>:
-                <input id='info1' type='text'
-                       class='form-control form-control-sm w100px'
-                       placeholder="meu@email.com.br">
+            <div class='form-group col-12'>
+                <label id='obs3Label' for='obs3'>Em caso de emergência, chamar</label>:
+                <input id='obs3' type='text'
+                       class='form-control form-control-sm w100px'>
             </div>
         </div>
         <div class='row'>
             <div class='form-group'>
-                <label for='companyName'>Convênio</label>:
-                <input id='companyName' type='text'
+                <label for='dentalPlanName'>Convênio</label>:
+                <input id='dentalPlanName' type='text'
                        class='form-control form-control-sm w100px'>
             </div>
             <div class='form-group'>
-                <label for='planName'>Plano</label>:
-                <input id='planName' type='text'
-                       class='form-control form-control-sm w100px'>
-            </div>
-            <div class='form-group'>
-                <label for='planNumber'>Carteira</label>:
-                <input id='planNumber' type='text'
+                <label for='dentalPlanNumber'>Carteira</label>:
+                <input id='dentalPlanNumber' type='text'
                        class='form-control form-control-sm w100px'>
             </div>
         </div>
-
-    </div>
-    <div class="col-12"><hr></div>
-    <div class='col-12 text-right'>
-<!--        <button id="cancelarOperacaoAgendada" type='button'-->
-<!--                class='btn btn-secondary' i18n="Cancelar">Cancelar</button>-->
-        <button id="updatePatient" type='button'
-                class='btn btn-primary'>Salvar</button>
     </div>
 </div>
