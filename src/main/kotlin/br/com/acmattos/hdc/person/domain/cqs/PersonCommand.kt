@@ -290,7 +290,7 @@ data class UpdatePatientCommand(
         dentalPlan: DentalPlan?,
         responsibleFor: PersonId?,
         indicatedBy: String?,
-        familyGroup: List<String>?,
+        familyGroup: List<PersonId>,
         status: String,
         enabled: Boolean,
         auditLog: AuditLog
@@ -309,7 +309,7 @@ data class UpdatePatientCommand(
         dentalPlan,
         responsibleFor,
         indicatedBy,
-        familyGroup?.map { PersonId(it) } ?: listOf(),
+        familyGroup,/*?.map { PersonId(it) } ?: listOf(),*/
         Status.convert(status),
         true,
         LocalDateTime.now(),
