@@ -76,6 +76,18 @@ dependencies {
     testImplementation 'org.jetbrains.kotlin:kotlin-test-junit'
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': 'br.com.acmattos.hdc.Main'
+    }
+
+    from {
+        configurations.runtimeClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+
 jacoco {
     toolVersion = "0.8.7"
     reportsDir = file("$buildDir/jacoco")
