@@ -19,6 +19,70 @@ import org.koin.core.qualifier.named
 
 /**
  * @author ACMattos
+ * @since 08/08/2022.
+ */
+class Main {
+    companion object{
+        @JvmStatic
+        fun main(args: Array<String>) {
+            HdcApplication().init()
+            println("Check out ReDoc docs at http://localhost:7000/redoc")
+            println("Check out Swagger UI docs at http://localhost:7000/swagger")
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+            println(
+                de.huxhorn.sulky.ulid.ULID(
+                    java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
+                ).nextULID()
+            )
+        }}
+}
+
+/**
+ * @author ACMattos
  * @since 07/06/2020.
  */
 class HdcApplication {
@@ -86,60 +150,4 @@ class HdcApplication {
                 .build()
         }
     }
-}
-
-fun main(){
-    HdcApplication().init()
-    println("Check out ReDoc docs at http://localhost:7000/redoc")
-    println("Check out Swagger UI docs at http://localhost:7000/swagger")
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
-    println(
-        de.huxhorn.sulky.ulid.ULID(
-            java.security.SecureRandom(HdcApplication::javaClass.name.toByteArray())
-        ).nextULID()
-    )
 }
