@@ -42,7 +42,7 @@
                   });
                }
             },
-            'lengthMenu': [[2,10, 25, 50, -1], [2,10, 25, 50, "Todos"]],
+            'lengthMenu': [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
             'columns': this.columns,
             'columnDefs': this.columnDefs,
             'initComplete': function(settings, json) {
@@ -93,24 +93,31 @@
          this.datatable = component.DataTable(this.dtConfig.config());
          return this.datatable;
       }
+   }
+   window.Datatable = Datatable;
+   class DtTr {
+      constructor(table, tr, id) {
+         this.table = table;
+         this.tr = tr;
+         this.id = id;
+         this.row = table ? table.row(tr) : {};
+      }
       toggleRow(addLineCallback) {
-         let tr = $('td.details-control').closest('tr');
-         let row = this.datatable.row(tr);
-         if (row.child.isShown()) {
-            row.child.remove();
-            tr.removeClass('shown').removeClass('selected');
+         if (this.row.child.isShown()) {
+            this.row.child.remove();
+            this.tr.removeClass('shown').removeClass('selected');
          } else {
-            // if (this.datatable.row('.shown').length) { // TODO THIS MUST WORK WITH MULTIPLE LINES
-            //    $(this.newItemId()).remove();
-            //    $('.shown').find('.details-control').click();
-            // }
+            if (this.table.row('.shown').length) {
+                $(this.Id).remove();
+                $('.shown').find('.details-control').click();
+            }
             if(addLineCallback) {
                addLineCallback();
             }
-            tr.addClass('shown');
-            tr.addClass('selected');
+            this.tr.addClass('shown');
+            this.tr.addClass('selected');
          }
       }
    }
-   window.Datatable = Datatable;
+   window.DtTr = DtTr;
 })();
