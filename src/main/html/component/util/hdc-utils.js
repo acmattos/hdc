@@ -44,11 +44,8 @@
       }
       get(key, ...replaceables) {
          try {
-            logger.delete('AQUI Message#get: key, replaceables',this.messages, key,  replaceables);
             return this.messages[key].format(replaceables);
          } catch (e) {
-            logger.info('[EXCEPTION] = APAGAR Message#get keys[0]', key,
-               this.messages/*[this.messageNotFoundKey]*/);
             logger.info('Message#get - [EXCEPTION] = ', e, key);
             return this.messages[this.messageNotFoundKey].format(key);
          }
@@ -80,7 +77,6 @@
    // ""data":"ULID [1] does not match the expected size: 26 chars long!"}"
    class Response {
       constructor(response) {
-         logger.debug('Incoming Response', response);
          this.uid = response.uid;
          this.code = response.code;
          this.status = response.status;
@@ -138,7 +134,7 @@
             type: 'GET',
             url: this.getFullUrl(uri)
          });
-         logger.debug(config.type, uri, config);
+         //logger.debug(config.type, uri, config);
          return this.send(config, done, fail);
       }
       post(uri, payload, done, fail) {
@@ -159,7 +155,7 @@
          if(payload) {
             config.data = JSON.stringify(payload);
          }
-         logger.debug(config.type, payload, config);
+         //logger.debug(config.type, payload, config);
          return this.send(config, done, fail);
       }
       put(uri, payload, done, fail) {
@@ -170,7 +166,7 @@
          if(payload) {
             config.data = JSON.stringify(payload);
          }
-         logger.debug(config.type, payload, config);
+         //logger.debug(config.type, payload, config);
          return this.send(config, done, fail);
       }
       delete(uri, payload, done, fail) {
@@ -181,7 +177,7 @@
          if(payload) {
             config.data = JSON.stringify(payload);
          }
-         logger.debug(config.type, payload, config);
+         //logger.debug(config.type, payload, config);
          return this.send(config, done, fail);
       }
       script(resource) {
@@ -248,14 +244,14 @@
                if(done){
                   done(data, textStatus, jqXHR);
                }
-               logger.debug('DONE - 2XX', jqXHR.url, jqXHR.status, textStatus, data);
+               //logger.debug('DONE - 2XX', jqXHR.url, jqXHR.status, textStatus, data);
                deferred.resolve(new Response(data));
             },
             /*fail*/(jqXHR, textStatus, errorThrown) => {
                if(fail){
                   fail(jqXHR, textStatus, errorThrown);
                }
-               logger.info("FAIL - 4|5XX", jqXHR.responseText, {"jqXHR_status": jqXHR.status,
+               logger.info("FAIL - 4XX/5XX", jqXHR.responseText, {"jqXHR_status": jqXHR.status,
                   "jqXHR_responseText": jqXHR.responseText, "textStatus": textStatus,
                   "errorThrown": errorThrown.url }, jqXHR, errorThrown);
 
@@ -345,3 +341,4 @@
    window.Timer = Timer;
    window.timer = new Timer();
 })();
+
