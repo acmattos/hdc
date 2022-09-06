@@ -5,28 +5,8 @@ import br.com.acmattos.hdc.person.domain.cqs.CreateDentistCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreateDentistEvent
 import br.com.acmattos.hdc.person.domain.cqs.CreatePatientCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreatePatientEvent
-import br.com.acmattos.hdc.person.domain.model.ContactType.EMAIL
 import java.time.LocalDate
 import java.time.LocalDateTime
-
-private val address = Address(
-    "Street Name",
-    "Number 30",
-    "Complement 1",
-    "22777-230",
-    "Neighborhood",
-    State.RJ,
-    "City",
-    LocalDateTime.now(),
-    null
-)
-private val contact = Contact(
-    "info@email.com",
-    EMAIL,
-    "OBS",
-    LocalDateTime.now(),
-    null
-)
 
 /**
  * @author ACMattos
@@ -42,8 +22,8 @@ class PersonBuilder {
             gender: String = "MALE",
             personType: PersonType = PersonType.DENTIST,
             personalId: String? = "PI 123",
-            addresses: List<Address> = listOf(address),
-            contacts: List<Contact> = listOf(contact),
+            addresses: List<Address> = listOf(PersonDataBuilder.buildAddress()),
+            contacts: List<Contact> = listOf(PersonDataBuilder.buildContact()),
             responsibleFor: PersonId? = PersonId("01FK96GENJKTN1BYZW6BRHFZFJ"),
             familyGroup: List<PersonId> = listOf()
         ) = Person.apply(
@@ -77,8 +57,8 @@ class PersonBuilder {
             personType: PersonType = PersonType.PATIENT,
             personalId: String? = "PI 123",
             occupation: String? = "Occupation",
-            addresses: List<Address> = listOf(address),
-            contacts: List<Contact> = listOf(contact),
+            addresses: List<Address> = listOf(PersonDataBuilder.buildAddress()),
+            contacts: List<Contact> = listOf(PersonDataBuilder.buildContact()),
             dentalPlan: DentalPlan? = DentalPlan("Name", "12345"),
             responsibleFor: PersonId? = PersonId("01FK96GENJKTN1BYZW6BRHFZFJ"),
             indicatedBy: String? = "Indicated BY",
