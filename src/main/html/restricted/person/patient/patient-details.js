@@ -60,11 +60,11 @@
          });
          this.occupationV = new StringValidator(this.occupationId, {
             empty: {},
-            len: { min: 5, max: 20, message: '01FWKSM5K4GRN5Q8KG39FK090X' }
+            len: { min: 3, max: 100, message: '01FVT5ENFP3PG1JPAG867MJ6XZ' }
          });
           this.indicatedByV = new StringValidator(this.indicatedById, {
             empty: {},
-            len: { min: 5, max: 20, message: '01FWKSM5K552MV85FW4ZTYTE6F' }
+            len: { min: 3, max: 100, message: '01FWKSM5K552MV85FW4ZTYTE6F' }
          });
          this.statusV = new SelectValidator(this.statusId, {
             select: { invalid: '-1', message: '01FWKSM5K527PHS1MQ52NS823F' }
@@ -334,9 +334,11 @@
             len: { min: 3, max: 100, message: '01FVQ2NP5H3PG1JPAG867MJ6XZ' }
          });
          this.numberV = new StringValidator(this.numberId, {
-            len: { min: 1, max: 10, message: '01FV2J1YQ69FE3F55670TQCPE3' }
+            empty: {},
+            len: { min: 1, max: 10, message: '01FWKFTFMG9FE3F55670TQCPE3' }
          });
          this.complementV = new StringValidator(this.complementId, {
+            empty: {},
             len: { min: 1, max: 50, message: '01FVQ2NP5KGRN5Q8KG39FK090X' }
          });
          this.zipCodeV = new StringValidator(this.zipCodeId, {
@@ -394,12 +396,14 @@
       validate() {
          let isValidStreet = this.streetV.validate();
          let isValidNumber = this.numberV.validate();
+         let isValidComplement = this.complementV.validate();
          let isValidZipCode = this.zipCodeV.validate();
          let isValidNeighborhood = this.neighborhoodV.validate();
          let isValidState = this.stateV.validate();
          let isValidCity = this.cityV.validate();
-         return isValidStreet && isValidNumber && isValidZipCode
-            && isValidNeighborhood && isValidState && isValidCity;
+         return isValidStreet && isValidNumber && isValidComplement
+            && isValidZipCode && isValidNeighborhood && isValidState
+            && isValidCity;
       }
    }
    class Contact{
