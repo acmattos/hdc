@@ -39,12 +39,13 @@
          }
          columns() {
             return  [
-               { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
-               { 'data': 'full_name', 'defaultContent': '', 'orderable': true },
-               { 'data': 'dob', 'defaultContent': '', 'orderable': true },
-               { 'data': 'cpf', 'defaultContent': '', 'orderable': true },
-               { 'data': 'contacts', 'defaultContent': '', 'orderable': true},
-               { 'data': 'dentalPlan', 'defaultContent': '', 'orderable': true},
+               { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null },
+               { 'data': 'full_name', 'defaultContent': '', 'orderable': false },
+               { 'data': 'dob', 'defaultContent': '', 'orderable': false },
+               { 'data': 'cpf', 'defaultContent': '', 'orderable': false },
+               { 'data': 'contacts', 'defaultContent': '', 'orderable': false },
+               { 'data': 'dentalPlan', 'defaultContent': '', 'orderable': false },
+               { 'data': 'dentalPlan', 'defaultContent': '', 'orderable': false },
                { 'className': "text-center", 'defaultContent': '', 'orderable': false }
             ];
          }
@@ -87,9 +88,6 @@
                      let whatsapp = ' <a role="button" target="_blank" '
                         + 'href="https://web.whatsapp.com/send?phone=55{0}&amp;text=Olá {1}"><i ' +
                         'class="fa-brands fa-whatsapp"></i></a>';
-                     // let whatsapp = ' <a role="button" target="_blank" '
-                     //    + 'href="https://api.whatsapp.com/send?phone=55{0}&amp;text=Olá {1}"><i ' +
-                     //    'class="fa-brands fa-whatsapp"></i></a>';
                      let contactMap = new Map();
                      let info = '';
                      rowData.contacts.forEach((item, index, array) => {
@@ -132,6 +130,18 @@
                },
                {
                   targets: [ 6 ],
+                  width: "100px",
+                  title:'<span>Carteira</span>',
+                  createdCell: function (td, cellData, rowData, row, col) {
+                     let html = '-';
+                     if(rowData.dental_plan && rowData.dental_plan.number) {
+                        html = rowData.dental_plan.number;
+                     }
+                     $(td).html(html);
+                  }
+               },
+               {
+                  targets: [ 7 ],
                   width: "30px",
                },
             ];
