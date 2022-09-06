@@ -14,7 +14,7 @@ import java.time.LocalDateTime
  */
 data class AddressMdbDocument (
     val street: String,
-    val number: String,
+    val number: String?,
     val complement: String?,
     val zipCode: String,
     val neighborhood: String,

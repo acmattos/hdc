@@ -30,7 +30,7 @@ import java.time.LocalDateTime
  */
 data class Address(
     val street: String,
-    val number: String,
+    val number: String?,
     val complement: String?,
     val zipCode: String,
     val neighborhood: String,
@@ -59,12 +59,14 @@ data class Address(
     }
 
     private fun assertValidNumber() {
-        Assertion.assert(
-            "Invalid address number: 1 <= number.length <= 10!",
-            PERSON.name,
-            INVALID_PERSON_ADDRESS_NUMBER.code
-        ) {
-            number.length in 1..10
+        if(number != null) {
+            Assertion.assert(
+                "Invalid address number: 1 <= number.length <= 10!",
+                PERSON.name,
+                INVALID_PERSON_ADDRESS_NUMBER.code
+            ) {
+                number.length in 1..10
+            }
         }
     }
 
@@ -128,7 +130,7 @@ data class Contact(
 
     private fun assertValidInfo() {
         Assertion.assert(
-            "Invalid contact info!",
+            "Invalid contact info: [$type]!",
             PERSON.name,
             INVALID_PERSON_CONTACT_INFO.code
         ) {
@@ -174,11 +176,11 @@ data class DentalPlan(
 
     private fun assertValidName() {
         Assertion.assert(
-            "Invalid dental plan name: 2 <= name.length <= 20!",
+            "Invalid dental plan name: 2 <= name.length <= 30!",
             PERSON.name,
             INVALID_PERSON_DENTAL_PLAN_NAME.code
         ) {
-            name.isNotBlank() && name.length in 2..20
+            name.isNotBlank() && name.length in 2..30
         }
     }
 
