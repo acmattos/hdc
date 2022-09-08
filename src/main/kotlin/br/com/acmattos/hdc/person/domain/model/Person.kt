@@ -43,6 +43,7 @@ data class Person(// TODO Create tests
     private var indicatedByData: String? = null,
     private var familyGroupData: List<PersonId>? = null,
     private var statusData: Status? = null,
+    private var lastAppointmentData: LocalDate? = null,
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
@@ -63,6 +64,7 @@ data class Person(// TODO Create tests
     val indicatedBy get() = indicatedByData
     val familyGroup get() = familyGroupData!!
     val status get() = statusData
+    val lastAppointment get() = lastAppointmentData
     val enabled get() = enabledData
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
@@ -122,6 +124,7 @@ data class Person(// TODO Create tests
                 dentalPlanData = event.dentalPlan
                 indicatedByData = event.indicatedBy
                 statusData = event.status
+                lastAppointmentData = event.lastAppointment
             }
         }
         assertValidFullName()
@@ -153,6 +156,7 @@ data class Person(// TODO Create tests
                 dentalPlanData = event.dentalPlan
                 indicatedByData = event.indicatedBy
                 statusData = event.status
+                lastAppointmentData = event.lastAppointment
             }
         }
         assertValidFullName()

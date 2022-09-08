@@ -31,6 +31,7 @@ data class PersonMdbDocument(
     val indicatedBy: String?,
     val familyGroup: List<String>,
     val status: String?,
+    val lastAppointment: LocalDate?,
     val enabled: Boolean,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime?
@@ -58,6 +59,7 @@ data class PersonMdbDocument(
         indicatedBy = person.indicatedBy,
         familyGroup = person.familyGroup.map { it.id },
         status = person.status?.name,
+        lastAppointment = person.lastAppointment,
         enabled = person.enabled,
         createdAt = person.createdAt,
         updatedAt = person.updatedAt,
@@ -89,6 +91,7 @@ data class PersonMdbDocument(
             } else {
                 null
             },
+            lastAppointmentData = lastAppointment,
             enabledData = enabled,
             createdAtData = createdAt,
             updatedAtData = updatedAt,

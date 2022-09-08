@@ -18,6 +18,7 @@
          this.indicatedById = '#indicatedBy';
          this.familyGroupId = '#familyGroup';
          this.statusId = '#status';
+         this.lastAppointmentId = '#lastAppointment';
          this.enabledId = '#enabled';
          // Attributes
          this.personId = '';
@@ -36,6 +37,7 @@
          this.indicatedBy = '';
          this.familyGroup = [];
          this.status = '';
+         this.lastAppointment = '';
          this.enabled = '';
          // Validators
          this.fullNameV = new StringValidator(this.fullNameId, {
@@ -69,6 +71,10 @@
          this.statusV = new SelectValidator(this.statusId, {
             select: { invalid: '-1', message: '01FWKSM5K527PHS1MQ52NS823F' }
          });
+         this.lastAppointmentV = new DateValidator(this.lastAppointmentId, {
+            between: { min: '01/01/1900'.toDate(), max: new Date(),
+               message: '01FWKTXVD752MV85FW4ZTYTE6F' }
+         });
          // Extra
          this.contactTypes = contactTypes;
          if (patient && Array.isArray(patient)) {
@@ -88,6 +94,7 @@
             this.indicatedBy = patient[0].indicated_by;
             this.familyGroup =  patient[0].family_group ? patient[0].family_group : [];
             this.status = patient[0].status;
+            this.lastAppointment = patient[0].last_appointment;
             this.enabled = patient[0].enabled;
          } else {
             this.maritalStatus = 'MARRIED';
@@ -118,8 +125,10 @@
             'indicated_by': patient.indicatedBy,
             'family_group': patient.familyGroup,
             'status': patient.status,
+            'last_appointment': patient.lastAppointment,
             'enabled': patient.enabled
          };
+         logger.debug('Patient Request', request);
          return request;
       }
       addressesPayLoad() {
@@ -254,6 +263,9 @@
          this.dentalPlan.toPage();
          $.inputText(this.indicatedById, this.indicatedBy);
          $.selectBuilder(this.statusId, this.status, statuses);
+         $.inputDate(this.lastAppointmentId, this.lastAppointment,
+            this.lastAppointmentV.rule.between.min,
+            this.lastAppointmentV.rule.between.max);
          $.checkBox(this.enabledId, this.enabled);
       }
       fromPage(){
@@ -275,6 +287,7 @@
             this.dentalPlan.fromPage();
             this.indicatedBy = this.indicatedByV.value;
             this.status = this.statusV.value;
+            this.lastAppointment = this.lastAppointmentV.value;
             this.enabled = $.checkBox(this.enabledId);
             return true;
          }
@@ -301,11 +314,13 @@
          let isValidIndicatedBy = this.indicatedByV.validate();
          //let isValid = this.familyGroup = ;
          let isValidStatus = this.statusV.validate();
+         let isValidLastAppointment = this.lastAppointmentV.validate();
 
          return isValidFullName && isValidDob && isValidMaritalStatus
             && isValidGender && isValidCpf && isValidPersonalId
             && isValidOccupation && isValidAddresses && isValidContacts
-            && isValidDentalPlan && isValidIndicatedBy && isValidStatus;
+            && isValidDentalPlan && isValidIndicatedBy && isValidStatus
+            && isValidLastAppointment;
       }
    }
    window.Patient = Patient;
