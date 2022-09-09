@@ -129,6 +129,7 @@
 - Verifying message tracker codes in the UI for patient
 - Fixing development application run
 - Adding last appointment information for patient
+- 
 
 --- Released:
 0.0.7 ->
