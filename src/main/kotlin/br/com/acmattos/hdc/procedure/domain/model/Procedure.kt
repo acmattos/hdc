@@ -27,8 +27,8 @@ data class Procedure(
     val procedureId get() = procedureIdData!!
     val code get() = codeData!!
     val description get() = descriptionData!!
-    val enabled get() = enabledData
-    val createdAt get() = createdAtData
+    val enabled get() = enabledData!!
+    val createdAt get() = createdAtData!!
     val updatedAt get() = updatedAtData
 
     fun apply(events: List<ProcedureEvent>): Procedure {
