@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.person.domain.cqs
 import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EqNullFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
@@ -12,6 +13,7 @@ import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACTS_INFO
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.DENTAL_PLAN
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.DENTAL_PLAN_NAME
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.FULL_NAME
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.PERSON_ID
@@ -24,6 +26,8 @@ open class PersonQuery(
     override val page: Page,
     override val auditLog: AuditLog
 ): Query(page, auditLog)
+
+private const val NO_DENTAL_PLAN = "particular"
 
 /**
  * @author ACMattos
@@ -159,9 +163,13 @@ data class FindAllPersonsQuery(
                 null
             }
 
-        private fun dentalPlanNameFilter(dentalPlanName: String?): RegexFilter<String, String>? =
+        private fun dentalPlanNameFilter(dentalPlanName: String?): Filter<String>? =
             if(!dentalPlanName.isNullOrEmpty()) {
-                RegexFilter(DENTAL_PLAN_NAME.fieldName, dentalPlanName)
+                if(!dentalPlanName.contains(NO_DENTAL_PLAN, ignoreCase = true)) {
+                    RegexFilter(DENTAL_PLAN_NAME.fieldName, dentalPlanName)
+                } else {
+                    EqNullFilter(DENTAL_PLAN.fieldName)
+                }
             } else {
                 null
             }
