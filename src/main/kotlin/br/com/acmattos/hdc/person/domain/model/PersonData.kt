@@ -186,11 +186,11 @@ data class DentalPlan(
 
     private fun assertValidNumber() {
         Assertion.assert(
-            "Invalid dental plan number: 5 <= number.length <= 20!",
+            "Invalid dental plan number: 5 <= number.length <= 30!",
             PERSON.name,
             INVALID_PERSON_DENTAL_PLAN_NUMBER.code
         ) {
-            number.isNotBlank() && number.length in 5..20
+            number.isNotBlank() && number.length in 5..30
         }
     }
 }
