@@ -44,6 +44,7 @@ open class CreateAPersonCommand(
     open val indicatedBy: String?,
     open val familyGroup: List<PersonId>,
     open val status: Status?,
+    open val lastAppointment: LocalDate?,
     open val enabled: Boolean,
     open val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -70,6 +71,7 @@ open class UpdateAPersonCommand(
     open val indicatedBy: String?,
     open val familyGroup: List<PersonId>,
     open val status: Status?,
+    open val lastAppointment: LocalDate?,
     open val enabled: Boolean,
     open val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -111,6 +113,7 @@ data class CreateDentistCommand(
     responsibleFor,
     null,
     familyGroup,
+    null,
     null,
     enabled,
     createdAt,
@@ -168,6 +171,7 @@ data class CreatePatientCommand(
     override val indicatedBy: String?,
     override val familyGroup: List<PersonId>,
     override val status: Status,
+    override val lastAppointment: LocalDate?,
     override val enabled: Boolean,
     override val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -188,6 +192,7 @@ data class CreatePatientCommand(
     indicatedBy,
     familyGroup,
     status,
+    lastAppointment,
     enabled,
     createdAt,
     auditLog
@@ -207,6 +212,7 @@ data class CreatePatientCommand(
         indicatedBy: String?,
         familyGroup: List<String>?,
         status: String,
+        lastAppointment: LocalDate?,
         auditLog: AuditLog
     ): this(
         PersonId(),
@@ -225,6 +231,7 @@ data class CreatePatientCommand(
         indicatedBy,
         familyGroup?.map { PersonId(it) } ?: listOf(),
         Status.convert(status),
+        lastAppointment,
         true,
         LocalDateTime.now(),
         auditLog
@@ -252,6 +259,7 @@ data class UpdatePatientCommand(
     override val indicatedBy: String?,
     override val familyGroup: List<PersonId>,
     override val status: Status,
+    override val lastAppointment: LocalDate?,
     override val enabled: Boolean,
     override val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -272,6 +280,7 @@ data class UpdatePatientCommand(
     indicatedBy,
     familyGroup,
     status,
+    lastAppointment,
     enabled,
     createdAt,
     auditLog
@@ -292,6 +301,7 @@ data class UpdatePatientCommand(
         indicatedBy: String?,
         familyGroup: List<PersonId>,
         status: String,
+        lastAppointment: LocalDate?,
         enabled: Boolean,
         auditLog: AuditLog
     ): this(
@@ -309,8 +319,9 @@ data class UpdatePatientCommand(
         dentalPlan,
         responsibleFor,
         indicatedBy,
-        familyGroup,/*?.map { PersonId(it) } ?: listOf(),*/
+        familyGroup,
         Status.convert(status),
+        lastAppointment,
         true,
         LocalDateTime.now(),
         auditLog

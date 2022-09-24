@@ -8,10 +8,9 @@ import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_C
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_CPF
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_DOB
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_FULL_NAME
+import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_INDICATED_BY
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_OCCUPATION
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSONAL_ID
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSON_TYPE_DENTIST
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSON_TYPE_PATIENT
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_STATUS
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.CreateAPersonEvent
@@ -20,8 +19,6 @@ import br.com.acmattos.hdc.person.domain.cqs.CreatePatientEvent
 import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
 import br.com.acmattos.hdc.person.domain.cqs.UpdateAPersonEvent
 import br.com.acmattos.hdc.person.domain.cqs.UpdatePatientEvent
-import br.com.acmattos.hdc.person.domain.model.PersonType.DENTIST
-import br.com.acmattos.hdc.person.domain.model.PersonType.PATIENT
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -29,7 +26,7 @@ import java.time.LocalDateTime
  * @author ACMattos
  * @since 30/09/2021.
  */
-data class Person(
+data class Person(// TODO Create tests
     private var personIdData: PersonId? = null,
     private var fullNameData: String? = null,
     private var dobData: LocalDate? = null,
@@ -46,6 +43,7 @@ data class Person(
     private var indicatedByData: String? = null,
     private var familyGroupData: List<PersonId>? = null,
     private var statusData: Status? = null,
+    private var lastAppointmentData: LocalDate? = null,
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
@@ -66,6 +64,7 @@ data class Person(
     val indicatedBy get() = indicatedByData
     val familyGroup get() = familyGroupData!!
     val status get() = statusData
+    val lastAppointment get() = lastAppointmentData
     val enabled get() = enabledData
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
@@ -88,20 +87,19 @@ data class Person(
 
     private fun apply(event: CreateDentistEvent) {
         applyCreateEvent(event)
-        //assertDentist()
     }
 
     private fun apply(event: CreatePatientEvent) {
         applyCreateEvent(event)
-        //assertPatient()
         assertValidOccupation()
+        assertValidIndicatedBy()
         assertValidStatus()
     }
 
     private fun apply(event: UpdatePatientEvent) {
         applyUpdateEvent(event)
-       // assertPatient()
         assertValidOccupation()
+        assertValidIndicatedBy()
         assertValidStatus()
     }
 
@@ -126,6 +124,7 @@ data class Person(
                 dentalPlanData = event.dentalPlan
                 indicatedByData = event.indicatedBy
                 statusData = event.status
+                lastAppointmentData = event.lastAppointment
             }
         }
         assertValidFullName()
@@ -157,6 +156,7 @@ data class Person(
                 dentalPlanData = event.dentalPlan
                 indicatedByData = event.indicatedBy
                 statusData = event.status
+                lastAppointmentData = event.lastAppointment
             }
         }
         assertValidFullName()
@@ -187,6 +187,7 @@ data class Person(
         }
     }
 
+    // TODO Review when dentist CRUD is done
 //    private fun assertDentist() {
 //        Assertion.assert(
 //            "Invalid person type: MUST BE DENTIST!",
@@ -196,19 +197,20 @@ data class Person(
 //            personType == DENTIST
 //        }
 //    }
-
-    /*private fun assertPatient() {
-        Assertion.assert(
-            "Invalid person type: MUST BE PATIENT!",
-            PERSON.name,
-            INVALID_PERSON_PERSON_TYPE_PATIENT.code
-        ) {
-            personType == PATIENT
-        }
-    }*/
+//    /*private fun assertPatient() {
+//    indicatedBy
+//        Assertion.assert(
+//            "Invalid person type: MUST BE PATIENT!",
+//            PERSON.name,
+//            INVALID_PERSON_PERSON_TYPE_PATIENT.code
+//        ) {
+//            personType == PATIENT
+//        }
+//    }*/
 
     private fun assertValidCpf() {
-        val rawCpf = cpf.replace(".", "").replace("-", "")
+        val rawCpf = cpf.replace(".", "")
+            .replace("-", "")
         var valid = false
         for(index in 1..10){
             if(rawCpf[index - 1] != rawCpf[index]) {
@@ -254,7 +256,7 @@ data class Person(
     private fun assertValidPersonId() {
         if(personalId != null) {
             Assertion.assert(
-                "Invalid personal id: 5 <= name.length <= 15!",
+                "Invalid personal id: 5 <= personalId.length <= 15!",
                 PERSON.name,
                 INVALID_PERSON_PERSONAL_ID.code
             ) {
@@ -266,11 +268,23 @@ data class Person(
     private fun assertValidOccupation()  {
         if(occupation != null) {
             Assertion.assert(
-                "Invalid occupation: 3 <= occupation.length <= 50!",
+                "Invalid occupation: 3 <= occupation.length <= 100!",
                 PERSON.name,
                 INVALID_PERSON_OCCUPATION.code
             ) {
-                occupation!!.length in 3..50
+                occupation!!.length in 3..100
+            }
+        }
+    }
+
+    private fun assertValidIndicatedBy()  {
+        if(indicatedBy != null) {
+            Assertion.assert(
+                "Invalid indicated by: 3 <= indicatedBy.length <= 100!",
+                PERSON.name,
+                INVALID_PERSON_INDICATED_BY.code
+            ) {
+                indicatedBy!!.length in 3..100
             }
         }
     }

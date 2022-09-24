@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.common.tool.config
 
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.FileReader
 import java.util.Properties
-
 
 /**
  * @author ACMattos
@@ -25,16 +25,7 @@ object PropHandler {
         val clazzName = T::class.java.simpleName
         val value = System.getProperty(key)
             ?: System.getenv(key)
-            ?: Properties().run {
-                this.load(
-                    FileReader(
-                        File(".").canonicalPath
-                            + File.separator
-                            + "application.properties"
-                    )
-                )
-                this
-            }[key]
+            ?: getValueFromPropertiesOrNull(key)
             ?: javaClass.classLoader.getResourceAsStream(
                 "application.properties"
                )
@@ -53,4 +44,19 @@ object PropHandler {
             value as? T?
         }
     }
+
+    fun getValueFromPropertiesOrNull(key: String) = try {
+            Properties().run {
+                this.load(
+                    FileReader(
+                        File(".").canonicalPath
+                            + File.separator
+                            + "application.properties"
+                    )
+                )
+                this
+            }[key]
+        } catch(fnfe: FileNotFoundException)  {
+            null
+        }
 }

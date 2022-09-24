@@ -18,6 +18,7 @@
          this.indicatedById = '#indicatedBy';
          this.familyGroupId = '#familyGroup';
          this.statusId = '#status';
+         this.lastAppointmentId = '#lastAppointment';
          this.enabledId = '#enabled';
          // Attributes
          this.personId = '';
@@ -36,6 +37,7 @@
          this.indicatedBy = '';
          this.familyGroup = [];
          this.status = '';
+         this.lastAppointment = '';
          this.enabled = '';
          // Validators
          this.fullNameV = new StringValidator(this.fullNameId, {
@@ -60,14 +62,19 @@
          });
          this.occupationV = new StringValidator(this.occupationId, {
             empty: {},
-            len: { min: 5, max: 20, message: '01FWKSM5K4GRN5Q8KG39FK090X' }
+            len: { min: 3, max: 100, message: '01FVT5ENFP3PG1JPAG867MJ6XZ' }
          });
-          this.indicatedByV = new StringValidator(this.indicatedById, {
+         this.indicatedByV = new StringValidator(this.indicatedById, {
             empty: {},
-            len: { min: 5, max: 20, message: '01FWKSM5K552MV85FW4ZTYTE6F' }
+            len: { min: 3, max: 100, message: '01FWKSM5K552MV85FW4ZTYTE6F' }
          });
          this.statusV = new SelectValidator(this.statusId, {
             select: { invalid: '-1', message: '01FWKSM5K527PHS1MQ52NS823F' }
+         });
+         this.lastAppointmentV = new DateValidator(this.lastAppointmentId, {
+            empty: {},
+            between: { min: '01/01/1900'.toDate(), max: new Date(),
+               message: '01FWKTXVD752MV85FW4ZTYTE6F' }
          });
          // Extra
          this.contactTypes = contactTypes;
@@ -88,6 +95,7 @@
             this.indicatedBy = patient[0].indicated_by;
             this.familyGroup =  patient[0].family_group ? patient[0].family_group : [];
             this.status = patient[0].status;
+            this.lastAppointment = patient[0].last_appointment;
             this.enabled = patient[0].enabled;
          } else {
             this.maritalStatus = 'MARRIED';
@@ -99,6 +107,27 @@
             this.status = 'REGULAR';
             this.enabled = true;
          }
+         this.contactsV  = new FunctionValidator(this.contacts, () => {
+            let components = [];
+               this.contacts.forEach((item, index, array) => {
+                  components.push(array[index].infoId);
+               });
+               return components;
+            },
+            (contacts) => {
+               let error = {
+                  'status': 461,
+                  'code':'01FWKTXVD727PHS1MQ52NS823F',
+                  'data':'01FWKTXVD727PHS1MQ52NS823F'
+               };
+               contacts.forEach((item, index, array) => {
+                  if(array[index].infoV.value) {
+                     error = null;
+                  }
+               }
+            );
+            return error;
+         });
       }
       createRequest() {
          let patient = this;
@@ -118,8 +147,10 @@
             'indicated_by': patient.indicatedBy,
             'family_group': patient.familyGroup,
             'status': patient.status,
+            'last_appointment': patient.lastAppointment,
             'enabled': patient.enabled
          };
+         logger.debug('Patient Request', request);
          return request;
       }
       addressesPayLoad() {
@@ -254,6 +285,9 @@
          this.dentalPlan.toPage();
          $.inputText(this.indicatedById, this.indicatedBy);
          $.selectBuilder(this.statusId, this.status, statuses);
+         $.inputDate(this.lastAppointmentId, this.lastAppointment,
+            this.lastAppointmentV.rule.between.min,
+            this.lastAppointmentV.rule.between.max);
          $.checkBox(this.enabledId, this.enabled);
       }
       fromPage(){
@@ -275,6 +309,7 @@
             this.dentalPlan.fromPage();
             this.indicatedBy = this.indicatedByV.value;
             this.status = this.statusV.value;
+            this.lastAppointment = this.lastAppointmentV.value;
             this.enabled = $.checkBox(this.enabledId);
             return true;
          }
@@ -296,16 +331,17 @@
          this.contacts.forEach((item, index, array) => {
             isValidContacts = isValidContacts && array[index].validate();
          });
+         isValidContacts = isValidContacts && this.contactsV.validate();
          let isValidDentalPlan = this.dentalPlan.validate();
-         // let isValid = this.responsibleForV.validate();
          let isValidIndicatedBy = this.indicatedByV.validate();
-         //let isValid = this.familyGroup = ;
          let isValidStatus = this.statusV.validate();
+         let isValidLastAppointment = this.lastAppointmentV.validate();
 
          return isValidFullName && isValidDob && isValidMaritalStatus
             && isValidGender && isValidCpf && isValidPersonalId
             && isValidOccupation && isValidAddresses && isValidContacts
-            && isValidDentalPlan && isValidIndicatedBy && isValidStatus;
+            && isValidDentalPlan && isValidIndicatedBy && isValidStatus
+            && isValidLastAppointment;
       }
    }
    window.Patient = Patient;
@@ -334,9 +370,11 @@
             len: { min: 3, max: 100, message: '01FVQ2NP5H3PG1JPAG867MJ6XZ' }
          });
          this.numberV = new StringValidator(this.numberId, {
-            len: { min: 1, max: 10, message: '01FV2J1YQ69FE3F55670TQCPE3' }
+            empty: {},
+            len: { min: 1, max: 10, message: '01FWKFTFMG9FE3F55670TQCPE3' }
          });
          this.complementV = new StringValidator(this.complementId, {
+            empty: {},
             len: { min: 1, max: 50, message: '01FVQ2NP5KGRN5Q8KG39FK090X' }
          });
          this.zipCodeV = new StringValidator(this.zipCodeId, {
@@ -394,12 +432,14 @@
       validate() {
          let isValidStreet = this.streetV.validate();
          let isValidNumber = this.numberV.validate();
+         let isValidComplement = this.complementV.validate();
          let isValidZipCode = this.zipCodeV.validate();
          let isValidNeighborhood = this.neighborhoodV.validate();
          let isValidState = this.stateV.validate();
          let isValidCity = this.cityV.validate();
-         return isValidStreet && isValidNumber && isValidZipCode
-            && isValidNeighborhood && isValidState && isValidCity;
+         return isValidStreet && isValidNumber && isValidComplement
+            && isValidZipCode && isValidNeighborhood && isValidState
+            && isValidCity;
       }
    }
    class Contact{
@@ -445,13 +485,30 @@
          } else if ('PHONE' == this.contactType) {
             return '(99) 9999-9999';
          } else if ('EMERGENCY' == this.contactType) {
-            return '(99) 09999-9999';
+            return this.getEmergencyMaskBehavior();
          } else {
             return null;
          }
       }
+      getEmergencyMaskBehavior() {
+         return (val) => {
+            if(val) {
+               return val.replace(/\D/g, '').length === 11
+                  ? '(00) 00000-0000'
+                  : '(00) 0000-00009';
+            }
+            else {
+               return '(00) 0000-00009';
+            }
+         }
+      }
       toPage(contactTypes) {
-         $.inputText(this.infoId, this.info, this.getContactMask());
+         let behavior = this.getEmergencyMaskBehavior;
+         $.inputText(this.infoId, this.info, this.getContactMask(), {
+            onKeyPress: function (val, e, field, options) {
+               field.mask(behavior.apply({}, arguments), options);
+            }
+         });
          $.text(this.infoId + 'Label', message.get(this.contactType));
          $.attribute(this.infoId, 'placeholder',
             message.get('placeholder_' + this.contactType));
@@ -498,7 +555,7 @@
             len: { min: 2, max: 30, message: '01FVPVJN7HKKHVWHP57PKD8N62' }
          });
          this.numberV = new StringValidator(this.numberId, { empty: {},
-            len: { min: 6, max: 20, message: '01FVQ2NP5FQ2MJX8PESM4KVKSP' }
+            len: { min: 5, max: 30, message: '01FVQ2NP5FQ2MJX8PESM4KVKSP' }
          });
          if (dentalPlan) {
             this.name = dentalPlan.name;

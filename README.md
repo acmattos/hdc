@@ -1,9 +1,5 @@
 # Helena Dental Care - HDC
 
-01FWKTXVD7GRN5Q8KG39FK090X
-01FWKTXVD72XQ2K4549SYH51FN
-01FWKTXVD752MV85FW4ZTYTE6F
-01FWKTXVD727PHS1MQ52NS823F
 01FWKTXVD857RMXBZDKHVT7ZGJ
 01FWKTXVD8KKHVWHP57PKD8N62
 01FXTSG8Z3Q2MJX8PESM4KVKSP
@@ -97,7 +93,12 @@
 01G3HA64BB27PHS1MQ52NS823F
 01G3HA64BB57RMXBZDKHVT7ZGJ
 
-
+## TODO List
+- Order Patient list alphabetically
+- Several whatsapp messages
+- Verify message tracker codes in the UI for procedure
+- Add Person tests
+- ULIDGen using Assert
 
 ##Versions:
 
@@ -109,7 +110,33 @@
 0.0.? -> Introducing Set appointment to patient
 0.0.? -> Extending Dentist data and CRUD operations;
 
+0.0.8 -> Meta Odontogram (Treatment?)
+
+
 --- Released:
+0.0.7.2 ->
+- ArrayValidator and FunctionValidator created
+- Fixing dynamic phone masks (for emergency phone: (XX) XXXX-XXXX or (XX) YXXXX-XXXX)
+- Allowing last appointment to be null
+- Adding EqNullFilter (MongoDB)
+- Adding no dental plan search using "particular" string
+
+0.0.7.1 ->
+- Removing orderable columns for patient list
+- Adding dental plan number in patient list
+- Change: occupation field with 3..100 chars
+- Change: indicated_by field with 3..100 chars
+- Change: address number may be empty
+- Fixing address number message tracker codes
+- Fixing address zip code message tracker codes
+- Fixing address neighborhood message tracker codes
+- Fixing address city message tracker codes
+- Fixing dental plan name message tracker codes
+- Fixing address complement UI validation
+- Verifying message tracker codes in the UI for patient
+- Fixing development application run
+- Adding last appointment information for patient
+
 0.0.7 ->
 - Implementing Patient CRUD operations.
 

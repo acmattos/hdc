@@ -62,6 +62,18 @@ data class EqFilter<TRANSLATION, TYPE>(
 
 /**
  * @author ACMattos
+ * @since 25/03/2022.
+ */
+data class EqNullFilter<TRANSLATION>(
+    val fieldName: String
+): Filter<TRANSLATION> {
+    override fun translate(
+        translator: FilterTranslator<TRANSLATION>
+    ): TRANSLATION = translator.createTranslation(this)
+}
+
+/**
+ * @author ACMattos
  * @since 05/04/2022.
  */
 data class RegexFilter<TRANSLATION, TYPE>(

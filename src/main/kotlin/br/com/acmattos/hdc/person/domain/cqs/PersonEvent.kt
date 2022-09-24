@@ -44,6 +44,7 @@ open class CreateAPersonEvent(
     open val indicatedBy: String?,
     open val familyGroup: List<PersonId>,
     open val status: Status?,
+    open val lastAppointment: LocalDate?,
     open val enabled: Boolean,
     open val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -70,6 +71,7 @@ open class UpdateAPersonEvent(
     open val indicatedBy: String?,
     open val familyGroup: List<PersonId>,
     open val status: Status?,
+    open val lastAppointment: LocalDate?,
     open val enabled: Boolean,
     open val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -112,6 +114,7 @@ data class CreateDentistEvent(
     responsibleFor,
     null,
     familyGroup,
+    null,
     null,
     enabled,
     createdAt,
@@ -160,6 +163,7 @@ data class CreatePatientEvent(
     override val indicatedBy: String?,
     override val familyGroup: List<PersonId>,
     override val status: Status,
+    override val lastAppointment: LocalDate?,
     override val enabled: Boolean,
     override val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -180,6 +184,7 @@ data class CreatePatientEvent(
     indicatedBy,
     familyGroup,
     status,
+    lastAppointment,
     enabled,
     createdAt,
     auditLog
@@ -203,6 +208,7 @@ data class CreatePatientEvent(
         indicatedBy = command.indicatedBy,
         familyGroup = command.familyGroup,
         status = command.status,
+        lastAppointment = command.lastAppointment,
         enabled = command.enabled,
         createdAt = command.createdAt,
         auditLog = command.auditLog
@@ -231,6 +237,7 @@ data class UpdatePatientEvent(
     override val indicatedBy: String?,
     override val familyGroup: List<PersonId>,
     override val status: Status,
+    override val lastAppointment: LocalDate?,
     override val enabled: Boolean,
     override val createdAt: LocalDateTime,
     override val auditLog: AuditLog
@@ -251,6 +258,7 @@ data class UpdatePatientEvent(
     indicatedBy,
     familyGroup,
     status,
+    lastAppointment,
     enabled,
     createdAt,
     auditLog
@@ -274,6 +282,7 @@ data class UpdatePatientEvent(
         indicatedBy = command.indicatedBy,
         familyGroup = command.familyGroup,
         status = command.status,
+        lastAppointment = command.lastAppointment,
         enabled = command.enabled,
         createdAt = command.createdAt,
         auditLog = command.auditLog

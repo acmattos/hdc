@@ -243,6 +243,7 @@ data class CreatePatientRequest(
     val indicatedBy: String?,
     val familyGroup: List<String>?,
     val status: String,
+    val lastAppointment: LocalDate?,
 ): Request<PersonCommand>() {
     override fun toType(who: String, what: String): PersonCommand =
         CreatePatientCommand(
@@ -260,6 +261,7 @@ data class CreatePatientRequest(
             indicatedBy,
             familyGroup,
             status,
+            lastAppointment,
             AuditLog(who = who, what = what)
         )
 }
@@ -284,6 +286,7 @@ data class UpdatePatientRequest(
     val indicatedBy: String?,
     val familyGroup: List<PersonId>,
     val status: String,
+    val lastAppointment: LocalDate?,
     val enabled: Boolean
 ): Request<PersonCommand>() {
     override fun toType(who: String, what: String): PersonCommand =
@@ -303,6 +306,7 @@ data class UpdatePatientRequest(
             indicatedBy,
             familyGroup,
             status,
+            lastAppointment,
             enabled,
             AuditLog(who = who, what = what)
         )
@@ -330,7 +334,7 @@ data class UpdatePatientRequest(
  */
 data class AddressRequest (
     val street: String,
-    val number: String,
+    val number: String?,
     val complement: String?,
     val zipCode: String,
     val neighborhood: String,

@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EqNullFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
 import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
@@ -23,6 +24,7 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
     override fun createTranslation(filter: Filter<Bson>): Bson =
         when(filter){
             is EqFilter<Bson, *> -> translate(filter)
+            is EqNullFilter<Bson> -> translate(filter)
             is RegexFilter<Bson, *> -> translate(filter)
             is AndFilter<Bson> -> translate(filter)
             is OrFilter<Bson> -> translate(filter)
@@ -31,6 +33,9 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
 
     private fun translate(filter: EqFilter<Bson, *>): Bson =
         Filters.eq(filter.fieldName, filter.value)
+
+    private fun translate(filter: EqNullFilter<Bson>): Bson =
+        Filters.eq(filter.fieldName, null)
 
     private fun translate(filter: RegexFilter<Bson, *>): Bson =
        if(!filter.value.toString().contains("*")) {
