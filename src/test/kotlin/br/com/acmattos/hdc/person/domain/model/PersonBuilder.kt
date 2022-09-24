@@ -64,6 +64,7 @@ class PersonBuilder {
             indicatedBy: String? = "Indicated BY",
             familyGroup: List<PersonId> = listOf(),
             status: String = "REGULAR",
+            lastAppointment: LocalDate = LocalDate.of(2022, 4, 22),
         ) = Person.apply(
             CreatePatientEvent(
                 CreatePatientCommand(
@@ -83,6 +84,7 @@ class PersonBuilder {
                     indicatedBy,
                     familyGroup,
                     Status.convert(status),
+                    lastAppointment,
                     true,
                     LocalDateTime.of(2022, 4, 22, 11, 2, 0),
                     AuditLog("who", "what")

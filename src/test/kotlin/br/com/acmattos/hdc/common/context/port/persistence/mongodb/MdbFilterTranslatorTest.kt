@@ -3,6 +3,7 @@ package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EqNullFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
 import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
@@ -51,6 +52,31 @@ object MdbFilterTranslatorTest: Spek({
             }
             And("""the #toString representation matches the expected""") {
                 assertThat(bson.toString()).isEqualTo("Filter{fieldName='fieldName', value=10}")
+            }
+        }
+
+        Scenario("${EqNullFilter::class.java.simpleName} usage") {
+            lateinit var translator: FilterTranslator<Bson>
+            lateinit var filter: Filter<Bson>
+            lateinit var fieldName: String
+            lateinit var bson: Bson
+            Given("""a field named $FIELD_NAME""") {
+                fieldName = FIELD_NAME
+            }
+            And("""a ${EqNullFilter::class.java.simpleName} filter""") {
+                filter = EqNullFilter(fieldName)
+            }
+            And("""a ${MdbFilterTranslator::class.java.simpleName} filter translator""") {
+                translator = MdbFilterTranslator()
+            }
+            When("""filter#translate is executed""") {
+                bson = filter.translate(translator)
+            }
+            Then("""the filter is equal to a ${Bson::class.java.simpleName} equivalent""") {
+                assertThat(bson).isEqualTo(Filters.eq(fieldName, null))
+            }
+            And("""the #toString representation matches the expected""") {
+                assertThat(bson.toString()).isEqualTo("Filter{fieldName='fieldName', value=null}")
             }
         }
 
