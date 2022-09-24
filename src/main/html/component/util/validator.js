@@ -363,7 +363,7 @@
             let isInvalidRange = value.getTime() < rule.between.min.getTime()
                || value.getTime() > rule.between.max.getTime();
             if ('Invalid Date' == value || isInvalidRange) {
-               error.push({'status': 453 , 'code': rule.between.message, 'data': rule.between.message});
+               error.push({'status': 459 , 'code': rule.between.message, 'data': rule.between.message});
             }
             return error.length == 0 ? null : error;
          }
@@ -430,4 +430,87 @@
       }
    }
    window.DateValidator = DateValidator;
+
+   // let ruleSample = {
+   //    empty: {},
+   //    min: { value='1', message: 'messade id for invalid phonr format' },
+   //    max: { value='10', message: 'messade id for invalid phonr format' },
+   // };
+   Array.prototype.validate = function(rule) {
+      let value = this;
+      let error = [];
+      if (rule) {
+         if(rule.empty && !value.length) {
+            return null;
+         } else {
+            //logger.alert(rule.min.value)
+            //logger.alert('value.length=', value.length)
+            //logger.alert(value.length < rule.min.value)
+            if (rule.min && value.length < rule.min.value) {
+               error.push({'status': 460, 'code': rule.min.message, 'data': rule.min.message});
+               logger.info('Invalid array min size!', this);
+               // return error;
+            }
+            if (rule.max && value.length > rule.max.value) {
+               error.push({'status': 460, 'code': rule.max.message, 'data': rule.max.message});
+               logger.info('Invalid array max size!', this);
+               // return error;
+            }
+            return error.length == 0 ? null : error;
+         }
+      } else {
+         logger.alert('No available <rule> to execute String#validateZipCode!');
+         return null;
+      }
+   };
+   class ArrayValidator {
+      constructor(component, rule) {
+         this.component = component;
+         this.rule = rule;
+         this.value = null;
+      }
+      validate(disableToast) {
+         this.value = this.component;
+         let errors = this.value.validate(this.rule);
+         if(errors) {
+            if(!disableToast) {
+               toast.show(errors);
+            }
+            $(this.component).addClass('invalid');
+            return false;
+         }
+         $(this.component).removeClass('invalid');
+         return true;
+      }
+   }
+   window.ArrayValidator = ArrayValidator;
+   // return {
+   //    'status': 461,
+   //    'code':'01FWKTXVD727PHS1MQ52NS823F',
+   //    'data':'01FWKTXVD727PHS1MQ52NS823F'
+   // };
+   class FunctionValidator {
+      constructor(value, componentsCB, validateCB) {
+         this.value = value;
+         this.components = componentsCB();
+         this.validateCB = validateCB;
+      }
+      validate(disableToast) {
+         let errors = this.validateCB(this.value);
+         if(errors) {
+            if(!disableToast) {
+               toast.show(errors);
+            }
+            this.components.forEach((item, index, array) => {
+               $(array[index]).addClass('invalid');
+            });
+            return false;
+         }
+         this.components.forEach((item, index, array) => {
+            $(array[index]).removeClass('invalid');
+         });
+         return true;
+      }
+   }
+   window.FunctionValidator = FunctionValidator;
 })();
