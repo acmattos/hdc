@@ -1,6 +1,5 @@
 # Helena Dental Care - HDC
 
-01FWKTXVD727PHS1MQ52NS823F
 01FWKTXVD857RMXBZDKHVT7ZGJ
 01FWKTXVD8KKHVWHP57PKD8N62
 01FXTSG8Z3Q2MJX8PESM4KVKSP
@@ -95,7 +94,6 @@
 01G3HA64BB57RMXBZDKHVT7ZGJ
 
 ## TODO List
-- Fix dynamic phone masks
 - Order Patient list alphabetically
 - Several whatsapp messages
 - Verify message tracker codes in the UI for procedure
@@ -114,6 +112,15 @@
 
 0.0.8 -> Meta Odontogram (Treatment?)
 
+
+--- Released:
+0.0.7.2 ->
+- ArrayValidator and FunctionValidator created
+- Fixing dynamic phone masks (for emergency phone: (XX) XXXX-XXXX or (XX) YXXXX-XXXX)
+- Allowing last appointment to be null
+- Adding EqNullFilter (MongoDB)
+- Adding no dental plan search using "particular" string
+
 0.0.7.1 ->
 - Removing orderable columns for patient list
 - Adding dental plan number in patient list
@@ -129,9 +136,7 @@
 - Verifying message tracker codes in the UI for patient
 - Fixing development application run
 - Adding last appointment information for patient
-- 
 
---- Released:
 0.0.7 ->
 - Implementing Patient CRUD operations.
 
