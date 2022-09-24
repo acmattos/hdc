@@ -64,7 +64,7 @@
             empty: {},
             len: { min: 3, max: 100, message: '01FVT5ENFP3PG1JPAG867MJ6XZ' }
          });
-          this.indicatedByV = new StringValidator(this.indicatedById, {
+         this.indicatedByV = new StringValidator(this.indicatedById, {
             empty: {},
             len: { min: 3, max: 100, message: '01FWKSM5K552MV85FW4ZTYTE6F' }
          });
@@ -72,6 +72,7 @@
             select: { invalid: '-1', message: '01FWKSM5K527PHS1MQ52NS823F' }
          });
          this.lastAppointmentV = new DateValidator(this.lastAppointmentId, {
+            empty: {},
             between: { min: '01/01/1900'.toDate(), max: new Date(),
                message: '01FWKTXVD752MV85FW4ZTYTE6F' }
          });
@@ -106,6 +107,27 @@
             this.status = 'REGULAR';
             this.enabled = true;
          }
+         this.contactsV  = new FunctionValidator(this.contacts, () => {
+            let components = [];
+               this.contacts.forEach((item, index, array) => {
+                  components.push(array[index].infoId);
+               });
+               return components;
+            },
+            (contacts) => {
+               let error = {
+                  'status': 461,
+                  'code':'01FWKTXVD727PHS1MQ52NS823F',
+                  'data':'01FWKTXVD727PHS1MQ52NS823F'
+               };
+               contacts.forEach((item, index, array) => {
+                  if(array[index].infoV.value) {
+                     error = null;
+                  }
+               }
+            );
+            return error;
+         });
       }
       createRequest() {
          let patient = this;
@@ -309,10 +331,9 @@
          this.contacts.forEach((item, index, array) => {
             isValidContacts = isValidContacts && array[index].validate();
          });
+         isValidContacts = isValidContacts && this.contactsV.validate();
          let isValidDentalPlan = this.dentalPlan.validate();
-         // let isValid = this.responsibleForV.validate();
          let isValidIndicatedBy = this.indicatedByV.validate();
-         //let isValid = this.familyGroup = ;
          let isValidStatus = this.statusV.validate();
          let isValidLastAppointment = this.lastAppointmentV.validate();
 
@@ -464,13 +485,30 @@
          } else if ('PHONE' == this.contactType) {
             return '(99) 9999-9999';
          } else if ('EMERGENCY' == this.contactType) {
-            return '(99) 09999-9999';
+            return this.getEmergencyMaskBehavior();
          } else {
             return null;
          }
       }
+      getEmergencyMaskBehavior() {
+         return (val) => {
+            if(val) {
+               return val.replace(/\D/g, '').length === 11
+                  ? '(00) 00000-0000'
+                  : '(00) 0000-00009';
+            }
+            else {
+               return '(00) 0000-00009';
+            }
+         }
+      }
       toPage(contactTypes) {
-         $.inputText(this.infoId, this.info, this.getContactMask());
+         let behavior = this.getEmergencyMaskBehavior;
+         $.inputText(this.infoId, this.info, this.getContactMask(), {
+            onKeyPress: function (val, e, field, options) {
+               field.mask(behavior.apply({}, arguments), options);
+            }
+         });
          $.text(this.infoId + 'Label', message.get(this.contactType));
          $.attribute(this.infoId, 'placeholder',
             message.get('placeholder_' + this.contactType));
@@ -517,7 +555,7 @@
             len: { min: 2, max: 30, message: '01FVPVJN7HKKHVWHP57PKD8N62' }
          });
          this.numberV = new StringValidator(this.numberId, { empty: {},
-            len: { min: 6, max: 20, message: '01FVQ2NP5FQ2MJX8PESM4KVKSP' }
+            len: { min: 5, max: 30, message: '01FVQ2NP5FQ2MJX8PESM4KVKSP' }
          });
          if (dentalPlan) {
             this.name = dentalPlan.name;
