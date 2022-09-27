@@ -12,6 +12,7 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDatabase
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbFilterTranslator
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbSortTranslator
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.http.Http
 import br.com.acmattos.hdc.scheduler.application.ScheduleCommandHandlerService
@@ -95,7 +96,8 @@ object ScheduleKoinComponent: KoinComponent {
         single(named(EMR)) {
             MdbRepository<MdbEventDocument>(
                 get(named(EMO)),
-                MdbFilterTranslator()
+                MdbFilterTranslator(),
+                MdbSortTranslator(),
             )
         }
         // 9 - Event Store - Event Store Repository
@@ -125,7 +127,8 @@ object ScheduleKoinComponent: KoinComponent {
         single(named(PMR)) {
             MdbRepository<ScheduleMdbDocument>(
                 get(named(PMO)),
-                MdbFilterTranslator()
+                MdbFilterTranslator(),
+                MdbSortTranslator(),
             )
         }
         // 15 - Entity Repository - Entity Repository
