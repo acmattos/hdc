@@ -33,7 +33,7 @@
             this.ffullName = $.inputText(this.ffullNameId) + '*';;
             this.fcontact = $.inputText(this.fcontactId);;
             this.fdentalPlanName = $.inputText(this.fdentalPlanNameId) + '*';
-            return "?f_cpf={0}&f_full_name={1}&f_contact={2}&f_dental_plan_name={3}"
+            return "?f_cpf={0}&f_full_name={1}&f_contact={2}&f_dental_plan_name={3}&s_full_name=a"
                .format(this.fcpf, this.ffullName, this.fcontact,
                   this.fdentalPlanName);
          }
