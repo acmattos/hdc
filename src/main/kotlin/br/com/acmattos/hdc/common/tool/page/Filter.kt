@@ -1,4 +1,4 @@
-package br.com.acmattos.hdc.common.context.domain.cqs
+package br.com.acmattos.hdc.common.tool.page
 
 /**
  * @author ACMattos

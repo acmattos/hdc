@@ -1,8 +1,11 @@
 package br.com.acmattos.hdc.common.tool.page
 
+import br.com.acmattos.hdc.common.tool.page.Order.ASC
+import br.com.acmattos.hdc.common.tool.page.Order.DESC
+
 /**
  * @author ACMattos
- * @since 07/04/2022.
+ * @since 25/09/2022.
  */
 interface Sort<TRANSLATION> {
     fun translate(translator: SortTranslator<TRANSLATION>): TRANSLATION
@@ -10,7 +13,7 @@ interface Sort<TRANSLATION> {
 
 /**
  * @author ACMattos
- * @since 07/04/2022.
+ * @since 25/09/2022.
  */
 interface SortTranslator<TRANSLATION> {
     fun createTranslation(sort: Sort<TRANSLATION>): TRANSLATION
@@ -18,11 +21,50 @@ interface SortTranslator<TRANSLATION> {
 
 /**
  * @author ACMattos
- * @since 05/04/2022.
+ * @since 25/09/2022.
  */
-data class FieldSort<TRANSLATION>(
-    val fieldName: String,
-    val order: SortOrder
+enum class Order {
+    ASC, DESC, NONE;
+
+    companion object {
+        fun convert(term: String?): Order =
+            if(equalsToAsc(term)) {
+                ASC
+            } else if(equalsToDesc(term)) {
+                DESC
+            } else {
+                NONE
+            }
+
+        private fun equalsToAsc(term: String?) = term != null
+            && term.equals("a", true)
+                ||  term.equals("asc", true)
+                || term == "+"
+
+        private fun equalsToDesc(term: String?) = term != null
+            && term.equals("d", true)
+            ||  term.equals("desc", true)
+            || term == "-"
+    }
+}
+
+/**
+ * @author ACMattos
+ * @since 25/09/2022.
+ */
+class EmptySort: Sort<Any> {
+    override fun translate(
+        translator: SortTranslator<Any>
+    ): Any = translator.createTranslation(this)
+}
+
+/**
+ * @author ACMattos
+ * @since 25/09/2022.
+ */
+open class FieldSort<TRANSLATION>(
+    open val fieldName: String,
+    open val value: Order,
 ): Sort<TRANSLATION> {
     override fun translate(
         translator: SortTranslator<TRANSLATION>
@@ -31,7 +73,25 @@ data class FieldSort<TRANSLATION>(
 
 /**
  * @author ACMattos
- * @since 05/04/2022.
+ * @since 25/09/2022.
+ */
+data class AscSort<TRANSLATION>(
+    override val fieldName: String,
+    override val value: Order = ASC,
+): FieldSort<TRANSLATION>(fieldName, ASC)
+
+/**
+ * @author ACMattos
+ * @since 25/09/2022.
+ */
+data class DescSort<TRANSLATION>(
+    override val fieldName: String,
+    override val value: Order = DESC,
+): FieldSort<TRANSLATION>(fieldName, DESC)
+
+/**
+ * @author ACMattos
+ * @since 25/09/2022.
  */
 data class CollectionSort<TRANSLATION>(
     val sorts: List<Sort<TRANSLATION>> = listOf()
@@ -39,12 +99,4 @@ data class CollectionSort<TRANSLATION>(
     override fun translate(
         translator: SortTranslator<TRANSLATION>
     ): TRANSLATION = translator.createTranslation(this)
-}
-
-/**
- * @author ACMattos
- * @since 05/04/2022.
- */
-enum class SortOrder {
-    ASC, DESC;
 }
