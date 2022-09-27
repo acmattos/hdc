@@ -1,5 +1,7 @@
 package br.com.acmattos.hdc.common.context.domain.cqs
 
+import br.com.acmattos.hdc.common.tool.page.Filter
+
 /**
  * @author ACMattos
  * @since 30/06/2020.
