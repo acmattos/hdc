@@ -23,6 +23,14 @@ inline fun Context.filterParam(
 
 /**
  * @author ACMattos
+ * @since 25/09/2022.
+ */
+inline fun Context.sortParam(
+    name: String
+): String? = this.queryParam("s_$name")
+
+/**
+ * @author ACMattos
  * @since 11/04/2022.
  */
 inline fun Context.pageNumber(): String? = this.queryParam("pn")
