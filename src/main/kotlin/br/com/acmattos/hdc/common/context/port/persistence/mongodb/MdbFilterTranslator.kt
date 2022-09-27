@@ -1,13 +1,13 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
-import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EqNullFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
-import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
-import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
+import br.com.acmattos.hdc.common.tool.page.AndFilter
+import br.com.acmattos.hdc.common.tool.page.EmptyFilter
+import br.com.acmattos.hdc.common.tool.page.EqFilter
+import br.com.acmattos.hdc.common.tool.page.EqNullFilter
+import br.com.acmattos.hdc.common.tool.page.Filter
+import br.com.acmattos.hdc.common.tool.page.FilterTranslator
+import br.com.acmattos.hdc.common.tool.page.OrFilter
+import br.com.acmattos.hdc.common.tool.page.RegexFilter
 import com.mongodb.client.model.Filters
 import java.util.regex.Pattern
 import org.bson.conversions.Bson

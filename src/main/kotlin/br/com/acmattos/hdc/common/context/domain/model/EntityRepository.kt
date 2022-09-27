@@ -1,10 +1,10 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.StoreEnum.STORE
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.common.tool.page.Filter
 import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.common.tool.page.PageResult
 import java.util.Optional

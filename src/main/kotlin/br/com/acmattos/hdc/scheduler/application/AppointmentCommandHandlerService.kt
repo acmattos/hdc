@@ -1,14 +1,14 @@
 package br.com.acmattos.hdc.scheduler.application
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
-import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.common.tool.page.AndFilter
+import br.com.acmattos.hdc.common.tool.page.EqFilter
 import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.OVERLAPPING_APPOINTMENT
 import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.SCHEDULE_NOT_DEFINED
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT

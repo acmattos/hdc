@@ -1,10 +1,7 @@
 package br.com.acmattos.hdc.common.tool.page
 
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptySort
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
-import br.com.acmattos.hdc.common.context.domain.cqs.Sort
+
 
 /**
  * @author ACMattos

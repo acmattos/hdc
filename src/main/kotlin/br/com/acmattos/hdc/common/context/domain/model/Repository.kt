@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
+import br.com.acmattos.hdc.common.tool.page.Filter
 import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.common.tool.page.PageResult
 import java.util.Optional

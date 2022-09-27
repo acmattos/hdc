@@ -1,11 +1,35 @@
-package br.com.acmattos.hdc.person.application
-
-private const val EXCEPTION_MESSAGE = "There is a dentist already defined for the given full name: [fullName]!"
-
-/**
- * @author ACMattos
- * @since 16/10/2021.
- */
+//package br.com.acmattos.hdc.person.application
+//
+//import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
+//import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
+//import br.com.acmattos.hdc.common.context.domain.model.Repository
+//import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
+//import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.DENTIST_ALREADY_EXISTS
+//import br.com.acmattos.hdc.person.domain.cqs.CreateADentistCommand
+//import br.com.acmattos.hdc.person.domain.cqs.CreateADentistEvent
+//import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
+//import br.com.acmattos.hdc.person.domain.model.Person
+//import br.com.acmattos.hdc.person.port.rest.CreateADentistRequest
+//import br.com.acmattos.hdc.person.port.rest.PersonRequestBuilder.buildCreateADentistRequest
+//import io.mockk.Runs
+//import io.mockk.every
+//import io.mockk.just
+//import io.mockk.mockk
+//import io.mockk.verify
+//import io.mockk.verifyOrder
+//import java.util.Optional
+//import org.assertj.core.api.AbstractThrowableAssert
+//import org.assertj.core.api.Assertions.assertThat
+//import org.assertj.core.api.Assertions.assertThatCode
+//import org.spekframework.spek2.Spek
+//import org.spekframework.spek2.style.gherkin.Feature
+//
+//private const val EXCEPTION_MESSAGE = "There is a dentist already defined for the given full name: [fullName]!"
+//
+///**
+// * @author ACMattos
+// * @since 16/10/2021.
+// */
 //object PersonCommandHandlerServiceTest: Spek({
 //    Feature("${PersonCommandHandlerService::class.java} usage") {
 //        Scenario("handling ${CreateADentistCommand::class.java} successfully") {

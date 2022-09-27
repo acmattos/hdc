@@ -7,14 +7,14 @@ import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ONE_BY_FILTER_FAILED
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAILED
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.UPDATE_FAILED
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
-import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
-import br.com.acmattos.hdc.common.context.domain.cqs.Sort
-import br.com.acmattos.hdc.common.context.domain.cqs.SortTranslator
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
+import br.com.acmattos.hdc.common.tool.page.Filter
+import br.com.acmattos.hdc.common.tool.page.FilterTranslator
 import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.common.tool.page.PageResult
+import br.com.acmattos.hdc.common.tool.page.Sort
+import br.com.acmattos.hdc.common.tool.page.SortTranslator
 import com.mongodb.client.MongoCollection
 import java.util.Optional
 import org.bson.conversions.Bson
@@ -117,14 +117,16 @@ open class MdbRepository<T: MdbDocument>(
             val filter: Bson = filterTranslator.createTranslation(
                 page.filter as Filter<Bson>
             )
-            val total = getCollection().countDocuments(filter)
-            val results = getCollection().find(filter)
-            .sort(
-                sortTranslator.createTranslation(page.sort as Sort<Bson>)
+            val sort: Bson = sortTranslator.createTranslation(
+                page.sort as Sort<Bson>
             )
-            .limit(page.size)
-            .skip(page.page)
-            .map { it }.toList()
+            val total = getCollection().countDocuments(filter)
+            val results = getCollection()
+                .find(filter)
+                .sort(sort)
+                .limit(page.size)
+                .skip(page.page)
+                .map { it }.toList()
             return@catch PageResult.create(results, page, total)
         }
 

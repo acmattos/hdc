@@ -1,13 +1,13 @@
 package br.com.acmattos.hdc.procedure.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
-import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
+import br.com.acmattos.hdc.common.tool.page.AndFilter
+import br.com.acmattos.hdc.common.tool.page.EmptyFilter
+import br.com.acmattos.hdc.common.tool.page.EqFilter
+import br.com.acmattos.hdc.common.tool.page.Filter
 import br.com.acmattos.hdc.common.tool.page.Page
+import br.com.acmattos.hdc.common.tool.page.RegexFilter
 import br.com.acmattos.hdc.procedure.domain.model.ProcedureId
 import br.com.acmattos.hdc.procedure.port.persistence.mongodb.DocumentIndexedField.PROCEDURE_ID
 

@@ -3,11 +3,11 @@ package br.com.acmattos.hdc.person.application
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.SERVICE
 import br.com.acmattos.hdc.common.context.domain.cqs.Command
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.common.tool.page.EqFilter
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_ALREADY_EXISTS
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_NOT_DEFINED
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
