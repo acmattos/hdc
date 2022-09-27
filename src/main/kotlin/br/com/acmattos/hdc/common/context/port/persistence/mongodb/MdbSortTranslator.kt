@@ -1,11 +1,10 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
-import br.com.acmattos.hdc.common.context.domain.cqs.AscSort
-import br.com.acmattos.hdc.common.context.domain.cqs.CollectionSort
-import br.com.acmattos.hdc.common.context.domain.cqs.DescSort
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptySort
-import br.com.acmattos.hdc.common.context.domain.cqs.Sort
-import br.com.acmattos.hdc.common.context.domain.cqs.SortTranslator
+import br.com.acmattos.hdc.common.tool.page.AscSort
+import br.com.acmattos.hdc.common.tool.page.DescSort
+import br.com.acmattos.hdc.common.tool.page.EmptySort
+import br.com.acmattos.hdc.common.tool.page.Sort
+import br.com.acmattos.hdc.common.tool.page.SortTranslator
 import com.mongodb.client.model.Sorts
 import org.bson.BsonDocument
 import org.bson.conversions.Bson
