@@ -16,36 +16,37 @@ import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbEventDocum
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbFilterTranslator
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbQueryDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
+import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbSortTranslator
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.procedure.application.ProcedureCommandHandlerService
 import br.com.acmattos.hdc.procedure.application.ProcedureQueryHandlerService
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.COMMAND_HANDLER
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_COLLECT_CONF
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_COLLECT
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_REPO
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENDPOINT_DEFINITION
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_CONF
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_DB
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_URL
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_COLLECT
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_COLLECT_CONF
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_NAME
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_STORE
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_NAME
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_CONF
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_DB
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_COLLECT
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_NAME
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_REPO
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_MDB_URL
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_NAME
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_STORE
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.ENTITY_REPO
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_COLLECT_CONF
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_COLLECT
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_COLLECT_CONF
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_CONF
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_DB
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_NAME
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_REPO
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_MDB_URL
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.EVENT_STORE
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_HANDLER
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_COLLECT
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_COLLECT_CONF
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_CONF
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_DB
-import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_COLLECT
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_NAME
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_REPO
 import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_MDB_URL
+import br.com.acmattos.hdc.procedure.config.KoinComponentName.QUERY_STORE
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureQuery
 import br.com.acmattos.hdc.procedure.domain.model.Procedure
@@ -118,7 +119,8 @@ object ProcedureKoinComponent: KoinComponent {
         single(named(EVENT_MDB_REPO.value)) {
             MdbRepository<MdbEventDocument>(
                 get(named(EVENT_MDB_COLLECT.value)),
-                MdbFilterTranslator()
+                MdbFilterTranslator(),
+                MdbSortTranslator(),
             )
         }
         // 9 - Event Store - Event Store Repository
@@ -160,7 +162,8 @@ object ProcedureKoinComponent: KoinComponent {
         single(named(ENTITY_MDB_REPO.value)) {
             MdbRepository<ProcedureMdbDocument>(
                 get(named(ENTITY_MDB_COLLECT.value)),
-                MdbFilterTranslator()
+                MdbFilterTranslator(),
+                MdbSortTranslator(),
             )
         }
         // 15 - Entity Repository - Entity Repository
@@ -210,7 +213,8 @@ object ProcedureKoinComponent: KoinComponent {
         single(named(QUERY_MDB_REPO.value)) {
             MdbRepository<MdbQueryDocument>(
                 get(named(QUERY_MDB_COLLECT.value)),
-                MdbFilterTranslator()
+                MdbFilterTranslator(),
+                MdbSortTranslator(),
             )
         }
         // 23 - Query Store - Event Store Repository
