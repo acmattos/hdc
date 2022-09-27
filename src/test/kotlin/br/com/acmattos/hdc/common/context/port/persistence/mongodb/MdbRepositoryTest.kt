@@ -40,7 +40,7 @@ object MdbRepositoryTest: Spek({
                 mongoDBCollection = mockk(relaxed = true)
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mongoDBCollection, MdbFilterTranslator())
+                repository = MdbRepository(mongoDBCollection, MdbFilterTranslator(), MdbSortTranslator())
             }
             When("""#save is executed""") {
                 repository.save(TestMdbDocument("id"))
@@ -68,7 +68,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().insertOne(any()) } throws Exception()
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator(), MdbSortTranslator())
             }
             When("""#save is executed""") {
                 assertion = assertThatCode {
@@ -120,7 +120,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().find(any<Bson>()).firstOrNull() } returns entity
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator(), MdbSortTranslator())
             }
             When("""#findByField is executed""") {
                 entity = repository.findOneByFilter(
@@ -153,7 +153,7 @@ object MdbRepositoryTest: Spek({
                 every { mdbCollection.getCollection().find(any<Bson>()) } throws Exception()
             }
             And("""a successful ${MdbRepository::class.java} instantiation""") {
-                repository = MdbRepository(mdbCollection, MdbFilterTranslator())
+                repository = MdbRepository(mdbCollection, MdbFilterTranslator(), MdbSortTranslator())
             }
             When("""#findByField is executed""") {
                 assertion = assertThatCode {

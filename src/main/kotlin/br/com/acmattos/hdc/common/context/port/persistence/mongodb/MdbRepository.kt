@@ -9,6 +9,8 @@ import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAI
 import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.UPDATE_FAILED
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.FilterTranslator
+import br.com.acmattos.hdc.common.context.domain.cqs.Sort
+import br.com.acmattos.hdc.common.context.domain.cqs.SortTranslator
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import br.com.acmattos.hdc.common.tool.page.Page
@@ -23,7 +25,8 @@ import org.bson.conversions.Bson
  */
 open class MdbRepository<T: MdbDocument>(
     private val mongoDBCollection: MdbCollection<T>,
-    private val filterTranslator: FilterTranslator<Bson>
+    private val filterTranslator: FilterTranslator<Bson>,
+    private val sortTranslator: SortTranslator<Bson>,
 ): Repository<T> {
 
     override fun save(document: T) {
@@ -116,9 +119,9 @@ open class MdbRepository<T: MdbDocument>(
             )
             val total = getCollection().countDocuments(filter)
             val results = getCollection().find(filter)
-//            .sort(
-//                sortTranslator.createTranslation(page.sort as Sort<Bson>)
-//            ) TODO VERIFY SORT CONSTRUCTION
+            .sort(
+                sortTranslator.createTranslation(page.sort as Sort<Bson>)
+            )
             .limit(page.size)
             .skip(page.page)
             .map { it }.toList()
