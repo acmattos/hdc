@@ -1,8 +1,10 @@
 package br.com.acmattos.hdc.common.tool.page
 
 import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
+import br.com.acmattos.hdc.common.context.domain.cqs.EmptySort
 import br.com.acmattos.hdc.common.context.domain.cqs.Filter
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
+import br.com.acmattos.hdc.common.context.domain.cqs.Sort
 
 /**
  * @author ACMattos
@@ -27,7 +29,7 @@ data class Page private constructor(
 
         fun create(
             filter: Filter<*> = EmptyFilter(),
-            sort: Sort<*> = CollectionSort<Any>(),
+            sort: Sort<*> = EmptySort(),
             number: String? = null,
             size: String? = null
         ) = Page(
