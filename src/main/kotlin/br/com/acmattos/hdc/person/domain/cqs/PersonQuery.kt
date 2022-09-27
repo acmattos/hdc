@@ -1,15 +1,20 @@
 package br.com.acmattos.hdc.person.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.AndFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EmptyFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.EqNullFilter
-import br.com.acmattos.hdc.common.context.domain.cqs.Filter
-import br.com.acmattos.hdc.common.context.domain.cqs.OrFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
-import br.com.acmattos.hdc.common.context.domain.cqs.RegexFilter
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
+import br.com.acmattos.hdc.common.tool.page.AndFilter
+import br.com.acmattos.hdc.common.tool.page.AscSort
+import br.com.acmattos.hdc.common.tool.page.DescSort
+import br.com.acmattos.hdc.common.tool.page.EmptyFilter
+import br.com.acmattos.hdc.common.tool.page.EmptySort
+import br.com.acmattos.hdc.common.tool.page.EqFilter
+import br.com.acmattos.hdc.common.tool.page.EqNullFilter
+import br.com.acmattos.hdc.common.tool.page.Filter
+import br.com.acmattos.hdc.common.tool.page.OrFilter
+import br.com.acmattos.hdc.common.tool.page.Order
 import br.com.acmattos.hdc.common.tool.page.Page
+import br.com.acmattos.hdc.common.tool.page.RegexFilter
+import br.com.acmattos.hdc.common.tool.page.Sort
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACTS_INFO
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
@@ -43,12 +48,14 @@ data class FindAllPersonsQuery(
         contact: String?,
         dentalPlanName: String?,
         personIds: String?,
+        fullNameOrder: String?,
         pageNumber: String?,
         pageSize: String?,
         auditLog: AuditLog
     ): this(
         Page.create(
             filter = filter(fullName, cpf, contact, dentalPlanName, personIds),
+            sort = sort(fullNameOrder),
             number = pageNumber,
             size = pageSize
         ),
@@ -172,6 +179,13 @@ data class FindAllPersonsQuery(
                 }
             } else {
                 null
+            }
+
+        private fun sort(fullNameOrder: String?,): Sort<*> =
+            when(Order.convert(fullNameOrder)) {
+                Order.ASC -> AscSort<String>(FULL_NAME.fieldName)
+                Order.DESC -> DescSort<String>(FULL_NAME.fieldName)
+                Order.NONE -> EmptySort()
             }
     }
 }
