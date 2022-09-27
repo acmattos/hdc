@@ -12,6 +12,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.filterParam
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.javalin.pageNumber
 import br.com.acmattos.hdc.common.tool.server.javalin.pageSize
+import br.com.acmattos.hdc.common.tool.server.javalin.sortParam
 import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.DENTIST_ID_INVALID
 import br.com.acmattos.hdc.person.config.PersonLogEnum.DENTIST
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
@@ -32,6 +33,7 @@ import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.domain.model.PersonType
 import br.com.acmattos.hdc.person.domain.model.State
 import br.com.acmattos.hdc.person.domain.model.Status
+import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACT
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.FULL_NAME
 import io.javalin.http.Context
@@ -334,9 +336,10 @@ class FindAllPersonsRequest(val context: Context): Request<PersonQuery>(context)
         return FindAllPersonsQuery(
             context.filterParam(FULL_NAME.fieldName),
             context.filterParam(CPF.fieldName),
-            context.filterParam("contact"),
+            context.filterParam(CONTACT.fieldName),
             context.filterParam("dental_plan_name"),
             context.filterParam("person_ids"),
+            context.sortParam("full_name"),
             context.pageNumber(),
             context.pageSize(),
             AuditLog(who, what)
