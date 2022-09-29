@@ -14,7 +14,27 @@ inline fun <reified T: Enum<T>> assertThatTerm(
     code: MessageTrackerCode
 ): T {
     val element = enumValues<T>().firstOrNull { t ->
-        term.toUpperCase() == t.name
+        t.name == term.toUpperCase()
+    }
+    Assertion.assert(assertionMessage, context, code) {
+        element != null
+    }
+    return element!!
+}
+
+/**
+ * @author ACMattos
+ * @since 29/09/2022.
+ */
+inline fun <reified T: Enum<T>> assertThatTermMatches(
+    term: String,
+    assertionMessage: String,
+    context: String,
+    code: MessageTrackerCode,
+    matches: (enumeration: T, term: String) -> Boolean
+): T {
+    val element = enumValues<T>().firstOrNull { t ->
+        matches(t, term)
     }
     Assertion.assert(assertionMessage, context, code) {
         element != null
