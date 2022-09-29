@@ -4,6 +4,7 @@ import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbQueryDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
+import br.com.acmattos.hdc.common.tool.page.EqFilter
 import br.com.acmattos.hdc.common.tool.page.Page
 import ch.qos.logback.classic.Level
 import io.mockk.mockk

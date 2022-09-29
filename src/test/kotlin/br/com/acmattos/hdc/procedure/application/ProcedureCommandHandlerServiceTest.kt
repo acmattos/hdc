@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.procedure.application
 
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
+import br.com.acmattos.hdc.common.tool.page.EqFilter
 import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.CODE_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.DESCRIPTION_INVALID_LENGTH
 import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.PROCEDURE_ALREADY_DEFINED
