@@ -38,7 +38,7 @@ data class Period(
         Assertion.assert(
             "from=[$from] must be smaller than to=[$to]!",
             SCHEDULE.name,
-            FROM_LESS_THAN_TO.code
+            FROM_LESS_THAN_TO
         ) { minutes > 0 }
     }
 
@@ -46,7 +46,7 @@ data class Period(
         Assertion.assert(
             "slot=[$slot] must be bigger than zero!",
             SCHEDULE.name,
-            VALID_SLOT.code
+            VALID_SLOT
         ) { slot > 0 }
     }
 
@@ -55,7 +55,7 @@ data class Period(
         Assertion.assert(
             "(to=[$to] - from=[$from]) % duration=[$slot] generates a reminder!",
             SCHEDULE.name,
-            DURATION_CREATES_PERFECT_SLOTS.code
+            DURATION_CREATES_PERFECT_SLOTS
         ) { division == 0L }
     }
 }
@@ -72,7 +72,7 @@ enum class WeekDay {
             term,
             "[$term] does not correspond to a valid WeekDay!",
             SCHEDULE.name,
-            WEEK_DAY_CONVERT_FAILED.code
+            WEEK_DAY_CONVERT_FAILED
         )
     }
 }

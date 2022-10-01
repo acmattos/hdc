@@ -29,7 +29,7 @@ data class Patient(
         Assertion.assert(
             "Invalid name for the Patient",
             APPOINTMENT.name,
-            INVALID_PATIENT_FULL_NAME.code
+            INVALID_PATIENT_FULL_NAME
         ) {
             fullName.isNotBlank()
         }
