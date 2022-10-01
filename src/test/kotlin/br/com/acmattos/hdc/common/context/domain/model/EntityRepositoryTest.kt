@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.cqs.EqFilter
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbDocument
 import br.com.acmattos.hdc.common.context.port.persistence.mongodb.MdbRepository
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
+import br.com.acmattos.hdc.common.tool.page.EqFilter
 import ch.qos.logback.classic.Level
 import io.mockk.every
 import io.mockk.mockk
