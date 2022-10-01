@@ -4,7 +4,8 @@ import br.com.acmattos.hdc.common.exception.HdcGenericException
 import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.ASSERTION
 import br.com.acmattos.hdc.common.tool.assertion.AssertionLogEnum.FAILURE
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTracker
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
 
 /**
  * @author ACMattos
@@ -14,28 +15,28 @@ object Assertion: Loggable() {
     fun assert(
         message: String,
         context: String,
-        code: MessageTrackerCode,
+        messageTracker: MessageTracker,
         condition: () -> Boolean
     ) {
         logger.trace(
-            "[{} {}] - Assertion to be evaluated...",
-            context,
-            ASSERTION.name
+            "[{} <{}>] - Assertion to be evaluated...",
+            "$context $ASSERTION",
+            messageTracker.toString()
         )
         if(!condition()) {
             logger.info(
-                "[{} {} {}]: -> '{}' <-",
-                context,
-                ASSERTION.name,
+                "[{} <{}> {}]: -> '{}' <-",
+                "$context $ASSERTION",
+                messageTracker.toString(),
                 FAILURE.name,
                 message
             )
-            throw AssertionFailedException(message, code)
+            throw AssertionFailedException(message, messageTracker.trackerId())
         }
-        logger.trace(
-            "[{} {}] - Assertion evaluated successfully!",
-            context,
-            ASSERTION.name
+        logger.debug(
+            "[{} <{}>] - Assertion evaluated successfully!",
+            "$context $ASSERTION",
+            messageTracker.toString()
         )
     }
 }
@@ -46,5 +47,5 @@ object Assertion: Loggable() {
  */
 data class AssertionFailedException(
     override val message: String,
-    val code: MessageTrackerCode,
-): HdcGenericException(message, code)
+    val messageTrackerId: MessageTrackerId,
+): HdcGenericException(message, messageTrackerId)
