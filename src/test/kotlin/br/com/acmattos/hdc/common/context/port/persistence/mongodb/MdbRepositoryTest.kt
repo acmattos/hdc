@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ONE_BY_FILTER_FAILED
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.FIND_ONE_BY_FILTER_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.SAVE_FAILED
 
 import br.com.acmattos.hdc.common.context.domain.model.TestMdbDocument
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher

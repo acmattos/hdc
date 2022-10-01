@@ -1,12 +1,12 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.REPOSITORY
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_BY_FILTER_FAILED
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_BY_PAGE
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ALL_FAILED
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.FIND_ONE_BY_FILTER_FAILED
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.SAVE_FAILED
-import br.com.acmattos.hdc.common.context.config.MessageTrackerCodeEnum.UPDATE_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.FIND_ALL_BY_FILTER_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.FIND_ALL_BY_PAGE
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.FIND_ALL_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.FIND_ONE_BY_FILTER_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.SAVE_FAILED
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.UPDATE_FAILED
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import br.com.acmattos.hdc.common.tool.page.Filter
