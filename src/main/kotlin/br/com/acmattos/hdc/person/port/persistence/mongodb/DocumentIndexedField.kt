@@ -6,6 +6,7 @@ package br.com.acmattos.hdc.person.port.persistence.mongodb
  */
 enum class DocumentIndexedField(val fieldName: String) {
     EVENT_PERSON_ID_ID("event.person_id.id"),
+    CONTACT("contact"),
     CPF("cpf"),
     FULL_NAME("full_name"),
     PERSON_ID("person_id"),
