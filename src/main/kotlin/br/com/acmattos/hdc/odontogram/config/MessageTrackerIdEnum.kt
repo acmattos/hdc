@@ -12,5 +12,5 @@ enum class MessageTrackerIdEnum(
     SURFACE_TYPE_CONVERT_FAILED(MessageTrackerId("01FXTSG8Z49FE3F55670TQCPE3")),
     SURFACE_STAMP_CONVERT_FAILED(MessageTrackerId("01FXTSG8Z3Q2MJX8PESM4KVKSP"));
 
-    override fun trackerId() = this.messageTrackerId
+    override fun messageTrackerId() = this.messageTrackerId
 }

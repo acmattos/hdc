@@ -31,7 +31,7 @@ object Assertion: Loggable() {
                 FAILURE.name,
                 message
             )
-            throw AssertionFailedException(message, messageTracker.trackerId())
+            throw AssertionFailedException(message, messageTracker.messageTrackerId())
         }
         logger.debug(
             "[{} <{}>] - Assertion evaluated successfully!",

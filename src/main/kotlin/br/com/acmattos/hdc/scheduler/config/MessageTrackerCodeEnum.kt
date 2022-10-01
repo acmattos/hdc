@@ -30,5 +30,5 @@ enum class MessageTrackerCodeEnum(
     ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED(MessageTrackerId("01FMMZRY979FE3F55670TQCPE3")),
     ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE(MessageTrackerId("01FN4KS8QBQ2MJX8PESM4KVKSP"));
 
-    override fun trackerId() = this.messageTrackerId
+    override fun messageTrackerId() = this.messageTrackerId
 }

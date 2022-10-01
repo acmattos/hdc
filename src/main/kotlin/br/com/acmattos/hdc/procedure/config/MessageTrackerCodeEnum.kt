@@ -15,5 +15,5 @@ enum class MessageTrackerCodeEnum(
     CODE_OUT_OF_RANGE(MessageTrackerId("01FVQ2NP5M52MV85FW4ZTYTE6F")),
     DESCRIPTION_INVALID_LENGTH(MessageTrackerId("01FVQ2NP5M27PHS1MQ52NS823F"));
 
-    override fun trackerId() = this.messageTrackerId
+    override fun messageTrackerId() = this.messageTrackerId
 }

@@ -18,5 +18,5 @@ enum class MessageTrackerCodeEnum(
     FIND_ALL_BY_PAGE(MessageTrackerId("01FVT3QG3R27PHS1MQ52NS823F")),
     CAUGHT_EXCEPTION(MessageTrackerId("01FK69M8XQKTN1BYZW6BRHFZFJ"));
 
-    override fun trackerId() = this.messageTrackerId
+    override fun messageTrackerId() = this.messageTrackerId
 }

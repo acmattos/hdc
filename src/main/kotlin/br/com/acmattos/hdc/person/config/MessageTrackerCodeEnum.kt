@@ -40,5 +40,5 @@ enum class MessageTrackerCodeEnum(
     INVALID_PERSON_DENTAL_PLAN_NAME(MessageTrackerId("01FVPVJN7HKKHVWHP57PKD8N62")),
     INVALID_PERSON_DENTAL_PLAN_NUMBER(MessageTrackerId("01FVQ2NP5FQ2MJX8PESM4KVKSP"));
 
-    override fun trackerId() = this.messageTrackerId
+    override fun messageTrackerId() = this.messageTrackerId
 }

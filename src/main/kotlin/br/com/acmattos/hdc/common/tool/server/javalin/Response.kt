@@ -91,5 +91,5 @@ class MessageTrackerId(id: String): Id(id)
  * @since 01/10/2022.
  */
 interface MessageTracker {
-    fun trackerId(): MessageTrackerId
+    fun messageTrackerId(): MessageTrackerId
 }
