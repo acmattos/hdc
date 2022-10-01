@@ -52,7 +52,7 @@ data class Address(
         Assertion.assert(
             "Invalid address street: 3 <= street.length <= 100!",
             PERSON.name,
-            INVALID_PERSON_ADDRESS_STREET.code
+            INVALID_PERSON_ADDRESS_STREET
         ) {
             street.length in 3..100
         }
@@ -63,7 +63,7 @@ data class Address(
             Assertion.assert(
                 "Invalid address number: 1 <= number.length <= 10!",
                 PERSON.name,
-                INVALID_PERSON_ADDRESS_NUMBER.code
+                INVALID_PERSON_ADDRESS_NUMBER
             ) {
                 number.length in 1..10
             }
@@ -75,9 +75,9 @@ data class Address(
             Assertion.assert(
                 "Invalid address complement: 1 <= complement.length <= 50!",
                 PERSON.name,
-                INVALID_PERSON_ADDRESS_COMPLEMENT.code
+                INVALID_PERSON_ADDRESS_COMPLEMENT
             ) {
-                complement!!.length in 1..50
+                complement.length in 1..50
             }
         }
     }
@@ -85,7 +85,7 @@ data class Address(
         Assertion.assert(
             "Invalid address zip code: format 12345-678!",
             PERSON.name,
-            INVALID_PERSON_ADDRESS_ZIP_CODE.code
+            INVALID_PERSON_ADDRESS_ZIP_CODE
         ) {
             zipCode.matches(Regex("^\\d{5}[-]\\d{3}$"))
         }
@@ -95,7 +95,7 @@ data class Address(
         Assertion.assert(
             "Invalid address neighborhood: 3 <= neighborhood.length <= 100!",
             PERSON.name,
-            INVALID_PERSON_ADDRESS_NEIGHBORHOOD.code
+            INVALID_PERSON_ADDRESS_NEIGHBORHOOD
         ) {
             neighborhood.length in 3..100
 
@@ -105,7 +105,7 @@ data class Address(
         Assertion.assert(
             "Invalid address city: 3 <= city.length <= 100!",
             PERSON.name,
-            INVALID_PERSON_ADDRESS_CITY.code
+            INVALID_PERSON_ADDRESS_CITY
         ) {
             city.length in 3..100
         }
@@ -132,9 +132,9 @@ data class Contact(
         Assertion.assert(
             "Invalid contact info: [$type]!",
             PERSON.name,
-            INVALID_PERSON_CONTACT_INFO.code
+            INVALID_PERSON_CONTACT_INFO
         ) {
-            info != null && info.matches(getEquivalentPattern())
+            /*info != null &&*/ info.matches(getEquivalentPattern())
         }
     }
 
@@ -151,9 +151,9 @@ data class Contact(
             Assertion.assert(
                 "Invalid contact obs: 3 <= obs.length <= 20!",
                 PERSON.name,
-                INVALID_PERSON_CONTACT_OBS.code
+                INVALID_PERSON_CONTACT_OBS
             ) {
-                obs!!.length in 3..20
+                obs.length in 3..20
             }
         }
     }
@@ -178,7 +178,7 @@ data class DentalPlan(
         Assertion.assert(
             "Invalid dental plan name: 2 <= name.length <= 30!",
             PERSON.name,
-            INVALID_PERSON_DENTAL_PLAN_NAME.code
+            INVALID_PERSON_DENTAL_PLAN_NAME
         ) {
             name.isNotBlank() && name.length in 2..30
         }
@@ -188,7 +188,7 @@ data class DentalPlan(
         Assertion.assert(
             "Invalid dental plan number: 5 <= number.length <= 30!",
             PERSON.name,
-            INVALID_PERSON_DENTAL_PLAN_NUMBER.code
+            INVALID_PERSON_DENTAL_PLAN_NUMBER
         ) {
             number.isNotBlank() && number.length in 5..30
         }
@@ -206,7 +206,7 @@ enum class ContactType {
             term,
             "[$term] does not correspond to a valid contact type!",
             PERSON.name,
-            CONTACT_TYPE_CONVERT_FAILED.code
+            CONTACT_TYPE_CONVERT_FAILED
         )
     }
 }
@@ -222,7 +222,7 @@ enum class Gender {
             term,
             "[$term] does not correspond to a valid gender!",
             PERSON.name,
-            MARITAL_STATUS_CONVERT_FAILED.code
+            MARITAL_STATUS_CONVERT_FAILED
         )
     }
 }
@@ -238,7 +238,7 @@ enum class MaritalStatus {
             term,
             "[$term] does not correspond to a valid marital status!",
             PERSON.name,
-            MARITAL_STATUS_CONVERT_FAILED.code
+            MARITAL_STATUS_CONVERT_FAILED
         )
     }
 }
@@ -255,7 +255,7 @@ enum class PersonType {
             term,
             "[$term] does not correspond to a valid person type!",
             PERSON.name,
-            PERSON_TYPE_CONVERT_FAILED.code
+            PERSON_TYPE_CONVERT_FAILED
         )
     }
 }
@@ -271,7 +271,7 @@ enum class State {
             term,
             "[$term] does not correspond to a valid state!",
             PERSON.name,
-            STATE_CONVERT_FAILED.code
+            STATE_CONVERT_FAILED
         )
     }
 }
@@ -288,7 +288,7 @@ enum class Status {
             term,
             "[$term] does not correspond to a valid status!",
             PERSON.name,
-            STATUS_CONVERT_FAILED.code
+            STATUS_CONVERT_FAILED
         )
     }
 }
