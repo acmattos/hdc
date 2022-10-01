@@ -8,8 +8,8 @@ import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.DENTIST_NOT_REGISTERED
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.SCHEDULE_ALREADY_DEFINED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.DENTIST_NOT_REGISTERED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.SCHEDULE_ALREADY_DEFINED
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent

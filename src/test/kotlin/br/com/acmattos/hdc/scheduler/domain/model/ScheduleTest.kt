@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.NO_PERIODS_DEFINED
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.THERE_IS_A_COLLISION
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.NO_PERIODS_DEFINED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.THERE_IS_A_COLLISION
 import br.com.acmattos.hdc.scheduler.domain.model.WeekDay.TUESDAY
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions

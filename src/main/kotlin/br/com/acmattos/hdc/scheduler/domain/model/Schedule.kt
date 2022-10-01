@@ -6,9 +6,9 @@ import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.FROM_LESSER_OR_EQUAL_TO_TO
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.NO_PERIODS_DEFINED
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.THERE_IS_A_COLLISION
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.FROM_LESSER_OR_EQUAL_TO_TO
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.NO_PERIODS_DEFINED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.THERE_IS_A_COLLISION
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentCommand

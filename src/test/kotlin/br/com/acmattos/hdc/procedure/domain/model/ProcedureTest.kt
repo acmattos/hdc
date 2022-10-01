@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.procedure.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.CODE_OUT_OF_RANGE
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
@@ -47,10 +47,10 @@ object ProcedureTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, CODE_OUT_OF_RANGE.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, Id_OUT_OF_RANGE.code))
             }
-            And("""exception has code ${CODE_OUT_OF_RANGE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", CODE_OUT_OF_RANGE.code)
+            And("""exception has code ${Id_OUT_OF_RANGE.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.code)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
