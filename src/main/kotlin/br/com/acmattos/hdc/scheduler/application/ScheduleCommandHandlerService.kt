@@ -117,7 +117,7 @@ class ScheduleCommandHandlerService(
     There is a schedule already defined for the given dentistId [${command.dentistId}]!
                     """.trimIndent(),
                 SCHEDULE.name,
-                SCHEDULE_ALREADY_DEFINED.code
+                SCHEDULE_ALREADY_DEFINED
             ) {
                 it.isEmpty()
             }
@@ -131,7 +131,7 @@ class ScheduleCommandHandlerService(
     There is no dentist defined for the given dentistId [${command.dentistId}]!
                     """.trimIndent(),
                 SCHEDULE.name,
-                DENTIST_NOT_REGISTERED.code
+                DENTIST_NOT_REGISTERED
             ) {
                 optionalDentist.isPresent
             }

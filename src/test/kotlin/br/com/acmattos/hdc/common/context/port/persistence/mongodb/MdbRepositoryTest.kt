@@ -79,15 +79,15 @@ object MdbRepositoryTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     EXCEPTION_MESSAGE,
-                    SAVE_FAILED.code,
+                    SAVE_FAILED.messageTrackerId,
                     Exception(EXCEPTION_MESSAGE)
                 ))
             }
             And("""message is $EXCEPTION_MESSAGE""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
-            And("""code is ${SAVE_FAILED.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", SAVE_FAILED.code)
+            And("""code is $SAVE_FAILED""") {
+                assertion.hasFieldOrPropertyWithValue("code", SAVE_FAILED)
             }
             And("""the message is $MESSAGE_SAVE""") {
                 assertThat(appender.containsMessage(MESSAGE_SAVE)).isTrue()
@@ -166,15 +166,15 @@ object MdbRepositoryTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     EXCEPTION_MESSAGE,
-                    FIND_ONE_BY_FILTER_FAILED.code,
+                    FIND_ONE_BY_FILTER_FAILED.messageTrackerId,
                     Exception(EXCEPTION_MESSAGE)
                 ))
             }
             And("""message is $EXCEPTION_MESSAGE""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
-            And("""code is ${FIND_ONE_BY_FILTER_FAILED.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", FIND_ONE_BY_FILTER_FAILED.code)
+            And("""code is $FIND_ONE_BY_FILTER_FAILED""") {
+                assertion.hasFieldOrPropertyWithValue("code", FIND_ONE_BY_FILTER_FAILED.messageTrackerId)
             }
             And("""the message is $MESSAGE_FIND""") {
                 assertThat(appender.containsMessage(MESSAGE_FIND)).isTrue()

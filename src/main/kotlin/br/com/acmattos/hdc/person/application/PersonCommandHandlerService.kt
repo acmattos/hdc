@@ -265,7 +265,7 @@ class PersonCommandHandlerService(
     There is a person already defined for the given full name: [${command.fullName}]!
                     """.trimIndent(),
                 PERSON.name,
-                PERSON_ALREADY_EXISTS.code
+                PERSON_ALREADY_EXISTS
             ) {
                 !it.isPresent
             }
@@ -285,7 +285,7 @@ class PersonCommandHandlerService(
     There is no person defined for the given id [${command.personId.id}]!
                     """.trimIndent(),
                 PERSON.name,
-                PERSON_NOT_DEFINED.code
+                PERSON_NOT_DEFINED
             ) {
                 it.isNotEmpty()
             }

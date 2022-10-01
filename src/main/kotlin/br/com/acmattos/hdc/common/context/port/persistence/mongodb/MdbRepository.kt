@@ -32,7 +32,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun save(document: T) {
         catch(
             "[{}] - Saving document into the repository: -> {} <-",
-            SAVE_FAILED.code,
+            SAVE_FAILED.messageTrackerId,
             REPOSITORY.name,
             document.toString()
         ) {
@@ -43,7 +43,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun update(filter: Filter<*>, document: T) {
         catch(
             "[{}] - Updating document into the repository: -> {} <-",
-            UPDATE_FAILED.code,
+            UPDATE_FAILED.messageTrackerId,
             REPOSITORY.name,
             document.toString()
         ) {
@@ -57,7 +57,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun delete(filter: Filter<*>) {
         catch(
             "[{}] - Deleting document into the repository: -> {} <-",
-            UPDATE_FAILED.code,
+            UPDATE_FAILED.messageTrackerId,
             REPOSITORY.name,
             filter.toString()
         ) {
@@ -70,7 +70,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findOneByFilter(filter: Filter<*>) : Optional<T> =
         catch(
             "[{}] - Finding document by filter in the repository: -> {}={} <-",
-            FIND_ONE_BY_FILTER_FAILED.code,
+            FIND_ONE_BY_FILTER_FAILED.messageTrackerId,
             REPOSITORY.name,
             filter.javaClass.simpleName,
             filter.toString()
@@ -84,7 +84,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findAllByFilter(filter: Filter<*>) : List<T> =
         catch(
             "[{}] - Finding all document by filter the repository: -> {}={} <-",
-            FIND_ALL_BY_FILTER_FAILED.code,
+            FIND_ALL_BY_FILTER_FAILED.messageTrackerId,
             REPOSITORY.name,
             filter.javaClass.simpleName,
             filter.toString()
@@ -98,7 +98,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findAll(): List<T> =// TODO Subject to change (APPLY a filter)
         catch(
             "[{}] - Finding all documents in the repository: -> {}={} <-",
-            FIND_ALL_FAILED.code,
+            FIND_ALL_FAILED.messageTrackerId,
             REPOSITORY.name,
             REPOSITORY.name // TODO Verify this log
         ) {
@@ -109,7 +109,7 @@ open class MdbRepository<T: MdbDocument>(
     override fun findAllByPage(page: Page): PageResult<T> =
         catch(
             "[{}] - Finding documents by page in the repository: -> {}={} <-",
-            FIND_ALL_BY_PAGE.code,
+            FIND_ALL_BY_PAGE.messageTrackerId,
             REPOSITORY.name,
             page.javaClass.simpleName,
             page.toString()

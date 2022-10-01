@@ -83,7 +83,7 @@ object ResponseTest : Spek({
                 exception = IllegalArgumentException("")
             }
             When("""#create is executed""") {
-                response = Response.create(MessageTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
+                response = Response.create(MessageTrackerId("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
             }
             Then("""a response.uid equal to ULID_ID""") {
                 assertThat(response.uid).isEqualTo(ULID_ID)
@@ -111,7 +111,7 @@ object ResponseTest : Spek({
                 exception = Exception()
             }
             When("""#create is executed""") {
-                response = Response.create(MessageTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
+                response = Response.create(MessageTrackerId("01FK6PF0DWKTN1BYZW6BRHFZFJ"), status, null, exception, uid)//TODO VERIFY
             }
             Then("""a response.uid is strictly between MIN_ULID_ID - MAX_ULID_ID """) {
                 assertThat(response.uid).isStrictlyBetween(MIN_ULID_ID, MAX_ULID_ID)
@@ -139,7 +139,7 @@ object ResponseTest : Spek({
                 message = INVALID_DATA
             }
             When("""#create is executed""") {
-                response = Response.create(MessageTrackerCode("01FK6PF0DWKTN1BYZW6BRHFZFJ"),status, message, null, uid)//TODO VERIFY
+                response = Response.create(MessageTrackerId("01FK6PF0DWKTN1BYZW6BRHFZFJ"),status, message, null, uid)//TODO VERIFY
             }
             Then("""a response.uid equal to ULID_ID""") {
                 assertThat(response.uid).isEqualTo(ULID_ID)

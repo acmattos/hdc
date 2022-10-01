@@ -217,7 +217,7 @@ class ProcedureCommandHandlerService(
     There is a dental procedure already defined for the given code [${command.code}]!
                     """.trimIndent(),
                 PROCEDURE.name,
-                PROCEDURE_ALREADY_DEFINED.code
+                PROCEDURE_ALREADY_DEFINED
             ) {
                 it.isEmpty()
             }
@@ -233,7 +233,7 @@ class ProcedureCommandHandlerService(
     There is no dental procedure defined for the given id [${command.procedureId.id}]!
                     """.trimIndent(),
                 PROCEDURE.name,
-                PROCEDURE_NOT_DEFINED.code
+                PROCEDURE_NOT_DEFINED
             ) {
                 it.isNotEmpty()
             }
