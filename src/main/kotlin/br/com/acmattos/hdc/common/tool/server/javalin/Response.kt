@@ -25,13 +25,13 @@ data class Response(
             ResponseBuilder.build(uid = uid, status = status, data = data)
 
         fun create(
-            code: MessageTrackerCode,
+            messageTrackerId: MessageTrackerId,
             status: Int,
             message: Any? = null,
             exception: Throwable?,
             uid: String = nextULID(),
         ) = ResponseBuilder.build(
-            code = code,
+            messageTrackerId = messageTrackerId,
             uid = uid,
             status = status,
             message = message,
@@ -47,12 +47,12 @@ data class Response(
 private class ResponseBuilder {
     companion object: Loggable() {
         fun build(
-            code: MessageTrackerCode = MessageTrackerCode("01FK6ADSETKTN1BYZW6BRHFZFJ"),//TODO SINGLE OR MULTIPLE OK?
+            messageTrackerId: MessageTrackerId = MessageTrackerId("01FK6ADSETKTN1BYZW6BRHFZFJ"),//TODO SINGLE OR MULTIPLE OK?
             uid: String,
             status: Int,
             data: Any
         ) = Response(
-            code = code.id,
+            code = messageTrackerId.id,
             uid = uid,
             status = status,
             data = data
@@ -61,13 +61,13 @@ private class ResponseBuilder {
         }
 
         fun build(
-            code: MessageTrackerCode,
+            messageTrackerId: MessageTrackerId,
             uid: String,
             status: Int,
             message: Any? = null,
             exception: Throwable?
         ) = Response(
-            code = code.id,
+            code = messageTrackerId.id,
             uid = uid,
             status = status,
             data = message
@@ -84,4 +84,12 @@ private class ResponseBuilder {
  * @author ACMattos
  * @since 29/10/2021.
  */
-class MessageTrackerCode(id: String): Id(id)
+class MessageTrackerId(id: String): Id(id)
+
+/**
+ * @author ACMattos
+ * @since 01/10/2022.
+ */
+interface MessageTracker {
+    fun trackerId(): MessageTrackerId
+}
