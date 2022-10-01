@@ -13,7 +13,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.javalin.pageNumber
 import br.com.acmattos.hdc.common.tool.server.javalin.pageSize
 import br.com.acmattos.hdc.common.tool.server.javalin.sortParam
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.DENTIST_ID_INVALID
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.DENTIST_ID_INVALID
 import br.com.acmattos.hdc.person.config.PersonLogEnum.DENTIST
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.FindAllContactTypesQuery

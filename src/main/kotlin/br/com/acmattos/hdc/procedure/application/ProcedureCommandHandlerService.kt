@@ -8,8 +8,8 @@ import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.PROCEDURE_ALREADY_DEFINED
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.PROCEDURE_NOT_DEFINED
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_ALREADY_DEFINED
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_NOT_DEFINED
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent

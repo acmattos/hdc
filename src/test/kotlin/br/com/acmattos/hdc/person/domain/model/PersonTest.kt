@@ -1,15 +1,15 @@
 package br.com.acmattos.hdc.person.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESSES
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_CONTACTS
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_CPF
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_DOB
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_FULL_NAME
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_OCCUPATION
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSONAL_ID
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSON_TYPE_DENTIST
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_PERSON_TYPE_PATIENT
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESSES
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CONTACTS
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CPF
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_DOB
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_FULL_NAME
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_OCCUPATION
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_PERSONAL_ID
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_PERSON_TYPE_DENTIST
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_PERSON_TYPE_PATIENT
 import java.time.LocalDate
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions

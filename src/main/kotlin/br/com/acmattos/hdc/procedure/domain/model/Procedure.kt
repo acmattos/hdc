@@ -4,8 +4,8 @@ import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.CODE_OUT_OF_RANGE
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureEvent
@@ -70,7 +70,7 @@ data class Procedure(
         Assertion.assert(
             "Code is out of range (81000014-87000199)!",
             PROCEDURE.name,
-            CODE_OUT_OF_RANGE
+            Id_OUT_OF_RANGE
         ) {
             codeData!! in 81000014..87000199
         }
