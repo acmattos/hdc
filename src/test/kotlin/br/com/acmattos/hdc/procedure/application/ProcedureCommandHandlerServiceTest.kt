@@ -4,10 +4,10 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.CODE_OUT_OF_RANGE
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.DESCRIPTION_INVALID_LENGTH
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.PROCEDURE_ALREADY_DEFINED
-import br.com.acmattos.hdc.procedure.config.MessageTrackerCodeEnum.PROCEDURE_NOT_DEFINED
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_ALREADY_DEFINED
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_NOT_DEFINED
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureCommand
@@ -221,15 +221,15 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasSameClassAs(
                     AssertionFailedException(
                         EXCEPTION_MESSAGE_2,
-                        CODE_OUT_OF_RANGE.code
+                        Id_OUT_OF_RANGE.code
                     )
                 )
             }
             And("""the message is $EXCEPTION_MESSAGE_2""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE_2)
             }
-            And("""exception has code ${CODE_OUT_OF_RANGE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", CODE_OUT_OF_RANGE.code)
+            And("""exception has code ${Id_OUT_OF_RANGE.code}""") {
+                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.code)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
