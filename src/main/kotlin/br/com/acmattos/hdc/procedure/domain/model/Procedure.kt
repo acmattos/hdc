@@ -70,7 +70,7 @@ data class Procedure(
         Assertion.assert(
             "Code is out of range (81000014-87000199)!",
             PROCEDURE.name,
-            CODE_OUT_OF_RANGE.code
+            CODE_OUT_OF_RANGE
         ) {
             codeData!! in 81000014..87000199
         }
@@ -80,7 +80,7 @@ data class Procedure(
         Assertion.assert(
             "Description length is out of range (3-120)!",
             PROCEDURE.name,
-            DESCRIPTION_INVALID_LENGTH.code
+            DESCRIPTION_INVALID_LENGTH
         ) {
             descriptionData!!.length in 3..120
         }

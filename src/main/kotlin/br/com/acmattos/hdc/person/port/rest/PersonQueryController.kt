@@ -357,7 +357,7 @@ class FindTheDentistRequest(val context: Context): Request<PersonQuery>(context)
         Assertion.assert(
             "dentist_id can't be null or empty",
             DENTIST.name,
-            DENTIST_ID_INVALID.code
+            DENTIST_ID_INVALID
         ) {
             dentistId.isNotBlank()
         }

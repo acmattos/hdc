@@ -67,14 +67,14 @@ data class Schedule(// TODO Test
         Assertion.assert(
             "No periods were defined!",
             SCHEDULE.name,
-            NO_PERIODS_DEFINED.code
+            NO_PERIODS_DEFINED
         ) {
             periodsData!!.isNotEmpty()
         }
         Assertion.assert(
             "There is a collision for existing periods [$periodsData]",
             SCHEDULE.name,
-            THERE_IS_A_COLLISION.code
+            THERE_IS_A_COLLISION
         ) {
             !hasSomePeriodCollision()
         }
@@ -212,7 +212,7 @@ data class Schedule(// TODO Test
         Assertion.assert(
             "from=[$command.from] must be lesser or equal to to=[$command.to]!",
             APPOINTMENT.name,
-            FROM_LESSER_OR_EQUAL_TO_TO.code
+            FROM_LESSER_OR_EQUAL_TO_TO
         ) { days >= 0 }
     }
 
