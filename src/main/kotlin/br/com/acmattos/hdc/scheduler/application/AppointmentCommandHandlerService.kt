@@ -9,8 +9,8 @@ import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.page.AndFilter
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.OVERLAPPING_APPOINTMENT
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.SCHEDULE_NOT_DEFINED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.OVERLAPPING_APPOINTMENT
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.SCHEDULE_NOT_DEFINED
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.APPOINTMENT
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentCommand
 import br.com.acmattos.hdc.scheduler.domain.cqs.AppointmentEvent
