@@ -22,7 +22,7 @@ data class Dentist(
         Assertion.assert(
             "Invalid name for the Dentist",
             SCHEDULE.name,
-            INVALID_DENTIST_FULL_NAME.code
+            INVALID_DENTIST_FULL_NAME
         ) {
             fullName.isNotBlank()
         }

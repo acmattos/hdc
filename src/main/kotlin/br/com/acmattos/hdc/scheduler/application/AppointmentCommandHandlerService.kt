@@ -144,7 +144,7 @@ class AppointmentCommandHandlerService(// TODO Test
     There is no schedule defined for the given scheduleId [${command.scheduleId}]!
                     """.trimIndent(),
                 APPOINTMENT.name,
-                SCHEDULE_NOT_DEFINED.code
+                SCHEDULE_NOT_DEFINED
             ) {
                 events.isNotEmpty()
             }
@@ -175,7 +175,7 @@ There is an appointment already defined for the given scheduleId, date and time
 [${command.scheduleId}, ${command.date}, ${command.time}]!
                     """.trimIndent(),
                 APPOINTMENT.name,
-                OVERLAPPING_APPOINTMENT.code
+                OVERLAPPING_APPOINTMENT
             ) {
                 events.isEmpty()
             }
