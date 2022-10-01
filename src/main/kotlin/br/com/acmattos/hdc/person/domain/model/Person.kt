@@ -170,7 +170,7 @@ data class Person(// TODO Create tests
     private fun assertValidFullName() {
         Assertion.assert(
             "Invalid full name: 3 <= fullName.length <= 100!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_FULL_NAME",
             INVALID_PERSON_FULL_NAME.code
         ) {
             fullName.length in 3..100
@@ -180,7 +180,7 @@ data class Person(// TODO Create tests
     private fun assertValidDob() {
         Assertion.assert(
             "Invalid dob: dob <= NOW!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_DOB",
             INVALID_PERSON_DOB.code
         ) {
             dob.isBefore(LocalDate.now()) || dob.isEqual(LocalDate.now())
@@ -246,7 +246,7 @@ data class Person(// TODO Create tests
         }
         Assertion.assert(
             "Invalid CPF!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_CPF",
             INVALID_PERSON_CPF.code
         ) {
             valid
@@ -257,7 +257,7 @@ data class Person(// TODO Create tests
         if(personalId != null) {
             Assertion.assert(
                 "Invalid personal id: 5 <= personalId.length <= 15!",
-                PERSON.name,
+                "${PERSON.name} $INVALID_PERSON_PERSONAL_ID",
                 INVALID_PERSON_PERSONAL_ID.code
             ) {
                 personalId!!.length in 5..15
@@ -269,7 +269,7 @@ data class Person(// TODO Create tests
         if(occupation != null) {
             Assertion.assert(
                 "Invalid occupation: 3 <= occupation.length <= 100!",
-                PERSON.name,
+                "${PERSON.name} $INVALID_PERSON_OCCUPATION",
                 INVALID_PERSON_OCCUPATION.code
             ) {
                 occupation!!.length in 3..100
@@ -281,7 +281,7 @@ data class Person(// TODO Create tests
         if(indicatedBy != null) {
             Assertion.assert(
                 "Invalid indicated by: 3 <= indicatedBy.length <= 100!",
-                PERSON.name,
+                "${PERSON.name} $INVALID_PERSON_INDICATED_BY",
                 INVALID_PERSON_INDICATED_BY.code
             ) {
                 indicatedBy!!.length in 3..100
@@ -292,7 +292,7 @@ data class Person(// TODO Create tests
     private fun assertValidAddresses() {
         Assertion.assert(
             "Invalid addresses size: one at least!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_ADDRESSES",
             INVALID_PERSON_ADDRESSES.code
         ) {
             addresses.isNotEmpty()
@@ -302,7 +302,7 @@ data class Person(// TODO Create tests
     private fun assertValidContacts() {
         Assertion.assert(
             "Invalid contacts size: one at least!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_CONTACTS",
             INVALID_PERSON_CONTACTS.code
         ) {
             contacts.isNotEmpty()
@@ -312,7 +312,7 @@ data class Person(// TODO Create tests
     private fun assertValidStatus()  {
         Assertion.assert(
             "Invalid status: PATIENT needs a defined status!",
-            PERSON.name,
+            "${PERSON.name} $INVALID_PERSON_STATUS",
             INVALID_PERSON_STATUS.code
         ) {
             PersonType.PATIENT == personType && status != null
