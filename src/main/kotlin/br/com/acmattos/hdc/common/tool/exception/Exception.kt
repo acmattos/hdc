@@ -1,7 +1,7 @@
 package br.com.acmattos.hdc.common.tool.exception
 
 import br.com.acmattos.hdc.common.exception.HdcGenericException
-import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
+import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
 
 /**
  * @author ACMattos
@@ -9,15 +9,6 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerCode
  */
 class InternalServerErrorException(
     message: String,
-    val code: MessageTrackerCode,
+    val messageTrackerId: MessageTrackerId,
     throwable: Throwable
-): HdcGenericException(message, code, throwable)
-
-///**
-// * @author ACMattos
-// * @since 16/08/2021.
-// */
-//class NotFoundException(
-//    message: String,
-//    code: String
-//): HdcGenericException(message, code)
+): HdcGenericException(message, messageTrackerId, throwable)
