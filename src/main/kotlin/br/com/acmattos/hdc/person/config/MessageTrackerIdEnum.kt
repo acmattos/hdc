@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
  * @author ACMattos
  * @since 27/10/2021.
  */
-enum class MessageTrackerCodeEnum(
+enum class MessageTrackerIdEnum(
     val messageTrackerId: MessageTrackerId
 ): MessageTracker {
     PERSON_ALREADY_EXISTS(MessageTrackerId("01FJZAFP3DKTN1BYZW6BRHFZFJ")),
@@ -32,7 +32,7 @@ enum class MessageTrackerCodeEnum(
     INVALID_PERSON_ADDRESS_STREET(MessageTrackerId("01FVQ2NP5H3PG1JPAG867MJ6XZ")),
     INVALID_PERSON_ADDRESS_NUMBER(MessageTrackerId("01FWKFTFMG9FE3F55670TQCPE3")),
     INVALID_PERSON_ADDRESS_COMPLEMENT(MessageTrackerId("01FVQ2NP5KGRN5Q8KG39FK090X")),
-    INVALID_PERSON_ADDRESS_ZIP_CODE(MessageTrackerId("01FVPVJN7D9FE3F55670TQCPE3")),
+    INVALID_PERSON_ADDRESS_ZIP_Id(MessageTrackerId("01FVPVJN7D9FE3F55670TQCPE3")),
     INVALID_PERSON_ADDRESS_NEIGHBORHOOD(MessageTrackerId("01FVPVJN7FGRN5Q8KG39FK090X")),
     INVALID_PERSON_ADDRESS_CITY(MessageTrackerId("01FVPVJN7F2XQ2K4549SYH51FN")),
     INVALID_PERSON_CONTACT_INFO(MessageTrackerId("01FVT5ENFTKKHVWHP57PKD8N62")),

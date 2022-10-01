@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
  * @author ACMattos
  * @since 27/10/2021.
  */
-enum class MessageTrackerCodeEnum(
+enum class MessageTrackerIdEnum(
     val messageTrackerId: MessageTrackerId
 ): MessageTracker {
     SCHEDULE_ALREADY_DEFINED(MessageTrackerId("01FJZAH7JVKTN1BYZW6BRHFZFJ")),

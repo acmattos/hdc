@@ -7,7 +7,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
  * @author ACMattos
  * @since 29/10/2021.
  */
-enum class MessageTrackerCodeEnum(
+enum class MessageTrackerIdEnum(
     val messageTrackerId: MessageTrackerId
 ): MessageTracker {
     SAVE_FAILED(MessageTrackerId("01FK69JRHFKTN1BYZW6BRHFZFJ")),
