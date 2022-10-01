@@ -3,21 +3,21 @@ package br.com.acmattos.hdc.person.domain.model
 import br.com.acmattos.hdc.common.context.domain.model.ValueObject
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.CONTACT_TYPE_CONVERT_FAILED
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_CITY
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_COMPLEMENT
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_NEIGHBORHOOD
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_NUMBER
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_STREET
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_ADDRESS_ZIP_CODE
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_CONTACT_INFO
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_CONTACT_OBS
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_DENTAL_PLAN_NAME
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.INVALID_PERSON_DENTAL_PLAN_NUMBER
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.MARITAL_STATUS_CONVERT_FAILED
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_TYPE_CONVERT_FAILED
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.STATE_CONVERT_FAILED
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.STATUS_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.CONTACT_TYPE_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_CITY
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_COMPLEMENT
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_NEIGHBORHOOD
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_NUMBER
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_STREET
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESS_ZIP_Id
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CONTACT_INFO
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CONTACT_OBS
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_DENTAL_PLAN_NAME
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_DENTAL_PLAN_NUMBER
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.MARITAL_STATUS_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.PERSON_TYPE_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.STATE_CONVERT_FAILED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.STATUS_CONVERT_FAILED
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.model.ContactType.CELLULAR
 import br.com.acmattos.hdc.person.domain.model.ContactType.EMAIL
@@ -85,7 +85,7 @@ data class Address(
         Assertion.assert(
             "Invalid address zip code: format 12345-678!",
             PERSON.name,
-            INVALID_PERSON_ADDRESS_ZIP_CODE
+            INVALID_PERSON_ADDRESS_ZIP_Id
         ) {
             zipCode.matches(Regex("^\\d{5}[-]\\d{3}$"))
         }

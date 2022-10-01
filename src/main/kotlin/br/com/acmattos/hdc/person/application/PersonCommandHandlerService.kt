@@ -8,8 +8,8 @@ import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_ALREADY_EXISTS
-import br.com.acmattos.hdc.person.config.MessageTrackerCodeEnum.PERSON_NOT_DEFINED
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.PERSON_ALREADY_EXISTS
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.PERSON_NOT_DEFINED
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
 import br.com.acmattos.hdc.person.domain.cqs.CreateDentistCommand
 import br.com.acmattos.hdc.person.domain.cqs.CreateDentistEvent

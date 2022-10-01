@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.FROM_BIGGER_THAN_TO
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.OPERATION_GENERATES_REMINDER
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.SLOT_BELLOW_ONE
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.FROM_BIGGER_THAN_TO
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.OPERATION_GENERATES_REMINDER
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.SLOT_BELLOW_ONE
 import br.com.acmattos.hdc.scheduler.domain.model.WeekDay.TUESDAY
 import java.time.LocalTime
 import org.assertj.core.api.AbstractThrowableAssert

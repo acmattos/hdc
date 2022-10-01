@@ -3,10 +3,10 @@ package br.com.acmattos.hdc.scheduler.domain.model
 import br.com.acmattos.hdc.common.context.domain.model.ValueObject
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.DURATION_CREATES_PERFECT_SLOTS
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.FROM_LESS_THAN_TO
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.VALID_SLOT
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerCodeEnum.WEEK_DAY_CONVERT_FAILED
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.DURATION_CREATES_PERFECT_SLOTS
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.FROM_LESS_THAN_TO
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.VALID_SLOT
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.WEEK_DAY_CONVERT_FAILED
 import br.com.acmattos.hdc.scheduler.config.ScheduleLogEnum.SCHEDULE
 import java.time.Duration
 import java.time.LocalDate
