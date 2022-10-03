@@ -79,7 +79,7 @@ object AssertionTest: Spek({
                 assertThat(appender.getMessageLevel(LOG_MESSAGE_3)).isEqualTo(Level.INFO)
             }
             Then("""#assert throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build()))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build().messageTrackerId()))
             }
             And("""code is ${MessageTrackerCodeBuilder.build()}""") {
                 assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())

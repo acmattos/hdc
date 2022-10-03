@@ -37,7 +37,7 @@ object PersonTest: Spek({
         Scenario("a valid Patient creation") {
             lateinit var entity: Person
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            When("a successful procedure instantiation is done") {
+            When("a successful patient instantiation is done") {
                 assertion = Assertions.assertThatCode {
                     entity = PersonBuilder.buildPatient()
                 }
@@ -63,10 +63,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, INVALID_PERSON_FULL_NAME.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, INVALID_PERSON_FULL_NAME.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_FULL_NAME.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_FULL_NAME.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_FULL_NAME.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_FULL_NAME.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -89,10 +89,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_8, INVALID_PERSON_DOB.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_8, INVALID_PERSON_DOB.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_DOB.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_DOB.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_DOB.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_DOB.messageTrackerId)
             }
             And("""exception has message $MESSAGE_8""") {
                 assertion.hasMessage(MESSAGE_8)
@@ -115,10 +115,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, INVALID_PERSON_PERSON_TYPE_PATIENT.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, INVALID_PERSON_PERSON_TYPE_PATIENT.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_PERSON_TYPE_PATIENT.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_PERSON_TYPE_PATIENT.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_PERSON_TYPE_PATIENT.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_PERSON_TYPE_PATIENT.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
@@ -141,10 +141,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_3, INVALID_PERSON_PERSON_TYPE_DENTIST.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_3, INVALID_PERSON_PERSON_TYPE_DENTIST.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_PERSON_TYPE_DENTIST.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_PERSON_TYPE_DENTIST.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_PERSON_TYPE_DENTIST.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_PERSON_TYPE_DENTIST.messageTrackerId)
             }
             And("""exception has message $MESSAGE_3""") {
                 assertion.hasMessage(MESSAGE_3)
@@ -167,10 +167,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_7, INVALID_PERSON_CPF.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_7, INVALID_PERSON_CPF.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_CPF.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_CPF.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_CPF.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_CPF.messageTrackerId)
             }
             And("""exception has message $MESSAGE_7""") {
                 assertion.hasMessage(MESSAGE_7)
@@ -193,10 +193,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_9, INVALID_PERSON_PERSONAL_ID.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_9, INVALID_PERSON_PERSONAL_ID.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_PERSONAL_ID.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_PERSONAL_ID.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_PERSONAL_ID.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_PERSONAL_ID.messageTrackerId)
             }
             And("""exception has message $MESSAGE_9""") {
                 assertion.hasMessage(MESSAGE_9)
@@ -219,10 +219,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_4, INVALID_PERSON_OCCUPATION.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_4, INVALID_PERSON_OCCUPATION.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_OCCUPATION.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_OCCUPATION.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_OCCUPATION.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_OCCUPATION.messageTrackerId)
             }
             And("""exception has message $MESSAGE_4""") {
                 assertion.hasMessage(MESSAGE_4)
@@ -245,10 +245,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_5, INVALID_PERSON_ADDRESSES.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_5, INVALID_PERSON_ADDRESSES.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_ADDRESSES.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_ADDRESSES.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_ADDRESSES.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_ADDRESSES.messageTrackerId)
             }
             And("""exception has message $MESSAGE_5""") {
                 assertion.hasMessage(MESSAGE_5)
@@ -271,10 +271,10 @@ object PersonTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_6, INVALID_PERSON_CONTACTS.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_6, INVALID_PERSON_CONTACTS.messageTrackerId))
             }
-            And("""exception has code ${INVALID_PERSON_CONTACTS.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_CONTACTS.code)
+            And("""exception has messageTrackerId ${INVALID_PERSON_CONTACTS.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_CONTACTS.messageTrackerId)
             }
             And("""exception has message $MESSAGE_6""") {
                 assertion.hasMessage(MESSAGE_6)
@@ -297,10 +297,10 @@ object PersonTest: Spek({
 //                }
 //            }
 //            Then("""instantiation throws exception""") {
-//                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_10, .code))
+//                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_10, .messageTrackerId))
 //            }
-//            And("""exception has code ${.code}""") {
-//                assertion.hasFieldOrPropertyWithValue("code", .code)
+//            And("""exception has messageTrackerId ${.messageTrackerId}""") {
+//                assertion.hasFieldOrPropertyWithValue("messageTrackerId", .messageTrackerId)
 //            }
 //            And("""exception has message $MESSAGE_10""") {
 //                assertion.hasMessage(MESSAGE_10)
@@ -323,10 +323,10 @@ object PersonTest: Spek({
 //                }
 //            }
 //            Then("""instantiation throws exception""") {
-//                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_10, INVALID_PERSON_STATUS.code))
+//                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_10, INVALID_PERSON_STATUS.messageTrackerId))
 //            }
-//            And("""exception has code ${INVALID_PERSON_STATUS.code}""") {
-//                assertion.hasFieldOrPropertyWithValue("code", INVALID_PERSON_STATUS.code)
+//            And("""exception has messageTrackerId ${INVALID_PERSON_STATUS.messageTrackerId}""") {
+//                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_PERSON_STATUS.messageTrackerId)
 //            }
 //            And("""exception has message $MESSAGE_10""") {
 //                assertion.hasMessage(MESSAGE_10)

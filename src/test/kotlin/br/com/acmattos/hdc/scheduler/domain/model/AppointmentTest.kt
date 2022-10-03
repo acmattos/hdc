@@ -2,8 +2,8 @@ package br.com.acmattos.hdc.scheduler.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED
 import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE
+import br.com.acmattos.hdc.scheduler.config.MessageTrackerIdEnum.ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleEvent
 import br.com.acmattos.hdc.scheduler.domain.model.AppointmentStatus.FREED
 import br.com.acmattos.hdc.scheduler.domain.model.AppointmentStatus.SCHEDULED
@@ -80,10 +80,10 @@ object AppointmentTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId))
             }
-            And("""exception has code ${ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.code)
+            And("""exception has messageTrackerId ${ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -117,10 +117,10 @@ object AppointmentTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId))
             }
-            And("""exception has code ${ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.code)
+            And("""exception has messageTrackerId ${ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)

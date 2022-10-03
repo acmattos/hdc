@@ -57,7 +57,7 @@ object EnumAssertionTest: Spek({
                 }
             }
             Then("""#convert throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build()))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build().messageTrackerId))
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)
@@ -106,7 +106,7 @@ object EnumAssertionTest: Spek({
                 }
             }
             Then("""#convert throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_MATCHES, MessageTrackerCodeBuilder.build()))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_MATCHES, MessageTrackerCodeBuilder.build().messageTrackerId))
             }
             And("""exception has message $MESSAGE_MATCHES""") {
                 assertion.hasMessage(MESSAGE_MATCHES)

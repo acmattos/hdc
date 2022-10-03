@@ -53,7 +53,7 @@ object JavalinServerTest : Spek({
             Given("""a HTTP Server GET route is defined but throws ${InternalServerErrorException::class.java}""") {
                 getRoute = {
                     ApiBuilder.get(uri) {
-                        throw InternalServerErrorException("Condition not met!", MessageTrackerCodeBuilder.build(), Exception()) // TODO FIND CODE
+                        throw InternalServerErrorException("Condition not met!", MessageTrackerCodeBuilder.build().messageTrackerId, Exception()) // TODO FIND CODE
                     }
                 }
             }
@@ -99,7 +99,7 @@ object JavalinServerTest : Spek({
             Given("""a HTTP Server GET route is defined but throws ${AssertionFailedException::class.java}""") {
                 getRoute = {
                     ApiBuilder.get(uri) {
-                        throw AssertionFailedException("Condition not met!", MessageTrackerCodeBuilder.build()) // TODO FIND CODE
+                        throw AssertionFailedException("Condition not met!", MessageTrackerCodeBuilder.build().messageTrackerId) // TODO FIND CODE
                     }
                 }
             }

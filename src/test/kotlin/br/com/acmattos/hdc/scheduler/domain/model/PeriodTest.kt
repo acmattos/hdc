@@ -79,10 +79,10 @@ object PeriodTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, FROM_BIGGER_THAN_TO.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, FROM_BIGGER_THAN_TO.messageTrackerId))
             }
-            And("""exception has code ${FROM_BIGGER_THAN_TO.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", FROM_BIGGER_THAN_TO.code)
+            And("""exception has messageTrackerId ${FROM_BIGGER_THAN_TO.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", FROM_BIGGER_THAN_TO.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -117,10 +117,10 @@ object PeriodTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, SLOT_BELLOW_ONE.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, SLOT_BELLOW_ONE.messageTrackerId))
             }
-            And("""exception has code ${SLOT_BELLOW_ONE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", SLOT_BELLOW_ONE.code)
+            And("""exception has messageTrackerId ${SLOT_BELLOW_ONE.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", SLOT_BELLOW_ONE.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
@@ -155,10 +155,10 @@ object PeriodTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_3, OPERATION_GENERATES_REMINDER.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_3, OPERATION_GENERATES_REMINDER.messageTrackerId))
             }
-            And("""exception has code ${OPERATION_GENERATES_REMINDER.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", OPERATION_GENERATES_REMINDER.code)
+            And("""exception has messageTrackerId ${OPERATION_GENERATES_REMINDER.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", OPERATION_GENERATES_REMINDER.messageTrackerId)
             }
             And("""exception has message $MESSAGE_3""") {
                 assertion.hasMessage(MESSAGE_3)

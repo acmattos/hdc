@@ -4,8 +4,8 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EventStore
 import br.com.acmattos.hdc.common.context.domain.model.Repository
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.common.tool.page.EqFilter
-import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_ALREADY_DEFINED
 import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.PROCEDURE_NOT_DEFINED
 import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
@@ -32,7 +32,7 @@ import org.assertj.core.api.Assertions.assertThatCode
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-private const val EXCEPTION_MESSAGE_1 = "There is a dental procedure already defined for the given code [81000014]!"
+private const val EXCEPTION_MESSAGE_1 = "There is a dental procedure already defined for the given messageTrackerId [81000014]!"
 private const val EXCEPTION_MESSAGE_2 = "Code is out of range (81000014-87000199)!"
 private const val EXCEPTION_MESSAGE_3 = "Description length is out of range (3-120)!"
 private const val EXCEPTION_MESSAGE_4 = "There is no dental procedure defined for the given id [12345678901234567890123456]!"
@@ -151,15 +151,15 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasSameClassAs(
                     AssertionFailedException(
                         EXCEPTION_MESSAGE_1,
-                        PROCEDURE_ALREADY_DEFINED.code
+                        PROCEDURE_ALREADY_DEFINED.messageTrackerId
                     )
                 )
             }
             And("""the message is $EXCEPTION_MESSAGE_1""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE_1)
             }
-            And("""exception has code ${PROCEDURE_ALREADY_DEFINED.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", PROCEDURE_ALREADY_DEFINED.code)
+            And("""exception has messageTrackerId ${PROCEDURE_ALREADY_DEFINED.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", PROCEDURE_ALREADY_DEFINED.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -183,7 +183,7 @@ object ProcedureCommandHandlerServiceTest: Spek({
             }
         }
 
-        Scenario("handling ${CreateDentalProcedureCommand::class.java.simpleName} for an invalid code") {
+        Scenario("handling ${CreateDentalProcedureCommand::class.java.simpleName} for an invalid messageTrackerId") {
             lateinit var command: CreateDentalProcedureCommand
             lateinit var eventStore: EventStore<ProcedureEvent>
             lateinit var repository: Repository<Procedure>
@@ -221,15 +221,15 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasSameClassAs(
                     AssertionFailedException(
                         EXCEPTION_MESSAGE_2,
-                        Id_OUT_OF_RANGE.code
+                        Id_OUT_OF_RANGE.messageTrackerId
                     )
                 )
             }
             And("""the message is $EXCEPTION_MESSAGE_2""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE_2)
             }
-            And("""exception has code ${Id_OUT_OF_RANGE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.code)
+            And("""exception has messageTrackerId ${Id_OUT_OF_RANGE.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", Id_OUT_OF_RANGE.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -292,15 +292,15 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasSameClassAs(
                     AssertionFailedException(
                         EXCEPTION_MESSAGE_3,
-                        DESCRIPTION_INVALID_LENGTH.code
+                        DESCRIPTION_INVALID_LENGTH.messageTrackerId
                     )
                 )
             }
             And("""the message is $EXCEPTION_MESSAGE_3""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE_3)
             }
-            And("""exception has code ${DESCRIPTION_INVALID_LENGTH.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", DESCRIPTION_INVALID_LENGTH.code)
+            And("""exception has messageTrackerId ${DESCRIPTION_INVALID_LENGTH.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -433,15 +433,15 @@ object ProcedureCommandHandlerServiceTest: Spek({
                     assertion.hasSameClassAs(
                         AssertionFailedException(
                             EXCEPTION_MESSAGE_4,
-                            PROCEDURE_NOT_DEFINED.code
+                            PROCEDURE_NOT_DEFINED.messageTrackerId
                         )
                     )
                 }
                 And("""the message is $EXCEPTION_MESSAGE_4""") {
                     assertion.hasMessage(EXCEPTION_MESSAGE_4)
                 }
-                And("""exception has code ${PROCEDURE_NOT_DEFINED.code}""") {
-                    assertion.hasFieldOrPropertyWithValue("code", PROCEDURE_NOT_DEFINED.code)
+                And("""exception has messageTrackerId ${PROCEDURE_NOT_DEFINED.messageTrackerId}""") {
+                    assertion.hasFieldOrPropertyWithValue("messageTrackerId", PROCEDURE_NOT_DEFINED.messageTrackerId)
                 }
                 And("""the repository#update is not accessed""") {
                     verify(exactly = 0) {

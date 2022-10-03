@@ -39,7 +39,7 @@ object ExceptionCatcherTest: Spek({
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
-                        CAUGHT_EXCEPTION.code,
+                        CAUGHT_EXCEPTION.messageTrackerId,
                          TEST
                     ) {
                         block()
@@ -49,15 +49,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     EXCEPTION_MESSAGE,
-                    CAUGHT_EXCEPTION.code,
+                    CAUGHT_EXCEPTION.messageTrackerId,
                     Exception(EXCEPTION_MESSAGE)
                 ))
             }
             And("""message is $EXCEPTION_MESSAGE""") {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
+            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
@@ -86,7 +86,7 @@ object ExceptionCatcherTest: Spek({
             When("""#catch is executed""") {
                 assertion = assertThatCode {
                     catch("[{}] - Trace Message",
-                        CAUGHT_EXCEPTION.code,
+                        CAUGHT_EXCEPTION.messageTrackerId,
                         TEST
                     ) {
                         block()
@@ -96,15 +96,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     CAUSE_MESSAGE,
-                    CAUGHT_EXCEPTION.code,
+                    CAUGHT_EXCEPTION.messageTrackerId,
                     Exception(Exception(CAUSE_MESSAGE))
                 ))
             }
             And("""message is $CAUSE_MESSAGE""") {
                 assertion.hasMessage(CAUSE_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
+            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
@@ -137,7 +137,7 @@ object ExceptionCatcherTest: Spek({
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
-                        CAUGHT_EXCEPTION.code,
+                        CAUGHT_EXCEPTION.messageTrackerId,
                         TEST
                     ) {
                         block()
@@ -147,15 +147,15 @@ object ExceptionCatcherTest: Spek({
             Then("""${InternalServerErrorException::class.java} is raised""") {
                 assertion.hasSameClassAs(InternalServerErrorException(
                     NO_MESSAGE,
-                    CAUGHT_EXCEPTION.code,
+                    CAUGHT_EXCEPTION.messageTrackerId,
                     Exception()
                 ))
             }
             And("""message is $NO_MESSAGE""") {
                 assertion.hasMessage(NO_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.code)
+            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
             And("""the message is $LOGGER_MESSAGE""") {
                 assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
@@ -185,7 +185,7 @@ object ExceptionCatcherTest: Spek({
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
-                        CAUGHT_EXCEPTION.code,
+                        CAUGHT_EXCEPTION.messageTrackerId,
                         TEST
                     ) {
                         block()

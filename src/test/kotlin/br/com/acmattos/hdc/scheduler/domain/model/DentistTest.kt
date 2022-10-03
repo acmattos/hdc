@@ -64,10 +64,10 @@ object DentistTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, INVALID_DENTIST_FULL_NAME.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE, INVALID_DENTIST_FULL_NAME.messageTrackerId))
             }
-            And("""exception has code ${INVALID_DENTIST_FULL_NAME.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", INVALID_DENTIST_FULL_NAME.code)
+            And("""exception has messageTrackerId ${INVALID_DENTIST_FULL_NAME.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_DENTIST_FULL_NAME.messageTrackerId)
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)

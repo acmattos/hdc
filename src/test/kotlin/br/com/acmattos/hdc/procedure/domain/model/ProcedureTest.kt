@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.procedure.domain.model
 
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
-import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
@@ -34,23 +34,23 @@ object ProcedureTest: Spek({
             }
         }
 
-        Scenario("invalid code") {
-            var code: Int? = null
+        Scenario("invalid messageTrackerId") {
+            var messageTrackerId: Int? = null
             var entity: Procedure? = null
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            Given("an invalid code") {
-                code = 1
+            Given("an invalid messageTrackerId") {
+                messageTrackerId = 1
             }
             When("an unsuccessful procedure instantiation is done") {
                 assertion = assertThatCode {
-                    entity = ProcedureBuilder.buildWithInvalidCode(code!!)
+                    entity = ProcedureBuilder.buildWithInvalidCode(messageTrackerId!!)
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, Id_OUT_OF_RANGE.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, Id_OUT_OF_RANGE.messageTrackerId))
             }
-            And("""exception has code ${Id_OUT_OF_RANGE.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.code)
+            And("""exception has messageTrackerId ${Id_OUT_OF_RANGE.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", Id_OUT_OF_RANGE.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -73,10 +73,10 @@ object ProcedureTest: Spek({
                 }
             }
             Then("""instantiation throws exception""") {
-                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, DESCRIPTION_INVALID_LENGTH.code))
+                assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, DESCRIPTION_INVALID_LENGTH.messageTrackerId))
             }
-            And("""exception has code ${DESCRIPTION_INVALID_LENGTH.code}""") {
-                assertion.hasFieldOrPropertyWithValue("code", DESCRIPTION_INVALID_LENGTH.code)
+            And("""exception has messageTrackerId ${DESCRIPTION_INVALID_LENGTH.messageTrackerId}""") {
+                assertion.hasFieldOrPropertyWithValue("messageTrackerId", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
