@@ -50,7 +50,7 @@ object ProcedureTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, Id_OUT_OF_RANGE.messageTrackerId))
             }
             And("""exception has messageTrackerId ${Id_OUT_OF_RANGE.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", Id_OUT_OF_RANGE.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -76,7 +76,7 @@ object ProcedureTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, DESCRIPTION_INVALID_LENGTH.messageTrackerId))
             }
             And("""exception has messageTrackerId ${DESCRIPTION_INVALID_LENGTH.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
