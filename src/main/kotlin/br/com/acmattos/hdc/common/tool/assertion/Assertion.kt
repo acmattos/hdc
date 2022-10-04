@@ -47,5 +47,5 @@ object Assertion: Loggable() {
  */
 data class AssertionFailedException(
     override val message: String,
-    val messageTrackerId: MessageTrackerId,
-): HdcGenericException(message, messageTrackerId)
+    val code: MessageTrackerId,
+): HdcGenericException(message, code)
