@@ -11,9 +11,9 @@ import org.spekframework.spek2.style.gherkin.Feature
 
 private const val MESSAGE = "Condition has failed!"
 private const val CONTEXT = "TEST"
-private const val LOG_MESSAGE_1 = "[$CONTEXT ASSERTION] - Assertion to be evaluated..."
-private const val LOG_MESSAGE_2 = "[$CONTEXT ASSERTION] - Assertion evaluated successfully!"
-private const val LOG_MESSAGE_3 = "[$CONTEXT ASSERTION FAILURE]: -> '$MESSAGE' <-"
+private const val LOG_MESSAGE_1 = "[$CONTEXT ASSERTION <MTI>] - Assertion to be evaluated..."
+private const val LOG_MESSAGE_2 = "[$CONTEXT ASSERTION <MTI>] - Assertion evaluated successfully!"
+private const val LOG_MESSAGE_3 = "[$CONTEXT ASSERTION <MTI> FAILURE]: -> '$MESSAGE' <-"
 
 /**
  * @author ACMattos
@@ -44,8 +44,8 @@ object AssertionTest: Spek({
             And("""the message is $LOG_MESSAGE_2""") {
                 assertThat(appender.containsMessage(LOG_MESSAGE_2)).isTrue()
             }
-            And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.TRACE)
+            And("the level is ${Level.DEBUG}") {
+                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.DEBUG)
             }
         }
 
@@ -82,13 +82,13 @@ object AssertionTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE, MessageTrackerCodeBuilder.build().messageTrackerId()))
             }
             And("""code is ${MessageTrackerCodeBuilder.build()}""") {
-                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())
+                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build().messageTrackerId)
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)
             }
             And("""exception has code ${MessageTrackerCodeBuilder.build()}""") {
-                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())
+                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build().messageTrackerId)
             }
         }
     }
