@@ -119,7 +119,7 @@ object ExceptionCatcherTest: Spek({
                 assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
             }
             And("there is no more log messages") {
-                assertThat(appender.eventsSize()).isEqualTo(2)
+                assertThat(appender.eventsSize()).isEqualTo(3)
             }
         }
 
