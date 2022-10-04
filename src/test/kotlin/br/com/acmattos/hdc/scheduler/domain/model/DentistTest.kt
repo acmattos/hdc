@@ -67,7 +67,7 @@ object DentistTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE, INVALID_DENTIST_FULL_NAME.messageTrackerId))
             }
             And("""exception has messageTrackerId ${INVALID_DENTIST_FULL_NAME.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", INVALID_DENTIST_FULL_NAME.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", INVALID_DENTIST_FULL_NAME.messageTrackerId)
             }
             And("""exception has message $MESSAGE""") {
                 assertion.hasMessage(MESSAGE)
