@@ -87,7 +87,7 @@ object MdbRepositoryTest: Spek({
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
             And("""code is $SAVE_FAILED""") {
-                assertion.hasFieldOrPropertyWithValue("code", SAVE_FAILED)
+                assertion.hasFieldOrPropertyWithValue("code", SAVE_FAILED.messageTrackerId)
             }
             And("""the message is $MESSAGE_SAVE""") {
                 assertThat(appender.containsMessage(MESSAGE_SAVE)).isTrue()
