@@ -83,7 +83,7 @@ object AppointmentTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId))
             }
             And("""exception has messageTrackerId ${ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", ENTITY_APPOINTMENT_STATUS_MUST_BE_FREED.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -120,7 +120,7 @@ object AppointmentTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId))
             }
             And("""exception has messageTrackerId ${ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", ENTITY_APPOINTMENT_ENABLED_MUST_BE_TRUE.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
