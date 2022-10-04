@@ -59,7 +59,7 @@ object ScheduleTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_1, NO_PERIODS_DEFINED.messageTrackerId))
             }
             And("""exception has messageTrackerId ${NO_PERIODS_DEFINED.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", NO_PERIODS_DEFINED.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", NO_PERIODS_DEFINED.messageTrackerId)
             }
             And("""exception has message $MESSAGE_1""") {
                 assertion.hasMessage(MESSAGE_1)
@@ -86,7 +86,7 @@ object ScheduleTest: Spek({
                 assertion.hasSameClassAs(AssertionFailedException(MESSAGE_2, THERE_IS_A_COLLISION.messageTrackerId))
             }
             And("""exception has messageTrackerId ${THERE_IS_A_COLLISION.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", THERE_IS_A_COLLISION.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", THERE_IS_A_COLLISION.messageTrackerId)
             }
             And("""exception has message $MESSAGE_2""") {
                 assertion.hasMessage(MESSAGE_2)
