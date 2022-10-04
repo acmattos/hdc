@@ -159,7 +159,7 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasMessage(EXCEPTION_MESSAGE_1)
             }
             And("""exception has messageTrackerId ${PROCEDURE_ALREADY_DEFINED.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", PROCEDURE_ALREADY_DEFINED.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", PROCEDURE_ALREADY_DEFINED.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -229,7 +229,7 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasMessage(EXCEPTION_MESSAGE_2)
             }
             And("""exception has messageTrackerId ${Id_OUT_OF_RANGE.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", Id_OUT_OF_RANGE.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", Id_OUT_OF_RANGE.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -300,7 +300,7 @@ object ProcedureCommandHandlerServiceTest: Spek({
                 assertion.hasMessage(EXCEPTION_MESSAGE_3)
             }
             And("""exception has messageTrackerId ${DESCRIPTION_INVALID_LENGTH.messageTrackerId}""") {
-                assertion.hasFieldOrPropertyWithValue("messageTrackerId", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
+                assertion.hasFieldOrPropertyWithValue("code", DESCRIPTION_INVALID_LENGTH.messageTrackerId)
             }
             And("""the repository#save is not accessed""") {
                 verify(exactly = 0) {
@@ -441,7 +441,7 @@ object ProcedureCommandHandlerServiceTest: Spek({
                     assertion.hasMessage(EXCEPTION_MESSAGE_4)
                 }
                 And("""exception has messageTrackerId ${PROCEDURE_NOT_DEFINED.messageTrackerId}""") {
-                    assertion.hasFieldOrPropertyWithValue("messageTrackerId", PROCEDURE_NOT_DEFINED.messageTrackerId)
+                    assertion.hasFieldOrPropertyWithValue("code", PROCEDURE_NOT_DEFINED.messageTrackerId)
                 }
                 And("""the repository#update is not accessed""") {
                     verify(exactly = 0) {
