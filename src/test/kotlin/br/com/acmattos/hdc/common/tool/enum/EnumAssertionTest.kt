@@ -63,7 +63,7 @@ object EnumAssertionTest: Spek({
                 assertion.hasMessage(MESSAGE)
             }
             And("""exception has code ${MessageTrackerCodeBuilder.build()}""") {
-                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())
+                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build().messageTrackerId)
             }
             And("""no enum was retrieved""") {
                 assertThat(enum).isNull()
@@ -112,7 +112,7 @@ object EnumAssertionTest: Spek({
                 assertion.hasMessage(MESSAGE_MATCHES)
             }
             And("""exception has code ${MessageTrackerCodeBuilder.build()}""") {
-                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build())
+                assertion.hasFieldOrPropertyWithValue("code", MessageTrackerCodeBuilder.build().messageTrackerId)
             }
             And("""no enum was retrieved""") {
                 assertThat(enum).isNull()
