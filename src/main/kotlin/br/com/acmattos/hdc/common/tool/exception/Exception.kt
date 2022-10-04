@@ -9,6 +9,6 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTrackerId
  */
 class InternalServerErrorException(
     message: String,
-    val messageTrackerId: MessageTrackerId,
+    val code: MessageTrackerId,
     throwable: Throwable
-): HdcGenericException(message, messageTrackerId, throwable)
+): HdcGenericException(message, code, throwable)
