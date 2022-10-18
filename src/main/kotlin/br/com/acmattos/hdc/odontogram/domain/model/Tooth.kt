@@ -14,7 +14,7 @@ import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SURFACE_TYPE_N
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SURFACE_TYPE_NOT_ALLOWED_MESIAL
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SURFACE_TYPE_NOT_ALLOWED_OCCLUSAL
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SURFACE_TYPE_NOT_ALLOWED_PALATAL
-import br.com.acmattos.hdc.odontogram.config.MetaOdontogramLogEnum.TOOTH
+import br.com.acmattos.hdc.odontogram.config.OdontogramLogEnum.TOOTH
 import java.time.LocalDateTime
 
 /**
