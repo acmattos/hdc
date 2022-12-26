@@ -19,7 +19,7 @@ class ContextBuilder {
     val req = mockk<HttpServletRequest>()
     val res = mockk<HttpServletResponse>()
 
-    fun mockContext(matchedPath: String, jsonBody: String = ""): Context {
+    fun mockContext(matchedPath: String = "", jsonBody: String = ""): Context {
         val context: Context = ContextUtil.init(
             req,
             res,
