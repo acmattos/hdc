@@ -8,7 +8,7 @@ import br.com.acmattos.hdc.common.tool.server.javalin.MessageTracker
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.CODE_OUT_OF_RANGE
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SIZE_DIFFERENT_THAN_EIGHT
 import br.com.acmattos.hdc.odontogram.config.MessageTrackerIdEnum.SIZE_DIFFERENT_THAN_FIVE
-import br.com.acmattos.hdc.odontogram.config.MetaOdontogramLogEnum.ODONTOGRAM
+import br.com.acmattos.hdc.odontogram.config.OdontogramLogEnum.ODONTOGRAM
 import java.time.LocalDateTime
 
 /**
@@ -29,7 +29,7 @@ data class Odontogram(
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
 ): Entity {
-    val odontogramId get() = odontogramIdData!!
+    val odontogramId get() = odontogramIdData ?: ""
     val upperLeft get() = upperLeftData!!
     val upperRight get() = upperRightData!!
     val lowerLeft get() = lowerLeftData!!
