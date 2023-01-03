@@ -115,7 +115,7 @@
 
    class Http {
       constructor() {
-         this.baseUrl = window.location.protocol + '//' + window.location.hostname;// + ':8080/service';
+         this.baseUrl = window.location.protocol + '//' + window.location.hostname + ':7000';
          this.config = {
             type: 'POST',
             dataType: 'json',
@@ -341,4 +341,9 @@
    window.Timer = Timer;
    window.timer = new Timer();
 })();
-
+/*
+function str2Number(numberAsString){
+  const number = parseFloat(numberAsString).toFixed(2) * 100;
+  return +(Math.round(number + "e+2") + "e-2");
+}\\\\\\\\\\\\\\\\\
+* */

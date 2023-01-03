@@ -42,7 +42,7 @@
          let promise = deferred.promise();
          if(this.fromPage()) {
             let request = this.createRequest();
-            resource.post(':7000/procedures', request)
+            resource.post('/procedures', request)
             .done((response) => {
                deferred.resolve(response);
             })
@@ -61,7 +61,7 @@
       static read(procedureId) {
          let deferred = $.Deferred();
          let promise = deferred.promise();
-         resource.get(':7000/procedures/' + procedureId)
+         resource.get('/procedures/' + procedureId)
          .done((response) => {logger.delete(response)
             deferred.resolve(new Procedure(response.data));
          })
@@ -79,7 +79,7 @@
             let request = this.createRequest();
             request.procedure_id = procedure.procedureId;
             request.enabled = procedure.enabled ? true : true// TODO ADJUST
-            resource.put(':7000/procedures', request)
+            resource.put('/procedures', request)
             .done((response) => {
                deferred.resolve(response);
             })
@@ -98,7 +98,7 @@
       delete() {
          let deferred = $.Deferred();
          let promise = deferred.promise();
-         resource.delete(':7000/procedures/' + this.procedureId)
+         resource.delete('/procedures/' + this.procedureId)
          .done((response) => {
             deferred.resolve(response);
          })

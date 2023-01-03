@@ -21,7 +21,7 @@
       }
       prefixId() { return '#familyGroupList'; }
       newItemId() { return '#newTrFamilyItem'; }
-      uri() { return ':7000/persons'; }
+      uri() { return '/persons'; }
       queryString() {
          return "?f_person_ids={0}".format(this.fromPatient());
       }

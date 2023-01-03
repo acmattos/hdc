@@ -38,7 +38,7 @@
       static read(responsibleId) {
          let deferred = $.Deferred();
          let promise = deferred.promise();
-         resource.get(':7000/persons/' + responsibleId)
+         resource.get('/persons/' + responsibleId)
          .done((response) => {
             deferred.resolve(response.data);
          })
@@ -153,7 +153,7 @@
             queryTokenizer: Bloodhound.tokenizers.whitespace,
             limit: 10,
             remote: {
-               url: 'http://localhost:7000/persons?f_full_name=*%QUERY*',
+               url: http.getFullUrl('/persons?f_full_name=*%QUERY*'),
                wildcard: '%QUERY',
                transform: function(response) {
                   return $.map(response.data.results, function(patient) {

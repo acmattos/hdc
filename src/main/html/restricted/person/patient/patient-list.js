@@ -27,7 +27,7 @@
          }
          prefixId() { return '#patientList';  }
          newItemId() { return '#newItem'; }
-         uri() { return ':7000/persons';  }
+         uri() { return '/persons';  }
          queryString() {
             this.fcpf = $.inputText(this.fcpfId) + '*';;
             this.ffullName = $.inputText(this.ffullNameId) + '*';;
@@ -267,7 +267,7 @@
          initContactTypes() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/contact_types')
+            resource.get('/persons/contact_types')
                .done((response) => {
                   response.data.forEach(element => {
                      this.contactTypes.push({"id": element, "text": message.get(element)})
@@ -283,7 +283,7 @@
          initGenders() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/genders')
+            resource.get('/persons/genders')
             .done((response) => {
                response.data.forEach(element => {
                   this.genders.push({"id": element, "text": message.get(element)})
@@ -299,7 +299,7 @@
          initMaritalStatuses() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/marital_statuses')
+            resource.get('/persons/marital_statuses')
             .done((response) => {
                response.data.forEach(element => {
                   this.maritalStatuses.push({"id": element, "text": message.get(element)})
@@ -315,7 +315,7 @@
          initPersonTypes() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/person_types')
+            resource.get('/persons/person_types')
                .done((response) => {
                   response.data.forEach(element => {
                      this.personTypes.push({"id": element, "text": message.get(element)})
@@ -331,7 +331,7 @@
          initStates() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/states')
+            resource.get('/persons/states')
             .done((response) => {
                response.data.forEach(element => {
                   this.states.push({"id": element, "text": message.get(element)})
@@ -347,7 +347,7 @@
          initStatuses() {
             let deferred = $.Deferred();
             let promise = deferred.promise();
-            resource.get(':7000/persons/statuses')
+            resource.get('/persons/statuses')
             .done((response) => {
                response.data.forEach(element => {
                   this.statuses.push({"id": element, "text": message.get(element)})

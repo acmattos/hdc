@@ -200,7 +200,7 @@
          let promise = deferred.promise();
          if(this.fromPage()) {
             let request = this.createRequest();
-            resource.post(':7000/persons', request)
+            resource.post('/persons', request)
             .done((response) => {
                deferred.resolve(response);
             })
@@ -219,7 +219,7 @@
       static read(contactTypes, personId) {
          var deferred = $.Deferred();
          var promise = deferred.promise();
-         resource.get(':7000/persons/' + personId)
+         resource.get('/persons/' + personId)
          .done((response) => {
             deferred.resolve(new Patient(contactTypes, response.data));
          })
@@ -237,7 +237,7 @@
             let request = this.createRequest();
             request.person_id = patient.personId;
             request.enabled = patient.enabled ? true : true// TODO ADJUST
-            resource.put(':7000/persons/', request)
+            resource.put('/persons/', request)
             .done((response) => {
                deferred.resolve(response);
             })
@@ -256,7 +256,7 @@
       delete() {
          let deferred = $.Deferred();
          let promise = deferred.promise();
-         resource.delete(':7000/persons/' + this.personId)
+         resource.delete('/persons/' + this.personId)
          .done((response) => {
             deferred.resolve(response);
          })
@@ -273,7 +273,7 @@
          $.selectBuilder(this.maritalStatusId, this.maritalStatus, maritalStatuses);
          $.selectBuilder(this.genderId, this.gender, genders);
          $.selectBuilder(this.personTypeId, this.personType, personTypes);
-         $.inputText(this.cpfId, this.cpf, '999.999.999-99');
+         $.inputText(this.cpfId, this.cpf, '123.456.789-09');
          $.inputText(this.personalIdId, this.personalId);
          $.inputText(this.occupationId, this.occupation);
          this.addresses.forEach((item, index, array) => {

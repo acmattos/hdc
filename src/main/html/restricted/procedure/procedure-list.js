@@ -15,7 +15,7 @@
          }
          prefixId() { return '#procedureList'; }
          newItemId() { return '#newItem'; }
-         uri() { return ':7000/procedures'; }
+         uri() { return '/procedures'; }
          queryString() {
             this.fcode = $.inputText(this.fcodeId);
             this.fdescription = $.inputText(this.fdescriptionId);
