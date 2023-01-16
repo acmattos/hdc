@@ -42,7 +42,7 @@ object AppointmentMdbDocumentTest: Spek({
                 event = CreateAppointmentForTheScheduleEvent(commands.first())
             }
             And("""a ${Appointment::class.java} successfully instantiated""") {
-                entity = Appointment.apply(listOf(event))
+                entity = Appointment.apply(listOf(event)) as Appointment
             }
             When("""${AppointmentMdbDocument::class.java} is instantiated""") {
                 document = AppointmentMdbDocument(entity)

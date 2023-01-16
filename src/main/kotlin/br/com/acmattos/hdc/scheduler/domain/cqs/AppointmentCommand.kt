@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.scheduler.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Command
+import br.com.acmattos.hdc.common.context.domain.cqs.AuditableCommand
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.scheduler.domain.model.AppointmentId
 import br.com.acmattos.hdc.scheduler.domain.model.AppointmentStatus
@@ -18,7 +18,7 @@ open class AppointmentCommand(
     open val appointmentId: AppointmentId,
     open val scheduleId: ScheduleId,
     override val auditLog: AuditLog
-): Command(auditLog)
+): AuditableCommand(auditLog)
 
 /**
  * @author ACMattos

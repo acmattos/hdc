@@ -14,8 +14,8 @@ object AppointmentRequestBuilder {
     }
 
     fun getContext() = ContextBuilder().mockContext(
-        "schedule_id",
-        """
+        matchedPath = "schedule_id",
+        jsonBody = """
             {
                "from":"2021-11-07",
                "to":"2021-11-12"
