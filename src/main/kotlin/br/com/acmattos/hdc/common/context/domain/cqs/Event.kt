@@ -5,13 +5,44 @@ import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.person.domain.cqs.CreatePatientEvent
 import br.com.acmattos.hdc.person.domain.cqs.UpdatePatientEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureDeleteEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpdateEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpsertEvent
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEvent
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleEvent
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+
+/**
+ * @author ACMattos
+ * @since 06/01/2023.
+ */
+interface Event
+
+/**
+ * @author ACMattos
+ * @since 06/01/2023.
+ */
+interface CreateEvent: Event
+
+/**
+ * @author ACMattos
+ * @since 06/01/2023.
+ */
+interface UpdateEvent: Event
+
+/**
+ * @author ACMattos
+ * @since 06/01/2023.
+ */
+interface UpsertEvent: Event
+
+/**
+ * @author ACMattos
+ * @since 06/01/2023.
+ */
+interface DeleteEvent: Event
 
 /**
  * @author ACMattos
@@ -25,17 +56,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 @JsonSubTypes(
     JsonSubTypes.Type(value = CreateAScheduleForTheDentistEvent::class, name = "CreateAScheduleForTheDentistEvent"),
     JsonSubTypes.Type(value = CreateAppointmentForTheScheduleEvent::class, name = "CreateAppointmentForTheScheduleEvent"),
-    JsonSubTypes.Type(value = CreateDentalProcedureEvent::class, name = "CreateDentalProcedureEvent"),
-    JsonSubTypes.Type(value = UpdateDentalProcedureEvent::class, name = "UpdateDentalProcedureEvent"),
-    JsonSubTypes.Type(value = DeleteDentalProcedureEvent::class, name = "DeleteDentalProcedureEvent"),
+    JsonSubTypes.Type(value = ProcedureCreateEvent::class, name = "ProcedureCreateEvent"),
+    JsonSubTypes.Type(value = ProcedureUpdateEvent::class, name = "ProcedureUpdateEvent"),
+    JsonSubTypes.Type(value = ProcedureUpsertEvent::class, name = "ProcedureUpsertEvent"),
+    JsonSubTypes.Type(value = ProcedureDeleteEvent::class, name = "ProcedureDeleteEvent"),
     JsonSubTypes.Type(value = CreatePatientEvent::class, name = "CreatePatientEvent"),
     JsonSubTypes.Type(value = UpdatePatientEvent::class, name = "UpdatePatientEvent"),
 //    JsonSubTypes.Type(value = DeletePatientEvent::class, name = "DeletePatientEvent"),
 )
-open class Event(
+open class EntityEvent(
     open val eventId: EventId,
     open val auditLog: AuditLog
-): Entity {
+): Event, Entity {
     constructor(
         auditLog: AuditLog
     ): this(
@@ -49,6 +81,6 @@ open class Event(
  * @since 01/07/2020.
  */
 class EventId: Id {
-    constructor(id: String): super(id)
+    //constructor(id: String): super(id)
     constructor(): super()
 }
