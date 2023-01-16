@@ -19,6 +19,8 @@ enum class MessageTrackerIdEnum(
     SURFACE_STAMP_CONVERT_FAILED(MessageTrackerId("01FXTSG8Z3Q2MJX8PESM4KVKSP")),
     SIZE_DIFFERENT_THAN_EIGHT(MessageTrackerId("01FXTSG8Z857RMXBZDKHVT7ZGJ")),
     SIZE_DIFFERENT_THAN_FIVE(MessageTrackerId("01FXTSG8Z8KKHVWHP57PKD8N62")),
+    ODONTOGRAM_NOT_DEFINED(MessageTrackerId("01FXZB727RQ2MJX8PESM4KVKSP")),
+
     ;
 
     override fun messageTrackerId() = this.messageTrackerId

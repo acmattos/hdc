@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.common.context.port.persistence.mongodb
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Event
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
 import br.com.acmattos.hdc.common.context.domain.model.Entity
 import org.bson.codecs.pojo.annotations.BsonId
 
@@ -10,9 +10,9 @@ import org.bson.codecs.pojo.annotations.BsonId
  */
 data class MdbEventDocument(
     @BsonId val eventId: String,
-    val event: Event
+    val event: EntityEvent,
 ): MdbDocument() {
-    constructor(event: Event): this(
+    constructor(event: EntityEvent): this(
         event.eventId.id,
         event
     )

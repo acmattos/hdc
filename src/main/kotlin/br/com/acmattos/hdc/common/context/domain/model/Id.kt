@@ -8,7 +8,7 @@ import br.com.acmattos.hdc.common.tool.uid.ULIDGen
  */
 open class Id(
     val id: String
-): Entity {
+) {
     constructor(): this(nextULID())
 
     init {

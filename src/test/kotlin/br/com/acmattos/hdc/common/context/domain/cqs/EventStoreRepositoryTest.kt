@@ -47,4 +47,4 @@ object EventStoreRepositoryTest: Spek({
 class TestEvent(
     override val eventId: EventId,
     override val auditLog: AuditLog
-): Event(eventId, auditLog)
+): EntityEvent(eventId, auditLog)
