@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.scheduler.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Event
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.scheduler.domain.model.Dentist
 import br.com.acmattos.hdc.scheduler.domain.model.Period
@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 open class ScheduleEvent(
     open val scheduleId: ScheduleId,
     override val auditLog: AuditLog
-): Event(auditLog)
+): EntityEvent(auditLog)
 
 /**
  * @author ACMattos
