@@ -1,8 +1,9 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.DomainLogEnum.ENTITY
+import br.com.acmattos.hdc.common.context.config.ContextLogEnum.ENTITY
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
+import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.domain.model.Entity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
@@ -31,7 +32,7 @@ data class Schedule(// TODO Test
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
-): Entity {
+): AppliableEntity {
     val scheduleId get() = scheduleIdData!!
     val dentist get() = dentistData!!
     val periods get() = periodsData!!
@@ -39,14 +40,7 @@ data class Schedule(// TODO Test
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
 
-    fun apply(events: List<ScheduleEvent>): Schedule {
-        for (event in events) {
-            apply(event)
-        }
-        return this
-    }
-
-    fun apply(event: ScheduleEvent): Schedule {
+    override fun apply(event: EntityEvent): Schedule {
         when(event) {
             is CreateAScheduleForTheDentistEvent -> apply(event)
             else -> apply(event as CreateAScheduleForTheDentistEvent)
@@ -274,7 +268,8 @@ data class Schedule(// TODO Test
     }
 
     companion object: Loggable() {
-        fun apply(events: List<ScheduleEvent>): Schedule = Schedule().apply(events)
+        fun apply(events: List<ScheduleEvent>): Schedule =
+            Schedule().apply(events) as Schedule
         fun apply(event: ScheduleEvent): Schedule = Schedule().apply(event)
     }
 }

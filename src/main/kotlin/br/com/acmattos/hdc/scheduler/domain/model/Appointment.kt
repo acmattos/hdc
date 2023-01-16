@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.scheduler.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.model.Entity
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
+import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.enum.assertThatTerm
@@ -30,7 +31,7 @@ data class Appointment(
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
-): Entity {
+): AppliableEntity {
     val appointmentId get() = appointmentIdData!!
     val scheduleId get() = scheduleIdData!!
     val patient get() = patientData
@@ -42,14 +43,7 @@ data class Appointment(
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
 
-    fun apply(events: List<AppointmentEvent>): Appointment {
-        for (event in events) {
-            apply(event)
-        }
-        return this
-    }
-
-    fun apply(event: AppointmentEvent): Appointment {
+    override fun apply(event: EntityEvent): Appointment {
         when(event) {
             is CreateAppointmentForTheScheduleEvent -> apply(event)
             else -> apply(event as CreateAppointmentForTheScheduleEvent)
