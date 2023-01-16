@@ -1,6 +1,7 @@
 package br.com.acmattos.hdc.person.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.model.Entity
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
+import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESSES
@@ -47,7 +48,7 @@ data class Person(// TODO Create tests
     private var enabledData: Boolean = true,
     private var createdAtData: LocalDateTime = LocalDateTime.now(),
     private var updatedAtData: LocalDateTime? = null
-): Entity {
+): AppliableEntity {
     val personId get() = personIdData!!
     val fullName get() = fullNameData!!
     val dob get() = dobData!!
@@ -69,14 +70,7 @@ data class Person(// TODO Create tests
     val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
 
-    fun apply(events: List<PersonEvent>): Person {
-        for (event in events) {
-            apply(event)
-        }
-        return this
-    }
-
-    fun apply(event: PersonEvent): Person {
+    override fun apply(event: EntityEvent): Person {
         when(event) {
             is CreateDentistEvent -> apply(event)
             is CreatePatientEvent -> apply(event)
@@ -320,7 +314,8 @@ data class Person(// TODO Create tests
     }
 
     companion object {
-        fun apply(events: List<PersonEvent>): Person = Person().apply(events)
+        fun apply(events: List<PersonEvent>): Person =
+            Person().apply(events) as Person
         fun apply(event: PersonEvent): Person = Person().apply(event)
     }
 }

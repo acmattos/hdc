@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.person.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Event
+import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.person.domain.model.Address
 import br.com.acmattos.hdc.person.domain.model.Contact
@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 open class PersonEvent(
     open val personId: PersonId,
     override val auditLog: AuditLog
-): Event(auditLog)
+): EntityEvent(auditLog)
 
 /**
  * @author ACMattos

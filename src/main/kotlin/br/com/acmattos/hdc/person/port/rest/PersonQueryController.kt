@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.person.port.rest
 
+import br.com.acmattos.hdc.common.context.config.ContextLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryHandler
 import br.com.acmattos.hdc.common.context.domain.cqs.QueryResult
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.port.rest.EndpointLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable

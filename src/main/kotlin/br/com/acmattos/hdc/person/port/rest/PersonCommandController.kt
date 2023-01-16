@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.person.port.rest
 
+import br.com.acmattos.hdc.common.context.config.ContextLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.port.rest.EndpointLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
@@ -17,8 +17,7 @@ import br.com.acmattos.hdc.person.domain.model.ContactType
 import br.com.acmattos.hdc.person.domain.model.DentalPlan
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.domain.model.State
-import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
-import br.com.acmattos.hdc.procedure.port.rest.UpdateDentalProcedureRequest
+import br.com.acmattos.hdc.procedure.port.rest.ProcedureUpdateRequest
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.HttpMethod
 import io.javalin.plugin.openapi.annotations.OpenApi
@@ -123,7 +122,7 @@ class PersonCommandController(
         operationId = "updatePatient",
         tags = ["Patient"],
         requestBody = OpenApiRequestBody(
-            [OpenApiContent(UpdateDentalProcedureRequest::class)],
+            [OpenApiContent(ProcedureUpdateRequest::class)],
             true,
             "UpdatePatientRequest Sample"
         ),
@@ -153,8 +152,8 @@ class PersonCommandController(
                 )
             }
         logger.info(
-            "[{} {}] - Dental procedure updated successfully!",
-            PROCEDURE.name,
+            "[{} {}] - Patient updated successfully!",
+            PATIENT.name,
             ENDPOINT.name
         )
     }

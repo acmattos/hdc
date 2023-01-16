@@ -1,6 +1,6 @@
 package br.com.acmattos.hdc.person.domain.cqs
 
-import br.com.acmattos.hdc.common.context.domain.cqs.Command
+import br.com.acmattos.hdc.common.context.domain.cqs.AuditableCommand
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.person.domain.model.Address
 import br.com.acmattos.hdc.person.domain.model.Contact
@@ -21,7 +21,7 @@ open class PersonCommand(
     open val personId: PersonId,
     open val fullName: String,
     override val auditLog: AuditLog
-): Command(auditLog)
+): AuditableCommand(auditLog)
 
 /**
  * @author ACMattos

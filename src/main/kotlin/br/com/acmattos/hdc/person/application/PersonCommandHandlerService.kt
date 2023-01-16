@@ -52,54 +52,10 @@ class PersonCommandHandlerService(
             "[{} {}] - Handling command {}...: -> Generated event {} !DONE!<-",
             PERSON.name,
             SERVICE.name,
-            command.javaClass.name,
-            event.javaClass.name
+            command.javaClass.simpleName,
+            event.javaClass.simpleName
         )
         return event
-    }
-
-    private fun handle(command: CreateDentistCommand): PersonEvent {
-        validatePersonDoesNotExist(command)
-        logger.trace(
-            "[{} {}] - Dentist does not exist...",
-            PERSON.name,
-            SERVICE.name
-        )
-
-        return CreateDentistEvent(command).also { event ->
-            logger.trace(
-                "[{} {}] - Event created: -> {} <-",
-                PERSON.name,
-                SERVICE.name,
-                event.toString()
-            )
-
-            Person.apply(event).also { entity ->
-                logger.trace(
-                    "[{} {}] - Entity created: -> {} <-",
-                    PERSON.name,
-                    SERVICE.name,
-                    entity.toString()
-                )
-
-                eventStore.addEvent(event)
-                logger.trace(
-                    "[{} {}] - Event added: -> {} <-",
-                    PERSON.name,
-                    SERVICE.name,
-                    event.javaClass.name
-                )
-
-                repository.save(entity)
-                logger.trace(
-                    "[{} {}] - Entity saved: -> {} <-",
-                    PERSON.name,
-                    SERVICE.name,
-                    entity.javaClass.name
-                )
-            }
-            event
-        }
     }
 
     private fun handle(command: CreatePatientCommand): PersonEvent {
@@ -242,6 +198,50 @@ class PersonCommandHandlerService(
 //            }
 //        }
 //    }
+
+    private fun handle(command: CreateDentistCommand): PersonEvent {
+        validatePersonDoesNotExist(command)
+        logger.trace(
+            "[{} {}] - Dentist does not exist...",
+            PERSON.name,
+            SERVICE.name
+        )
+
+        return CreateDentistEvent(command).also { event ->
+            logger.trace(
+                "[{} {}] - Event created: -> {} <-",
+                PERSON.name,
+                SERVICE.name,
+                event.toString()
+            )
+
+            Person.apply(event).also { entity ->
+                logger.trace(
+                    "[{} {}] - Entity created: -> {} <-",
+                    PERSON.name,
+                    SERVICE.name,
+                    entity.toString()
+                )
+
+                eventStore.addEvent(event)
+                logger.trace(
+                    "[{} {}] - Event added: -> {} <-",
+                    PERSON.name,
+                    SERVICE.name,
+                    event.javaClass.name
+                )
+
+                repository.save(entity)
+                logger.trace(
+                    "[{} {}] - Entity saved: -> {} <-",
+                    PERSON.name,
+                    SERVICE.name,
+                    entity.javaClass.name
+                )
+            }
+            event
+        }
+    }
 
     private fun addEvent(event: PersonEvent) {
         eventStore.addEvent(event)
