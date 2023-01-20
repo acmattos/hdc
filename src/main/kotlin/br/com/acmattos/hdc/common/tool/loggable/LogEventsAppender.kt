@@ -11,13 +11,14 @@ import org.slf4j.LoggerFactory
  * @since 21/09/2021.
  */
 class LogEventsAppender(
-    private val clazz: Class<*>
+    private val clazz: Class<*>,
 ): AppenderBase<ILoggingEvent>() {
     private lateinit var logger: ch.qos.logback.classic.Logger
     private val events: MutableList<ILoggingEvent> = mutableListOf()
 
     init {
         setup()
+        events.clear()
     }
 
     /**
@@ -59,23 +60,31 @@ class LogEventsAppender(
      * Get the logging event by index.
      * @param index
      */
+    @Deprecated("Avoid this", ReplaceWith("#getMessageLevel"))
     fun getLoggingEvent(index: Int) = events[index]
 
     /**
      * Get message by index.
      * @param index
      */
+    @Deprecated("Avoid this", ReplaceWith("#containsMessage"))
     fun getMessage(index: Int): String = getLoggingEvent(index).message
 
     /**
      * Verifies if this appender contains a certain @param message.
      */
-    fun containsMessage(message: String) = events.filter { it.message == message }.map { true }.first()
+    fun containsMessage(message: String) = events
+        .filter { it.message == message }
+        .map { true }
+        .getOrElse(0) { false }
 
     /**
      * Gets the message logging level.
      */
-    fun getMessageLevel(message: String): Level = events.filter { it.message == message }.map { it.level }.first()
+    fun getMessageLevel(message: String): Level = events
+        .filter { it.message == message }
+        .map { it.level }
+        .getOrElse(0) { Level.OFF }
 
     override fun append(eventObject: ILoggingEvent) {
         events.add(eventObject)
