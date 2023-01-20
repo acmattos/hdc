@@ -13,6 +13,7 @@ import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAScheduleForTheDentistEven
 import br.com.acmattos.hdc.scheduler.domain.cqs.CreateAppointmentForTheScheduleEvent
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import java.time.LocalDateTime
 
 /**
  * @author ACMattos
@@ -24,25 +25,34 @@ interface Event
  * @author ACMattos
  * @since 06/01/2023.
  */
-interface CreateEvent: Event
+interface CreateEvent: Event {
+    val createdAt: LocalDateTime
+}
 
 /**
  * @author ACMattos
  * @since 06/01/2023.
  */
-interface UpdateEvent: Event
+interface UpsertEvent: Event {
+    val updatedAt: LocalDateTime
+    val deletedAt: LocalDateTime?
+}
 
 /**
  * @author ACMattos
  * @since 06/01/2023.
  */
-interface UpsertEvent: Event
+interface UpdateEvent: Event {
+    val updatedAt: LocalDateTime?
+}
 
 /**
  * @author ACMattos
  * @since 06/01/2023.
  */
-interface DeleteEvent: Event
+interface DeleteEvent: Event {
+    val deletedAt: LocalDateTime?
+}
 
 /**
  * @author ACMattos
@@ -80,7 +90,4 @@ open class EntityEvent(
  * @author ACMattos
  * @since 01/07/2020.
  */
-class EventId: Id {
-    //constructor(id: String): super(id)
-    constructor(): super()
-}
+class EventId() : Id()
