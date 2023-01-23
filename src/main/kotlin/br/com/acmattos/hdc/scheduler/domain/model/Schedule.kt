@@ -30,8 +30,9 @@ data class Schedule(// TODO Test
     private var dentistData: Dentist? = null,
     private var periodsData: List<Period>? = null,
     private var enabledData: Boolean = true,
-    private var createdAtData: LocalDateTime = LocalDateTime.now(),
-    private var updatedAtData: LocalDateTime? = null
+    override var createdAtData: LocalDateTime = LocalDateTime.now(),
+    override var updatedAtData: LocalDateTime? = null,
+    override var deletedAtData: LocalDateTime? = null,
 ): AppliableEntity {
     val scheduleId get() = scheduleIdData!!
     val dentist get() = dentistData!!

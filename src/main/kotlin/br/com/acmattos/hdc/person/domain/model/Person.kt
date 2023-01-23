@@ -46,8 +46,9 @@ data class Person(// TODO Create tests
     private var statusData: Status? = null,
     private var lastAppointmentData: LocalDate? = null,
     private var enabledData: Boolean = true,
-    private var createdAtData: LocalDateTime = LocalDateTime.now(),
-    private var updatedAtData: LocalDateTime? = null
+    override var createdAtData: LocalDateTime = LocalDateTime.now(),
+    override var updatedAtData: LocalDateTime? = null,
+    override var deletedAtData: LocalDateTime? = null,
 ): AppliableEntity {
     val personId get() = personIdData!!
     val fullName get() = fullNameData!!
