@@ -29,8 +29,9 @@ data class Appointment(
     private var durationData: Long? = null,
     private var statusData: AppointmentStatus = FREED,
     private var enabledData: Boolean = true,
-    private var createdAtData: LocalDateTime = LocalDateTime.now(),
-    private var updatedAtData: LocalDateTime? = null
+    override var createdAtData: LocalDateTime = LocalDateTime.now(),
+    override var updatedAtData: LocalDateTime? = null,
+    override var deletedAtData: LocalDateTime? = null,
 ): AppliableEntity {
     val appointmentId get() = appointmentIdData!!
     val scheduleId get() = scheduleIdData!!
