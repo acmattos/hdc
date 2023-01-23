@@ -98,7 +98,7 @@
       delete() {
          let deferred = $.Deferred();
          let promise = deferred.promise();
-         resource.delete('/procedures/' + this.procedureId)
+         resource.delete('/procedures/' + this.procedureId + ';' + this.code)
          .done((response) => {
             deferred.resolve(response);
          })
