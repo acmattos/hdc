@@ -1,8 +1,8 @@
 package br.com.acmattos.hdc.procedure.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
 import java.time.LocalDateTime
 
 /**
@@ -15,8 +15,8 @@ class ProcedureBuilder {
             code: Int = 81000014,
             description: String = "Procedure description"
         ) = Procedure.apply(
-            CreateDentalProcedureEvent(
-                CreateDentalProcedureCommand(
+            ProcedureCreateEvent(
+                ProcedureCreateCommand(
                     ProcedureId("01FK96GENJKTN1BYZW6BRHFZFJ"),
                     code,
                     description,
