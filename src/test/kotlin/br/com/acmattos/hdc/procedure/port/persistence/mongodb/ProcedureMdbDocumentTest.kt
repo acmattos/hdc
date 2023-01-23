@@ -1,9 +1,9 @@
 package br.com.acmattos.hdc.procedure.port.persistence.mongodb
 
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
 import br.com.acmattos.hdc.procedure.domain.model.Procedure
-import br.com.acmattos.hdc.procedure.port.rest.CreateDentalProcedureRequest
+import br.com.acmattos.hdc.procedure.port.rest.ProcedureCreateRequest
 import br.com.acmattos.hdc.procedure.port.rest.ProcedureRequestBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
@@ -16,19 +16,19 @@ import org.spekframework.spek2.style.gherkin.Feature
 object ProcedureMdbDocumentTest: Spek({
     Feature("${ProcedureMdbDocument::class.java.simpleName} usage") {
         Scenario("${ProcedureMdbDocument::class.java.simpleName} population") {
-            lateinit var request: CreateDentalProcedureRequest
-            lateinit var command: CreateDentalProcedureCommand
-            lateinit var event: CreateDentalProcedureEvent
+            lateinit var request: ProcedureCreateRequest
+            lateinit var command: ProcedureCreateCommand
+            lateinit var event: ProcedureCreateEvent
             lateinit var entity: Procedure
             lateinit var document: ProcedureMdbDocument
-            Given("""a ${CreateDentalProcedureRequest::class.java.simpleName} successfully instantiated""") {
+            Given("""a ${ProcedureCreateRequest::class.java.simpleName} successfully instantiated""") {
                 request = ProcedureRequestBuilder.buildCreateDentalProcedureRequest()
             }
-            And("""a ${CreateDentalProcedureCommand::class.java.simpleName} successfully generated""") {
-                command = (request.toType() as CreateDentalProcedureCommand)
+            And("""a ${ProcedureCreateCommand::class.java.simpleName} successfully generated""") {
+                command = (request.toType() as ProcedureCreateCommand)
             }
-            And("""a ${CreateDentalProcedureEvent::class.java.simpleName} successfully instantiated""") {
-                event = CreateDentalProcedureEvent(command)
+            And("""a ${ProcedureCreateEvent::class.java.simpleName} successfully instantiated""") {
+                event = ProcedureCreateEvent(command)
             }
             And("""a ${Procedure::class.java.simpleName} successfully instantiated""") {
                 entity = Procedure.apply(listOf(event))

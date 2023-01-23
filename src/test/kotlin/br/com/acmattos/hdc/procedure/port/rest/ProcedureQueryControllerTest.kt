@@ -17,7 +17,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import io.mockk.verifyOrder
 import java.util.Optional
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -53,7 +52,7 @@ object ProcedureQueryControllerTest: Spek({
                 every { service.handle(any<FindAllProceduresQuery>()) } returns result
             }
             And("""a ${Context::class.java} mock""") {
-                context = ContextBuilder().mockContext("procedure_id")
+                context = ContextBuilder().mockContext("procedure_ids")
             }
             And("""${JavalinJackson::class.java} is properly configured""") {
                 JavalinJackson.configure(JacksonObjectMapperFactory.build())
