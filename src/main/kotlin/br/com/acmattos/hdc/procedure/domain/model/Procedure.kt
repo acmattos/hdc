@@ -1,15 +1,20 @@
 package br.com.acmattos.hdc.procedure.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.model.Entity
+import br.com.acmattos.hdc.common.context.domain.cqs.CreateEvent
+import br.com.acmattos.hdc.common.context.domain.cqs.DeleteEvent
+import br.com.acmattos.hdc.common.context.domain.cqs.UpdateEvent
+import br.com.acmattos.hdc.common.context.domain.cqs.UpsertEvent
+import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.DESCRIPTION_INVALID_LENGTH
+import br.com.acmattos.hdc.procedure.config.MessageTrackerIdEnum.Id_OUT_OF_RANGE
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpdateEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpsertEvent
 import java.time.LocalDateTime
 
 /**
@@ -21,49 +26,56 @@ data class Procedure(
     private var codeData: Int? = null,
     private var descriptionData: String? = null,
     private var enabledData: Boolean = true,
-    private var createdAtData: LocalDateTime = LocalDateTime.now(),
-    private var updatedAtData: LocalDateTime? = null
-): Entity {
+    override var createdAtData: LocalDateTime = LocalDateTime.now(),
+    override var updatedAtData: LocalDateTime? = null,
+    override var deletedAtData: LocalDateTime? = null,
+): AppliableEntity {
     val procedureId get() = procedureIdData!!
     val code get() = codeData!!
     val description get() = descriptionData!!
-    val enabled get() = enabledData!!
-    val createdAt get() = createdAtData!!
+    val enabled get() = enabledData
+    val createdAt get() = createdAtData
     val updatedAt get() = updatedAtData
+    val deletedAt get() = deletedAtData
 
-    fun apply(events: List<ProcedureEvent>): Procedure {
-        for (event in events) {
-            apply(event)
-        }
-        return this
-    }
 
-    fun apply(event: ProcedureEvent): Procedure {
-        when(event) {
-            is CreateDentalProcedureEvent -> apply(event)
-            else -> apply(event as UpdateDentalProcedureEvent)
-        }
-        return this
-    }
-
-    private fun apply(event: CreateDentalProcedureEvent) {
-        procedureIdData = event.procedureId
+    override fun apply(event: CreateEvent) {
+        procedureIdData = (event as ProcedureCreateEvent).procedureId
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
         createdAtData = event.createdAt
         assertCodeIsValid()
         assertDescriptionIsValid()
+        super.apply(event as CreateEvent)
     }
 
-    private fun apply(event: UpdateDentalProcedureEvent) {
-        procedureIdData = event.procedureId
+    override fun apply(event: UpsertEvent) {
+        procedureIdData = (event as ProcedureUpsertEvent).procedureId
+        codeData = event.code
+        descriptionData = event.description
+        enabledData = event.enabled
+        updatedAtData = event.updatedAt
+        deletedAtData = event.deletedAt
+        assertCodeIsValid()
+        assertDescriptionIsValid()
+        super.apply(event as UpsertEvent)
+    }
+
+    override fun apply(event: UpdateEvent) {
+        procedureIdData = (event as ProcedureUpdateEvent).procedureId
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
         updatedAtData = event.updatedAt
         assertCodeIsValid()
         assertDescriptionIsValid()
+        super.apply(event as UpdateEvent)
+    }
+
+    override fun apply(event: DeleteEvent) {
+        deletedAtData = LocalDateTime.now()
+        super.apply(event)
     }
 
     private fun assertCodeIsValid() {
@@ -87,8 +99,10 @@ data class Procedure(
     }
 
     companion object: Loggable() {
-        fun apply(events: List<ProcedureEvent>): Procedure = Procedure().apply(events)
-        fun apply(event: ProcedureEvent): Procedure = Procedure().apply(event)
+        fun apply(events: List<ProcedureEvent>): Procedure =
+            Procedure().apply(events) as Procedure
+        fun apply(event: ProcedureEvent): Procedure =
+            Procedure().apply(event) as Procedure
     }
 }
 
