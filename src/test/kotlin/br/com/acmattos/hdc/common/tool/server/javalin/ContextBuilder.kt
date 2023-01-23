@@ -19,12 +19,16 @@ class ContextBuilder {
     val req = mockk<HttpServletRequest>()
     val res = mockk<HttpServletResponse>()
 
-    fun mockContext(matchedPath: String = "", jsonBody: String = ""): Context {
+    fun mockContext(
+        matchedPath: String = "",
+        matchedPathValue: String = "01FJJDJKDXN4K558FMCKEMQE6B",
+        jsonBody: String = ""
+    ): Context {
         val context: Context = ContextUtil.init(
             req,
             res,
             matchedPath,
-            mapOf(matchedPath to "01FJJDJKDXN4K558FMCKEMQE6B")
+            mapOf(matchedPath to matchedPathValue)
         )
         every { req.getHeader(any<String>()) } returns "application\\json"
         every { req.inputStream } returns DelegatingServletInputStream(
