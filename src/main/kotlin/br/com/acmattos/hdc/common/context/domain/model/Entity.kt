@@ -74,6 +74,7 @@ interface AppliableEntity: Entity {
     }
 
     fun apply(event: DeleteEvent) {
+        updatedAtData = event.updatedAt
         deletedAtData = event.deletedAt
         assertUpdatedAtIsNull()
         assertDeletedAtIsNotNull()

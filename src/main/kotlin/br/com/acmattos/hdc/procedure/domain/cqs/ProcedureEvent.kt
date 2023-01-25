@@ -99,6 +99,7 @@ data class ProcedureUpdateEvent(
 data class ProcedureDeleteEvent(
     override val procedureId: ProcedureId,
     val code: Int,
+    override val updatedAt: LocalDateTime?,
     override val deletedAt: LocalDateTime,
     override val auditLog: AuditLog,
 ): DeleteEvent, ProcedureEvent(procedureId, auditLog) {
@@ -107,6 +108,7 @@ data class ProcedureDeleteEvent(
     ): this(
         procedureId = command.procedureId,
         code = command.code,
+        updatedAt = command.updatedAt,
         deletedAt = command.deletedAt,
         auditLog = command.auditLog,
     )

@@ -44,7 +44,6 @@ data class Procedure(
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
-        createdAtData = event.createdAt
         assertCodeIsValid()
         assertDescriptionIsValid()
         super.apply(event as CreateEvent)
@@ -55,8 +54,6 @@ data class Procedure(
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
-        updatedAtData = event.updatedAt
-        deletedAtData = event.deletedAt
         assertCodeIsValid()
         assertDescriptionIsValid()
         super.apply(event as UpsertEvent)
@@ -67,14 +64,12 @@ data class Procedure(
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
-        updatedAtData = event.updatedAt
         assertCodeIsValid()
         assertDescriptionIsValid()
         super.apply(event as UpdateEvent)
     }
 
     override fun apply(event: DeleteEvent) {
-        deletedAtData = LocalDateTime.now()
         super.apply(event)
     }
 
