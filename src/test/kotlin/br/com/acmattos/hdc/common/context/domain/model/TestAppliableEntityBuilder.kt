@@ -132,6 +132,6 @@ data class TestUpdateEvent(
 ): UpdateEvent, TestEvent()
 
 data class TestDeleteEvent(
-    val updatedAt: LocalDateTime? = null,
+    override val updatedAt: LocalDateTime? = null,
     override val deletedAt: LocalDateTime = DateTimetBuilder.deletedAt(),
 ): DeleteEvent, TestEvent()
