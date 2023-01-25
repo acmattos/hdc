@@ -22,7 +22,7 @@ open class ProcedureCommand(
  * @author ACMattos
  * @since 19/03/2022.
  */
-data class ProcedureCreateCommand private constructor(
+data class ProcedureCreateCommand(
     override val procedureId: ProcedureId,
     val code: Int,
     val description: String,
@@ -48,7 +48,7 @@ data class ProcedureCreateCommand private constructor(
  * @author ACMattos
  * @since 10/01/2023.
  */
-data class ProcedureUpsertCommand private constructor(
+data class ProcedureUpsertCommand(
     override val procedureId: ProcedureId,
     val code: Int,
     val description: String,
@@ -77,7 +77,7 @@ data class ProcedureUpsertCommand private constructor(
  * @author ACMattos
  * @since 24/03/2022.
  */
-data class ProcedureUpdateCommand private constructor(
+data class ProcedureUpdateCommand(
     override val procedureId: ProcedureId,
     val code: Int,
     val description: String,
@@ -105,7 +105,7 @@ data class ProcedureUpdateCommand private constructor(
  * @author ACMattos
  * @since 26/03/2022.
  */
-data class ProcedureDeleteCommand private constructor(
+data class ProcedureDeleteCommand(
     override val procedureId: ProcedureId,
     val code: Int,
     val updatedAt: LocalDateTime?,
