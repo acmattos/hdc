@@ -12,7 +12,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
 
-const val MESSAGE =
+private const val MESSAGE =
     "[STORE] Saving entity [br.com.acmattos.hdc.common.context.domain.model.TestEntity] to repository...: -> !DONE! <-"
 /**
  * @author ACMattos
