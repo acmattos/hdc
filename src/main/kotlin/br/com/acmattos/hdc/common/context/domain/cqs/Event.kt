@@ -51,6 +51,7 @@ interface UpdateEvent: Event {
  * @since 06/01/2023.
  */
 interface DeleteEvent: Event {
+    val updatedAt: LocalDateTime?
     val deletedAt: LocalDateTime?
 }
 
@@ -90,4 +91,4 @@ open class EntityEvent(
  * @author ACMattos
  * @since 01/07/2020.
  */
-class EventId() : Id()
+class EventId: Id()
