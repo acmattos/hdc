@@ -89,26 +89,26 @@ abstract class CommandHandlerService<E: EntityEvent, T: AppliableEntity>(
         saveEntityInRepository(entity)
     }
 
-    fun upsert(event: E, entity: T) {
-        applyEventToEntity(event, entity).also {
+    fun upsert(event: E, entity: T) =
+        applyEventToEntity(event, entity).let {
             addEventToStore(event)
             saveEntityInRepository(entity)
+            event
         }
-    }
 
-    fun update(event: E, entity: T, filter: Filter<*>) {
-        applyEventToEntity(event, entity).also { updated ->
+    fun update(event: E, entity: T, filter: Filter<*>) =
+        applyEventToEntity(event, entity).let { updated ->
             addEventToStore(event)
             updateEntityInRepository(filter, updated)
+            event
         }
-    }
 
-    fun delete(event: E, entity: T, filter: Filter<*>) {
-        applyEventToEntity(event, entity).also { deleted ->
+    fun delete(event: E, entity: T, filter: Filter<*>) =
+        applyEventToEntity(event, entity).let { deleted ->
             addEventToStore(event)
             deleteEntityInRepository(filter, deleted)
+            event
         }
-    }
 
     private fun addEventToStore(event: E) {
         eventStore.addEvent(event)
