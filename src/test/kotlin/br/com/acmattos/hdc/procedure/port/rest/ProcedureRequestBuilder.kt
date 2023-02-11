@@ -7,34 +7,6 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ContextBuilder
  * @since 20/03/2022.
  */
 object ProcedureRequestBuilder {
-    fun buildCreateDentalProcedureRequest() = ProcedureCreateRequest(
-        81000014,
-        "Procedure Description",
-    )
-
-    fun buildCreateDentalProcedureRequestInvalidCode() = ProcedureCreateRequest(
-        8100001,
-        "Procedure Description",
-    )
-
-    fun buildCreateDentalProcedureRequestInvalidDescription() = ProcedureCreateRequest(
-        81000014,
-        "Pr",
-    )
-
-    fun buildUpdateDentalProcedureRequest() = ProcedureUpdateRequest(
-        "12345678901234567890123456",
-        81000014,
-        "Procedure Description",
-        true
-    )
-
-    fun buildDeleteDentalProcedureRequest() = ProcedureDeleteRequest(
-        getContext(
-            matchedPath = "procedure_ids",
-            matchedPathValue = "01FJJDJKDXN4K558FMCKEMQE6B;1"
-        )
-    )
 
     fun buildFindAllProceduresRequest() = FindAllProceduresRequest(
         getContext(matchedPath = "procedure_id")

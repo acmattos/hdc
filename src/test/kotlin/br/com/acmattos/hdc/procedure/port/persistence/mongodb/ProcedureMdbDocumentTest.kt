@@ -3,8 +3,8 @@ package br.com.acmattos.hdc.procedure.port.persistence.mongodb
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
 import br.com.acmattos.hdc.procedure.domain.model.Procedure
+import br.com.acmattos.hdc.procedure.domain.model.RequestBuilder
 import br.com.acmattos.hdc.procedure.port.rest.ProcedureCreateRequest
-import br.com.acmattos.hdc.procedure.port.rest.ProcedureRequestBuilder
 import org.assertj.core.api.Assertions.assertThat
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -22,7 +22,7 @@ object ProcedureMdbDocumentTest: Spek({
             lateinit var entity: Procedure
             lateinit var document: ProcedureMdbDocument
             Given("""a ${ProcedureCreateRequest::class.java.simpleName} successfully instantiated""") {
-                request = ProcedureRequestBuilder.buildCreateDentalProcedureRequest()
+                request = RequestBuilder.buildCreateRequest()
             }
             And("""a ${ProcedureCreateCommand::class.java.simpleName} successfully generated""") {
                 command = (request.toType() as ProcedureCreateCommand)
