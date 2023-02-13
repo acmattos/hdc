@@ -43,7 +43,7 @@ object ProcedureQueryControllerTest: Spek({
                 query = request.toType() as FindAllProceduresQuery
             }
             And("""a ${QueryResult::class.java} successfully instantiated""") {
-                result = QueryResult.build(listOf(ProcedureBuilder.build()))
+                result = QueryResult.build(listOf(ProcedureBuilder.buildCreate()))
             }
             And("""a ${ProcedureQueryHandlerService::class.java} mock""") {
                 service = mockk()
@@ -108,7 +108,7 @@ object ProcedureQueryControllerTest: Spek({
                 query = request.toType() as FindTheProcedureQuery
             }
             And("""a ${QueryResult::class.java} successfully instantiated""") {
-                result = QueryResult.build(Optional.of(ProcedureBuilder.build()))
+                result = QueryResult.build(Optional.of(ProcedureBuilder.buildCreate()))
             }
             And("""a ${ProcedureQueryHandlerService::class.java} mock""") {
                 service = mockk()

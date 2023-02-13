@@ -49,7 +49,7 @@ object ProcedureQueryHandlerServiceTest: Spek({
             And("""repository#findAllByPage returns a${PageResult::class.java.simpleName}""") {
                 every {
                     repository.findAllByPage(any())
-                } returns PageResult.create(listOf(ProcedureBuilder.build()), Page.create(), 1)
+                } returns PageResult.create(listOf(ProcedureBuilder.buildCreate()), Page.create(), 1)
             }
             And("""a ${FindAllProceduresQuery::class.java} created from ${Context::class.java}""") {
                 query = ProcedureRequestBuilder.buildFindAllProceduresRequest()
@@ -147,7 +147,7 @@ object ProcedureQueryHandlerServiceTest: Spek({
                             "01FJJDJKDXN4K558FMCKEMQE6B"
                         )
                     )
-                } returns Optional.of(ProcedureBuilder.build())
+                } returns Optional.of(ProcedureBuilder.buildCreate())
             }
             And("""a ${FindTheProcedureRequest::class.java} created from ${Context::class.java}""") {
                 query = ProcedureRequestBuilder.buildFindTheProcedureRequest()
