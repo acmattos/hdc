@@ -6,12 +6,14 @@ import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
 import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
 import br.com.acmattos.hdc.procedure.application.ProcedureCommandHandlerService
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureDeleteCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureDeleteEvent
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpdateCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpdateEvent
+import br.com.acmattos.hdc.procedure.domain.model.EventBuilder
+import br.com.acmattos.hdc.procedure.domain.model.RequestBuilder
 import io.javalin.http.Context
 import io.javalin.plugin.json.JavalinJackson
 import io.mockk.every
@@ -31,34 +33,30 @@ private const val STATUS_200 = 200
  */
 object ProcedureCommandControllerTest: Spek({
     Feature("${ProcedureCommandController::class.java.simpleName} usage") {
-        Scenario("handling ${CreateDentalProcedureCommand::class.java} successfully") {
-            lateinit var request: CreateDentalProcedureRequest
-            lateinit var command: CreateDentalProcedureCommand
-            lateinit var event: CreateDentalProcedureEvent
+        Scenario("handling ${ProcedureCreateCommand::class.java} successfully") {
+            lateinit var request: ProcedureCreateRequest
+            lateinit var event: ProcedureCreateEvent
             lateinit var service: ProcedureCommandHandlerService
             lateinit var context: Context
             lateinit var controller: ProcedureCommandController
 
-            Given("""a ${CreateDentalProcedureRequest::class.java.simpleName} successfully instantiated""") {
-                request = ProcedureRequestBuilder.buildCreateDentalProcedureRequest()
+            Given("""a ${ProcedureCreateRequest::class.java.simpleName} successfully instantiated""") {
+                request = RequestBuilder.buildCreateRequest()
             }
-            And("""a ${CreateDentalProcedureCommand::class.java.simpleName} successfully generated""") {
-                command = request.toType() as CreateDentalProcedureCommand
-            }
-            And("""a ${CreateDentalProcedureEvent::class.java.simpleName} successfully instantiated""") {
-                event = CreateDentalProcedureEvent(command)
+            And("""a ${ProcedureCreateEvent::class.java.simpleName} successfully instantiated""") {
+                event = EventBuilder.buildCreateEvent()
             }
             And("""a ${ProcedureCommandHandlerService::class.java.simpleName} mock""") {
                 service = mockk()
             }
-            And("""service#handle returning the ${CreateDentalProcedureCommand::class.java.simpleName}""") {
-                every { service.handle(any<CreateDentalProcedureCommand>()) } returns event
+            And("""service#handle returning the ${ProcedureCreateCommand::class.java.simpleName}""") {
+                every { service.handle(any<ProcedureCreateCommand>()) } returns event
             }
             And("""a ${Context::class.java.simpleName} mock""") {
                 context = mockk()
             }
-            And("""context#bodyValidator#get returns ${CreateDentalProcedureRequest::class.java.simpleName}""") {
-                every { context.bodyValidator<CreateDentalProcedureRequest>().get() } returns request
+            And("""context#bodyValidator#get returns ${ProcedureCreateRequest::class.java.simpleName}""") {
+                every { context.bodyValidator<ProcedureCreateRequest>().get() } returns request
             }
             And("""context#fullUrl returns fullUrl""") {
                 every { context.fullUrl() } returns "fullUrl"
@@ -76,14 +74,14 @@ object ProcedureCommandControllerTest: Spek({
                 controller = ProcedureCommandController(service)
             }
             When("""#createDentalProcedure is executed""") {
-                controller.createDentalProcedure(context)
+                controller.create(context)
             }
             Then("""status is $STATUS_201""") {
                 assertThat(context.status()).isEqualTo(STATUS_201)
             }
             And("""the context is accessed in the right order""") {
                 verifyOrder {
-                    context.bodyValidator<CreateDentalProcedureRequest>().get()
+                    context.bodyValidator<ProcedureCreateRequest>().get()
                     context.fullUrl()
                     context.status(STATUS_201)
                     context.status()
@@ -92,39 +90,35 @@ object ProcedureCommandControllerTest: Spek({
             }
             And("""the service is accessed as well""") {
                 verify(exactly = 1) {
-                    service.handle(any<CreateDentalProcedureCommand>())
+                    service.handle(any<ProcedureCreateCommand>())
                 }
             }
         }
 
-        Scenario("handling ${UpdateDentalProcedureCommand::class.java.simpleName} successfully") {
-            lateinit var request: UpdateDentalProcedureRequest
-            lateinit var command: UpdateDentalProcedureCommand
-            lateinit var event: UpdateDentalProcedureEvent
+        Scenario("handling ${ProcedureUpdateCommand::class.java.simpleName} successfully") {
+            lateinit var request: ProcedureUpdateRequest
+            lateinit var event: ProcedureUpdateEvent
             lateinit var service: ProcedureCommandHandlerService
             lateinit var context: Context
             lateinit var controller: ProcedureCommandController
 
-            Given("""a ${UpdateDentalProcedureRequest::class.java.simpleName} successfully instantiated""") {
-                request = ProcedureRequestBuilder.buildUpdateDentalProcedureRequest()
+            Given("""a ${ProcedureUpdateRequest::class.java.simpleName} successfully instantiated""") {
+                request = RequestBuilder.buildUpdateRequest()
             }
-            And("""a ${UpdateDentalProcedureCommand::class.java.simpleName} successfully generated""") {
-                command = request.toType() as UpdateDentalProcedureCommand
-            }
-            And("""a ${UpdateDentalProcedureEvent::class.java.simpleName} successfully instantiated""") {
-                event = UpdateDentalProcedureEvent(command)
+            And("""a ${ProcedureUpdateEvent::class.java.simpleName} successfully instantiated""") {
+                event = EventBuilder.buildUpdateEvent()
             }
             And("""a ${ProcedureCommandHandlerService::class.java.simpleName} mock""") {
                 service = mockk()
             }
-            And("""service#handle returning the ${UpdateDentalProcedureCommand::class.java.simpleName}""") {
-                every { service.handle(any<UpdateDentalProcedureCommand>()) } returns event
+            And("""service#handle returning the ${ProcedureUpdateCommand::class.java.simpleName}""") {
+                every { service.handle(any<ProcedureUpdateCommand>()) } returns event
             }
             And("""a ${Context::class.java.simpleName} mock""") {
                 context = mockk()
             }
-            And("""context#bodyValidator#get returns ${UpdateDentalProcedureRequest::class.java.simpleName}""") {
-                every { context.bodyValidator<UpdateDentalProcedureRequest>().get() } returns request
+            And("""context#bodyValidator#get returns ${ProcedureUpdateRequest::class.java.simpleName}""") {
+                every { context.bodyValidator<ProcedureUpdateRequest>().get() } returns request
             }
             And("""context#fullUrl returns fullUrl""") {
                 every { context.fullUrl() } returns "fullUrl"
@@ -142,14 +136,14 @@ object ProcedureCommandControllerTest: Spek({
                 controller = ProcedureCommandController(service)
             }
             When("""#updateDentalProcedure is executed""") {
-                controller.updateDentalProcedure(context)
+                controller.update(context)
             }
             Then("""status is $STATUS_200""") {
                 assertThat(context.status()).isEqualTo(STATUS_200)
             }
             And("""the context is accessed in the right order""") {
                 verifyOrder {
-                    context.bodyValidator<UpdateDentalProcedureRequest>().get()
+                    context.bodyValidator<ProcedureUpdateRequest>().get()
                     context.fullUrl()
                     context.status(STATUS_200)
                     context.status()
@@ -158,36 +152,28 @@ object ProcedureCommandControllerTest: Spek({
             }
             And("""the service is accessed as well""") {
                 verify(exactly = 1) {
-                    service.handle(any<UpdateDentalProcedureCommand>())
+                    service.handle(any<ProcedureUpdateCommand>())
                 }
             }
         }
 
-        Scenario("handling ${DeleteDentalProcedureCommand::class.java.simpleName} successfully") {
-            lateinit var request: DeleteDentalProcedureRequest
-            lateinit var command: DeleteDentalProcedureCommand
-            lateinit var event: DeleteDentalProcedureEvent
+        Scenario("handling ${ProcedureDeleteCommand::class.java.simpleName} successfully") {
+            lateinit var event: ProcedureDeleteEvent
             lateinit var service: ProcedureCommandHandlerService
             lateinit var context: Context
             lateinit var controller: ProcedureCommandController
 
-            Given("""a ${DeleteDentalProcedureRequest::class.java.simpleName} successfully instantiated""") {
-                request = ProcedureRequestBuilder.buildDeleteDentalProcedureRequest()
-            }
-            And("""a ${DeleteDentalProcedureCommand::class.java.simpleName} successfully generated""") {
-                command = request.toType() as DeleteDentalProcedureCommand
-            }
-            And("""a ${DeleteDentalProcedureEvent::class.java.simpleName} successfully instantiated""") {
-                event = DeleteDentalProcedureEvent(command)
+            Given(""""a ${ProcedureDeleteEvent::class.java.simpleName} successfully instantiated""") {
+                event = EventBuilder.buildDeleteEvent()
             }
             And("""a ${ProcedureCommandHandlerService::class.java.simpleName} mock""") {
                 service = mockk()
             }
-            And("""service#handle returning the ${DeleteDentalProcedureCommand::class.java.simpleName}""") {
-                every { service.handle(any<DeleteDentalProcedureCommand>()) } returns event
+            And("""service#handle returning the ${ProcedureDeleteCommand::class.java.simpleName}""") {
+                every { service.handle(any<ProcedureDeleteCommand>()) } returns event
             }
             And("""a ${Context::class.java} mock""") {
-                context = ContextBuilder().mockContext("procedure_id")
+                context = ContextBuilder().mockContext("procedure_ids", "01FJJDJKDXN4K558FMCKEMQE6B;1")
             }
             And("""${JavalinJackson::class.java} is properly configured""") {
                 JavalinJackson.configure(JacksonObjectMapperFactory.build())
@@ -208,14 +194,14 @@ object ProcedureCommandControllerTest: Spek({
                 controller = ProcedureCommandController(service)
             }
             When("""#deleteDentalProcedure is executed""") {
-                controller.deleteDentalProcedure(context)
+                controller.delete(context)
             }
             Then("""status is $STATUS_200""") {
                 assertThat(context.status()).isEqualTo(STATUS_200)
             }
             And("""the context is accessed in the right order""") {
                 verifyOrder {
-                    context.getRequest(::DeleteDentalProcedureRequest)
+                    context.getRequest(::ProcedureDeleteRequest)
                     context.fullUrl()
                     context.status(STATUS_200)
                     context.status()
@@ -224,7 +210,7 @@ object ProcedureCommandControllerTest: Spek({
             }
             And("""the service is accessed as well""") {
                 verify(exactly = 1) {
-                    service.handle(any<DeleteDentalProcedureCommand>())
+                    service.handle(any<ProcedureDeleteCommand>())
                 }
             }
         }

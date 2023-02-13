@@ -1,18 +1,18 @@
 package br.com.acmattos.hdc.procedure.port.rest
 
+import br.com.acmattos.hdc.common.context.config.ContextLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.domain.cqs.CommandHandler
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.context.port.rest.EndpointLogEnum.ENDPOINT
 import br.com.acmattos.hdc.common.context.port.rest.Request
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum.PROCEDURE
-import br.com.acmattos.hdc.procedure.domain.cqs.CreateDentalProcedureCommand
-import br.com.acmattos.hdc.procedure.domain.cqs.DeleteDentalProcedureCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureDeleteCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureEvent
-import br.com.acmattos.hdc.procedure.domain.cqs.UpdateDentalProcedureCommand
+import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureUpdateCommand
 import io.javalin.http.Context
 import io.javalin.plugin.openapi.annotations.HttpMethod
 import io.javalin.plugin.openapi.annotations.OpenApi
@@ -29,13 +29,13 @@ class ProcedureCommandController(
     private val handler: CommandHandler<ProcedureEvent>
 ) {
     @OpenApi(
-        summary = "Create dental procedure",
-        operationId = "createDentalProcedure",
+        summary = "Create procedure",
+        operationId = "createProcedure",
         tags = ["Procedure"],
         requestBody = OpenApiRequestBody(
-            [OpenApiContent(CreateDentalProcedureRequest::class)],
+            [OpenApiContent(ProcedureCreateRequest::class)],
             true,
-            "CreateDentalProcedureRequest Sample"
+            "ProcedureCreateRequest Sample"
         ),
         responses = [
             OpenApiResponse("201",[
@@ -45,13 +45,13 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun createDentalProcedure(context: Context) {
+    fun create(context: Context) {
         logger.debug(
-            "[{} {}] - Create dental procedure...",
+            "[{} {}] - Create procedure...",
             PROCEDURE.name,
             ENDPOINT.name
         )
-        context.bodyValidator<CreateDentalProcedureRequest>()
+        context.bodyValidator<ProcedureCreateRequest>()
         .get()
         .toType(what = context.fullUrl())
         .also { command ->
@@ -63,20 +63,20 @@ class ProcedureCommandController(
             )
         }
         logger.info(
-            "[{} {}] - Dental procedure created successfully!",
+            "[{} {}] - Procedure created successfully!",
             PROCEDURE.name,
             ENDPOINT.name
         )
     }
 
     @OpenApi(
-        summary = "Update dental procedure",
-        operationId = "updateDentalProcedure",
+        summary = "Update procedure",
+        operationId = "updateProcedure",
         tags = ["Procedure"],
         requestBody = OpenApiRequestBody(
-            [OpenApiContent(UpdateDentalProcedureRequest::class)],
+            [OpenApiContent(ProcedureUpdateRequest::class)],
             true,
-            "UpdateDentalProcedureRequest Sample"
+            "ProcedureUpdateRequest Sample"
         ),
         responses = [
             OpenApiResponse("200",[
@@ -86,13 +86,13 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun updateDentalProcedure(context: Context) {
+    fun update(context: Context) {
         logger.debug(
-            "[{} {}] - Update dental procedure...",
+            "[{} {}] - Update procedure...",
             PROCEDURE.name,
             ENDPOINT.name
         )
-        context.bodyValidator<UpdateDentalProcedureRequest>()
+        context.bodyValidator<ProcedureUpdateRequest>()
             .get()
             .toType(what = context.fullUrl())
             .also { command ->
@@ -104,20 +104,20 @@ class ProcedureCommandController(
                 )
             }
         logger.info(
-            "[{} {}] - Dental procedure updated successfully!",
+            "[{} {}] - Procedure updated successfully!",
             PROCEDURE.name,
             ENDPOINT.name
         )
     }
 
     @OpenApi(
-        summary = "Delete dental procedure",
-        operationId = "deleteDentalProcedure",
+        summary = "Delete procedure",
+        operationId = "deleteProcedure",
         tags = ["Procedure"],
         requestBody = OpenApiRequestBody(
-            [OpenApiContent(DeleteDentalProcedureRequest::class)],
+            [OpenApiContent(ProcedureDeleteRequest::class)],
             true,
-            "DeleteDentalProcedureRequest Sample"
+            "ProcedureDeleteRequest Sample"
         ),
         responses = [
             OpenApiResponse("200",[
@@ -127,13 +127,13 @@ class ProcedureCommandController(
         ],
         method = HttpMethod.POST
     )
-    fun deleteDentalProcedure(context: Context) {
+    fun delete(context: Context) {
         logger.debug(
-            "[{} {}] - Delete dental procedure...",
+            "[{} {}] - Delete procedure...",
             PROCEDURE.name,
             ENDPOINT.name
         )
-        context.getRequest(::DeleteDentalProcedureRequest)
+        context.getRequest(::ProcedureDeleteRequest)
             .toType(what = context.fullUrl())
             .also { command ->
                 context.status(HttpStatus.OK_200).json(
@@ -144,7 +144,7 @@ class ProcedureCommandController(
                 )
             }
         logger.info(
-            "[{} {}] - Dental procedure deleted successfully!",
+            "[{} {}] - Procedure deleted successfully!",
             PROCEDURE.name,
             ENDPOINT.name
         )
@@ -157,12 +157,12 @@ class ProcedureCommandController(
  * @author ACMattos
  * @since 19/03/2022.
  */
-data class CreateDentalProcedureRequest(
+data class ProcedureCreateRequest(
     val code: Int,
     val description: String
 ): Request<ProcedureCommand>() {
     override fun toType(who: String, what: String): ProcedureCommand =
-        CreateDentalProcedureCommand(
+        ProcedureCreateCommand(
             code,
             description,
             AuditLog(who = who, what = what)
@@ -173,14 +173,14 @@ data class CreateDentalProcedureRequest(
  * @author ACMattos
  * @since 24/03/2022.
  */
-data class UpdateDentalProcedureRequest(
+data class ProcedureUpdateRequest(
     val procedureId: String,
     val code: Int,
     val description: String,
     val enabled: Boolean
 ): Request<ProcedureCommand>() {
     override fun toType(who: String, what: String): ProcedureCommand =
-        UpdateDentalProcedureCommand(
+        ProcedureUpdateCommand(
             procedureId,
             code,
             description,
@@ -193,13 +193,15 @@ data class UpdateDentalProcedureRequest(
  * @author ACMattos
  * @since 26/03/2022.
  */
-data class DeleteDentalProcedureRequest(
+data class ProcedureDeleteRequest(
     val context: Context
 ): Request<ProcedureCommand>(context) {
     override fun toType(who: String, what: String): ProcedureCommand {
-        val procedureId = context.pathParam("procedure_id")
-        return DeleteDentalProcedureCommand(
-            procedureId,
+        val procedureIds = context.pathParam("procedure_ids")
+            .split(";")// TODO ASSERT VALUES
+        return ProcedureDeleteCommand(
+            procedureIds[0],
+            procedureIds[1],
             AuditLog(who = who, what = what)
         )
     }
