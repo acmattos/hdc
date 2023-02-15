@@ -78,6 +78,15 @@ abstract class CommandHandlerService<E: EntityEvent, T: AppliableEntity>(
         events: List<EntityEvent>
     ):OneOfTwo<UpsertCommand, CreateCommand>
 
+    protected fun logEntity(oldEntity: T) {
+        logger.trace(
+            "[{} {}] - Entity re-created: -> {} <-",
+            contextName,
+            SERVICE.name,
+            oldEntity.toString()
+        )
+    }
+
     fun create(event: E, entity: T) {
         logger.trace(
             "[{} {}] - Entity created: -> {} <-",
