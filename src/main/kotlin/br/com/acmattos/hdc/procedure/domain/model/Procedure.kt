@@ -1,7 +1,6 @@
 package br.com.acmattos.hdc.procedure.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.cqs.CreateEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.DeleteEvent
 import br.com.acmattos.hdc.common.context.domain.cqs.UpdateEvent
 import br.com.acmattos.hdc.common.context.domain.cqs.UpsertEvent
 import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
@@ -38,7 +37,6 @@ data class Procedure(
     val updatedAt get() = updatedAtData
     val deletedAt get() = deletedAtData
 
-
     override fun apply(event: CreateEvent) {
         procedureIdData = (event as ProcedureCreateEvent).procedureId
         codeData = event.code
@@ -50,8 +48,7 @@ data class Procedure(
     }
 
     override fun apply(event: UpsertEvent) {
-        procedureIdData = (event as ProcedureUpsertEvent).procedureId
-        codeData = event.code
+        codeData = (event as ProcedureUpsertEvent).code
         descriptionData = event.description
         enabledData = event.enabled
         assertCodeIsValid()
@@ -60,17 +57,12 @@ data class Procedure(
     }
 
     override fun apply(event: UpdateEvent) {
-        procedureIdData = (event as ProcedureUpdateEvent).procedureId
-        codeData = event.code
+        codeData = (event as ProcedureUpdateEvent).code
         descriptionData = event.description
         enabledData = event.enabled
         assertCodeIsValid()
         assertDescriptionIsValid()
         super.apply(event as UpdateEvent)
-    }
-
-    override fun apply(event: DeleteEvent) {
-        super.apply(event)
     }
 
     private fun assertCodeIsValid() {
