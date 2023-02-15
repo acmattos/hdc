@@ -88,15 +88,6 @@ class ProcedureCommandHandlerService(
             )
         }
 
-    private fun logEntity(oldEntity: Procedure) {
-        logger.trace(
-            "[{} {}] - Entity re-created: -> {} <-",
-            PROCEDURE.name,
-            SERVICE.name,
-            oldEntity.toString()
-        )
-    }
-
     override fun validateEntityDoesNotExist(
         command: CreateCommand
     ): OneOfTwo<UpsertCommand, CreateCommand> =

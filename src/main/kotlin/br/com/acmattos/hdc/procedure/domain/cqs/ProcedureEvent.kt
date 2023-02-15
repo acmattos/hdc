@@ -33,12 +33,12 @@ data class ProcedureCreateEvent(
     constructor(
         command: ProcedureCreateCommand
     ): this(
-        procedureId = command.procedureId,
-        code = command.code,
+        command.procedureId,
+        command.code,
         description = command.description,
-        enabled = command.enabled,
-        createdAt = command.createdAt,
-        auditLog = command.auditLog,
+        command.enabled,
+        command.createdAt,
+        command.auditLog,
     )
 }
 
@@ -58,13 +58,13 @@ data class ProcedureUpsertEvent(
     constructor(
         command: ProcedureUpsertCommand
     ): this(
-        procedureId = command.procedureId,
-        code = command.code,
-        description = command.description,
-        enabled = command.enabled,
-        updatedAt = command.updatedAt,
-        deletedAt = command.deletedAt,
-        auditLog = command.auditLog,
+        command.procedureId,
+        command.code,
+        command.description,
+        command.enabled,
+        command.updatedAt,
+        command.deletedAt,
+        command.auditLog,
     )
 }
 
@@ -83,12 +83,12 @@ data class ProcedureUpdateEvent(
     constructor(
         command: ProcedureUpdateCommand
     ): this(
-        procedureId = command.procedureId,
-        code = command.code,
-        description = command.description,
-        enabled = command.enabled,
-        updatedAt = command.updatedAt,
-        auditLog = command.auditLog,
+        command.procedureId,
+        command.code,
+        command.description,
+        command.enabled,
+        command.updatedAt,
+        command.auditLog,
     )
 }
 
@@ -106,10 +106,10 @@ data class ProcedureDeleteEvent(
     constructor(
         command: ProcedureDeleteCommand
     ): this(
-        procedureId = command.procedureId,
-        code = command.code,
-        updatedAt = command.updatedAt,
-        deletedAt = command.deletedAt,
-        auditLog = command.auditLog,
+        command.procedureId,
+        command.code,
+        command.updatedAt,
+        command.deletedAt,
+        command.auditLog,
     )
 }

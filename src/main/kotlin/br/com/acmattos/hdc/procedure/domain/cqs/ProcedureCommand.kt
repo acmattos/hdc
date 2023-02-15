@@ -35,12 +35,12 @@ data class ProcedureCreateCommand(
         description: String,
         auditLog: AuditLog,
     ): this(
-        procedureId = ProcedureId(),
-        code = code,
-        description = description,
-        enabled = true,
-        createdAt = LocalDateTime.now(),
-        auditLog =auditLog,
+        ProcedureId(),
+        code,
+        description,
+        true,
+        LocalDateTime.now(),
+        auditLog,
     )
 }
 
@@ -62,14 +62,14 @@ data class ProcedureUpsertCommand(
         command: ProcedureCreateCommand,
         events: List<ProcedureEvent>,
     ): this(
-        procedureId = events.last().procedureId,
-        code = command.code,
-        description = command.description,
-        enabled = command.enabled,
-        updatedAt = LocalDateTime.now(),
-        deletedAt = null,
-        auditLog = command.auditLog,
-        events = events,
+        events.last().procedureId,
+        command.code,
+        command.description,
+        command.enabled,
+        LocalDateTime.now(),
+        null,
+        command.auditLog,
+        events,
     )
 }
 
@@ -92,12 +92,12 @@ data class ProcedureUpdateCommand(
         enabled: Boolean,
         auditLog: AuditLog,
     ): this(
-        procedureId = ProcedureId(procedureId),
-        code = code,
-        description = description,
-        enabled = enabled,
-        updatedAt = LocalDateTime.now(),
-        auditLog = auditLog,
+        ProcedureId(procedureId),
+        code,
+        description,
+        enabled,
+        LocalDateTime.now(),
+        auditLog,
     )
 }
 
@@ -117,8 +117,8 @@ data class ProcedureDeleteCommand(
         code: String,
         auditLog: AuditLog,
     ): this(
-        procedureId = ProcedureId(procedureId),
-        code = code.toInt(),
+        ProcedureId(procedureId),
+        code.toInt(),
         updatedAt = null,
         deletedAt = LocalDateTime.now(),
         auditLog = auditLog,
