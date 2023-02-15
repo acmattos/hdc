@@ -35,5 +35,7 @@ open class Id(
 
     override fun hashCode() = id.hashCode()
 
-    companion object: ULIDGen()
+    companion object: ULIDGen() {
+        const val INVALID = "7ZZZZZZZZZZZZZZZZZZZZZZZZ7"
+    }
 }
