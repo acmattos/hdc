@@ -4,7 +4,6 @@ import br.com.acmattos.hdc.common.tool.server.javalin.ContextBuilder
 import br.com.acmattos.hdc.common.tool.server.javalin.Response
 import br.com.acmattos.hdc.common.tool.server.javalin.getRequest
 import br.com.acmattos.hdc.common.tool.server.mapper.JacksonObjectMapperFactory
-import br.com.acmattos.hdc.person.application.PersonCommandHandlerService
 import br.com.acmattos.hdc.procedure.application.ProcedureCommandHandlerService
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateCommand
 import br.com.acmattos.hdc.procedure.domain.cqs.ProcedureCreateEvent
@@ -70,7 +69,7 @@ object ProcedureCommandControllerTest: Spek({
             And("""context#json returns ${Context::class.java.simpleName}""") {
                 every { context.json(any<Response>()) } returns context
             }
-            And("""a ${PersonCommandHandlerService::class.java.simpleName} successfully instantiated""") {
+            And("""a ${ProcedureCommandController::class.java.simpleName} successfully instantiated""") {
                 controller = ProcedureCommandController(service)
             }
             When("""#createDentalProcedure is executed""") {
@@ -132,7 +131,7 @@ object ProcedureCommandControllerTest: Spek({
             And("""context#json returns ${Context::class.java.simpleName}""") {
                 every { context.json(any<Response>()) } returns context
             }
-            And("""a ${PersonCommandHandlerService::class.java.simpleName} successfully instantiated""") {
+            And("""a ${ProcedureCommandController::class.java.simpleName} successfully instantiated""") {
                 controller = ProcedureCommandController(service)
             }
             When("""#updateDentalProcedure is executed""") {
@@ -190,7 +189,7 @@ object ProcedureCommandControllerTest: Spek({
             And("""context#json returns ${Context::class.java.simpleName}""") {
                 every { context.json(Response("", "", 0, "")) } returns context
             }
-            And("""a ${PersonCommandHandlerService::class.java.simpleName} successfully instantiated""") {
+            And("""a ${ProcedureCommandController::class.java.simpleName} successfully instantiated""") {
                 controller = ProcedureCommandController(service)
             }
             When("""#deleteDentalProcedure is executed""") {
