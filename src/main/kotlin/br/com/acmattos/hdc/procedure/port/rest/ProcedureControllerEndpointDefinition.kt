@@ -2,6 +2,7 @@ package br.com.acmattos.hdc.procedure.port.rest
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum
 import io.javalin.apibuilder.ApiBuilder.delete
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
@@ -23,20 +24,20 @@ class ProcedureControllerEndpointDefinition(
     override fun routes() {
         path(PROCEDURES) {
             post(command::create)
+            logger.info(routePostMessage("/$PROCEDURES"))
             put(command::update)
+            logger.info(routePutMessage("/$PROCEDURES"))
             get(query::findAllProcedures)
+            logger.info(routeGetMessage("/$PROCEDURES"))
             path(PROCEDURE_ID) {
                 get(query::findTheProcedure)
+                logger.info(routeGetMessage("/$PROCEDURES/$PROCEDURE_ID"))
             }
             path(PROCEDURE_IDS) {
                 delete(command::delete)
+                logger.info(routeDeleteMessage("/$PROCEDURES/$PROCEDURE_IDS"))
             }
         }
-        logger.info("Route loaded: -> POST   /$PROCEDURES <-")
-        logger.info("Route loaded: -> PUT    /$PROCEDURES <-")
-        logger.info("Route loaded: -> GET    /$PROCEDURES <-")
-        logger.info("Route loaded: -> GET    /$PROCEDURES/$PROCEDURE_ID <-")
-        logger.info("Route loaded: -> DELETE /$PROCEDURES/$PROCEDURE_IDS <-")
         logger.info("All routes loaded for: -> ${ProcedureControllerEndpointDefinition::class.java.simpleName} <-")
     }
 
