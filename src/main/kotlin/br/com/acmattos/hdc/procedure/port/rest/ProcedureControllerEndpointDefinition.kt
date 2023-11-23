@@ -2,16 +2,15 @@ package br.com.acmattos.hdc.procedure.port.rest
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
-import br.com.acmattos.hdc.procedure.config.ProcedureLogEnum
 import io.javalin.apibuilder.ApiBuilder.delete
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
 import io.javalin.apibuilder.ApiBuilder.post
 import io.javalin.apibuilder.ApiBuilder.put
 
-private const val PROCEDURES = "procedures"
-private const val PROCEDURE_ID = ":procedure_id"
-private const val PROCEDURE_IDS = ":procedure_ids"
+private const val CONTEXT = "procedures"
+private const val ID = ":procedure_id"
+private const val IDS = ":procedure_ids"
 
 /**
  * @author ACMattos
@@ -22,20 +21,20 @@ class ProcedureControllerEndpointDefinition(
     private val query: ProcedureQueryController
 ): EndpointDefinition {
     override fun routes() {
-        path(PROCEDURES) {
+        path(CONTEXT) {
             post(command::create)
-            logger.info(routePostMessage("/$PROCEDURES"))
+            logger.info(routePostMessage("/$CONTEXT"))
             put(command::update)
-            logger.info(routePutMessage("/$PROCEDURES"))
+            logger.info(routePutMessage("/$CONTEXT"))
             get(query::findAllProcedures)
-            logger.info(routeGetMessage("/$PROCEDURES"))
-            path(PROCEDURE_ID) {
+            logger.info(routeGetMessage("/$CONTEXT"))
+            path(ID) {
                 get(query::findTheProcedure)
-                logger.info(routeGetMessage("/$PROCEDURES/$PROCEDURE_ID"))
+                logger.info(routeGetMessage("/$CONTEXT/$ID"))
             }
-            path(PROCEDURE_IDS) {
+            path(IDS) {
                 delete(command::delete)
-                logger.info(routeDeleteMessage("/$PROCEDURES/$PROCEDURE_IDS"))
+                logger.info(routeDeleteMessage("/$CONTEXT/$IDS"))
             }
         }
         logger.info("All routes loaded for: -> ${ProcedureControllerEndpointDefinition::class.java.simpleName} <-")
