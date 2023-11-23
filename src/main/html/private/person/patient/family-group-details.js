@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/procedure/family-group-details.js');
+   const logger = new Logger('private/procedure/family-group-details.js');
    class FamilyMember {
       constructor(patient, familyMember) {
          // Component's IDs

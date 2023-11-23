@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/person/patient/family-group-list.js');
+   const logger = new Logger('private/person/patient/family-group-list.js');
    class FamilyGroupList {
       constructor(patient) {
          // Attributes
@@ -60,7 +60,7 @@
       addNewLine(addNewLineCallback, executeAfterLoadCallback) {
          addNewLineCallback();
          resource.component(this.newItemId(),
-            'restricted/person/patient/family-group-details')
+            'private/person/patient/family-group-details')
             .done(() => {
                executeAfterLoadCallback();
             });
