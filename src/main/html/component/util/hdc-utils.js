@@ -94,8 +94,8 @@
          this.listenToRouteEvents();
       }
       setupRoutes() {
-         this.routeMap.set('PROCEDURE', 'restricted/procedure/procedure-list');
-         this.routeMap.set('PATIENT', 'restricted/person/patient/patient-list');
+         this.routeMap.set('PROCEDURE', 'private/procedure/procedure-list');
+         this.routeMap.set('PATIENT', 'private/person/patient/patient-list');
       }
       listenToRouteEvents() {
          $.bodyListener('route',
