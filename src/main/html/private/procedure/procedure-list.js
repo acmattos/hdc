@@ -1,7 +1,7 @@
 (()=>{
    'use strict';
 
-   const logger = new Logger('restricted/procedure/procedure-list.js');
+   const logger = new Logger('private/procedure/procedure-list.js');
    $(document).ready(() => {
       class ProcedureList {
          constructor() {
@@ -68,7 +68,7 @@
          addNewLine(addNewLineCallback, executeAfterLoadCallback) {
             addNewLineCallback();
             resource.component(this.newItemId(),
-               'restricted/procedure/procedure-details')
+               'private/procedure/procedure-details')
             .done(() => {
                executeAfterLoadCallback();
             });

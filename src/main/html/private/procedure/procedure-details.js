@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/procedure/procedure-details.js');
+   const logger = new Logger('private/procedure/procedure-details.js');
    class Procedure {
       constructor() {
          // Component's IDs

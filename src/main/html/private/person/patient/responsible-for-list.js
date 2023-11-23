@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/person/patient/responsible-for-list.js');
+   const logger = new Logger('private/person/patient/responsible-for-list.js');
    class ResponsibleForList {
       constructor(patient) {
          // Attributes
@@ -56,7 +56,7 @@
       addNewLine(addNewLineCallback, executeAfterLoadCallback) {
          addNewLineCallback();
          resource.component(this.newItemId(),
-            'restricted/person/patient/responsible-for-details')
+            'private/person/patient/responsible-for-details')
             .done(() => {
                executeAfterLoadCallback();
             });

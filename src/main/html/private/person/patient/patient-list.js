@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/person/patient/patient-list.js');
+   const logger = new Logger('private/person/patient/patient-list.js');
    $(document).ready(() => {
       class PersonList {
          constructor() {
@@ -153,7 +153,7 @@
          addNewLine(addNewLineCallback, executeAfterLoadCallback) {
             addNewLineCallback();
             resource.component(this.newItemId(),
-               'restricted/person/patient/patient-details')
+               'private/person/patient/patient-details')
                .done(() => {
                   executeAfterLoadCallback();
                });

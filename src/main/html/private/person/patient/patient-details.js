@@ -1,7 +1,7 @@
 (() => {
    'use strict';
 
-   const logger = new Logger('restricted/person/patient/patient-details.js');
+   const logger = new Logger('private/person/patient/patient-details.js');
    class Patient {
       constructor(contactTypes, patient) {
          // Component's IDs
@@ -615,7 +615,7 @@
             'Ver (' + (patient.responsibleFor ? 1 : 0) + ')' );
          $('#responsibleForButton').off('click').on('click', (event) => {
             resource.component('#modalBody',
-               'restricted/person/patient/responsible-for-list')
+               'private/person/patient/responsible-for-list')
             .done(() => {
                new ResponsibleForList(patientDetails.patient).initPage();
                $.bodyListener('#modalCloseButton',
@@ -634,7 +634,7 @@
          $.text('#familyGroupButton', 'Ver (' + familyGroup.length + ')' );
          $('#familyGroupButton').off('click').on('click', (event) => {
             resource.component('#modalBody',
-               'restricted/person/patient/family-group-list')
+               'private/person/patient/family-group-list')
             .done(() => {
                new FamilyGroupList(patient).initPage();
                $.bodyListener('#modalCloseButton',
