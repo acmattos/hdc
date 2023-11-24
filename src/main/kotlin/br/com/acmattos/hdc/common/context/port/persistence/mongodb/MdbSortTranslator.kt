@@ -28,7 +28,7 @@ class MdbSortTranslator: SortTranslator<Bson> {
     private fun translate(sort: DescSort<Bson>): Bson =
         Sorts.descending(sort.fieldName)
 
-    private fun translate(sort: EmptySort): Bson =
+    private fun translate(sort: EmptySort<Bson>): Bson =
         Sorts.orderBy(BsonDocument())
 
 //    private fun translate(sort: CollectionSort<Bson>): Bson =

@@ -161,12 +161,14 @@ data class OrFilter<TRANSLATION>(
  */
 class OrFilterBuilder{
     companion object {
-        fun build(csv: String): OrFilter<String> = OrFilter(
-            csv
-                .split(",")
-                .map {
-                    EqFilter(PERSON_ID.fieldName, it)
-                }
+        fun build(
+            fieldName: String,
+            csv: String
+        ): OrFilter<String> = OrFilter(
+            csv.split(",")
+               .map {
+                   EqFilter(fieldName, it)
+               }
         )
     }
 }

@@ -9,8 +9,8 @@ import br.com.acmattos.hdc.common.tool.page.FilterTranslator
 import br.com.acmattos.hdc.common.tool.page.OrFilter
 import br.com.acmattos.hdc.common.tool.page.RegexFilter
 import com.mongodb.client.model.Filters
-import java.util.regex.Pattern
 import org.bson.conversions.Bson
+import java.util.regex.Pattern
 
 private val X_TERM_X = Pattern.compile("(.*)\\w(.*)").toRegex()
 private val X_TERM = Pattern.compile("(.*)\\w").toRegex()
@@ -85,5 +85,5 @@ class MdbFilterTranslator: FilterTranslator<Bson> {
                 .map { filter ->  createTranslation(filter) }
         )
 
-    private fun translate(filter: EmptyFilter): Bson = Filters.empty()
+    private fun translate(filter: EmptyFilter<Bson>): Bson = Filters.empty()
 }

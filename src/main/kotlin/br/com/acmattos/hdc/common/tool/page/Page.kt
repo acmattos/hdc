@@ -26,7 +26,7 @@ data class Page private constructor(
 
         fun create(
             filter: Filter<*> = EmptyFilter<Any>(),
-            sort: Sort<*> = EmptySort(),
+            sort: Sort<*> = EmptySort<Any>(),
             number: String? = null,
             size: String? = null
         ) = Page(

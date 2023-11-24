@@ -3,19 +3,15 @@ package br.com.acmattos.hdc.person.domain.cqs
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
 import br.com.acmattos.hdc.common.tool.page.AndFilterBuilder
-import br.com.acmattos.hdc.common.tool.page.AscSort
-import br.com.acmattos.hdc.common.tool.page.DescSort
-import br.com.acmattos.hdc.common.tool.page.EmptySort
 import br.com.acmattos.hdc.common.tool.page.EqFilter
 import br.com.acmattos.hdc.common.tool.page.EqFilterBuilder
 import br.com.acmattos.hdc.common.tool.page.EqNullFilter
 import br.com.acmattos.hdc.common.tool.page.Filter
 import br.com.acmattos.hdc.common.tool.page.OrFilterBuilder
-import br.com.acmattos.hdc.common.tool.page.Order
 import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.common.tool.page.RegexFilter
 import br.com.acmattos.hdc.common.tool.page.RegexFilterBuilder
-import br.com.acmattos.hdc.common.tool.page.Sort
+import br.com.acmattos.hdc.common.tool.page.SingleSortBuilder
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACTS_INFO
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CPF
@@ -56,7 +52,7 @@ data class FindAllPersonsQuery(
     ): this(
         Page.create(
             filter = filter(fullName, cpf, contact, dentalPlanName, personIds),
-            sort = sort(fullNameOrder),
+            sort = SingleSortBuilder.build(FULL_NAME.fieldName, fullNameOrder),
             number = pageNumber,
             size = pageSize
         ),
@@ -79,7 +75,7 @@ data class FindAllPersonsQuery(
                     dentalPlanNameFilter(dentalPlanName)
                 )
             } else {
-                OrFilterBuilder.build(personIds)
+                OrFilterBuilder.build(PERSON_ID.fieldName, personIds)
             }
         }
 
@@ -92,13 +88,6 @@ data class FindAllPersonsQuery(
                 }
             } else {
                 null
-            }
-
-        private fun sort(fullNameOrder: String?): Sort<*> =
-            when(Order.convert(fullNameOrder)) {
-                Order.ASC -> AscSort<String>(FULL_NAME.fieldName)
-                Order.DESC -> DescSort<String>(FULL_NAME.fieldName)
-                Order.NONE -> EmptySort()
             }
     }
 }

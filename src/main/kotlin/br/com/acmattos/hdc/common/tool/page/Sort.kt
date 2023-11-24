@@ -52,10 +52,10 @@ enum class Order {
  * @author ACMattos
  * @since 25/09/2022.
  */
-class EmptySort: Sort<Any> {
+class EmptySort<TRANSLATION>: Sort<TRANSLATION> {
     override fun translate(
-        translator: SortTranslator<Any>
-    ): Any = translator.createTranslation(this)
+        translator: SortTranslator<TRANSLATION>
+    ): TRANSLATION = translator.createTranslation(this)
 }
 
 /**
@@ -88,6 +88,23 @@ data class DescSort<TRANSLATION>(
     override val fieldName: String,
     override val value: Order = DESC,
 ): FieldSort<TRANSLATION>(fieldName, DESC)
+
+/**
+ * @author ACMattos
+ * @since 24/11/2023.
+ */
+class SingleSortBuilder{
+    companion object {
+        fun build(
+            fieldName: String,
+            value: String?
+        ): Sort<String> = when(Order.convert(value)) {
+            ASC -> AscSort(fieldName)
+            DESC -> DescSort(fieldName)
+            Order.NONE -> EmptySort()
+        }
+    }
+}
 
 /**
  * @author ACMattos
