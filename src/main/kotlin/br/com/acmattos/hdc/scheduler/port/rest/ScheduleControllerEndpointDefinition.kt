@@ -13,14 +13,16 @@ private const val SCHEDULES = "schedules"
 */
 class ScheduleControllerEndpointDefinition(
     private val controller: ScheduleCommandController
-): EndpointDefinition {
+): EndpointDefinition() {
     override fun routes() {
         path(SCHEDULES) {
             post(controller::createAScheduleForTheDentist)
+            logPostRoute("Route loaded: -> POST /$SCHEDULES <-")
         }
-        logger.info("Route loaded: -> POST /$SCHEDULES <-")
-        logger.info("All routes loaded for: -> ${ScheduleControllerEndpointDefinition::class.java.simpleName} <-")
+        logAllRoutesLoaded()
     }
+
+    override fun name() = "${ScheduleControllerEndpointDefinition::class.java}"
 
     companion object: Loggable()
 }

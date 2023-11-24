@@ -23,47 +23,52 @@ private const val DENTIST_ID = ":dentist_id"
 class PersonControllerEndpointDefinition(
     private val command: PersonCommandController,
     private val query: PersonQueryController
-): EndpointDefinition {
+): EndpointDefinition() {
     override fun routes() {
         path(PERSONS) {
-            //post(command::createADentist)
             post(command::createPatient)
+            logPostRoute("/$PERSONS")
+
             put(command::updatePatient)
+            logPutRoute("/$PERSONS")
+
             get(query::findAllPersons)
+            logGetRoute("/$PERSONS")
+
             path(CONTACT_TYPES){
                 get(query::findAllContactTypes)
+                logGetRoute("/$PERSONS/$CONTACT_TYPES")
             }
             path(GENDERS){
                 get(query::findAllGenders)
+                logGetRoute("/$PERSONS/$GENDERS")
             }
             path(MARITAL_STATUSES){
                 get(query::findAllMaritalStatuses)
+                logGetRoute("/$PERSONS/$MARITAL_STATUSES")
             }
             path(PERSON_TYPES){
                 get(query::findAllPersonTypes)
+                logGetRoute("/$PERSONS/$PERSON_TYPES")
             }
             path(STATES){
                 get(query::findAllStates)
+                logGetRoute("/$PERSONS/$STATES")
             }
             path(STATUSES){
                 get(query::findAllStatuses)
+                logGetRoute("/$PERSONS/$STATUSES")
             }
             path(DENTIST_ID) {
                 get(query::findTheDentist)
+                logGetRoute("/$PERSONS/$DENTIST_ID")
             }
         }
-        logger.info("Route loaded: -> POST /$PERSONS <-")
-        logger.info("Route loaded: -> PUT /$PERSONS <-")
-        logger.info("Route loaded: -> GET  /$PERSONS <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$CONTACT_TYPES <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$GENDERS <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$MARITAL_STATUSES <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$PERSON_TYPES <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$STATES <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$STATUSES <-")
-        logger.info("Route loaded: -> GET  /$PERSONS/$DENTIST_ID <-")
+        logAllRoutesLoaded()
         logger.info("All routes loaded for: -> ${PersonControllerEndpointDefinition::class.java} <-")
     }
+
+    override fun name() = "${PersonControllerEndpointDefinition::class.java}"
 
     companion object: Loggable()
 }

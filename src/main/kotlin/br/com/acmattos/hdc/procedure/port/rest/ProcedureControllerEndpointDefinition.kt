@@ -19,26 +19,32 @@ private const val IDS = ":procedure_ids"
 class ProcedureControllerEndpointDefinition(
     private val command: ProcedureCommandController,
     private val query: ProcedureQueryController
-): EndpointDefinition {
+): EndpointDefinition() {
     override fun routes() {
         path(CONTEXT) {
             post(command::create)
-            logger.info(routePostMessage("/$CONTEXT"))
+            logPostRoute("/$CONTEXT")
+
             put(command::update)
-            logger.info(routePutMessage("/$CONTEXT"))
+            logPutRoute("/$CONTEXT")
+
             get(query::findAllProcedures)
-            logger.info(routeGetMessage("/$CONTEXT"))
+            logGetRoute("/$CONTEXT")
+
             path(ID) {
                 get(query::findTheProcedure)
-                logger.info(routeGetMessage("/$CONTEXT/$ID"))
+                logGetRoute("/$CONTEXT/$ID")
             }
+
             path(IDS) {
                 delete(command::delete)
-                logger.info(routeDeleteMessage("/$CONTEXT/$IDS"))
+                logDeleteRoute("/$CONTEXT/$IDS")
             }
         }
-        logger.info("All routes loaded for: -> ${ProcedureControllerEndpointDefinition::class.java.simpleName} <-")
+        logAllRoutesLoaded()
     }
+
+    override fun name() = "${ProcedureControllerEndpointDefinition::class.java}"
 
     companion object: Loggable()
 }

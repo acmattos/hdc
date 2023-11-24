@@ -15,8 +15,10 @@
     </appender>
     <logger name="br.com.acmattos.hdc" level="trace"/>
 <!--    <logger name="io.mockk" level="trace"/>-->
-    <logger name="org.eclipse.jetty" level="info"/>
-<!--    <logger name="org.mongodb" level="debug"/>-->
+<!--    <logger name="org.eclipse.jetty" level="info"/>-->
+    <logger name="org.mongodb" level="fatal"/>
+    <logger name="org.mongodb.driver.connection" level="fatal"/>
+    <logger name="org.mongodb.driver.cluster" level="fatal"/>
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="FILE" />
