@@ -2,36 +2,40 @@ package br.com.acmattos.hdc.odontogram.port.rest
 
 import br.com.acmattos.hdc.common.context.port.rest.EndpointDefinition
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
+import io.javalin.apibuilder.ApiBuilder.delete
 import io.javalin.apibuilder.ApiBuilder.get
 import io.javalin.apibuilder.ApiBuilder.path
+import io.javalin.apibuilder.ApiBuilder.post
+import io.javalin.apibuilder.ApiBuilder.put
 
 private const val ODONTOGRAMS = "odontograms"
 private const val NEW = "new"
-//private const val PROCEDURE_ID = ":procedure_id"
+private const val ODONTOGRAM_ID = ":odontogram_id"
 
 class OdontogramControllerEndpointDefinition(
-//    private val command: OdontogramCommandController,
+    private val command: OdontogramCommandController,
     private val query: OdontogramQueryController
-): EndpointDefinition {
+): EndpointDefinition() {
     override fun routes() {
         path(ODONTOGRAMS) {
-//            post(command::createDentalProcedure)
-//            put(command::updateDentalProcedure)
-            path(NEW) {
-                get(query::getABasicOdontogram)
+            post(command::create)
+            logPostRoute("Route loaded: -> POST   /$ODONTOGRAMS <-")
+
+            put(command::update)
+            logPutRoute("Route loaded: -> PUT    /$ODONTOGRAMS <-")
+
+            path(ODONTOGRAM_ID) {
+                get(query::get)
+                logGetRoute("Route loaded: -> GET    /$ODONTOGRAMS/$ODONTOGRAM_ID <-")
+
+                delete(command::delete)
+                logDeleteRoute("Route loaded: -> DELETE /$ODONTOGRAMS/ODONTOGRAM_ID <-")
             }
-//            path(PROCEDURE_ID) {
-//                ApiBuilder.get(query::findTheProcedure)
-//                ApiBuilder.delete(command::deleteDentalProcedure)
-//            }
         }
-//        logger.info("Route loaded: -> POST   /$PROCEDURES <-")
-//        logger.info("Route loaded: -> PUT    /$PROCEDURES <-")
-        logger.info("Route loaded: -> GET    /$ODONTOGRAMS/$NEW <-")
-//        logger.info("Route loaded: -> GET    /$PROCEDURES/$PROCEDURE_ID <-")
-//        logger.info("Route loaded: -> DELETE /$PROCEDURES/$PROCEDURE_ID <-")
-//        logger.info("All routes loaded for: -> ${OdontogramControllerEndpointDefinition::class.java.simpleName} <-")
+        logAllRoutesLoaded()
     }
+
+    override fun name() = "${OdontogramControllerEndpointDefinition::class.java}"
 
     companion object: Loggable()
 }
