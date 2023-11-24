@@ -20,10 +20,10 @@ interface FilterTranslator<TRANSLATION> {
  * @author ACMattos
  * @since 01/04/2022.
  */
-class EmptyFilter: Filter<Any> {
+class EmptyFilter<T>: Filter<T> {
     override fun translate(
-        translator: FilterTranslator<Any>
-    ): Any = translator.createTranslation(this)
+        translator: FilterTranslator<T>
+    ): T = translator.createTranslation(this)
 }
 
 /**
@@ -62,6 +62,24 @@ data class EqFilter<TRANSLATION, TYPE>(
 
 /**
  * @author ACMattos
+ * @since 24/11/2023.
+ */
+class EqFilterBuilder{
+    companion object {
+        fun build(
+            fieldName: String,
+            value: String?
+        ): EqFilter<String, String>? =
+            if(!value.isNullOrEmpty()) {
+                EqFilter(fieldName, value)
+            } else {
+                null
+            }
+    }
+}
+
+/**
+ * @author ACMattos
  * @since 25/03/2022.
  */
 data class EqNullFilter<TRANSLATION>(
@@ -83,12 +101,51 @@ data class RegexFilter<TRANSLATION, TYPE>(
 
 /**
  * @author ACMattos
+ * @since 24/11/2023.
+ */
+class RegexFilterBuilder{
+    companion object {
+        fun build(
+            fieldName: String,
+            value: String?
+        ): RegexFilter<String, String>? =
+            if (!value.isNullOrEmpty()) {
+                RegexFilter(fieldName, value)
+            } else {
+                null
+            }
+    }
+}
+
+/**
+ * @author ACMattos
  * @since 25/03/2022.
  */
 data class AndFilter<TRANSLATION>(
     override val filters: List<Filter<TRANSLATION>>
 ): CollectionFilter<TRANSLATION>(filters)
 
+/**
+ * @author ACMattos
+ * @since 24/11/2023.
+ */
+class AndFilterBuilder{
+    companion object {
+        fun <T> build(vararg clauses: Filter<T>?): Filter<T> =
+            mutableListOf<Filter<T>>().run {
+                clauses.filterNotNull().forEach { filter: Filter<T> ->
+                    this.add(filter)
+                }
+                return if (this.size >= 2) {
+                    AndFilter(this)
+                } else if (this.size == 1) {
+                    this[0]
+                } else {
+                    EmptyFilter()
+                }
+            }
+    }
+}
 
 /**
  * @author ACMattos
@@ -97,3 +154,19 @@ data class AndFilter<TRANSLATION>(
 data class OrFilter<TRANSLATION>(
     override val filters: List<Filter<TRANSLATION>>
 ): CollectionFilter<TRANSLATION>(filters)
+
+/**
+ * @author ACMattos
+ * @since 24/11/2023.
+ */
+class OrFilterBuilder{
+    companion object {
+        fun build(csv: String): OrFilter<String> = OrFilter(
+            csv
+                .split(",")
+                .map {
+                    EqFilter(PERSON_ID.fieldName, it)
+                }
+        )
+    }
+}

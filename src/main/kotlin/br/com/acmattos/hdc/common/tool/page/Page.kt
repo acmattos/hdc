@@ -25,7 +25,7 @@ data class Page private constructor(
         internal const val FIRST_PAGE = 0
 
         fun create(
-            filter: Filter<*> = EmptyFilter(),
+            filter: Filter<*> = EmptyFilter<Any>(),
             sort: Sort<*> = EmptySort(),
             number: String? = null,
             size: String? = null

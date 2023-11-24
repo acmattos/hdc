@@ -2,18 +2,19 @@ package br.com.acmattos.hdc.person.domain.cqs
 
 import br.com.acmattos.hdc.common.context.domain.cqs.Query
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.common.tool.page.AndFilter
+import br.com.acmattos.hdc.common.tool.page.AndFilterBuilder
 import br.com.acmattos.hdc.common.tool.page.AscSort
 import br.com.acmattos.hdc.common.tool.page.DescSort
-import br.com.acmattos.hdc.common.tool.page.EmptyFilter
 import br.com.acmattos.hdc.common.tool.page.EmptySort
 import br.com.acmattos.hdc.common.tool.page.EqFilter
+import br.com.acmattos.hdc.common.tool.page.EqFilterBuilder
 import br.com.acmattos.hdc.common.tool.page.EqNullFilter
 import br.com.acmattos.hdc.common.tool.page.Filter
-import br.com.acmattos.hdc.common.tool.page.OrFilter
+import br.com.acmattos.hdc.common.tool.page.OrFilterBuilder
 import br.com.acmattos.hdc.common.tool.page.Order
 import br.com.acmattos.hdc.common.tool.page.Page
 import br.com.acmattos.hdc.common.tool.page.RegexFilter
+import br.com.acmattos.hdc.common.tool.page.RegexFilterBuilder
 import br.com.acmattos.hdc.common.tool.page.Sort
 import br.com.acmattos.hdc.person.domain.model.PersonId
 import br.com.acmattos.hdc.person.port.persistence.mongodb.DocumentIndexedField.CONTACTS_INFO
@@ -71,104 +72,16 @@ data class FindAllPersonsQuery(
             personIds: String?,
         ): Filter<*> {
             return if(personIds == null) {
-                val fnFilter = fullNameFilter(fullName)
-                val cpfFilter = cpfFilter(cpf)
-                val cFilter = contactFilter(contact)
-                val dpnFilter = dentalPlanNameFilter(dentalPlanName)
-                return if (fnFilter != null && cpfFilter != null && cFilter != null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(fnFilter, cpfFilter, cFilter, dpnFilter))
-                } else if (fnFilter != null && cpfFilter != null && cFilter != null
-                    && dpnFilter == null
-                ) {
-                    AndFilter(listOf(fnFilter, cpfFilter, cFilter))
-                } else if (fnFilter != null && cpfFilter != null && cFilter == null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(fnFilter, cpfFilter, dpnFilter))
-                } else if (fnFilter != null && cpfFilter == null && cFilter != null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(fnFilter, cFilter, dpnFilter))
-                } else if (fnFilter == null && cpfFilter != null && cFilter != null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(cpfFilter, cFilter, dpnFilter))
-                } else if (fnFilter != null && cpfFilter != null && cFilter == null
-                    && dpnFilter == null
-                ) {
-                    AndFilter(listOf(fnFilter, cpfFilter))
-                } else if (fnFilter != null && cpfFilter == null && cFilter != null
-                    && dpnFilter == null
-                ) {
-                    AndFilter(listOf(fnFilter, cFilter))
-                } else if (fnFilter == null && cpfFilter == null && cFilter != null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(cFilter, dpnFilter))
-                } else if (fnFilter == null && cpfFilter != null && cFilter == null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(cpfFilter, dpnFilter))
-                } else if (fnFilter == null && cpfFilter != null && cFilter != null
-                    && dpnFilter == null
-                ) {
-                    AndFilter(listOf(cpfFilter, cFilter))
-                } else if (fnFilter != null && cpfFilter == null && cFilter == null
-                    && dpnFilter != null
-                ) {
-                    AndFilter(listOf(fnFilter, dpnFilter))
-                } else if (fnFilter != null && cpfFilter == null && cFilter == null
-                    && dpnFilter == null
-                ) {
-                    fnFilter
-                } else if (fnFilter == null && cpfFilter != null && cFilter == null
-                    && dpnFilter == null
-                ) {
-                    cpfFilter
-                } else if (fnFilter == null && cpfFilter == null && cFilter != null
-                    && dpnFilter == null
-                ) {
-                    cFilter
-                } else if (fnFilter == null && cpfFilter == null && cFilter == null
-                    && dpnFilter != null
-                ) {
-                    dpnFilter
-                } else {
-                    EmptyFilter()
-                }
-            } else {
-                OrFilter<String>(
-                    personIds
-                        .split(",")
-                        .map {
-                            EqFilter(PERSON_ID.fieldName, it)
-                        }
+                return AndFilterBuilder.build(
+                    RegexFilterBuilder.build(FULL_NAME.fieldName, fullName),
+                    RegexFilterBuilder.build(CPF.fieldName, cpf),
+                    EqFilterBuilder.build(CONTACTS_INFO.fieldName, contact),
+                    dentalPlanNameFilter(dentalPlanName)
                 )
+            } else {
+                OrFilterBuilder.build(personIds)
             }
         }
-
-        private fun fullNameFilter(fullName: String?): RegexFilter<String, String>? =
-            if(!fullName.isNullOrEmpty()) {
-                RegexFilter(FULL_NAME.fieldName, fullName)
-            } else {
-                null
-            }
-
-        private fun cpfFilter(cpf: String?): RegexFilter<String, String>? =
-            if(!cpf.isNullOrEmpty()) {
-                RegexFilter(CPF.fieldName, cpf)
-            } else {
-                null
-            }
-
-        private fun contactFilter(contact: String?): EqFilter<String, String>? =
-            if(!contact.isNullOrEmpty()) {
-                EqFilter(CONTACTS_INFO.fieldName, contact)
-            } else {
-                null
-            }
 
         private fun dentalPlanNameFilter(dentalPlanName: String?): Filter<String>? =
             if(!dentalPlanName.isNullOrEmpty()) {
@@ -181,7 +94,7 @@ data class FindAllPersonsQuery(
                 null
             }
 
-        private fun sort(fullNameOrder: String?,): Sort<*> =
+        private fun sort(fullNameOrder: String?): Sort<*> =
             when(Order.convert(fullNameOrder)) {
                 Order.ASC -> AscSort<String>(FULL_NAME.fieldName)
                 Order.DESC -> DescSort<String>(FULL_NAME.fieldName)
