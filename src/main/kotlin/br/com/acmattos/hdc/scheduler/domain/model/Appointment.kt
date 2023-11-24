@@ -41,8 +41,6 @@ data class Appointment(
     val duration get() = durationData!!
     val status get() = statusData
     val enabled get() = enabledData
-    val createdAt get() = createdAtData
-    val updatedAt get() = updatedAtData
 
     override fun apply(event: EntityEvent): Appointment {
         when(event) {

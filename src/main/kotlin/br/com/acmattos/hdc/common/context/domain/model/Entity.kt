@@ -30,6 +30,10 @@ interface AppliableEntity: Entity {
     var updatedAtData: LocalDateTime?
     var deletedAtData: LocalDateTime?
 
+    val createdAt get() = createdAtData
+    val updatedAt get() = updatedAtData
+    val deletedAt get() = deletedAtData
+
     fun apply(events: List<EntityEvent>): AppliableEntity {
         for (event in events) {
             apply(event)

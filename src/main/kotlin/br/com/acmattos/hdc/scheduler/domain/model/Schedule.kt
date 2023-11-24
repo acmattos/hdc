@@ -38,8 +38,6 @@ data class Schedule(// TODO Test
     val dentist get() = dentistData!!
     val periods get() = periodsData!!
     val enabled get() = enabledData
-    val createdAt get() = createdAtData
-    val updatedAt get() = updatedAtData
 
     override fun apply(event: EntityEvent): Schedule {
         when(event) {

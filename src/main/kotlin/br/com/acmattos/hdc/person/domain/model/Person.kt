@@ -68,8 +68,8 @@ data class Person(// TODO Create tests
     val status get() = statusData
     val lastAppointment get() = lastAppointmentData
     val enabled get() = enabledData
-    val createdAt get() = createdAtData
-    val updatedAt get() = updatedAtData
+//    val createdAt get() = createdAtData
+//    val updatedAt get() = updatedAtData
 
     override fun apply(event: EntityEvent): Person {
         when(event) {

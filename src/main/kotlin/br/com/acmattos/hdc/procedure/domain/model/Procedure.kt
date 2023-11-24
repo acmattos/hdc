@@ -33,9 +33,6 @@ data class Procedure(
     val code get() = codeData!!
     val description get() = descriptionData!!
     val enabled get() = enabledData
-    val createdAt get() = createdAtData
-    val updatedAt get() = updatedAtData
-    val deletedAt get() = deletedAtData
 
     override fun apply(event: CreateEvent) {
         procedureIdData = (event as ProcedureCreateEvent).procedureId
