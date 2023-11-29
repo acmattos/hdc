@@ -393,7 +393,7 @@
    String.prototype.fromLocalDate = function() {
       let value = this;
       if(value.includes("-")) {
-         let elements = value.split("-");
+         let elements = value.split("T")[0].split("-");
          let date = new Date(elements[0], parseInt(elements[1]) -1, elements[2]);
          return date.toBrString();
       } else {
