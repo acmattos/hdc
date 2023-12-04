@@ -16,12 +16,6 @@
          prefixId() { return '#procedureList'; }
          newItemId() { return '#newItem'; }
          uri() { return '/procedures'; }
-         queryString() {
-            this.fcode = $.inputText(this.fcodeId);
-            this.fdescription = $.inputText(this.fdescriptionId);
-            return "?f_code={0}&f_description={1}".format(
-               this.fcode, this.fdescription);
-         }
          columns() {
             return  [
                { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null  },
@@ -113,6 +107,15 @@
                this.datatable(this.uri() + this.queryString());
             });
             $.keyup(this.fdescriptionId, 4, () => {$.trigger('#filter');});
+         }
+         queryString() {
+            this.fcode = this.getQueryAttribute($.inputText(this.fcodeId));
+            this.fdescription = this.getQueryAttribute($.inputText(this.fdescriptionId));
+            return "?f_code={0}&f_description={1}".format(
+               this.fcode, this.fdescription);
+         }
+         getQueryAttribute(value) {
+            return value ? value + '*' : '';
          }
          setupNewItem() {
             let procedureList = this;

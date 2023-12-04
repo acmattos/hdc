@@ -28,15 +28,6 @@
          prefixId() { return '#patientList';  }
          newItemId() { return '#newItem'; }
          uri() { return '/persons';  }
-         queryString() {
-            this.fcpf = $.inputText(this.fcpfId) + '*';;
-            this.ffullName = $.inputText(this.ffullNameId) + '*';;
-            this.fcontact = $.inputText(this.fcontactId);;
-            this.fdentalPlanName = $.inputText(this.fdentalPlanNameId) + '*';
-            return "?f_cpf={0}&f_full_name={1}&f_contact={2}&f_dental_plan_name={3}&s_full_name=a"
-               .format(this.fcpf, this.ffullName, this.fcontact,
-                  this.fdentalPlanName);
-         }
          columns() {
             return  [
                { 'class': 'details-control', 'defaultContent': '', 'orderable': false, 'data': null },
@@ -173,7 +164,7 @@
             let states = this.states;
             let statuses = this.statuses;
             let prefixId = this.prefixId();
-         let newItemId = this.newItemId;
+            let newItemId = this.newItemId;
             $(prefixId + ' tbody').off('click').on(
                'click', 'tr td.details-control', function () {
                let tr = $(this).closest('tr');
@@ -231,6 +222,18 @@
             $(this.fcontactId).mask(maskBehavior, maskOptions);
             $.keyup(this.fcontactId, 13, () => {$.trigger('#filter');});
             $.keyup(this.fdentalPlanNameId, 4, () => {$.trigger('#filter');});
+         }
+         queryString() {
+            this.fcpf = this.getQueryAttribute($.inputText(this.fcpfId));
+            this.ffullName = this.getQueryAttribute($.inputText(this.ffullNameId));
+            this.fcontact = this.getQueryAttribute($.inputText(this.fcontactId));
+            this.fdentalPlanName = this.getQueryAttribute($.inputText(this.fdentalPlanNameId));
+            return "?f_cpf={0}&f_full_name={1}&f_contact={2}&f_dental_plan_name={3}&s_full_name=a"
+               .format(this.fcpf, this.ffullName, this.fcontact,
+                  this.fdentalPlanName);
+         }
+         getQueryAttribute(value) {
+            return value ? value + '*' : '';
          }
          setupNewItem() {
             let patientList = this;
