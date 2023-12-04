@@ -4,7 +4,9 @@
    const logger = new Logger('component/util/validator.js');
    // let ruleSample = {
    //    empty: {},
-   //    len: { min: 1, max: 50, message: 'messade id for invalid length' }
+   //    len: { min: 1, max: 50, message: 'messade id for invalid length' },
+   //    regex: { exp: /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i, message: 'messade id for invalid length' },
+   //    space: { inner: "N", message: 'messade id for invalid length' }
    // };
    String.prototype.validate = function(rule) {
       let value = this;
@@ -13,11 +15,25 @@
          if(rule.empty && !value) {
             return null;
          } else {
-            let isInvalidSize = rule && rule.len
+            let isInvalidSize = rule.len
                ?  value.length < rule.len.min
                || value.length > rule.len.max : false;
             if (isInvalidSize) {
                error.push({'status': 452 , 'code': rule.len.message, 'data': rule.len.message});
+            }
+            let hasInvalidSpace = rule.space && rule.space.inner
+               ? rule.space.inner.toLowerCase() == "n"
+                  ? value.split(' ').length != 1
+                  : false
+               : false;
+            if (hasInvalidSpace) {
+               error.push({'status': 452 , 'code': rule.space.inner.message, 'data': rule.space.inner.message});
+            }
+            let noRegexMatch = rule.regex && rule.regex.exp
+               ? !value.match(rule.regex)
+               : false;
+            if (noRegexMatch) {
+               error.push({'status': 452 , 'code': rule.regex.message, 'data': rule.regex.message});
             }
             return error.length == 0 ? null : error;
          }
@@ -393,11 +409,19 @@
    String.prototype.fromLocalDate = function() {
       let value = this;
       if(value.includes("-")) {
-         let elements = value.split("T")[0].split("-");
-         let date = new Date(elements[0], parseInt(elements[1]) -1, elements[2]);
+         let date = new Date(value);
          return date.toBrString();
       } else {
          return new Date(value);
+      }
+   }
+   String.prototype.fromLocalDateTime = function() {
+      let value = this;
+      if(value.includes("-")) {
+         let date = new Date(value);
+         return date.toBrString() + ' ' + date.toLocaleTimeString('pt-BR');
+      } else {
+         return '';
       }
    }
    Date.prototype.toBrString = function () {
@@ -430,7 +454,6 @@
       }
    }
    window.DateValidator = DateValidator;
-
    // let ruleSample = {
    //    empty: {},
    //    min: { value='1', message: 'messade id for invalid phonr format' },
