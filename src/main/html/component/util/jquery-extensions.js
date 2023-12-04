@@ -103,12 +103,17 @@
       $(component).text(value);
    };
 
+   $.textDate = (component, value) => {
+      let date = value ? value.fromLocalDateTime() : '-';
+      $(component).text(date);
+   };
+
    $.attribute = (component, attribute, value) => {
       $(component).attr(attribute, value);
    }
 
    $.checkBox = (component, value) => {
-      if(value === 'undefined') {
+      if(!value) {
          return $(component).is(':checked');
       } else {
          $(component).prop('checked', value);
