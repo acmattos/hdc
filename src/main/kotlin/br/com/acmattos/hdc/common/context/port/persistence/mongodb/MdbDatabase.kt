@@ -39,7 +39,10 @@ class MdbDatabase(
 data class MdbConfiguration(
     private val urlProperty: String
 ) {
-    fun databaseUrl() = getProperty<String>(urlProperty)
+    fun databaseUrl() = getProperty<String>(
+        urlProperty,
+        getProperty<String>("MONGO_URL")
+    )
 
     fun databaseName() = databaseNameFromUrl()
 
