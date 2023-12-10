@@ -96,6 +96,8 @@
       setupRoutes() {
          this.routeMap.set('PROCEDURE', 'private/procedure/procedure-list');
          this.routeMap.set('PATIENT', 'private/person/patient/patient-list');
+         this.routeMap.set('USER', 'private/user/user-list');
+         this.routeMap.set('ROLE', 'private/user/role-list');
       }
       listenToRouteEvents() {
          $.bodyListener('route',
@@ -340,6 +342,27 @@
    }
    window.Timer = Timer;
    window.timer = new Timer();
+
+   class Info2Map {
+      constructor(entity) {
+         this.entity = entity;
+      }
+      toMap() {
+         let infoMap = new Map();
+         infoMap.set("Criação", this.extract(this.entity.createdAt));
+         infoMap.set("Atualização", this.extract(this.entity.updatedAt));
+         infoMap.set("Exclusão", this.extract(this.entity.deletedAt));
+         return infoMap;
+      }
+      extract(value){
+         return value ? value.fromLocalDateTime() : '-'
+      }
+      static build(entity) {
+         return new Info2Map(entity)
+      }
+   }
+
+   window.Info2Map = Info2Map;
 })();
 /*
 function str2Number(numberAsString){
