@@ -1,15 +1,18 @@
  <td class=" position-relative text-center">
   <span class="icon-save-cancel">
-   <input id="procedureId" type="hidden">
-   <a id="save" href="#" class="edit-input-okk mr-3"><i class="fas fa-check"></i></a>
+   <input id="roleId" type="hidden">
+   <a id="save" href="#" class="edit-input-ok mr-3"><i class="fas fa-check"></i></a>
    <a id="cancel" href="#" class="edit-input-ok"><i class="fas fa-times"></i></a>
+   <a id="info" href="#" class="edit-input-ok mr-3"
+      data-bs-toggle="modal" data-bs-target="#modal"><i
+      class="fa fa-info-circle" aria-hidden="true"></i></a>
   </span>
  </td>
  <td>
   <span class="input-edit align-items-center">
-   <input id="code" type="number"
+   <input id="name" type="text"
           class="form-control form-control-sm edit-input mr-0"
-          min= "81000014" max="87000199">
+          minlength="3" maxlength="120">
   </span>
  </td>
  <td>

@@ -64,6 +64,25 @@
           </div>
          </div>
         </div>
+        <div class="accordion-item">
+         <h2 class="accordion-header" id="headingUser">
+          <button class="accordion-button collapsed" type="button"
+                  data-bs-toggle="collapse" data-bs-target="#collapseUser"
+                  aria-expanded="false" aria-controls="collapseTwo">
+           Usuários
+          </button>
+         </h2>
+         <div id="collapseUser" class="accordion-collapse collapse" aria-labelledby="headingUser"
+              data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+           <a href="#" onclick="router.redirect('USER');">Usuários</a>
+          </div>
+          <div class="accordion-body">
+           <a href="#" onclick="router.redirect('ROLE');">Papéis</a>
+          </div>
+         </div>
+        </div>
+
 <!--        <div class="accordion-item">-->
 <!--         <h2 class="accordion-header" id="headingThree">-->
 <!--          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">-->
@@ -96,7 +115,7 @@
   <div class="modal-dialog">
    <div class="modal-content">
     <div class="modal-header">
-<!--     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>-->
+     <h5 class="modal-title" id="modalTitle">Modal</h5>
      <button id="modalCloseButton" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
     <div id="modalBody" class="modal-body">
