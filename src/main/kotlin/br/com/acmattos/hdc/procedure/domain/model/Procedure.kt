@@ -34,32 +34,32 @@ data class Procedure(
     val description get() = descriptionData!!
     val enabled get() = enabledData
 
-    override fun apply(event: CreateEvent) {
+    override fun apply(event: CreateEvent, validateState: Boolean) {
         procedureIdData = (event as ProcedureCreateEvent).procedureId
         codeData = event.code
         descriptionData = event.description
         enabledData = event.enabled
         assertCodeIsValid()
         assertDescriptionIsValid()
-        super.apply(event as CreateEvent)
+        super.apply(event as CreateEvent, validateState)
     }
 
-    override fun apply(event: UpsertEvent) {
+    override fun apply(event: UpsertEvent, validateState: Boolean) {
         codeData = (event as ProcedureUpsertEvent).code
         descriptionData = event.description
         enabledData = event.enabled
         assertCodeIsValid()
         assertDescriptionIsValid()
-        super.apply(event as UpsertEvent)
+        super.apply(event as UpsertEvent, validateState)
     }
 
-    override fun apply(event: UpdateEvent) {
+    override fun apply(event: UpdateEvent, validateState: Boolean) {
         codeData = (event as ProcedureUpdateEvent).code
         descriptionData = event.description
         enabledData = event.enabled
         assertCodeIsValid()
         assertDescriptionIsValid()
-        super.apply(event as UpdateEvent)
+        super.apply(event as UpdateEvent, validateState)
     }
 
     private fun assertCodeIsValid() {
@@ -83,10 +83,10 @@ data class Procedure(
     }
 
     companion object: Loggable() {
-        fun apply(events: List<ProcedureEvent>): Procedure =
-            Procedure().apply(events) as Procedure
-        fun apply(event: ProcedureEvent): Procedure =
-            Procedure().apply(event) as Procedure
+        fun apply(events: List<ProcedureEvent>, validateState: Boolean = false): Procedure =
+            Procedure().apply(events, validateState) as Procedure
+        fun apply(event: ProcedureEvent, validateState: Boolean = true): Procedure =
+            Procedure().apply(event, validateState) as Procedure
     }
 }
 

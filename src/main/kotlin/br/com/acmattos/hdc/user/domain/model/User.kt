@@ -4,7 +4,6 @@ import br.com.acmattos.hdc.common.context.domain.cqs.CreateEvent
 import br.com.acmattos.hdc.common.context.domain.cqs.UpdateEvent
 import br.com.acmattos.hdc.common.context.domain.cqs.UpsertEvent
 import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
-import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import br.com.acmattos.hdc.user.config.MessageTrackerIdEnum.INVALID_EMAIL
@@ -22,13 +21,13 @@ import java.time.LocalDateTime
  * @since 26/03/2023.
  */
 data class User(
-    private var userIdData: UserId? = null,
+    private var userIdData: RoleId? = null,
     private var nameData: String? = null,
     private var usernameData: String? = null,
     private var passwordData: String? = null,
     private var emailData: String? = null,
     private var saltData: String? = null,
-//    private var rolesData: Set<Role>? = null,
+    private var rolesData: Set<Role>? = null,
     private var lastLoginAtData: LocalDateTime? = null,
     private var enabledData: Boolean = true,
     override var createdAtData: LocalDateTime = LocalDateTime.now(),
@@ -41,52 +40,52 @@ data class User(
     val password get() = passwordData!!
     val salt get() = saltData!!
     val email get() = emailData!!
-//    val roles get() = rolesData!!
+    val roles get() = rolesData
     val lastLoginAt get() = lastLoginAtData
     val enabled get() = enabledData
 
-    override fun apply(event: CreateEvent) {
+    override fun apply(event: CreateEvent, validateState: Boolean) {
         userIdData = (event as UserCreateEvent).userId
         nameData = event.name
         usernameData = event.username
         passwordData = event.password
         saltData = event.salt
         emailData = event.email
-//        rolesData = event.roles
+        rolesData = event.roles
         enabledData = event.enabled
         //validate()
         assertValidName()
         assertValidUsername()
 //        assertValidPassword()
         assertValidEmail()
-        super.apply(event as CreateEvent)
+        super.apply(event as CreateEvent, validateState)
     }
 
-    override fun apply(event: UpsertEvent) {
+    override fun apply(event: UpsertEvent, validateState: Boolean) {
         nameData = (event as UserUpsertEvent).name
         usernameData = event.username
         passwordData = event.password
         saltData = event.salt
         emailData = event.email
-//        rolesData = event.roles
+        rolesData = event.roles
         enabledData = event.enabled
         //validate()
-        super.apply(event as UpsertEvent)
+        super.apply(event as UpsertEvent, validateState)
     }
 
-    override fun apply(event: UpdateEvent) {
+    override fun apply(event: UpdateEvent, validateState: Boolean) {
         nameData = (event as UserUpdateEvent).name ?: nameData
         usernameData = event.username ?: usernameData
         passwordData = event.password ?: passwordData
         saltData = event.salt ?: saltData
         emailData = event.email ?: emailData
-//        rolesData = event.roles ?: rolesData
+        rolesData = event.roles ?: rolesData
         enabledData = event.enabled ?: enabledData
         assertValidName()
         assertValidUsername()
 //        assertValidPassword()
         assertValidEmail()
-        super.apply(event as UpdateEvent)
+        super.apply(event as UpdateEvent, validateState)
 
 
 //        userIdData = (event as UserCreateEvent).userId
@@ -202,17 +201,19 @@ data class User(
 //    }
 
     companion object: Loggable() {
-        fun apply(events: List<UserEvent>): User = User().apply(events) as User
-        fun apply(event: UserEvent): User = User().apply(event) as User
+        fun apply(events: List<UserEvent>, validateState: Boolean = false): User =
+            User().apply(events, validateState) as User
+        fun apply(event: UserEvent, validateState: Boolean = true): User =
+            User().apply(event, validateState) as User
     }
 
 }
 
-/**
- * @author ACMattos
- * @since 27/03/2023.
- */
-class UserId: Id {
-    constructor(id: String): super(id)
-    constructor(): super()
-}
+///**
+// * @author ACMattos
+// * @since 27/03/2023.
+// */
+//class RoleId: Id {
+//    constructor(id: String): super(id)
+//    constructor(): super()
+//}

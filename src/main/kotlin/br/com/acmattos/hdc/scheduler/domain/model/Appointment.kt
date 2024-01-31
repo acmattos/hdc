@@ -42,7 +42,7 @@ data class Appointment(
     val status get() = statusData
     val enabled get() = enabledData
 
-    override fun apply(event: EntityEvent): Appointment {
+    override fun apply(event: EntityEvent, validateState: Boolean): Appointment {
         when(event) {
             is CreateAppointmentForTheScheduleEvent -> apply(event)
             else -> apply(event as CreateAppointmentForTheScheduleEvent)
@@ -80,8 +80,10 @@ data class Appointment(
     }
 
     companion object {
-        fun apply(event: AppointmentEvent) = Appointment().apply(event)
-        fun apply(events: List<AppointmentEvent>) = Appointment().apply(events)
+        fun apply(events: List<AppointmentEvent>, validateState: Boolean = false) =
+            Appointment().apply(events, validateState)
+        fun apply(event: AppointmentEvent, validateState: Boolean = true) =
+            Appointment().apply(event, validateState)
     }
 }
 

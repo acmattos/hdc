@@ -34,9 +34,9 @@ interface AppliableEntity: Entity {
     val updatedAt get() = updatedAtData
     val deletedAt get() = deletedAtData
 
-    fun apply(events: List<EntityEvent>): AppliableEntity {
+    fun apply(events: List<EntityEvent>, validateState: Boolean = false): AppliableEntity {
         for (event in events) {
-            apply(event)
+            apply(event, validateState)
             logger.trace(
                 "[{} {}] - Event [{}] applied to Entity: -> {} <-",
                 this.javaClass.simpleName.toUpperCase(),
@@ -48,40 +48,48 @@ interface AppliableEntity: Entity {
         return this
     }
 
-    fun apply(event: EntityEvent): AppliableEntity {
+    fun apply(event: EntityEvent, validateState: Boolean): AppliableEntity {
         when(event) {
-            is CreateEvent -> apply(event as CreateEvent)
-            is UpdateEvent -> apply(event as UpdateEvent)
-            is UpsertEvent -> apply(event as UpsertEvent)
-            else -> apply(event as DeleteEvent)
+            is CreateEvent -> apply(event as CreateEvent, validateState)
+            is UpdateEvent -> apply(event as UpdateEvent, validateState)
+            is UpsertEvent -> apply(event as UpsertEvent, validateState)
+            else -> apply(event as DeleteEvent, validateState)
         }
         return this
     }
 
-    fun apply(event: CreateEvent) {
+    fun apply(event: CreateEvent, validateState: Boolean = false) {
         createdAtData = event.createdAt
-        assertUpdatedAtIsNull()
-        assertDeletedAtIsNull()
+        if(validateState) {
+            assertUpdatedAtIsNull()
+            assertDeletedAtIsNull()
+        }
     }
 
-    fun apply(event: UpsertEvent) {
+    fun apply(event: UpsertEvent, validateState: Boolean = false) {
         updatedAtData = event.updatedAt
         deletedAtData = event.deletedAt
-        assertUpdatedAtIsNotNull()
-        assertDeletedAtIsNull()
+        if(validateState) {
+            assertUpdatedAtIsNotNull()
+            assertDeletedAtIsNull()
+        }
     }
 
-    fun apply(event: UpdateEvent) {
+    fun apply(event: UpdateEvent, validateState: Boolean = false) {
         updatedAtData = event.updatedAt
-        assertUpdatedAtIsNotNull()
-        assertDeletedAtIsNull()
+        if(validateState) {
+            assertUpdatedAtIsNotNull()
+            assertDeletedAtIsNull()
+        }
     }
 
-    fun apply(event: DeleteEvent) {
+    fun apply(event: DeleteEvent, validateState: Boolean = false) {
         updatedAtData = event.updatedAt
         deletedAtData = event.deletedAt
-        assertUpdatedAtIsNull()
-        assertDeletedAtIsNotNull()
+        if(validateState) {
+            assertUpdatedAtIsNull()
+            assertDeletedAtIsNotNull()
+        }
     }
 
     private fun assertUpdatedAtIsNull() {

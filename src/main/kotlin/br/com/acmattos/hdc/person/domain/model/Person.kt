@@ -71,11 +71,11 @@ data class Person(// TODO Create tests
 //    val createdAt get() = createdAtData
 //    val updatedAt get() = updatedAtData
 
-    override fun apply(event: EntityEvent): Person {
+    override fun apply(event: EntityEvent, validateState: Boolean): Person {
         when(event) {
-            is CreateDentistEvent -> apply(event)
-            is CreatePatientEvent -> apply(event)
-            else -> apply(event as UpdatePatientEvent)
+            is CreateDentistEvent -> apply(event, validateState)
+            is CreatePatientEvent -> apply(event, validateState)
+            else -> apply(event as UpdatePatientEvent, validateState)
         }
         return this
     }
@@ -315,9 +315,10 @@ data class Person(// TODO Create tests
     }
 
     companion object {
-        fun apply(events: List<PersonEvent>): Person =
-            Person().apply(events) as Person
-        fun apply(event: PersonEvent): Person = Person().apply(event)
+        fun apply(events: List<PersonEvent>, validateState: Boolean = false): Person =
+            Person().apply(events, validateState) as Person
+        fun apply(event: PersonEvent, validateState: Boolean = true): Person =
+            Person().apply(event, validateState)
     }
 }
 

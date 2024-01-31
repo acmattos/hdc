@@ -48,15 +48,12 @@ data class Odontogram(
     val lowerLeftChild get() = lowerLeftChildData!!
     val lowerRightChild get() = lowerRightChildData!!
     val enabled get() = enabledData
-    val createdAt get() = createdAtData
-    val updatedAt get() = updatedAtData
-    val deletedAt get() = deletedAtData
 
 //    init {
 //        validate()
 //    }
 
-    override fun apply(event: CreateEvent) {
+    override fun apply(event: CreateEvent, validateState: Boolean) {
         odontogramIdData = (event as OdontogramCreateEvent).odontogramId
         upperLeftData = event.upperLeft
         upperRightData = event.upperRight
@@ -68,10 +65,10 @@ data class Odontogram(
         lowerRightChildData = event.lowerRightChild
         enabledData = event.enabled
         validate()
-        super.apply(event as CreateEvent)
+        super.apply(event as CreateEvent, validateState)
     }
 
-    override fun apply(event: UpsertEvent) {
+    override fun apply(event: UpsertEvent, validateState: Boolean) {
         upperLeftData = (event as OdontogramUpsertEvent).upperLeft
         upperRightData = event.upperRight
         lowerLeftData = event.lowerLeft
@@ -82,10 +79,10 @@ data class Odontogram(
         lowerRightChildData = event.lowerRightChild
         enabledData = event.enabled
         validate()
-        super.apply(event as UpsertEvent)
+        super.apply(event as UpsertEvent, validateState)
     }
 
-    override fun apply(event: UpdateEvent) {
+    override fun apply(event: UpdateEvent, validateState: Boolean) {
         upperLeftData = (event as OdontogramUpdateEvent).upperLeft
         upperRightData = event.upperRight
         lowerLeftData = event.lowerLeft
@@ -96,7 +93,7 @@ data class Odontogram(
         lowerRightChildData = event.lowerRightChild
         enabledData = event.enabled
         validate()
-        super.apply(event as UpdateEvent)
+        super.apply(event as UpdateEvent, validateState)
     }
 
     fun validate(): Odontogram {
@@ -186,10 +183,10 @@ data class Odontogram(
     }
 
     companion object: Loggable() {
-        fun apply(events: List<OdontogramEvent>): Odontogram =
-            Odontogram().apply(events) as Odontogram
-        fun apply(event: OdontogramEvent): Odontogram =
-            Odontogram().apply(event) as Odontogram
+        fun apply(events: List<OdontogramEvent>, validateState: Boolean = false): Odontogram =
+            Odontogram().apply(events, validateState) as Odontogram
+        fun apply(event: OdontogramEvent, validateState: Boolean = true): Odontogram =
+            Odontogram().apply(event, validateState) as Odontogram
 
         fun create(): Odontogram = Odontogram(
             odontogramIdData = INVALID_ID,

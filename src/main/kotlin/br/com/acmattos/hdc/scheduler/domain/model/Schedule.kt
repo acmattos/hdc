@@ -39,7 +39,7 @@ data class Schedule(// TODO Test
     val periods get() = periodsData!!
     val enabled get() = enabledData
 
-    override fun apply(event: EntityEvent): Schedule {
+    override fun apply(event: EntityEvent, validateState: Boolean): Schedule {
         when(event) {
             is CreateAScheduleForTheDentistEvent -> apply(event)
             else -> apply(event as CreateAScheduleForTheDentistEvent)
@@ -267,9 +267,10 @@ data class Schedule(// TODO Test
     }
 
     companion object: Loggable() {
-        fun apply(events: List<ScheduleEvent>): Schedule =
-            Schedule().apply(events) as Schedule
-        fun apply(event: ScheduleEvent): Schedule = Schedule().apply(event)
+        fun apply(events: List<ScheduleEvent>, validateState: Boolean = false): Schedule =
+            Schedule().apply(events, validateState) as Schedule
+        fun apply(event: ScheduleEvent, validateState: Boolean = true): Schedule =
+            Schedule().apply(event, validateState)
     }
 }
 
