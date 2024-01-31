@@ -146,7 +146,7 @@ abstract class CommandHandlerService<E: EntityEvent, T: AppliableEntity>(
             SERVICE.name,
             event.toString()
         )
-        return old.apply(event).let { updated ->
+        return old.apply(event, true).let { updated ->
             logger.trace(
                 "[{} {}] - Entity updated by event: -> {} <-",
                 contextName,
