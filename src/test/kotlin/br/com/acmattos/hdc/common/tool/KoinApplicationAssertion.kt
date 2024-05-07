@@ -2,7 +2,7 @@
 
 package br.com.acmattos.hdc.common.tool
 
-import kotlin.test.assertEquals
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.koin.core.KoinApplication
 import org.koin.core.annotation.KoinInternalApi
 
