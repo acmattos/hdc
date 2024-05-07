@@ -1,10 +1,6 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
-import br.com.acmattos.hdc.common.context.domain.cqs.CreateEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.DeleteEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.UpdateEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.UpsertEvent
+import br.com.acmattos.hdc.common.context.domain.cqs.*
 import java.time.LocalDateTime
 
 /**
@@ -42,36 +38,36 @@ data class TestAppliableEntity(
     override var deletedAtData: LocalDateTime? = null,
 ) : AppliableEntity {
 
-    override fun apply(event: CreateEvent) {
+    override fun apply(event: CreateEvent, validateState: Boolean) {
         createdAtData = (event as TestCreateEvent).createdAt
         updatedAtData = event.updatedAt
         deletedAtData = event.deletedAt
-        super.apply(event as CreateEvent)
+        super.apply(event as CreateEvent, validateState)
     }
 
-    override fun apply(event: UpsertEvent) {
+    override fun apply(event: UpsertEvent, validateState: Boolean) {
         updatedAtData = (event as TestUpsertEvent).updatedAt
         deletedAtData = event.deletedAt
-        super.apply(event as UpsertEvent)
+        super.apply(event as UpsertEvent, validateState)
     }
 
-    override fun apply(event: UpdateEvent) {
+    override fun apply(event: UpdateEvent, validateState: Boolean) {
         updatedAtData = (event as TestUpdateEvent).updatedAt
         deletedAtData = event.deletedAt
-        super.apply(event as UpdateEvent)
+        super.apply(event as UpdateEvent, validateState)
     }
 
-    override fun apply(event: DeleteEvent) {
+    override fun apply(event: DeleteEvent, validateState: Boolean) {
         updatedAtData = (event as TestDeleteEvent).updatedAt
         deletedAtData = event.deletedAt
-        super.apply(event as DeleteEvent)
+        super.apply(event as DeleteEvent, validateState)
     }
 
     companion object {
         fun apply(events: List<EntityEvent>): TestAppliableEntity =
             TestAppliableEntity().apply(events) as TestAppliableEntity
         fun apply(event: EntityEvent): TestAppliableEntity =
-            TestAppliableEntity().apply(event) as TestAppliableEntity
+            TestAppliableEntity().apply(event,true) as TestAppliableEntity
     }
 }
 
