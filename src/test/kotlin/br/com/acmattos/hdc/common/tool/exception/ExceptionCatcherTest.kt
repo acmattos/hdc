@@ -4,11 +4,10 @@ import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.CAUGHT_EXC
 import br.com.acmattos.hdc.common.tool.exception.ExceptionCatcher.catch
 import br.com.acmattos.hdc.common.tool.loggable.LogEventsAppender
 import ch.qos.logback.classic.Level
+import io.kotest.core.spec.style.FreeSpec
 import org.assertj.core.api.AbstractThrowableAssert
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatCode
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.gherkin.Feature
 
 private const val TEST = "TEST"
 private const val LOGGER_MESSAGE = "[$TEST] - Trace Message"
@@ -23,19 +22,19 @@ private const val LOGGER_NO_MESSAGE = "$NO_MESSAGE > [CATCHER] $LOGGER_MESSAGE"
  * @author ACMattos
  * @since 01/10/2021.
  */
-object ExceptionCatcherTest: Spek({
-    Feature("${ExceptionCatcher::class.java} usage") {
-        Scenario("ex.message was found") {
+class ExceptionCatcherTest: FreeSpec({
+    "Feature: ${ExceptionCatcher::class.java} usage" - {
+        "Scenario: ex.message was found" - {
             lateinit var block: () -> Exception
             lateinit var appender: LogEventsAppender
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            Given("""a block that throws an ${Exception::class.java}""") {
+            "Given: a block that throws an ${Exception::class.java}" {
                 block = { throw Exception(EXCEPTION_MESSAGE) }
             }
-            And("""a prepared ${LogEventsAppender::class.java}""") {
+            "And: a prepared ${LogEventsAppender::class.java}" {
                 appender = LogEventsAppender(ExceptionCatcher::class.java)
             }
-            When("""#catch is executed""") {
+            "When: #catch is executed" {
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
@@ -46,44 +45,48 @@ object ExceptionCatcherTest: Spek({
                     }
                 }
             }
-            Then("""${InternalServerErrorException::class.java} is raised""") {
-                assertion.hasSameClassAs(InternalServerErrorException(
+            "Then: ${InternalServerErrorException::class.java} is raised" {
+                assertion.hasSameClassAs(
+                    InternalServerErrorException(
                     EXCEPTION_MESSAGE,
                     CAUGHT_EXCEPTION.messageTrackerId,
                     Exception(EXCEPTION_MESSAGE)
-                ))
+                )
+                )
             }
-            And("""message is $EXCEPTION_MESSAGE""") {
+            "And: message is $EXCEPTION_MESSAGE" {
                 assertion.hasMessage(EXCEPTION_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+            "And: code is ${CAUGHT_EXCEPTION.messageTrackerId}" {
                 assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
-            And("""the message is $LOGGER_MESSAGE""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
+            "And: the message is $LOGGER_MESSAGE" {
+                assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            "And: the level is ${Level.TRACE}" {
+                assertThat(appender.getMessageLevel(LOGGER_MESSAGE)).isEqualTo(Level.TRACE)
             }
-            And("""the message is $LOGGER_EXCEPTION_MESSAGE""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_EXCEPTION_MESSAGE)
+            "And: the message is $LOGGER_EXCEPTION_MESSAGE" {
+                assertThat(appender.containsMessage(LOGGER_EXCEPTION_MESSAGE))
+                    .isTrue()
             }
-            And("the level is ${Level.ERROR}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+            "And: the level is ${Level.ERROR}" {
+                assertThat(appender.getMessageLevel(LOGGER_EXCEPTION_MESSAGE))
+                    .isEqualTo(Level.ERROR)
             }
         }
 
-        Scenario("ex.cause.message was found") {
+        "Scenario: ex.cause.message was found" - {
             lateinit var block: () -> Exception
             lateinit var appender: LogEventsAppender
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            Given("""a block that throws an ${Exception::class.java}""") {
+            "Given: a block that throws an ${Exception::class.java}" {
                 block = { throw Exception(Exception(CAUSE_MESSAGE)) }
             }
-            And("""a prepared ${LogEventsAppender::class.java}""") {
+            "And: a prepared ${LogEventsAppender::class.java}" {
                 appender = LogEventsAppender(ExceptionCatcher::class.java)
             }
-            When("""#catch is executed""") {
+            "When: #catch is executed" {
                 assertion = assertThatCode {
                     catch("[{}] - Trace Message",
                         CAUGHT_EXCEPTION.messageTrackerId,
@@ -93,47 +96,50 @@ object ExceptionCatcherTest: Spek({
                     }
                 }
             }
-            Then("""${InternalServerErrorException::class.java} is raised""") {
-                assertion.hasSameClassAs(InternalServerErrorException(
+            "Then: ${InternalServerErrorException::class.java} is raised" {
+                assertion.hasSameClassAs(
+                    InternalServerErrorException(
                     CAUSE_MESSAGE,
                     CAUGHT_EXCEPTION.messageTrackerId,
                     Exception(Exception(CAUSE_MESSAGE))
-                ))
+                )
+                )
             }
-            And("""message is $CAUSE_MESSAGE""") {
+            "And: message is $CAUSE_MESSAGE" {
                 assertion.hasMessage(CAUSE_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+            "And: code is ${CAUGHT_EXCEPTION.messageTrackerId}" {
                 assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
-            And("""the message is $LOGGER_MESSAGE""") {
-                assertThat(appender.getMessage(0)).isEqualTo(LOGGER_MESSAGE)
+            "And: the message is $LOGGER_MESSAGE" {
+                assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            "And: the level is ${Level.TRACE}" {
+                assertThat(appender.getMessageLevel(LOGGER_MESSAGE))
+                    .isEqualTo(Level.TRACE)
             }
-            And("""the message is $LOGGER_CAUSE_MESSAGE""") {
-                assertThat(appender.getMessage(1)).isEqualTo(LOGGER_CAUSE_MESSAGE)
+            "And: the message is $LOGGER_CAUSE_MESSAGE" {
+                assertThat(appender.containsMessage(LOGGER_CAUSE_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.ERROR}") {
-                assertThat(appender.getLoggingEvent(1).level).isEqualTo(Level.ERROR)
+            "And: the level is ${Level.ERROR}" {
+                assertThat(appender.getMessageLevel(LOGGER_CAUSE_MESSAGE)).isEqualTo(Level.ERROR)
             }
-            And("there is no more log messages") {
+            "And: there is no more log messages" {
                 assertThat(appender.eventsSize()).isEqualTo(2)
             }
         }
 
-        Scenario("no ex message was found") {
+        "Scenario: no ex message was found" - {
             lateinit var block: () -> Exception
             lateinit var appender: LogEventsAppender
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            Given("""a block that throws an ${Exception::class.java}""") {
+            "Given: a block that throws an ${Exception::class.java}" {
                 block = { throw Exception() }
             }
-            And("""a prepared ${LogEventsAppender::class.java}""") {
+            "And: a prepared ${LogEventsAppender::class.java}" {
                 appender = LogEventsAppender(ExceptionCatcher::class.java)
             }
-            When("""#catch is executed""") {
+            "When: #catch is executed" {
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
@@ -144,44 +150,46 @@ object ExceptionCatcherTest: Spek({
                     }
                 }
             }
-            Then("""${InternalServerErrorException::class.java} is raised""") {
-                assertion.hasSameClassAs(InternalServerErrorException(
+            "Then: ${InternalServerErrorException::class.java} is raised" {
+                assertion.hasSameClassAs(
+                    InternalServerErrorException(
                     NO_MESSAGE,
                     CAUGHT_EXCEPTION.messageTrackerId,
                     Exception()
-                ))
+                )
+                )
             }
-            And("""message is $NO_MESSAGE""") {
+            "And: message is $NO_MESSAGE" {
                 assertion.hasMessage(NO_MESSAGE)
             }
-            And("""code is ${CAUGHT_EXCEPTION.messageTrackerId}""") {
+            "And: code is ${CAUGHT_EXCEPTION.messageTrackerId}" {
                 assertion.hasFieldOrPropertyWithValue("code", CAUGHT_EXCEPTION.messageTrackerId)
             }
-            And("""the message is $LOGGER_MESSAGE""") {
+            "And: the message is $LOGGER_MESSAGE" {
                 assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.TRACE}") {
-                assertThat(appender.getLoggingEvent(0).level).isEqualTo(Level.TRACE)
+            "And: the level is ${Level.TRACE}" {
+                assertThat(appender.getMessageLevel(LOGGER_MESSAGE)).isEqualTo(Level.TRACE)
             }
-            And("""the message is $LOGGER_NO_MESSAGE""") {
+            "And: the message is $LOGGER_NO_MESSAGE" {
                 assertThat(appender.containsMessage(LOGGER_NO_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.ERROR}") {
+            "And: the level is ${Level.ERROR}" {
                 assertThat(appender.getMessageLevel(LOGGER_NO_MESSAGE)).isEqualTo(Level.ERROR)
             }
         }
 
-        Scenario("no ${InternalServerErrorException::class.java} thrown") {
+        "Scenario: no ${InternalServerErrorException::class.java} thrown" - {
             lateinit var block: () -> Unit
             lateinit var appender: LogEventsAppender
             lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-            Given("""a block that does not throw any ${Exception::class.java}""") {
+            "Given: a block that does not throw any ${Exception::class.java}" {
                 block = {}
             }
-            And("""a prepared ${LogEventsAppender::class.java}""") {
+            "And: a prepared ${LogEventsAppender::class.java}" {
                 appender = LogEventsAppender(ExceptionCatcher::class.java)
             }
-            When("""#catch is executed""") {
+            "When: #catch is executed" {
                 assertion = assertThatCode {
                     catch(
                         "[{}] - Trace Message",
@@ -192,13 +200,13 @@ object ExceptionCatcherTest: Spek({
                     }
                 }
             }
-            Then("""${InternalServerErrorException::class.java} is raised""") {
+            "Then: ${InternalServerErrorException::class.java} is raised" {
                 assertion.doesNotThrowAnyException()
             }
-            And("""the message is $LOGGER_MESSAGE""") {
+            "And: the message is $LOGGER_MESSAGE" {
                 assertThat(appender.containsMessage(LOGGER_MESSAGE)).isTrue()
             }
-            And("the level is ${Level.TRACE}") {
+            "And: the level is ${Level.TRACE}" {
                 assertThat(appender.getMessageLevel(LOGGER_MESSAGE)).isEqualTo(Level.TRACE)
             }
         }
