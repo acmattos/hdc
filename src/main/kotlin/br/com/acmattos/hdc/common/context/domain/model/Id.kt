@@ -1,13 +1,14 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
 import br.com.acmattos.hdc.common.tool.uid.ULIDGen
+import com.fasterxml.jackson.annotation.JsonValue
 
 /**
  * @author ACMattos
  * @since 13/06/2020.
  */
 open class Id(
-    val id: String
+    @JsonValue val id: String
 ) {
     constructor(): this(nextULID())
 
