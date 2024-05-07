@@ -57,20 +57,6 @@ class LogEventsAppender(
     fun eventsSize() = events.size
 
     /**
-     * Get the logging event by index.
-     * @param index
-     */
-    @Deprecated("Avoid this", ReplaceWith("#getMessageLevel"))
-    fun getLoggingEvent(index: Int) = events[index]
-
-    /**
-     * Get message by index.
-     * @param index
-     */
-    @Deprecated("Avoid this", ReplaceWith("#containsMessage"))
-    fun getMessage(index: Int): String = getLoggingEvent(index).message
-
-    /**
      * Verifies if this appender contains a certain @param message.
      */
     fun containsMessage(message: String) = events
