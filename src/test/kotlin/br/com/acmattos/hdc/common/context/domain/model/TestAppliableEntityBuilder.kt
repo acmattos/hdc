@@ -32,44 +32,7 @@ object TestAppliableEntityBuilder {
     )
 }
 
-data class TestAppliableEntity(
-    override var createdAtData: LocalDateTime = LocalDateTime.MIN,
-    override var updatedAtData: LocalDateTime? = null,
-    override var deletedAtData: LocalDateTime? = null,
-) : AppliableEntity {
 
-    override fun apply(event: CreateEvent, validateState: Boolean) {
-        createdAtData = (event as TestCreateEvent).createdAt
-        updatedAtData = event.updatedAt
-        deletedAtData = event.deletedAt
-        super.apply(event as CreateEvent, validateState)
-    }
-
-    override fun apply(event: UpsertEvent, validateState: Boolean) {
-        updatedAtData = (event as TestUpsertEvent).updatedAt
-        deletedAtData = event.deletedAt
-        super.apply(event as UpsertEvent, validateState)
-    }
-
-    override fun apply(event: UpdateEvent, validateState: Boolean) {
-        updatedAtData = (event as TestUpdateEvent).updatedAt
-        deletedAtData = event.deletedAt
-        super.apply(event as UpdateEvent, validateState)
-    }
-
-    override fun apply(event: DeleteEvent, validateState: Boolean) {
-        updatedAtData = (event as TestDeleteEvent).updatedAt
-        deletedAtData = event.deletedAt
-        super.apply(event as DeleteEvent, validateState)
-    }
-
-    companion object {
-        fun apply(events: List<EntityEvent>): TestAppliableEntity =
-            TestAppliableEntity().apply(events) as TestAppliableEntity
-        fun apply(event: EntityEvent): TestAppliableEntity =
-            TestAppliableEntity().apply(event,true) as TestAppliableEntity
-    }
-}
 
 /**
  * @author ACMattos
