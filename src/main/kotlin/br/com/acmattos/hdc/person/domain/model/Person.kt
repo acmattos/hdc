@@ -4,22 +4,9 @@ import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
 import br.com.acmattos.hdc.common.context.domain.model.AppliableEntity
 import br.com.acmattos.hdc.common.context.domain.model.Id
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_ADDRESSES
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CONTACTS
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_CPF
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_DOB
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_FULL_NAME
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_INDICATED_BY
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_OCCUPATION
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_PERSONAL_ID
-import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.INVALID_PERSON_STATUS
+import br.com.acmattos.hdc.person.config.MessageTrackerIdEnum.*
 import br.com.acmattos.hdc.person.config.PersonLogEnum.PERSON
-import br.com.acmattos.hdc.person.domain.cqs.CreateAPersonEvent
-import br.com.acmattos.hdc.person.domain.cqs.CreateDentistEvent
-import br.com.acmattos.hdc.person.domain.cqs.CreatePatientEvent
-import br.com.acmattos.hdc.person.domain.cqs.PersonEvent
-import br.com.acmattos.hdc.person.domain.cqs.UpdateAPersonEvent
-import br.com.acmattos.hdc.person.domain.cqs.UpdatePatientEvent
+import br.com.acmattos.hdc.person.domain.cqs.*
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -80,25 +67,25 @@ data class Person(// TODO Create tests
         return this
     }
 
-    private fun apply(event: CreateDentistEvent) {
-        applyCreateEvent(event)
+    private fun apply(event: CreateDentistEvent, validateState: Boolean) {
+        applyCreateEvent(event, validateState)
     }
 
-    private fun apply(event: CreatePatientEvent) {
-        applyCreateEvent(event)
+    private fun apply(event: CreatePatientEvent, validateState: Boolean) {
+        applyCreateEvent(event, validateState)
         assertValidOccupation()
         assertValidIndicatedBy()
         assertValidStatus()
     }
 
-    private fun apply(event: UpdatePatientEvent) {
-        applyUpdateEvent(event)
+    private fun apply(event: UpdatePatientEvent, validateState: Boolean) {
+        applyUpdateEvent(event, validateState)
         assertValidOccupation()
         assertValidIndicatedBy()
         assertValidStatus()
     }
 
-    private fun applyCreateEvent(event: CreateAPersonEvent) {
+    private fun applyCreateEvent(event: CreateAPersonEvent, validateState: Boolean) {
         personIdData = event.personId
         fullNameData = event.fullName
         dobData = event.dob
@@ -130,7 +117,7 @@ data class Person(// TODO Create tests
         assertValidContacts()
     }
 
-    private fun applyUpdateEvent(event: UpdateAPersonEvent) {
+    private fun applyUpdateEvent(event: UpdateAPersonEvent, validateState: Boolean) {
         personIdData = event.personId
         fullNameData = event.fullName
         dobData = event.dob
