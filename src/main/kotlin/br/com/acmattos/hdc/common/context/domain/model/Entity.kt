@@ -1,16 +1,8 @@
 package br.com.acmattos.hdc.common.context.domain.model
 
 import br.com.acmattos.hdc.common.context.config.ContextLogEnum.ENTITY
-import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.DELETED_AT_NEEDS_TO_BE_NOT_NULL
-import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.DELETED_AT_NEEDS_TO_BE_NULL
-import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.UPDATED_AT_NEEDS_TO_BE_NOT_NULL
-import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.UPDATED_AT_NEEDS_TO_BE_NULL
-import br.com.acmattos.hdc.common.context.domain.cqs.CreateEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.DeleteEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.EntityEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.Message
-import br.com.acmattos.hdc.common.context.domain.cqs.UpdateEvent
-import br.com.acmattos.hdc.common.context.domain.cqs.UpsertEvent
+import br.com.acmattos.hdc.common.context.config.MessageTrackerIdEnum.*
+import br.com.acmattos.hdc.common.context.domain.cqs.*
 import br.com.acmattos.hdc.common.tool.assertion.Assertion
 import br.com.acmattos.hdc.common.tool.loggable.Loggable
 import java.time.LocalDateTime
@@ -39,7 +31,7 @@ interface AppliableEntity: Entity {
             apply(event, validateState)
             logger.trace(
                 "[{} {}] - Event [{}] applied to Entity: -> {} <-",
-                this.javaClass.simpleName.toUpperCase(),
+                this.javaClass.simpleName.uppercase(),
                 ENTITY.name,
                 event.javaClass.simpleName,
                 this.toString()
