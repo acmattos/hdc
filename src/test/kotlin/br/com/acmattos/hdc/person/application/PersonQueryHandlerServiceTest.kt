@@ -24,95 +24,95 @@
 // * @author ACMattos
 // * @since 03/11/2021.
 // */
-//object PersonQueryHandlerServiceTest: Spek({
-//    Feature("${PersonQueryHandlerService::class.java} usage") {
-//        Scenario("handling ${FindTheDentistQuery::class.java} successfully - results found") {
+//object PersonQueryHandlerServiceTest: FreeSpec({
+//    "Feature: ${PersonQueryHandlerService::class.java} usage") {
+//        "Scenario: handling ${FindTheDentistQuery::class.java} successfully - results found") {
 //            lateinit var query: FindTheDentistQuery
 //            lateinit var store: QueryStore<PersonQuery>
 //            lateinit var repository: Repository<Person>
 //            lateinit var service: PersonQueryHandlerService
 //            lateinit var result: QueryResult<Person>
-//            Given("""a ${QueryStore::class.java} mock""") {
+//            "Given: a ${QueryStore::class.java} mock" {
 //                store = mockk()
 //            }
-//            And("""QueryStore#addQuery just runs""") {
+//            "And: QueryStore#addQuery just runs" {
 //                every { store.addQuery(any<FindTheDentistQuery>()) } just Runs
 //            }
-//            And("""a ${Repository::class.java} mock""") {
+//            "And: a ${Repository::class.java} mock" {
 //                repository = mockk()
 //            }
-//            And("""repository#findOneByFilter returns a dentist""") {
+//            "And: repository#findOneByFilter returns a dentist" {
 //                every {
 //                    repository.findOneByFilter(
 //                        EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B")
 //                    )
 //                } returns Optional.of(PersonBuilder.buildDentist())
 //            }
-//            And("""a ${FindTheDentistQuery::class.java} created from ${Context::class.java}""") {
+//            "And: a ${FindTheDentistQuery::class.java} created from ${Context::class.java}" {
 //                query = buildFindTheDentistRequest().toType() as FindTheDentistQuery
 //            }
-//            And("""a ${PersonQueryHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${PersonQueryHandlerService::class.java} successfully instantiated" {
 //                service = PersonQueryHandlerService(store, repository)
 //            }
-//            When("""#handle is executed""") {
+//            "When: #handle is executed" {
 //                result = service.handle(query)
 //            }
-//            Then("""${QueryResult::class.java} is not empty""") {
+//            "Then: ${QueryResult::class.java} is not empty" {
 //                assertThat(result.results).isNotEmpty()
 //            }
-//            And("""${QueryResult::class.java} size is one""") {
+//            "And: ${QueryResult::class.java} size is one" {
 //                assertThat(result.results.size).isEqualTo(1)
 //            }
-//            And("""the repository is accessed""") {
+//            "And: the repository is accessed" {
 //                verify {
 //                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
 //                }
 //            }
-//            And("""the query store is accessed as well""") {
+//            "And: the query store is accessed as well" {
 //                verify {
 //                    store.addQuery(any<FindTheDentistQuery>())
 //                }
 //            }
 //        }
 //
-//        Scenario("handling ${FindTheDentistQuery::class.java} successfully - results not found") {
+//        "Scenario: handling ${FindTheDentistQuery::class.java} successfully - results not found") {
 //            lateinit var query: FindTheDentistQuery
 //            lateinit var store: QueryStore<PersonQuery>
 //            lateinit var repository: Repository<Person>
 //            lateinit var service: PersonQueryHandlerService
 //            lateinit var result: QueryResult<Person>
-//            Given("""a ${QueryStore::class.java} mock""") {
+//            "Given: a ${QueryStore::class.java} mock" {
 //                store = mockk()
 //            }
-//            And("""QueryStore#addQuery just runs""") {
+//            "And: QueryStore#addQuery just runs" {
 //                every { store.addQuery(any<FindTheDentistQuery>()) } just Runs
 //            }
-//            And("""a ${Repository::class.java} mock""") {
+//            "And: a ${Repository::class.java} mock" {
 //                repository = mockk()
 //            }
-//            And("""repository#findOneByFilter returns null""") {
+//            "And: repository#findOneByFilter returns null" {
 //                every {
 //                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
 //                } returns Optional.empty()
 //            }
-//            And("""a ${FindTheDentistQuery::class.java} created from ${Context::class.java}""") {
+//            "And: a ${FindTheDentistQuery::class.java} created from ${Context::class.java}" {
 //                query = buildFindTheDentistRequest().toType() as FindTheDentistQuery
 //            }
-//            And("""a ${PersonQueryHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${PersonQueryHandlerService::class.java} successfully instantiated" {
 //                service = PersonQueryHandlerService(store, repository)
 //            }
-//            When("""#handle is executed""") {
+//            "When: #handle is executed" {
 //                result = service.handle(query)
 //            }
-//            Then("""${QueryResult::class.java} is empty""") {
+//            "Then: ${QueryResult::class.java} is empty" {
 //                assertThat(result.results).isEmpty()
 //            }
-//            And("""the repository is accessed""") {
+//            "And: the repository is accessed" {
 //                verify {
 //                    repository.findOneByFilter(EqFilter<String, String>("person_id", "01FJJDJKDXN4K558FMCKEMQE6B"))
 //                }
 //            }
-//            And("""the query store is accessed as well""") {
+//            "And: the query store is accessed as well" {
 //                verify {
 //                    store.addQuery(any<FindTheDentistQuery>())
 //                }
