@@ -31,12 +31,12 @@
 // * @author ACMattos
 // * @since 30/11/2021.
 // */
-//object DentistRestServiceTest: Spek({
+//object DentistRestServiceTest: FreeSpec({
 ////    afterEachTest { // Avoids error when all tests are executed at the same time
 ////        JavalinJackson.configure(JacksonObjectMapperFactory.build())
 ////    }
-//    Feature("${DentistRestService::class.java} usage") {
-//        Scenario("handling ${CreateADentistCommand::class.java} successfully") {
+//    "Feature: ${DentistRestService::class.java} usage") {
+//        "Scenario: handling ${CreateADentistCommand::class.java} successfully") {
 //            lateinit var request: CreateAppointmentsForTheScheduleRequestBuilder
 //            lateinit var command: CreateAppointmentsForTheScheduleCommand
 //            lateinit var event: CreateAppointmentsForTheScheduleEvent
@@ -45,7 +45,7 @@
 //            lateinit var response: Response?// = null
 //            lateinit var service: PersonRestApiService
 //
-//            Given("""a ${PersonRestApiService::class.java} mock""") {
+//            "Given: a ${PersonRestApiService::class.java} mock" {
 //                dentistId = DentistId("12345678901234567890123456")
 //                response = mockk(relaxed = true)
 //                every { response!!.isEmpty() } returns false
@@ -59,46 +59,46 @@
 //                    .findTheDentist(dentistId.id).execute().body()
 //                if (response != null && !response.isEmpty()) {
 //            }
-//            And("""a ${CreateAppointmentsForTheScheduleCommand::class.java} successfully generated""") {
+//            "And: a ${CreateAppointmentsForTheScheduleCommand::class.java} successfully generated" {
 //                command = (request.toType() as CreateAppointmentsForTheScheduleCommand)
 //            }
-//            And("""a ${CreateAppointmentsForTheScheduleEvent::class.java} successfully instantiated""") {
+//            "And: a ${CreateAppointmentsForTheScheduleEvent::class.java} successfully instantiated" {
 //                event = CreateAppointmentsForTheScheduleEvent(command, listOf())
 //            }
-//            And("""a ${AppointmentCommandHandlerService::class.java} mock""") {
+//            "And: a ${AppointmentCommandHandlerService::class.java} mock" {
 //                service = mockk()
 //            }
-//            And("""service#handle returning the ${CreateADentistCommand::class.java}""") {
+//            "And: service#handle returning the ${CreateADentistCommand::class.java}" {
 //                every { service.handle(any<CreateADentistCommand>()) } returns event
 //            }
-//            And("""a ${Context::class.java} mock""") {
+//            "And: a ${Context::class.java} mock" {
 //                context = AppointmentRequestBuilder.getContext()
 //            }
-//            And("""${JavalinJackson::class.java} is properly configured""") {
+//            "And: ${JavalinJackson::class.java} is properly configured" {
 //                JavalinJackson.configure(JacksonObjectMapperFactory.build())
 //            }
-//            And("""context#fullUrl returns fullUrl""") {
+//            "And: context#fullUrl returns fullUrl" {
 //                every { context.fullUrl() } returns "fullUrl"
 //            }
-//            And("""context#status returns ${Context::class.java}""") {
+//            "And: context#status returns ${Context::class.java}" {
 //                every { context.status(STATUS) } returns context
 //            }
-//            And("""context#status returns $STATUS""") {
+//            "And: context#status returns $STATUS" {
 //                every { context.status() } returns STATUS
 //            }
-//            And("""context#json returns ${Context::class.java}""") {
+//            "And: context#json returns ${Context::class.java}" {
 //                every { context.json(Response("", "", 0, "")) } returns context
 //            }
-//            And("""a ${PersonCommandHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${PersonCommandHandlerService::class.java} successfully instantiated" {
 //                controller = AppointmentCommandController(service)
 //            }
-//            When("""#createADentist is executed""") {
+//            "When: #createADentist is executed" {
 //                controller.createAppointmentsForTheSchedule(context)
 //            }
-//            Then("""status is $STATUS""") {
+//            "Then: status is $STATUS" {
 //                Assertions.assertThat(context.status()).isEqualTo(STATUS)
 //            }
-//            And("""the context is accessed in the right order""") {
+//            "And: the context is accessed in the right order" {
 //                verifyOrder {
 //                    context.getRequest(br.com.acmattos.hdc.scheduler.port.rest::CreateAppointmentsForTheScheduleRequestBuilder)
 //                    context.fullUrl()
@@ -107,7 +107,7 @@
 //                    context.json(Response("", "", 0, ""))
 //                }
 //            }
-//            And("""the service is accessed as well""") {
+//            "And: the service is accessed as well" {
 //                verify(exactly = 1) {
 //                    service.handle(any<CreateAppointmentsForTheScheduleCommand>())
 //                }

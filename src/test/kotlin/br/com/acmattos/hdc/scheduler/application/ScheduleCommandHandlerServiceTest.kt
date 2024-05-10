@@ -34,19 +34,19 @@
 // * @author ACMattos
 // * @since 21/10/2021.
 // */
-//object ScheduleCommandHandlerServiceTest: Spek({
-//    Feature("${ScheduleCommandHandlerService::class.java} usage") {
-//        Scenario("handling ${CreateAScheduleForTheDentistCommand::class.java} successfully") {
+//object ScheduleCommandHandlerServiceTest: FreeSpec({
+//    "Feature: ${ScheduleCommandHandlerService::class.java} usage") {
+//        "Scenario: handling ${CreateAScheduleForTheDentistCommand::class.java} successfully") {
 //            lateinit var command: CreateAScheduleForTheDentistCommand
 //            lateinit var eventStore: EventStore<ScheduleEvent>
 //            lateinit var repository: Repository<Schedule>
 //            lateinit var dentistService: DentistRestService
 //            lateinit var service: ScheduleCommandHandlerService
 //            lateinit var event: CreateAScheduleForTheDentistEvent
-//            Given("""a ${EventStore::class.java} mock""") {
+//            "Given: a ${EventStore::class.java} mock" {
 //                eventStore = mockk()
 //            }
-//            And("""eventStore#findAllByField returns null""") {
+//            "And: eventStore#findAllByField returns null" {
 //                every {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
@@ -54,47 +54,47 @@
 //                    )
 //                } returns listOf()
 //            }
-//            And("""eventStore#addEvent just runs""") {
+//            "And: eventStore#addEvent just runs" {
 //                every { eventStore.addEvent(any<CreateAScheduleForTheDentistEvent>()) } just Runs
 //            }
-//            And("""a ${Repository::class.java} mock""") {
+//            "And: a ${Repository::class.java} mock" {
 //                repository = mockk()
 //            }
-//            And("""repository#save just runs""") {
+//            "And: repository#save just runs" {
 //                every { repository.save(any()) } just Runs
 //            }
-//            And("""a ${DentistRestService::class.java} mock""") {
+//            "And: a ${DentistRestService::class.java} mock" {
 //                dentistService = mockk()
 //            }
-//            And("""dentistService#findTheDentist returns ${Dentist::class.java}""") {
+//            "And: dentistService#findTheDentist returns ${Dentist::class.java}" {
 //                every {
 //                    dentistService.findTheDentist(any())
 //                } returns Optional.of(DentistBuilder.build())
 //            }
-//            And("""a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}""") {
+//            "And: a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}" {
 //                command = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
 //                    .toType() as CreateAScheduleForTheDentistCommand
 //            }
-//            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${ScheduleCommandHandlerService::class.java} successfully instantiated" {
 //                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
 //            }
-//            When("""#handle is executed""") {
+//            "When: #handle is executed" {
 //                event = service.handle(command) as CreateAScheduleForTheDentistEvent
 //            }
-//            Then("""${CreateAScheduleForTheDentistEvent::class.java} is not null""") {
+//            "Then: ${CreateAScheduleForTheDentistEvent::class.java} is not null" {
 //                assertThat(event).isNotNull()
 //            }
-//            And("""the dentistService is accessed once""") {
+//            "And: the dentistService is accessed once" {
 //                verify(exactly = 1) {
 //                    dentistService.findTheDentist(any())
 //                }
 //            }
-//            And("""the repository is accessed once""") {
+//            "And: the repository is accessed once" {
 //                verify(exactly = 1) {
 //                    repository.save(any())
 //                }
 //            }
-//            And("""the event store is accessed in the right order""") {
+//            "And: the event store is accessed in the right order" {
 //                verifyOrder {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
@@ -105,17 +105,17 @@
 //            }
 //        }
 //
-//        Scenario("handling ${CreateAScheduleForTheDentistCommand::class.java} for a already registered dentist's schedule ") {
+//        "Scenario: handling ${CreateAScheduleForTheDentistCommand::class.java} for a already registered dentist's schedule ") {
 //            lateinit var command: CreateAScheduleForTheDentistCommand
 //            lateinit var eventStore: EventStore<ScheduleEvent>
 //            lateinit var repository: Repository<Schedule>
 //            lateinit var dentistService: DentistRestService
 //            lateinit var service: ScheduleCommandHandlerService
 //            lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-//            Given("""a ${EventStore::class.java} mock""") {
+//            "Given: a ${EventStore::class.java} mock" {
 //                eventStore = mockk()
 //            }
-//            And("""eventStore#findAllByField returns an event""") {
+//            "And: eventStore#findAllByField returns an event" {
 //                every {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
@@ -128,52 +128,52 @@
 //                    )
 //                )
 //            }
-//            And("""eventStore#addEvent just runs""") {
+//            "And: eventStore#addEvent just runs" {
 //                every { eventStore.addEvent(any<CreateAScheduleForTheDentistEvent>()) } just Runs
 //            }
-//            And("""a ${Repository::class.java} mock""") {
+//            "And: a ${Repository::class.java} mock" {
 //                repository = mockk()
 //            }
-//            And("""a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}""") {
+//            "And: a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}" {
 //                command = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
 //                    .toType() as CreateAScheduleForTheDentistCommand
 //            }
-//            And("""a ${DentistRestService::class.java} mock""") {
+//            "And: a ${DentistRestService::class.java} mock" {
 //                dentistService = mockk()
 //            }
-//            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${ScheduleCommandHandlerService::class.java} successfully instantiated" {
 //                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
 //            }
-//            When("""#handle is executed""") {
+//            "When: #handle is executed" {
 //                assertion = assertThatCode {
 //                    service.handle(command) as CreateAScheduleForTheDentistEvent
 //                }
 //            }
-//            Then("""${AssertionFailedException::class.java} is raised with message""") {
+//            "Then: ${AssertionFailedException::class.java} is raised with message" {
 //                assertion.hasSameClassAs(AssertionFailedException(EXCEPTION_MESSAGE_1, SCHEDULE_ALREADY_DEFINED.code))
 //            }
-//            And("""the message is $EXCEPTION_MESSAGE_1""") {
+//            "And: the message is $EXCEPTION_MESSAGE_1" {
 //                assertion.hasMessage(EXCEPTION_MESSAGE_1)
 //            }
-//            And("""exception has code ${SCHEDULE_ALREADY_DEFINED.code}""") {
+//            "And: exception has code ${SCHEDULE_ALREADY_DEFINED.code}" {
 //                assertion.hasFieldOrPropertyWithValue("code", SCHEDULE_ALREADY_DEFINED.code)
 //            }
-//            And("""the repository#save is not accessed""") {
+//            "And: the repository#save is not accessed" {
 //                verify(exactly = 0) {
 //                    repository.save(any())
 //                }
 //            }
-//            And("""the dentistService is not accessed""") {
+//            "And: the dentistService is not accessed" {
 //                verify(exactly = 0) {
 //                    dentistService.findTheDentist(any())
 //                }
 //            }
-//            And("""the event store#addEvent is not accessed""") {
+//            "And: the event store#addEvent is not accessed" {
 //                verify(exactly = 0){
 //                    eventStore.addEvent(any<CreateAScheduleForTheDentistEvent>())
 //                }
 //            }
-//            And("""the eventStore#findAllByField is accessed""") {
+//            "And: the eventStore#findAllByField is accessed" {
 //                verify(exactly = 1) {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
@@ -183,17 +183,17 @@
 //            }
 //        }
 //
-//        Scenario("handling ${CreateAScheduleForTheDentistCommand::class.java} for a non-existant dentist") {
+//        "Scenario: handling ${CreateAScheduleForTheDentistCommand::class.java} for a non-existant dentist") {
 //            lateinit var command: CreateAScheduleForTheDentistCommand
 //            lateinit var eventStore: EventStore<ScheduleEvent>
 //            lateinit var repository: Repository<Schedule>
 //            lateinit var dentistService: DentistRestService
 //            lateinit var service: ScheduleCommandHandlerService
 //            lateinit var assertion: AbstractThrowableAssert<*, out Throwable>
-//            Given("""a ${EventStore::class.java} mock""") {
+//            "Given: a ${EventStore::class.java} mock" {
 //                eventStore = mockk()
 //            }
-//            And("""eventStore#findAllByField returns null""") {
+//            "And: eventStore#findAllByField returns null" {
 //                every {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
@@ -201,54 +201,54 @@
 //                    )
 //                } returns listOf()
 //            }
-//            And("""a ${Repository::class.java} mock""") {
+//            "And: a ${Repository::class.java} mock" {
 //                repository = mockk()
 //            }
-//            And("""a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}""") {
+//            "And: a ${CreateAScheduleForTheDentistCommand::class.java} generated from ${CreateAScheduleForTheDentistRequest::class.java}" {
 //                command = ScheduleRequestBuilder.buildCreateAScheduleForTheDentistRequest()
 //                    .toType() as CreateAScheduleForTheDentistCommand
 //            }
-//            And("""a ${DentistRestService::class.java} mock""") {
+//            "And: a ${DentistRestService::class.java} mock" {
 //                dentistService = mockk()
 //            }
-//            And("""dentistService#findTheDentist returns ${Dentist::class.java}""") {
+//            "And: dentistService#findTheDentist returns ${Dentist::class.java}" {
 //                every {
 //                    dentistService.findTheDentist(any())
 //                } returns Optional.empty<Dentist>()
 //            }
-//            And("""a ${ScheduleCommandHandlerService::class.java} successfully instantiated""") {
+//            "And: a ${ScheduleCommandHandlerService::class.java} successfully instantiated" {
 //                service = ScheduleCommandHandlerService(eventStore, repository, dentistService)
 //            }
-//            When("""#handle is executed""") {
+//            "When: #handle is executed" {
 //                assertion = assertThatCode {
 //                    service.handle(command) as CreateAScheduleForTheDentistEvent
 //                }
 //            }
-//            Then("""${AssertionFailedException::class.java} is raised with message""") {
+//            "Then: ${AssertionFailedException::class.java} is raised with message" {
 //                assertion.hasSameClassAs(AssertionFailedException(EXCEPTION_MESSAGE_2, DENTIST_NOT_REGISTERED.code))
 //            }
-//            And("""the message is $EXCEPTION_MESSAGE_2""") {
+//            "And: the message is $EXCEPTION_MESSAGE_2" {
 //                assertion.hasMessage(EXCEPTION_MESSAGE_2)
 //            }
-//            And("""exception has code ${DENTIST_NOT_REGISTERED.code}""") {
+//            "And: exception has code ${DENTIST_NOT_REGISTERED.code}" {
 //                assertion.hasFieldOrPropertyWithValue("code", DENTIST_NOT_REGISTERED.code)
 //            }
-//            And("""the repository#save is not accessed""") {
+//            "And: the repository#save is not accessed" {
 //                verify(exactly = 0) {
 //                    repository.save(any())
 //                }
 //            }
-//            And("""the dentistService is accessed once""") {
+//            "And: the dentistService is accessed once" {
 //                verify(exactly = 1) {
 //                    dentistService.findTheDentist(any())
 //                }
 //            }
-//            And("""the event store#addEvent is not accessed """) {
+//            "And: the event store#addEvent is not accessed " {
 //                verify(exactly = 0){
 //                    eventStore.addEvent(any<CreateAScheduleForTheDentistEvent>())
 //                }
 //            }
-//            And("""the eventStore#findAllByField is accessed""") {
+//            "And: the eventStore#findAllByField is accessed" {
 //                verify(exactly = 1) {
 //                    eventStore.findAllByField(
 //                        "event.dentist.dentist_id.id",// TODO TRACK THIS FIELD
