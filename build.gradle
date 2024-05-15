@@ -48,7 +48,7 @@ dependencies {
 
     //----------------- TEST DEPENDENCIES -----------------//
     // AssertJ
-    testImplementation "org.assertj:assertj-core:3.16.1"
+    testImplementation "org.assertj:assertj-core:3.25.3"
 
     // Fuel
     implementation "com.github.kittinunf.fuel:fuel:2.3.1"
