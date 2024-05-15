@@ -1,8 +1,7 @@
-package br.com.acmattos.hdc.user.domain.cqs
+package br.com.acmattos.hdc.user.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.user.domain.model.Role
-import br.com.acmattos.hdc.user.domain.model.RoleId
+import br.com.acmattos.hdc.user.domain.cqs.*
 import java.time.LocalDateTime
 
 
