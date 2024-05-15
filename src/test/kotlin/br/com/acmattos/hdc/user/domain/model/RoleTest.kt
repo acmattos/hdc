@@ -3,8 +3,6 @@ package br.com.acmattos.hdc.user.domain.model
 import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.user.config.MessageTrackerIdEnum.INVALID_CODE_FORMAT
 import br.com.acmattos.hdc.user.config.MessageTrackerIdEnum.INVALID_DESCRIPTION
-import br.com.acmattos.hdc.user.domain.cqs.RoleBuilder
-import br.com.acmattos.hdc.user.domain.cqs.RoleRequest
 import io.kotest.core.spec.style.FreeSpec
 import org.assertj.core.api.Assertions.*
 
