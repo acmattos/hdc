@@ -4,7 +4,9 @@ import br.com.acmattos.hdc.common.tool.assertion.AssertionFailedException
 import br.com.acmattos.hdc.user.config.MessageTrackerIdEnum.INVALID_CODE_FORMAT
 import br.com.acmattos.hdc.user.config.MessageTrackerIdEnum.INVALID_DESCRIPTION
 import io.kotest.core.spec.style.FreeSpec
-import org.assertj.core.api.Assertions.*
+import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.assertThatCode
+import org.assertj.core.api.Assertions.catchThrowableOfType
 
 /**
  * @author ACMattos
@@ -22,12 +24,14 @@ class RoleTest: FreeSpec({
             // Then
             assertion.doesNotThrowAnyException()
             assertThat(entity).isNotNull()
-
+            assertThat(entity?.code).isEqualTo("CODE_12")
+            assertThat(entity?.description).isEqualTo("DESCRIPTION")
+            assertThat(entity?.enabled).isTrue()
         }
 
         "Scenario: invalid creation - code.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode("IN")
+            val request = RoleRequest.buildWithCode("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildCreate(request) },
@@ -42,7 +46,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid creation - code.length > 20 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "INVALIDINVALIDINVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -58,7 +62,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid creation - code !starting with A-Z " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "_INVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -74,7 +78,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid creation - description.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription("IN")
+            val request = RoleRequest.buildWithDescription("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildCreate(request) },
@@ -89,7 +93,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid creation - description.length > 255 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription(
+            val request = RoleRequest.buildWithDescription(
                 "I".inflate(256)
             )
             // When
@@ -121,7 +125,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid upsert - code.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode("IN")
+            val request = RoleRequest.buildWithCode("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildUpsert(request) },
@@ -136,7 +140,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid upsert - code.length > 20 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "INVALIDINVALIDINVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -152,7 +156,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid upsert - code !starting with A-Z " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "_INVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -168,7 +172,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid upsert - description.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription("IN")
+            val request = RoleRequest.buildWithDescription("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildUpsert(request) },
@@ -183,7 +187,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid upsert - description.length > 255 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription(
+            val request = RoleRequest.buildWithDescription(
                 "I".inflate(256)
             )
             // When
@@ -210,12 +214,59 @@ class RoleTest: FreeSpec({
             // Then
             assertion.doesNotThrowAnyException()
             assertThat(entity).isNotNull()
+        }
 
+        "Scenario: Valid update - new code" {
+            // Given a valid request
+            val request = RoleRequest.buildWithCode("NEW_CODE", true)
+            // When
+            var entity: Role? = null
+            val assertion = assertThatCode {
+                entity = RoleBuilder.buildUpdate(request)
+            }
+            // Then
+            assertion.doesNotThrowAnyException()
+            assertThat(entity).isNotNull()
+            assertThat(entity?.code).isEqualTo("NEW_CODE")
+            assertThat(entity?.description).isEqualTo("DESCRIPTION")
+            assertThat(entity?.enabled).isTrue()
+        }
+
+        "Scenario: Valid update - new description" {
+            // Given a valid request
+            val request = RoleRequest.buildWithDescription("NEW_DESCRIPTION", true)
+            // When
+            var entity: Role? = null
+            val assertion = assertThatCode {
+                entity = RoleBuilder.buildUpdate(request)
+            }
+            // Then
+            assertion.doesNotThrowAnyException()
+            assertThat(entity).isNotNull()
+            assertThat(entity?.code).isEqualTo("CODE_12")
+            assertThat(entity?.description).isEqualTo("NEW_DESCRIPTION")
+            assertThat(entity?.enabled).isTrue()
+        }
+
+        "Scenario: Valid update - new description" {
+            // Given a valid request
+            val request = RoleRequest.buildWithEnabled(false, true)
+            // When
+            var entity: Role? = null
+            val assertion = assertThatCode {
+                entity = RoleBuilder.buildUpdate(request)
+            }
+            // Then
+            assertion.doesNotThrowAnyException()
+            assertThat(entity).isNotNull()
+            assertThat(entity?.code).isEqualTo("CODE_12")
+            assertThat(entity?.description).isEqualTo("DESCRIPTION")
+            assertThat(entity?.enabled).isFalse()
         }
 
         "Scenario: invalid update - code.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode("IN")
+            val request = RoleRequest.buildWithCode("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildUpdate(request) },
@@ -230,7 +281,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid update - code.length > 20 " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "INVALIDINVALIDINVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -246,7 +297,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid update - code !starting with A-Z " {
             // Given
-            val request = RoleRequest.buildWithInvalidCode(
+            val request = RoleRequest.buildWithCode(
                 "_INVALID")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
@@ -262,7 +313,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid update - description.length < 3 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription("IN")
+            val request = RoleRequest.buildWithDescription("IN")
             // When
             val exception: AssertionFailedException = catchThrowableOfType(
                 { RoleBuilder.buildUpdate(request) },
@@ -277,7 +328,7 @@ class RoleTest: FreeSpec({
 
         "Scenario: invalid update - description.length > 255 " {
             // Given
-            val request = RoleRequest.buildWithInvalidDescription(
+            val request = RoleRequest.buildWithDescription(
                 "I".inflate(256)
             )
             // When

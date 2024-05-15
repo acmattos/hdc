@@ -1,7 +1,14 @@
 package br.com.acmattos.hdc.user.domain.model
 
 import br.com.acmattos.hdc.common.context.domain.model.AuditLog
-import br.com.acmattos.hdc.user.domain.cqs.*
+import br.com.acmattos.hdc.user.domain.cqs.RoleCreateCommand
+import br.com.acmattos.hdc.user.domain.cqs.RoleCreateEvent
+import br.com.acmattos.hdc.user.domain.cqs.RoleDeleteCommand
+import br.com.acmattos.hdc.user.domain.cqs.RoleDeleteEvent
+import br.com.acmattos.hdc.user.domain.cqs.RoleUpdateCommand
+import br.com.acmattos.hdc.user.domain.cqs.RoleUpdateEvent
+import br.com.acmattos.hdc.user.domain.cqs.RoleUpsertCommand
+import br.com.acmattos.hdc.user.domain.cqs.RoleUpsertEvent
 import java.time.LocalDateTime
 
 
@@ -11,22 +18,63 @@ import java.time.LocalDateTime
  */
 data class RoleRequest(
     val roleId: RoleId = RoleId("01FK96GENJKTN1BYZW6BRHFZFK"),
-    val code: String = "CODE_12",
-    val description: String = "DESCRIPTION",
-    val enabled: Boolean = true,
+    val code: String? = "CODE_12",
+    val description: String? = "DESCRIPTION",
+    val enabled: Boolean? = true,
     val createdAt: LocalDateTime = LocalDateTime.of(2024, 5, 14, 16, 0, 0),
     val updatedAt: LocalDateTime = LocalDateTime.of(2024, 5, 15, 17, 0, 0),
     val deletedAt: LocalDateTime = LocalDateTime.of(2024, 5, 16, 18, 0, 0),
     val auditLog: AuditLog = AuditLog( "who", "what", LocalDateTime.of(2024, 5, 14, 16, 0, 0))
 ) {
+    constructor(
+        code: String?,
+        description: String?,
+        enabled: Boolean?,
+        isUpdate: Boolean,
+    ): this(
+        code = code,
+        description = description,
+        enabled = enabled,
+    )
+
     companion object {
         fun build() = RoleRequest()
 
-        fun buildWithInvalidCode(invalid: String) =
-            RoleRequest(code = invalid)
+        fun buildWithCode(value: String, isUpdate: Boolean = false) =
+            if(isUpdate) {
+                RoleRequest(
+                    code = value,
+                    description = null,
+                    enabled = null,
+                    isUpdate = true
+                )
+            } else {
+                RoleRequest(code = value)
+            }
 
-        fun buildWithInvalidDescription(invalid: String) =
-            RoleRequest(description = invalid)
+        fun buildWithDescription(value: String, isUpdate: Boolean = false) =
+            if(isUpdate) {
+                RoleRequest(
+                    code = null,
+                    description = value,
+                    enabled = null,
+                    isUpdate = true
+                )
+            } else {
+                RoleRequest(description = value)
+            }
+
+        fun buildWithEnabled(value: Boolean, isUpdate: Boolean = false) =
+            if(isUpdate) {
+                RoleRequest(
+                    code = null,
+                    description = null,
+                    enabled = value,
+                    isUpdate = true
+                )
+            } else {
+                RoleRequest(enabled = value)
+            }
     }
 }
 
@@ -124,18 +172,18 @@ private object RoleEventBuilder {
 private object RoleCommandBuilder {
     fun buildCreate(data: RoleRequest) = RoleCreateCommand(
         roleId = data.roleId,
-        code = data.code,
-        description = data.description,
-        enabled = data.enabled,
+        code = data.code!!,
+        description = data.description!!,
+        enabled = data.enabled!!,
         createdAt = data.createdAt,
         auditLog = data.auditLog,
     )
 
     fun buildUpsert(data: RoleRequest) = RoleUpsertCommand(
         roleId = data.roleId,
-        code = data.code,
-        description = data.description,
-        enabled = data.enabled,
+        code = data.code!!,
+        description = data.description!!,
+        enabled = data.enabled!!,
         updatedAt = data.updatedAt,
         deletedAt = null,
         auditLog = data.auditLog,
