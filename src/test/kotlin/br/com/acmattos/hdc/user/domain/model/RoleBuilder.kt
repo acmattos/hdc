@@ -11,7 +11,6 @@ import br.com.acmattos.hdc.user.domain.cqs.RoleUpsertCommand
 import br.com.acmattos.hdc.user.domain.cqs.RoleUpsertEvent
 import java.time.LocalDateTime
 
-
 /**
  * @author ACMattos
  * @since 14/05/2024.
@@ -147,7 +146,7 @@ object RoleBuilder{
  * @author ACMattos
  * @since 14/05/2024.
  */
-private object RoleEventBuilder {
+object RoleEventBuilder {
     fun buildCreate(command: RoleCreateCommand) = RoleCreateEvent(
         command
     )
@@ -169,7 +168,7 @@ private object RoleEventBuilder {
  * @author ACMattos
  * @since 14/05/2024.
  */
-private object RoleCommandBuilder {
+object RoleCommandBuilder {
     fun buildCreate(data: RoleRequest) = RoleCreateCommand(
         roleId = data.roleId,
         code = data.code!!,
